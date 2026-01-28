@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { TreeData, ViewMode, Concept } from '@/lib/types';
+import { useProgress } from '@/lib/useProgress';
 import { LevelSection } from '@/components/LevelSection';
 import { TreeNavigation } from '@/components/TreeNavigation';
 import { ViewModeToggle } from '@/components/ViewModeToggle';
@@ -24,6 +25,8 @@ export default function AITreePage() {
   const t = useTranslations();
   const params = useParams();
   const locale = params.locale as string;
+  const { isCompleted, toggleCompleted, completedCount, getCompletionPercentage, clearProgress } = useProgress();
+  const totalConcepts = data.concepts.length;
 
   // Track active section on scroll
   useEffect(() => {
@@ -90,7 +93,7 @@ export default function AITreePage() {
       </header>
 
       {/* Tree Navigation */}
-      <TreeNavigation levels={data.levels} activeLevel={activeLevel} />
+      <TreeNavigation levels={data.levels} activeLevel={activeLevel} completedCount={completedCount} totalConcepts={totalConcepts} />
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden" aria-labelledby="hero-heading">
@@ -221,6 +224,7 @@ export default function AITreePage() {
               viewMode={viewMode}
               index={index}
               onConceptClick={setSelectedConcept}
+              isCompleted={isCompleted}
             />
           );
         })}
@@ -238,6 +242,8 @@ export default function AITreePage() {
               setSelectedConcept(concept);
             }
           }}
+          isCompleted={isCompleted(selectedConcept.id)}
+          onToggleComplete={() => toggleCompleted(selectedConcept.id)}
         />
       )}
 

@@ -103,7 +103,10 @@
     "shareTwitter": "Share on X (Twitter)",
     "shareLinkedIn": "Share on LinkedIn",
     "copyLink": "Copy link",
-    "linkCopied": "Link copied!"
+    "linkCopied": "Link copied!",
+    "completed": "Completed",
+    "markAsComplete": "Mark as understood",
+    "markedComplete": "Understood!"
   },
   "tokenizer": {
     "title": "Tokenizer Demo",
@@ -129,7 +132,8 @@
     "openNavPanel": "Open navigation panel",
     "closeNavPanel": "Close navigation panel",
     "goToLevel": "Go to {level} level",
-    "currentLevel": "Current"
+    "currentLevel": "Current",
+    "conceptsCompleted": "concepts understood"
   },
   "levelSection": {
     "conceptCount": "{count} concepts",

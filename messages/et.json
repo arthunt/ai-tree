@@ -103,7 +103,10 @@
     "shareTwitter": "Jaga X-is (Twitter)",
     "shareLinkedIn": "Jaga LinkedInis",
     "copyLink": "Kopeeri link",
-    "linkCopied": "Link kopeeritud!"
+    "linkCopied": "Link kopeeritud!",
+    "completed": "Omandatud",
+    "markAsComplete": "Märgi omandatuks",
+    "markedComplete": "Omandatud!"
   },
   "tokenizer": {
     "title": "Tokeniseerija Demo",
@@ -129,7 +132,8 @@
     "openNavPanel": "Ava navigatsioonipaneel",
     "closeNavPanel": "Sulge navigatsioonipaneel",
     "goToLevel": "Mine {level} tasandile",
-    "currentLevel": "Praegune"
+    "currentLevel": "Praegune",
+    "conceptsCompleted": "kontseptsiooni omandatud"
   },
   "levelSection": {
     "conceptCount": "{count} kontseptsiooni",

@@ -10,9 +10,11 @@ import { useTranslations } from 'next-intl';
 interface TreeNavigationProps {
   levels: TreeLevel[];
   activeLevel: string;
+  completedCount?: number;
+  totalConcepts?: number;
 }
 
-export function TreeNavigation({ levels, activeLevel }: TreeNavigationProps) {
+export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalConcepts = 0 }: TreeNavigationProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = useTranslations('navigation');
@@ -26,6 +28,7 @@ export function TreeNavigation({ levels, activeLevel }: TreeNavigationProps) {
   };
 
   const activeIndex = levels.findIndex(l => l.id === activeLevel);
+  const progressPercentage = totalConcepts > 0 ? Math.round((completedCount / totalConcepts) * 100) : 0;
 
   return (
     <>
@@ -72,7 +75,14 @@ export function TreeNavigation({ levels, activeLevel }: TreeNavigationProps) {
 
                 {/* Header */}
                 <div className="flex items-center justify-between px-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('treeLevels')}</h2>
+                  <div>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('treeLevels')}</h2>
+                    {totalConcepts > 0 && (
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {completedCount}/{totalConcepts} {t('conceptsCompleted')} ({progressPercentage}%)
+                      </p>
+                    )}
+                  </div>
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="flex items-center justify-center w-11 h-11 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -85,6 +95,18 @@ export function TreeNavigation({ levels, activeLevel }: TreeNavigationProps) {
 
                 {/* Progress indicator */}
                 <div className="px-6 py-3 bg-gray-50 dark:bg-gray-900/50">
+                  {/* Learning progress bar */}
+                  {totalConcepts > 0 && (
+                    <div className="mb-3">
+                      <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-500"
+                          style={{ width: `${progressPercentage}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {/* Level indicator */}
                   <div className="flex items-center gap-2">
                     {levels.map((level, index) => (
                       <div

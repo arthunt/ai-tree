@@ -12,9 +12,10 @@ interface LevelSectionProps {
   viewMode: ViewMode;
   index: number;
   onConceptClick: (concept: Concept) => void;
+  isCompleted?: (conceptId: string) => boolean;
 }
 
-export function LevelSection({ level, concepts, viewMode, index, onConceptClick }: LevelSectionProps) {
+export function LevelSection({ level, concepts, viewMode, index, onConceptClick, isCompleted }: LevelSectionProps) {
   const t = useTranslations('levelSection');
   const levelColors: Record<string, { from: string; to: string; border: string; darkFrom: string; darkTo: string }> = {
     roots: { from: 'from-emerald-50/50', to: 'to-emerald-100/20', border: 'border-emerald-200', darkFrom: 'dark:from-emerald-950/50', darkTo: 'dark:to-emerald-900/20' },
@@ -104,6 +105,7 @@ export function LevelSection({ level, concepts, viewMode, index, onConceptClick 
                 viewMode={viewMode}
                 index={idx}
                 onClick={() => onConceptClick(concept)}
+                isCompleted={isCompleted?.(concept.id) ?? false}
               />
             </div>
           ))}

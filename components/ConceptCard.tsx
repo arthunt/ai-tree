@@ -17,6 +17,7 @@ import {
   BookText,
   Blocks,
   Maximize2,
+  CheckCircle2,
   type LucideIcon,
 } from 'lucide-react';
 import { Concept } from '../lib/types';
@@ -50,9 +51,10 @@ interface ConceptCardProps {
   viewMode: 'metaphor' | 'technical' | 'both';
   index: number;
   onClick: () => void;
+  isCompleted?: boolean;
 }
 
-export function ConceptCard({ concept, viewMode, index, onClick }: ConceptCardProps) {
+export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = false }: ConceptCardProps) {
   const IconComponent = iconMap[concept.icon] || Brain;
   const t = useTranslations('concept');
   const isBeginnerPath = BEGINNER_PATH.includes(concept.id);
@@ -68,7 +70,11 @@ export function ConceptCard({ concept, viewMode, index, onClick }: ConceptCardPr
       className="group h-full"
     >
       <button
-        className="relative h-full min-h-[120px] w-full overflow-hidden rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer text-left focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
+        className={`relative h-full min-h-[120px] w-full overflow-hidden rounded-xl border-2 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer text-left focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none ${
+          isCompleted
+            ? 'border-green-400 dark:border-green-600 ring-2 ring-green-200 dark:ring-green-800'
+            : 'border-gray-200 dark:border-gray-700'
+        }`}
         onClick={onClick}
         aria-label={`${t('viewDetails')} ${concept.title}`}
         type="button"
@@ -107,6 +113,13 @@ export function ConceptCard({ concept, viewMode, index, onClick }: ConceptCardPr
 
         {/* Hover overlay effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/5 group-hover:to-purple-500/5 transition-all duration-300 pointer-events-none rounded-xl" />
+
+        {/* Completion indicator */}
+        {isCompleted && (
+          <div className="absolute top-2 right-2 p-1 bg-green-500 rounded-full shadow-lg" aria-label={t('completed')}>
+            <CheckCircle2 className="h-4 w-4 text-white" />
+          </div>
+        )}
       </button>
     </motion.div>
   );

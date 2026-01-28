@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Lightbulb, Code2, Terminal, ArrowRight, Share2, Link2, Check } from 'lucide-react';
+import { X, Lightbulb, Code2, Terminal, ArrowRight, Share2, Link2, Check, CheckCircle2, Circle } from 'lucide-react';
 import { Concept } from '../lib/types';
 import { getComplexityColor, getComplexityLabel, getLevelColor } from '../lib/utils';
 import { useEffect, useRef, useState } from 'react';
@@ -50,9 +50,11 @@ interface ConceptLightboxProps {
   onClose: () => void;
   allConcepts?: Concept[];
   onNavigate?: (conceptId: string) => void;
+  isCompleted?: boolean;
+  onToggleComplete?: () => void;
 }
 
-export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate }: ConceptLightboxProps) {
+export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate, isCompleted = false, onToggleComplete }: ConceptLightboxProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const t = useTranslations('concept');
   const params = useParams();
@@ -379,9 +381,34 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
 
           {/* Footer */}
           <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-b-3xl border-t dark:border-gray-700">
-            <p className="text-center text-gray-600 dark:text-gray-400">
-              {t('pressEscToClose')}
-            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              {onToggleComplete && (
+                <button
+                  onClick={onToggleComplete}
+                  className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all min-h-[48px] focus:ring-2 focus:ring-offset-2 focus:outline-none ${
+                    isCompleted
+                      ? 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800 focus:ring-green-500'
+                      : 'bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500'
+                  }`}
+                  type="button"
+                >
+                  {isCompleted ? (
+                    <>
+                      <CheckCircle2 className="h-5 w-5" />
+                      {t('markedComplete')}
+                    </>
+                  ) : (
+                    <>
+                      <Circle className="h-5 w-5" />
+                      {t('markAsComplete')}
+                    </>
+                  )}
+                </button>
+              )}
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
+                {t('pressEscToClose')}
+              </p>
+            </div>
           </div>
         </motion.div>
       </motion.div>
