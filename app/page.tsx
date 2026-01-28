@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { TreeData, ViewMode, Concept } from './lib/types';
-import { LevelSection } from './components/LevelSection';
-import { TreeNavigation } from './components/TreeNavigation';
-import { ViewModeToggle } from './components/ViewModeToggle';
-import { ConceptLightbox } from './components/ConceptLightbox';
-import treeData from './data/tree-concepts.json';
+import { TreeData, ViewMode, Concept } from '@/lib/types';
+import { LevelSection } from '@/components/LevelSection';
+import { TreeNavigation } from '@/components/TreeNavigation';
+import { ViewModeToggle } from '@/components/ViewModeToggle';
+import { ConceptLightbox } from '@/components/ConceptLightbox';
+import treeData from '@/data/tree-concepts.json';
 import Link from 'next/link';
 import { Network } from 'lucide-react';
 
@@ -66,7 +66,7 @@ export default function AITreePage() {
             </div>
             <div className="flex items-center gap-4">
               <Link
-                href="/ai-tree/tree-view"
+                href="/tree-view"
                 className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:shadow-lg transition-all font-medium"
               >
                 <Network className="h-5 w-5" />
@@ -115,7 +115,7 @@ export default function AITreePage() {
 
               <div className="text-2xl text-gray-400">või</div>
 
-              <Link href="/ai-tree/tree-view">
+              <Link href="/tree-view">
                 <div className="bg-gradient-to-br from-blue-500 to-purple-500 text-white rounded-2xl shadow-lg p-6 max-w-sm hover:shadow-xl transition-all cursor-pointer">
                   <h3 className="font-bold mb-2 flex items-center gap-2">
                     <Network className="h-5 w-5" /> Puu Vaade

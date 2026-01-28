@@ -4,17 +4,16 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { TreeData, Concept } from '../lib/types';
-import { OrganicTreeDiagram } from '../components/OrganicTreeDiagram';
-import { ConceptLightbox } from '../components/ConceptLightbox';
-import { NameToggle } from '../components/NameToggle';
-import treeData from '../data/tree-concepts.json';
+import { TreeData, Concept } from '@/lib/types';
+import { OrganicTreeDiagram } from '@/components/OrganicTreeDiagram';
+import { ConceptLightbox } from '@/components/ConceptLightbox';
+import { NameToggle } from '@/components/NameToggle';
+import treeData from '@/data/tree-concepts.json';
 
 export default function TreeViewPage() {
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
   const [showSimpleNames, setShowSimpleNames] = useState(true);
   const data = treeData as TreeData;
-  // Using new OrganicTreeDiagram with background image
 
   // Handle ESC key
   useEffect(() => {
@@ -36,7 +35,7 @@ export default function TreeViewPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link
-                href="/ai-tree"
+                href="/"
                 className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 <ArrowLeft className="h-5 w-5" />
