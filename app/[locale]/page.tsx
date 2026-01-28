@@ -139,18 +139,19 @@ export default function AITreePage() {
                     const element = document.getElementById(level.id);
                     if (element) element.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className={`flex-1 flex items-center justify-center gap-1 py-1 rounded text-xs font-medium transition-all ${
+                  title={level.name}
+                  className={`flex-1 flex items-center justify-center gap-1 py-1.5 rounded text-xs font-medium transition-all ${
                     isActive
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                      ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-sm'
                       : isPast
                       ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
                       : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
                   }`}
-                  aria-label={`Go to ${level.name}`}
+                  aria-label={`${t('navigation.goToLevel', { level: level.name })} (${level.order}/4)`}
                   aria-current={isActive ? 'location' : undefined}
                 >
-                  <span className="text-sm">{level.order === 1 ? '🌱' : level.order === 2 ? '🌲' : level.order === 3 ? '🌿' : '🍃'}</span>
-                  <span className="hidden xs:inline">{level.name}</span>
+                  <span className={`text-xs font-bold ${isActive ? '' : 'opacity-70'}`}>{level.order}</span>
+                  <span className="truncate">{level.name}</span>
                 </button>
               );
             })}
