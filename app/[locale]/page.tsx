@@ -140,6 +140,32 @@ export default function AITreePage() {
               </Link>
             </div>
 
+            {/* Beginner Path CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mt-6 mb-8"
+            >
+              <div className="inline-block bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-2xl px-6 py-4 shadow-lg">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-2xl">🚀</span>
+                  <h3 className="font-bold text-lg">{t('hero.newToAI')}</h3>
+                </div>
+                <p className="text-sm text-white/90 mb-3">{t('hero.beginnerPathDesc')}</p>
+                <button
+                  onClick={() => {
+                    const tokensConcept = data.concepts.find(c => c.id === 'tokens');
+                    if (tokensConcept) setSelectedConcept(tokensConcept);
+                  }}
+                  className="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                >
+                  {t('hero.startWithTokens')}
+                  <span>→</span>
+                </button>
+              </div>
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

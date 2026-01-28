@@ -23,7 +23,10 @@
     "or": "or",
     "treeEmoji": "Tree emoji",
     "bookEmoji": "Book",
-    "startFromRoots": "Start from roots and move up or scroll freely"
+    "startFromRoots": "Start from roots and move up or scroll freely",
+    "newToAI": "New to AI?",
+    "beginnerPathDesc": "Start here! Understand the basics in ~30 minutes.",
+    "startWithTokens": "Start with Tokens"
   },
   "levels": {
     "roots": "Roots",
@@ -86,6 +89,7 @@
     "closeDialog": "Close dialog window",
     "viewDetails": "View details",
     "viewFullSize": "View full size",
+    "beginnerPath": "Beginner Path",
     "learnFirst": "Learn first",
     "prerequisiteHelp": "Understanding these topics will help you better grasp this concept:",
     "navigateTo": "Navigate to topic",

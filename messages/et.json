@@ -23,7 +23,10 @@
     "or": "või",
     "treeEmoji": "Puu emotiikon",
     "bookEmoji": "Raamat",
-    "startFromRoots": "Alusta juurtest ja liigu ülespoole või keri vabalt"
+    "startFromRoots": "Alusta juurtest ja liigu ülespoole või keri vabalt",
+    "newToAI": "Uus AI maailmas?",
+    "beginnerPathDesc": "Alusta siit! ~30 minutiga saad põhitõdedest aru.",
+    "startWithTokens": "Alusta Tokenitega"
   },
   "levels": {
     "roots": "Juured",
@@ -86,6 +89,7 @@
     "closeDialog": "Sulge dialoogi aken",
     "viewDetails": "Vaata detaile",
     "viewFullSize": "Vaata täismõõtus",
+    "beginnerPath": "Algaja rada",
     "learnFirst": "Õpi enne",
     "prerequisiteHelp": "Nende teemade mõistmine aitab sul seda kontseptsiooni paremini omandada:",
     "navigateTo": "Mine teema juurde",

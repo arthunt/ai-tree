@@ -42,6 +42,9 @@ const iconMap: Record<string, LucideIcon> = {
   'book-text': BookText,
 };
 
+// Beginner path: concepts recommended for first-time learners
+const BEGINNER_PATH = ['tokens', 'vectors', 'attention', 'context-engineering', 'rag'];
+
 interface ConceptCardProps {
   concept: Concept;
   viewMode: 'metaphor' | 'technical' | 'both';
@@ -52,6 +55,8 @@ interface ConceptCardProps {
 export function ConceptCard({ concept, viewMode, index, onClick }: ConceptCardProps) {
   const IconComponent = iconMap[concept.icon] || Brain;
   const t = useTranslations('concept');
+  const isBeginnerPath = BEGINNER_PATH.includes(concept.id);
+  const beginnerPathIndex = BEGINNER_PATH.indexOf(concept.id) + 1;
 
   const displayText = viewMode === 'technical' ? concept.explanation : concept.metaphor;
 
@@ -77,9 +82,16 @@ export function ConceptCard({ concept, viewMode, index, onClick }: ConceptCardPr
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
                 {concept.title}
               </h3>
-              <span className={`inline-block text-xs px-2 py-1 rounded-full font-medium ${getComplexityColor(concept.complexity)}`}>
-                {getComplexityLabel(concept.complexity)}
-              </span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className={`inline-block text-xs px-2 py-1 rounded-full font-medium ${getComplexityColor(concept.complexity)}`}>
+                  {getComplexityLabel(concept.complexity)}
+                </span>
+                {isBeginnerPath && (
+                  <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300">
+                    🚀 {t('beginnerPath')} #{beginnerPathIndex}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
 
