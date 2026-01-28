@@ -128,7 +128,8 @@
     "treeLevels": "Tree level navigation",
     "openNavPanel": "Open navigation panel",
     "closeNavPanel": "Close navigation panel",
-    "goToLevel": "Go to {level} level"
+    "goToLevel": "Go to {level} level",
+    "currentLevel": "Current"
   },
   "levelSection": {
     "conceptCount": "{count} concepts",

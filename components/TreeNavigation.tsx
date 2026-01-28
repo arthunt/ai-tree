@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Menu, X } from 'lucide-react';
 import { TreeLevel } from '../lib/types';
 import { getLevelIcon } from '../lib/utils';
 import { useTranslations } from 'next-intl';
@@ -14,6 +14,7 @@ interface TreeNavigationProps {
 
 export function TreeNavigation({ levels, activeLevel }: TreeNavigationProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = useTranslations('navigation');
 
   const scrollToLevel = (levelId: string) => {
@@ -21,10 +22,128 @@ export function TreeNavigation({ levels, activeLevel }: TreeNavigationProps) {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+    setIsMobileMenuOpen(false);
   };
 
+  const activeIndex = levels.findIndex(l => l.id === activeLevel);
+
   return (
-    <nav className="fixed left-4 top-1/2 -translate-y-1/2 z-50 hidden lg:block" aria-label={t('treeLevels')}>
+    <>
+      {/* Mobile Navigation */}
+      <div className="lg:hidden">
+        {/* Mobile FAB Button */}
+        <button
+          onClick={() => setIsMobileMenuOpen(true)}
+          className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
+          aria-label={t('openNavPanel')}
+          type="button"
+        >
+          <Menu className="h-6 w-6" />
+        </button>
+
+        {/* Mobile Menu Overlay */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+              />
+
+              {/* Bottom Sheet */}
+              <motion.div
+                initial={{ y: '100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '100%' }}
+                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 rounded-t-3xl shadow-2xl max-h-[70vh] overflow-hidden"
+                role="dialog"
+                aria-modal="true"
+                aria-label={t('treeLevels')}
+              >
+                {/* Handle bar */}
+                <div className="flex justify-center pt-3 pb-2">
+                  <div className="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full" />
+                </div>
+
+                {/* Header */}
+                <div className="flex items-center justify-between px-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('treeLevels')}</h2>
+                  <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-center w-11 h-11 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    aria-label={t('closeNavPanel')}
+                    type="button"
+                  >
+                    <X className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+                  </button>
+                </div>
+
+                {/* Progress indicator */}
+                <div className="px-6 py-3 bg-gray-50 dark:bg-gray-900/50">
+                  <div className="flex items-center gap-2">
+                    {levels.map((level, index) => (
+                      <div
+                        key={level.id}
+                        className={`flex-1 h-2 rounded-full transition-colors ${
+                          index <= activeIndex
+                            ? 'bg-gradient-to-r from-blue-500 to-purple-500'
+                            : 'bg-gray-200 dark:bg-gray-700'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Navigation Items */}
+                <div className="p-4 space-y-2 overflow-y-auto">
+                  {levels.map((level) => {
+                    const isActive = activeLevel === level.id;
+                    return (
+                      <button
+                        key={level.id}
+                        onClick={() => scrollToLevel(level.id)}
+                        className={`
+                          w-full flex items-center gap-4 p-4 min-h-[56px] rounded-2xl transition-all focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none
+                          ${isActive
+                            ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
+                            : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                          }
+                        `}
+                        aria-label={t('goToLevel', { level: level.name })}
+                        aria-current={isActive ? 'location' : undefined}
+                        type="button"
+                      >
+                        <span className="text-3xl">{getLevelIcon(level.id)}</span>
+                        <div className="flex-1 text-left">
+                          <div className={`font-semibold ${isActive ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
+                            {level.order}. {level.name}
+                          </div>
+                          <div className={`text-sm ${isActive ? 'text-white/80' : 'text-gray-500 dark:text-gray-400'}`}>
+                            {level.subtitle}
+                          </div>
+                        </div>
+                        {isActive && (
+                          <div className="px-2 py-1 bg-white/20 rounded-full text-xs font-medium">
+                            {t('currentLevel')}
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Desktop Navigation */}
+      <nav className="fixed left-4 top-1/2 -translate-y-1/2 z-50 hidden lg:block" aria-label={t('treeLevels')}>
       <motion.div
         animate={{ width: isExpanded ? '280px' : '64px' }}
         transition={{ type: 'spring', damping: 20, stiffness: 300 }}
@@ -91,5 +210,6 @@ export function TreeNavigation({ levels, activeLevel }: TreeNavigationProps) {
         </div>
       </motion.div>
     </nav>
+    </>
   );
 }

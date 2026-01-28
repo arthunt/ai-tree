@@ -128,7 +128,8 @@
     "treeLevels": "Puu tasandite navigatsioon",
     "openNavPanel": "Ava navigatsioonipaneel",
     "closeNavPanel": "Sulge navigatsioonipaneel",
-    "goToLevel": "Mine {level} tasandile"
+    "goToLevel": "Mine {level} tasandile",
+    "currentLevel": "Praegune"
   },
   "levelSection": {
     "conceptCount": "{count} kontseptsiooni",
