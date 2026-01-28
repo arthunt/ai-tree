@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Settings } from 'lucide-react';
 import { ViewModeToggle } from './ViewModeToggle';
 import { DarkModeToggle } from './DarkModeToggle';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import { ViewMode } from '../lib/types';
 import { useTranslations } from 'next-intl';
 
@@ -88,6 +89,14 @@ export function SettingsDropdown({ viewMode, onViewModeChange }: SettingsDropdow
                 {t('theme')}
               </label>
               <DarkModeToggle />
+            </div>
+
+            {/* Language Section */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                {t('language')}
+              </label>
+              <LanguageSwitcher />
             </div>
           </div>
         </div>

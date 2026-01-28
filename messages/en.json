@@ -27,7 +27,10 @@
     "startFromRoots": "Start from roots and move up or scroll freely",
     "newToAI": "New to AI?",
     "beginnerPathDesc": "Start here! Understand the basics in ~30 minutes.",
-    "startWithTokens": "Start with Tokens"
+    "startWithTokens": "Start with Tokens",
+    "startLearning": "Start Learning",
+    "showMore": "Show more",
+    "showLess": "Show less"
   },
   "levels": {
     "roots": "Roots",
@@ -82,7 +85,8 @@
   "settings": {
     "ariaLabel": "Open settings menu",
     "viewMode": "View Mode",
-    "theme": "Theme"
+    "theme": "Theme",
+    "language": "Language"
   },
   "footer": {
     "description": "AI Knowledge Tree – Interactive learning tool for understanding AI concepts",
@@ -193,6 +197,27 @@
       "branches": "Branches",
       "leaves": "Leaves"
     }
+  },
+  "skillSelector": {
+    "title": "Where should we start?",
+    "subtitle": "Choose your experience level",
+    "close": "Close modal",
+    "beginner": {
+      "title": "New to AI",
+      "description": "Start from the basics. Learn what tokens, vectors, and transformers are.",
+      "time": "~30 min to get started"
+    },
+    "intermediate": {
+      "title": "Exploring AI",
+      "description": "Know the basics? Dive into how models learn and generate content.",
+      "time": "~45 min deeper dive"
+    },
+    "advanced": {
+      "title": "Building with AI",
+      "description": "Ready for advanced topics like fine-tuning, RAG, and agents.",
+      "time": "~35 min advanced topics"
+    },
+    "skipAndExplore": "Skip and explore freely"
   },
   "vectorDemo": {
     "title": "Vector Similarity Demo",

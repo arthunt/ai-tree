@@ -27,7 +27,10 @@
     "startFromRoots": "Alusta juurtest ja liigu ülespoole või keri vabalt",
     "newToAI": "Uus AI maailmas?",
     "beginnerPathDesc": "Alusta siit! ~30 minutiga saad põhitõdedest aru.",
-    "startWithTokens": "Alusta Tokenitega"
+    "startWithTokens": "Alusta Tokenitega",
+    "startLearning": "Alusta Õppimist",
+    "showMore": "Näita rohkem",
+    "showLess": "Näita vähem"
   },
   "levels": {
     "roots": "Juured",
@@ -82,7 +85,8 @@
   "settings": {
     "ariaLabel": "Ava seaded menüü",
     "viewMode": "Vaate Režiim",
-    "theme": "Teema"
+    "theme": "Teema",
+    "language": "Keel"
   },
   "footer": {
     "description": "AI Teadmiste Puu – Interaktiivne õppevahend AI kontseptide mõistmiseks",
@@ -193,6 +197,27 @@
       "branches": "Oksad",
       "leaves": "Lehed"
     }
+  },
+  "skillSelector": {
+    "title": "Kust alustame?",
+    "subtitle": "Vali oma kogemustase",
+    "close": "Sulge modaal",
+    "beginner": {
+      "title": "AI-ga alles tutvun",
+      "description": "Alusta põhitõdedest. Õpi, mis on tokenid, vektorid ja transformerid.",
+      "time": "~30 min alustamiseks"
+    },
+    "intermediate": {
+      "title": "Uurin AI-d",
+      "description": "Tead põhitõdesid? Sukelduge sellesse, kuidas mudelid õpivad ja sisu loovad.",
+      "time": "~45 min süvitsi"
+    },
+    "advanced": {
+      "title": "Ehitan AI-ga",
+      "description": "Valmis edasijõudnud teemadeks nagu peenhäälestamine, RAG ja agendid.",
+      "time": "~35 min edasijõudnutele"
+    },
+    "skipAndExplore": "Jäta vahele ja uuri vabalt"
   },
   "vectorDemo": {
     "title": "Vektorisarnasuse Demo",

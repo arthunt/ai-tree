@@ -6,17 +6,15 @@ import { TreeData, ViewMode, Concept } from '@/lib/types';
 import { useProgress } from '@/lib/useProgress';
 import { LevelSection } from '@/components/LevelSection';
 import { TreeNavigation } from '@/components/TreeNavigation';
-import { ViewModeToggle } from '@/components/ViewModeToggle';
 import { ConceptLightbox } from '@/components/ConceptLightbox';
-import { DarkModeToggle } from '@/components/DarkModeToggle';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { SettingsDropdown } from '@/components/SettingsDropdown';
 import { TokenizerDemo } from '@/components/TokenizerDemo';
 import { VectorDemo } from '@/components/VectorDemo';
 import { SearchModal } from '@/components/SearchModal';
+import { SkillSelectorModal } from '@/components/SkillSelectorModal';
 import treeData from '@/data/tree-concepts.json';
 import Link from 'next/link';
-import { Network, Search } from 'lucide-react';
+import { Network, Search, ChevronDown, ChevronUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
@@ -26,6 +24,8 @@ export default function AITreePage() {
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isHeroExpanded, setIsHeroExpanded] = useState(true);
+  const [isSkillSelectorOpen, setIsSkillSelectorOpen] = useState(false);
   const data = treeData as TreeData;
   const t = useTranslations();
   const params = useParams();
@@ -96,36 +96,32 @@ export default function AITreePage() {
               </h1>
               <p className="text-sm text-gray-600 dark:text-gray-400">{t('header.description')}</p>
             </div>
-            <div className="flex items-center gap-4">
-              <LanguageSwitcher />
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Search Button */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="flex items-center gap-2 px-4 py-3 min-h-[44px] bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-xl hover:shadow-md hover:border-gray-400 dark:hover:border-gray-500 transition-all font-medium group"
+                className="flex items-center justify-center min-w-[44px] min-h-[44px] p-2.5 sm:px-4 sm:py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-xl hover:shadow-md hover:border-gray-400 dark:hover:border-gray-500 transition-all font-medium group"
                 aria-label={t('search.buttonLabel')}
               >
                 <Search className="h-5 w-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200" aria-hidden="true" />
-                <span className="hidden sm:inline">{t('search.button')}</span>
-                <kbd className="hidden md:inline-flex items-center gap-1 px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded">
+                <span className="hidden sm:inline ml-2">{t('search.button')}</span>
+                <kbd className="hidden lg:inline-flex items-center gap-1 ml-2 px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded">
                   <span className="text-xs">⌘</span>K
                 </kbd>
               </button>
+
+              {/* Concept Map Button */}
               <Link
                 href={`/${locale}/tree-view`}
-                className="flex items-center gap-2 px-4 py-3 min-h-[44px] bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:shadow-lg transition-all font-medium"
+                className="flex items-center justify-center min-w-[44px] min-h-[44px] p-2.5 sm:px-4 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:shadow-lg transition-all font-medium"
                 aria-label={t('header.treeViewAriaLabel')}
               >
                 <Network className="h-5 w-5" aria-hidden="true" />
-                {t('header.treeView')}
+                <span className="hidden sm:inline ml-2">{t('header.treeView')}</span>
               </Link>
-              {/* Settings Dropdown - Tablet only (768-1023px) */}
-              <div className="hidden md:flex lg:hidden">
-                <SettingsDropdown viewMode={viewMode} onViewModeChange={setViewMode} />
-              </div>
-              {/* Individual Controls - Mobile and Desktop */}
-              <div className="md:hidden lg:flex items-center gap-4">
-                <ViewModeToggle viewMode={viewMode} onChange={setViewMode} />
-                <DarkModeToggle />
-              </div>
+
+              {/* Consolidated Settings Dropdown - All breakpoints */}
+              <SettingsDropdown viewMode={viewMode} onViewModeChange={setViewMode} />
             </div>
           </div>
         </div>
@@ -134,8 +130,8 @@ export default function AITreePage() {
       {/* Tree Navigation */}
       <TreeNavigation levels={data.levels} activeLevel={activeLevel} completedCount={completedCount} totalConcepts={totalConcepts} isLightboxOpen={selectedConcept !== null} />
 
-      {/* Hero Section - Simplified */}
-      <section className="relative py-12 sm:py-16 overflow-hidden" aria-labelledby="hero-heading">
+      {/* Hero Section - Collapsible on Mobile */}
+      <section className="relative py-8 sm:py-16 overflow-hidden" aria-labelledby="hero-heading">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-blue-950 dark:via-purple-950 dark:to-pink-950 -z-10" />
         <div className="container mx-auto px-4 max-w-4xl text-center">
           <motion.div
@@ -144,82 +140,116 @@ export default function AITreePage() {
             transition={{ duration: 0.6 }}
           >
             {/* Compact title with inline emoji */}
-            <h2 id="hero-heading" className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-              <span role="img" aria-label={t('hero.treeEmoji')} className="mr-3">🌳</span>
+            <h2 id="hero-heading" className="text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
+              <span role="img" aria-label={t('hero.treeEmoji')} className="mr-2 sm:mr-3">🌳</span>
               {t('hero.title')}
             </h2>
 
-            {/* Value proposition */}
-            <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-200 max-w-2xl mx-auto leading-relaxed mb-2">
-              {t('hero.subtitle')}
-            </p>
-
-            {/* For whom */}
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-              {t('hero.forWhom')}
-            </p>
-
-            {/* Primary CTA - Start Learning */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
-              <button
-                onClick={() => {
-                  const tokensConcept = data.concepts.find(c => c.id === 'tokens');
-                  if (tokensConcept) setSelectedConcept(tokensConcept);
-                }}
-                className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-6 py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all min-h-[48px]"
-              >
-                <span className="text-xl">🚀</span>
-                {t('hero.startWithTokens')}
-                <span>→</span>
-              </button>
-
-              <Link
-                href={`/${locale}/tree-view`}
-                className="flex items-center gap-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-6 py-3 rounded-xl font-medium border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition-all min-h-[48px]"
-                aria-label={t('header.treeViewAriaLabel')}
-              >
-                <Network className="h-5 w-5" aria-hidden="true" />
-                {t('hero.treeViewTitle')}
-              </Link>
+            {/* Mobile: Collapsed view shows time + expand button */}
+            <div className="sm:hidden">
+              {!isHeroExpanded && (
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                    ⏱️ {t('levels.totalTime')}
+                  </span>
+                  <button
+                    onClick={() => setIsHeroExpanded(true)}
+                    className="flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 font-medium"
+                    aria-expanded={isHeroExpanded}
+                  >
+                    {t('hero.showMore')}
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
             </div>
 
-            {/* Time estimate badge */}
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              ⏱️ {t('levels.totalTime')}
-            </p>
+            {/* Expandable content - always visible on desktop, collapsible on mobile */}
+            <div className={`${isHeroExpanded ? 'block' : 'hidden'} sm:block`}>
+              {/* Value proposition */}
+              <p className="text-base sm:text-xl text-gray-700 dark:text-gray-200 max-w-2xl mx-auto leading-relaxed mb-2">
+                {t('hero.subtitle')}
+              </p>
+
+              {/* For whom */}
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 sm:mb-6">
+                {t('hero.forWhom')}
+              </p>
+
+              {/* Primary CTA - Start Learning */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <button
+                  onClick={() => setIsSkillSelectorOpen(true)}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-6 py-3 rounded-xl text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all min-h-[48px]"
+                >
+                  <span className="text-xl">🚀</span>
+                  {t('hero.startLearning')}
+                  <span>→</span>
+                </button>
+
+                <Link
+                  href={`/${locale}/tree-view`}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-6 py-3 rounded-xl font-medium border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition-all min-h-[48px]"
+                  aria-label={t('header.treeViewAriaLabel')}
+                >
+                  <Network className="h-5 w-5" aria-hidden="true" />
+                  {t('hero.treeViewTitle')}
+                </Link>
+              </div>
+
+              {/* Time estimate badge - desktop and expanded mobile */}
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                ⏱️ {t('levels.totalTime')}
+              </p>
+
+              {/* Mobile collapse button */}
+              <button
+                onClick={() => setIsHeroExpanded(false)}
+                className="sm:hidden mt-4 flex items-center justify-center gap-1 mx-auto text-sm text-gray-500 dark:text-gray-400"
+                aria-expanded={isHeroExpanded}
+              >
+                {t('hero.showLess')}
+                <ChevronUp className="h-4 w-4" />
+              </button>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Tokenizer Demo Section */}
-      <section className="py-16 bg-white dark:bg-gray-900" aria-label="Tokeniseerija demo">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <TokenizerDemo />
-        </div>
-      </section>
-
-      {/* Vector Similarity Demo Section */}
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900" aria-label="Vector similarity demo">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <VectorDemo />
-        </div>
-      </section>
-
-      {/* Level Sections */}
+      {/* Level Sections with Contextual Demos */}
       <main aria-label={t('navigation.levelSections')}>
         {data.levels.map((level, index) => {
           const levelConcepts = data.concepts.filter(c => c.level === level.id);
           return (
-            <LevelSection
-              key={level.id}
-              level={level}
-              concepts={levelConcepts}
-              viewMode={viewMode}
-              index={index}
-              onConceptClick={setSelectedConcept}
-              isCompleted={isCompleted}
-              isLoading={isLoading}
-            />
+            <div key={level.id}>
+              <LevelSection
+                level={level}
+                concepts={levelConcepts}
+                viewMode={viewMode}
+                index={index}
+                onConceptClick={setSelectedConcept}
+                isCompleted={isCompleted}
+                isLoading={isLoading}
+              />
+
+              {/* Tokenizer Demo - after Roots (tokens concept) */}
+              {level.id === 'roots' && (
+                <section className="py-16 bg-white dark:bg-gray-900" aria-label={t('tokenizer.title')}>
+                  <div className="container mx-auto px-4 max-w-7xl">
+                    <TokenizerDemo />
+                  </div>
+                </section>
+              )}
+
+              {/* Vector Demo - after Trunk (embeddings concept) */}
+              {level.id === 'trunk' && (
+                <section className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900" aria-label={t('vectorDemo.title')}>
+                  <div className="container mx-auto px-4 max-w-7xl">
+                    <VectorDemo />
+                  </div>
+                </section>
+              )}
+            </div>
           );
         })}
       </main>
@@ -228,6 +258,17 @@ export default function AITreePage() {
       <SearchModal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
+        concepts={data.concepts}
+        onConceptSelect={(concept) => setSelectedConcept(concept)}
+      />
+
+      {/* Skill Selector Modal */}
+      <SkillSelectorModal
+        isOpen={isSkillSelectorOpen}
+        onClose={() => setIsSkillSelectorOpen(false)}
+        onSelectLevel={(level) => {
+          setIsSkillSelectorOpen(false);
+        }}
         concepts={data.concepts}
         onConceptSelect={(concept) => setSelectedConcept(concept)}
       />
