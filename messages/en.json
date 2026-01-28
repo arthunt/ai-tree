@@ -4,21 +4,22 @@
     "description": "Comprehensive interactive framework for teaching and understanding AI concepts. Terviklik interaktiivne raamistik AI kontseptide õpetamiseks ja mõistmiseks."
   },
   "header": {
-    "title": "AI Knowledge Tree (AI Teadmiste Puu)",
-    "description": "Comprehensive framework for teaching AI concepts",
-    "treeView": "Tree View",
-    "treeViewAriaLabel": "Go to tree view page",
-    "classicView": "Classic view",
-    "classicViewAriaLabel": "Back to classic view"
+    "title": "AI Knowledge Tree",
+    "description": "Master AI fundamentals in ~2 hours",
+    "treeView": "Concept Map",
+    "treeViewAriaLabel": "Go to concept map view",
+    "classicView": "Learning Path",
+    "classicViewAriaLabel": "Back to learning path view"
   },
   "hero": {
     "title": "AI Knowledge Tree",
-    "subtitle": "A comprehensive framework for teaching AI concepts – from fundamental mechanics principles to the latest research.",
-    "classicViewTitle": "Classic View",
-    "classicViewDescription": "Scrollable level view with detailed content",
-    "currentPage": "Currently here",
-    "treeViewTitle": "Tree View",
-    "treeViewDescription": "Interactive tree with all concepts",
+    "subtitle": "Understand AI well enough to make informed decisions. Master the fundamentals in ~2 hours.",
+    "forWhom": "For trainers, team leads, and curious professionals",
+    "classicViewTitle": "Learning Path",
+    "classicViewDescription": "Step-by-step progression through concepts",
+    "currentPage": "You are here",
+    "treeViewTitle": "Concept Map",
+    "treeViewDescription": "Visual overview of all concepts",
     "clickHere": "Click here →",
     "or": "or",
     "treeEmoji": "Tree emoji",
@@ -32,15 +33,22 @@
     "roots": "Roots",
     "trunk": "Trunk",
     "branches": "Branches",
-    "leaves": "Leaves"
+    "leaves": "Leaves",
+    "totalTime": "Complete path: ~2 hours",
+    "levelTime": {
+      "roots": "~25 min",
+      "trunk": "~30 min",
+      "branches": "~35 min",
+      "leaves": "~30 min"
+    }
   },
   "treeView": {
-    "title": "AI Knowledge Tree - Tree View",
+    "title": "AI Knowledge Tree - Concept Map",
     "description": "All concepts in one view",
-    "instructionsTitle": "Interactive Tree Visualization",
-    "instructionsText": "Hover over a concept to make it grow. Click to open detailed view.",
-    "ariaLabel": "Tree view",
-    "diagramAriaLabel": "AI concepts tree diagram",
+    "instructionsTitle": "Interactive Concept Map",
+    "instructionsText": "Hover over a concept to highlight it. Click to open detailed view.",
+    "ariaLabel": "Concept map",
+    "diagramAriaLabel": "AI concepts map diagram",
     "legendHeading": "Tree levels legend",
     "rootsEmoji": "Seedling emoji",
     "trunkEmoji": "Evergreen tree emoji",

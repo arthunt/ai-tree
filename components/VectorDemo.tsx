@@ -365,6 +365,64 @@ export function VectorDemo() {
     setHoveredPoint(null);
   };
 
+  // Handle canvas touch for mobile devices
+  const handleCanvasTouch = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (visualPoints.length === 0) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    if (!touch) return;
+
+    const touchX = touch.clientX - rect.left;
+    const touchY = touch.clientY - rect.top;
+
+    const width = rect.width;
+    const height = rect.height;
+    const padding = 60;
+
+    const xValues = visualPoints.map(p => p.x);
+    const yValues = visualPoints.map(p => p.y);
+    const minX = Math.min(...xValues);
+    const maxX = Math.max(...xValues);
+    const minY = Math.min(...yValues);
+    const maxY = Math.max(...yValues);
+
+    const xRange = maxX - minX || 1;
+    const yRange = maxY - minY || 1;
+
+    const scaleX = (x: number) => padding + ((x - minX) / xRange) * (width - 2 * padding);
+    const scaleY = (y: number) => padding + ((maxY - y) / yRange) * (height - 2 * padding);
+
+    // Check if touch is near any point
+    let foundHover = false;
+    for (const point of visualPoints) {
+      const x = scaleX(point.x);
+      const y = scaleY(point.y);
+      const distance = Math.sqrt((touchX - x) ** 2 + (touchY - y) ** 2);
+
+      // Use larger touch target (25px) for better mobile UX
+      if (distance < 25) {
+        setHoveredPoint(point.word);
+        foundHover = true;
+        break;
+      }
+    }
+
+    if (!foundHover) {
+      setHoveredPoint(null);
+    }
+  };
+
+  const handleCanvasTouchEnd = () => {
+    // Keep the hovered point visible briefly on touch end for better UX
+    setTimeout(() => {
+      setHoveredPoint(null);
+    }, 1500);
+  };
+
   const hasValidWords = useMemo(() => {
     const words = [word1, word2, word3].filter(w => w.trim());
     return words.length >= 2 && words.every(w => WORD_EMBEDDINGS[w.toLowerCase().trim()]);
@@ -576,7 +634,10 @@ export function VectorDemo() {
                 ref={canvasRef}
                 onMouseMove={handleCanvasMouseMove}
                 onMouseLeave={handleCanvasMouseLeave}
-                className="w-full h-[300px] cursor-pointer"
+                onTouchStart={handleCanvasTouch}
+                onTouchMove={handleCanvasTouch}
+                onTouchEnd={handleCanvasTouchEnd}
+                className="w-full h-[300px] cursor-pointer touch-none"
                 aria-label={t('visualizationAriaLabel')}
               />
               <p className="text-xs text-gray-600 dark:text-gray-400 text-center mt-3">

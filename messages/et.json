@@ -4,21 +4,22 @@
     "description": "Terviklik interaktiivne raamistik AI kontseptide õpetamiseks ja mõistmiseks. Comprehensive interactive framework for teaching and understanding AI concepts."
   },
   "header": {
-    "title": "AI Teadmiste Puu (AI Knowledge Tree)",
-    "description": "Terviklik raamistik AI kontseptide õpetamiseks",
-    "treeView": "Puu Vaade",
-    "treeViewAriaLabel": "Liigu puu vaate lehele",
-    "classicView": "Klassikaline vaade",
-    "classicViewAriaLabel": "Tagasi klassikalisse vaatesse"
+    "title": "AI Teadmiste Puu",
+    "description": "Omanda AI põhitõed ~2 tunniga",
+    "treeView": "Kontseptsioonikaart",
+    "treeViewAriaLabel": "Liigu kontseptsioonikaardi vaatesse",
+    "classicView": "Õpperada",
+    "classicViewAriaLabel": "Tagasi õpperaja vaatesse"
   },
   "hero": {
     "title": "AI Teadmiste Puu",
-    "subtitle": "Terviklik raamistik AI kontseptide õpetamiseks – alates fundamentaalsetest mehaanikate põhimõtetest kuni kõige uuemate uuringuteni.",
-    "classicViewTitle": "Klassikaline Vaade",
-    "classicViewDescription": "Keritav tasandite vaade detailse sisuga",
-    "currentPage": "Praegu siin",
-    "treeViewTitle": "Puu Vaade",
-    "treeViewDescription": "Interaktiivne puu kõigi kontseptsioonidega",
+    "subtitle": "Mõista AI-d piisavalt, et teha teadlikke otsuseid. Omanda põhitõed ~2 tunniga.",
+    "forWhom": "Koolitajatele, tiimijuhtidele ja uudishimulikele professionaalidele",
+    "classicViewTitle": "Õpperada",
+    "classicViewDescription": "Samm-sammuline kontseptsioonide läbimine",
+    "currentPage": "Oled siin",
+    "treeViewTitle": "Kontseptsioonikaart",
+    "treeViewDescription": "Visuaalne ülevaade kõigist kontseptsioonidest",
     "clickHere": "Kliki siia →",
     "or": "või",
     "treeEmoji": "Puu emotiikon",
@@ -32,15 +33,22 @@
     "roots": "Juured",
     "trunk": "Tüvi",
     "branches": "Oksad",
-    "leaves": "Lehed"
+    "leaves": "Lehed",
+    "totalTime": "Kogu teekond: ~2 tundi",
+    "levelTime": {
+      "roots": "~25 min",
+      "trunk": "~30 min",
+      "branches": "~35 min",
+      "leaves": "~30 min"
+    }
   },
   "treeView": {
-    "title": "AI Teadmiste Puu - Puu Vaade",
+    "title": "AI Teadmiste Puu - Kontseptsioonikaart",
     "description": "Kõik kontseptsioonid ühes vaates",
-    "instructionsTitle": "Interaktiivne Puu Visualisatsioon",
-    "instructionsText": "Liigu hiire kontseptsiooni peale, et see suureks kasvaks. Kliki detailse vaate avamiseks.",
-    "ariaLabel": "Puu vaade",
-    "diagramAriaLabel": "AI kontseptide puu diagramm",
+    "instructionsTitle": "Interaktiivne Kontseptsioonikaart",
+    "instructionsText": "Liigu hiire kontseptsiooni peale, et see esile tõsta. Kliki detailse vaate avamiseks.",
+    "ariaLabel": "Kontseptsioonikaart",
+    "diagramAriaLabel": "AI kontseptide kaardi diagramm",
     "legendHeading": "Puu tasandite legend",
     "rootsEmoji": "Idu emotiikon",
     "trunkEmoji": "Kuuse puu emotiikon",

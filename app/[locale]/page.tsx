@@ -134,112 +134,59 @@ export default function AITreePage() {
       {/* Tree Navigation */}
       <TreeNavigation levels={data.levels} activeLevel={activeLevel} completedCount={completedCount} totalConcepts={totalConcepts} isLightboxOpen={selectedConcept !== null} />
 
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden" aria-labelledby="hero-heading">
+      {/* Hero Section - Simplified */}
+      <section className="relative py-12 sm:py-16 overflow-hidden" aria-labelledby="hero-heading">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-blue-950 dark:via-purple-950 dark:to-pink-950 -z-10" />
-        <div className="container mx-auto px-4 max-w-7xl text-center">
+        <div className="container mx-auto px-4 max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="text-8xl mb-6" role="img" aria-label={t('hero.treeEmoji')}>🌳</div>
-            <h2 id="hero-heading" className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            {/* Compact title with inline emoji */}
+            <h2 id="hero-heading" className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+              <span role="img" aria-label={t('hero.treeEmoji')} className="mr-3">🌳</span>
               {t('hero.title')}
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed mb-8">
+
+            {/* Value proposition */}
+            <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-200 max-w-2xl mx-auto leading-relaxed mb-2">
               {t('hero.subtitle')}
             </p>
 
-            {/* View Options */}
-            <div className="flex items-center justify-center gap-4 mb-8" role="navigation" aria-label={t('navigation.viewOptions')}>
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 max-w-sm">
-                <h3 className="font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                  <span role="img" aria-label={t('hero.bookEmoji')}>📚</span> {t('hero.classicViewTitle')}
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                  {t('hero.classicViewDescription')}
-                </p>
-                <div className="text-xs text-gray-500 dark:text-gray-400 bg-green-100 dark:bg-green-900 px-3 py-1 rounded-full inline-block" aria-current="page">
-                  {t('hero.currentPage')}
-                </div>
-              </div>
+            {/* For whom */}
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+              {t('hero.forWhom')}
+            </p>
 
-              <div className="text-2xl text-gray-400 dark:text-gray-600" aria-hidden="true">{t('hero.or')}</div>
+            {/* Primary CTA - Start Learning */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+              <button
+                onClick={() => {
+                  const tokensConcept = data.concepts.find(c => c.id === 'tokens');
+                  if (tokensConcept) setSelectedConcept(tokensConcept);
+                }}
+                className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-6 py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all min-h-[48px]"
+              >
+                <span className="text-xl">🚀</span>
+                {t('hero.startWithTokens')}
+                <span>→</span>
+              </button>
 
-              <Link href={`/${locale}/tree-view`} aria-label={t('header.treeViewAriaLabel')}>
-                <div className="bg-gradient-to-br from-blue-500 to-purple-500 text-white rounded-2xl shadow-lg p-6 max-w-sm hover:shadow-xl transition-all cursor-pointer">
-                  <h3 className="font-bold mb-2 flex items-center gap-2">
-                    <Network className="h-5 w-5" aria-hidden="true" /> {t('hero.treeViewTitle')}
-                  </h3>
-                  <p className="text-sm text-white/90 mb-4">
-                    {t('hero.treeViewDescription')}
-                  </p>
-                  <div className="text-xs bg-white/20 px-3 py-1 rounded-full inline-block">
-                    {t('hero.clickHere')}
-                  </div>
-                </div>
+              <Link
+                href={`/${locale}/tree-view`}
+                className="flex items-center gap-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-6 py-3 rounded-xl font-medium border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition-all min-h-[48px]"
+                aria-label={t('header.treeViewAriaLabel')}
+              >
+                <Network className="h-5 w-5" aria-hidden="true" />
+                {t('hero.treeViewTitle')}
               </Link>
             </div>
 
-            {/* Beginner Path CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="mt-6 mb-8"
-            >
-              <div className="inline-block bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-2xl px-6 py-4 shadow-lg">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-2xl">🚀</span>
-                  <h3 className="font-bold text-lg">{t('hero.newToAI')}</h3>
-                </div>
-                <p className="text-sm text-white/90 mb-3">{t('hero.beginnerPathDesc')}</p>
-                <button
-                  onClick={() => {
-                    const tokensConcept = data.concepts.find(c => c.id === 'tokens');
-                    if (tokensConcept) setSelectedConcept(tokensConcept);
-                  }}
-                  className="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-                >
-                  {t('hero.startWithTokens')}
-                  <span>→</span>
-                </button>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="mt-8 flex flex-col items-center gap-4"
-            >
-              <div className="flex items-center gap-8 text-sm text-gray-600 dark:text-gray-300 flex-wrap justify-center">
-                <div className="flex items-center gap-2">
-                  <span className="text-xl font-bold text-gray-700 dark:text-gray-300">1.</span>
-                  <span className="text-2xl">🌱</span>
-                  <span>{t('levels.roots')}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xl font-bold text-gray-700 dark:text-gray-300">2.</span>
-                  <span className="text-2xl">🌲</span>
-                  <span>{t('levels.trunk')}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xl font-bold text-gray-700 dark:text-gray-300">3.</span>
-                  <span className="text-2xl">🌿</span>
-                  <span>{t('levels.branches')}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xl font-bold text-gray-700 dark:text-gray-300">4.</span>
-                  <span className="text-2xl">🍃</span>
-                  <span>{t('levels.leaves')}</span>
-                </div>
-              </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 italic">
-                {t('hero.startFromRoots')}
-              </p>
-            </motion.div>
+            {/* Time estimate badge */}
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              ⏱️ {t('levels.totalTime')}
+            </p>
           </motion.div>
         </div>
       </section>

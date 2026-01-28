@@ -808,4 +808,242 @@ npm test             # Run tests (when configured)
 
 ---
 
+## 🎯 Sprint 6: Minimalism & Learning Flow (Jan 2026)
+
+> **Review Date:** 2026-01-28
+> **Based On:** Comprehensive UX Review (5 specialist agents)
+> **Goal:** Reduce clutter by 60%, improve learning flow, respect adult learners' time
+> **Report:** `/docs/UX_COMPREHENSIVE_REVIEW.md`
+
+---
+
+### US-060: Hero Section Simplification
+**Priority:** P0-Critical | **Effort:** 4h | **Type:** Minimalism
+
+**Problem:** Hero has 25 competing elements causing decision paralysis:
+- Giant emoji (146px) dominates heading
+- Two view option cards (redundant - header has Tree View button)
+- Three CTAs competing
+- Level preview strip (duplicates FAB navigation)
+- Multiple badges and decorative elements
+
+**Solution:**
+- Remove giant emoji (or reduce to 32px inline)
+- Remove view option cards (Classic/Tree) - redundant with header
+- Keep single focused CTA
+- Remove level preview strip
+- Add skill-level selector instead
+
+**Acceptance Criteria:**
+- [ ] Hero reduced from 25 to ~10 elements
+- [ ] Remove: Giant emoji, view option cards, level preview
+- [ ] Add: Skill selector modal (New to AI? / Exploring / Building)
+- [ ] Single primary CTA: "Start Learning"
+- [ ] Mobile: Hero fits in one screen (not 1.4 screens)
+
+**Files:** `app/[locale]/page.tsx`
+
+---
+
+### US-061: Add Clear Value Proposition
+**Priority:** P0-Critical | **Effort:** 2h | **Type:** Andragogy
+
+**Problem:** Current subtitle "Comprehensive framework for teaching AI concepts" is a feature, not a benefit. Adults need to know WHY this matters to them.
+
+**Current:** "Terviklik raamistik AI kontseptide õpetamiseks"
+**Problem:** Doesn't answer "What problem does this solve for ME?"
+
+**Solution Options:**
+- "Train your team on AI fundamentals in 2 hours"
+- "Understand AI well enough to make informed decisions"
+- "The AI literacy toolkit for non-technical leaders"
+
+**Acceptance Criteria:**
+- [ ] Hero subtitle focuses on user benefit, not feature
+- [ ] Value is clear within 5 seconds
+- [ ] Both ET and EN translations updated
+- [ ] Optional: Add "Who this is for" line
+
+**Files:** `messages/en.json`, `messages/et.json`, `app/[locale]/page.tsx`
+
+---
+
+### US-062: Add Time Estimates to Hero & Levels
+**Priority:** P0-Critical | **Effort:** 2h | **Type:** Andragogy
+
+**Problem:** Adults value their time. No prominent time estimates visible:
+- Total learning time not shown in hero
+- Level time estimates not visible
+- Users can't plan their learning session
+
+**Solution:**
+- Hero: "Complete path: ~2 hours"
+- Each level section: "⏱️ 20-30 min"
+- Concept cards already have time (keep)
+
+**Acceptance Criteria:**
+- [ ] Hero shows total time: "Complete learning path: ~2 hours"
+- [ ] Each level header shows time estimate
+- [ ] Beginner path shows: "~30 minutes"
+- [ ] Translations in both languages
+
+**Files:** `app/[locale]/page.tsx`, `components/LevelSection.tsx`, `messages/*.json`
+
+---
+
+### US-063: Move Demos After Relevant Concepts
+**Priority:** P1-High | **Effort:** 3h | **Type:** Learning Design
+
+**Problem:** Tokenizer and Vector demos appear BEFORE the learning content:
+- Current: Hero → Demos → Level 1 → Level 2...
+- Demos require context to be meaningful
+- Like giving calculator before teaching math
+
+**Solution:**
+- Move Tokenizer Demo after Level 1 (Roots) - relates to Tokens concept
+- Move Vector Demo after Level 2 (Trunk) - relates to Vectors/Embeddings
+- Or: Make demos collapsible/optional in hero
+
+**Acceptance Criteria:**
+- [ ] Tokenizer Demo appears after Roots level
+- [ ] Vector Demo appears after Trunk level
+- [ ] Demos have contextual intro: "Now try it yourself!"
+- [ ] Mobile scroll depth reduced by ~1 screen
+
+**Files:** `app/[locale]/page.tsx`
+
+---
+
+### US-064: Simplify Header Controls
+**Priority:** P1-High | **Effort:** 2h | **Type:** Minimalism
+
+**Problem:** Header has 7 controls competing for space:
+Language | Search | Tree View | Settings | View Mode | Dark Mode
+
+**Solution:**
+- Keep: Search (icon only on mobile), Tree View, Settings dropdown
+- Settings dropdown contains: Language, View Mode, Theme
+- Result: 3 visible controls instead of 6-7
+
+**Acceptance Criteria:**
+- [ ] Header reduced to 3-4 primary controls
+- [ ] Settings dropdown contains: Language, View Mode, Theme
+- [ ] Search shows icon only on mobile (remove ⌘K badge)
+- [ ] Mobile header fits comfortably
+
+**Files:** `app/[locale]/page.tsx`, `components/SettingsDropdown.tsx`
+
+---
+
+### US-065: Rename View Terminology
+**Priority:** P1-High | **Effort:** 1h | **Type:** Information Architecture
+
+**Problem:** "Classic View" sounds outdated. "Tree View" is abstract. Users confused.
+
+**Solution:**
+- "Classic View" → "Learning Path" (implies progression)
+- "Tree View" → "Concept Map" (implies visual relationships)
+
+**Acceptance Criteria:**
+- [ ] All references to "Classic View" changed to "Learning Path"
+- [ ] All references to "Tree View" changed to "Concept Map"
+- [ ] Both ET and EN translations updated
+- [ ] URL paths unchanged (backward compatibility)
+
+**Files:** `messages/en.json`, `messages/et.json`, all components using these terms
+
+---
+
+### US-066: Add Vector Demo Touch Handlers
+**Priority:** P1-High | **Effort:** 2h | **Type:** Mobile UX
+
+**Problem:** Vector Demo canvas only has mouse handlers (onMouseMove, onMouseDown). Mobile users can't interact with the visualization.
+
+**Solution:**
+- Add touch event handlers (onTouchStart, onTouchMove, onTouchEnd)
+- Translate touch coordinates same as mouse
+- Test on actual mobile devices
+
+**Acceptance Criteria:**
+- [ ] Vector demo responds to touch on mobile
+- [ ] Drag/pan works with finger
+- [ ] Point hover shows tooltip on tap
+- [ ] No conflicts with page scroll
+
+**Files:** `components/VectorDemo.tsx`
+
+---
+
+### US-067: Collapsible Hero on Mobile
+**Priority:** P2-Medium | **Effort:** 3h | **Type:** Mobile UX
+
+**Problem:** Hero takes 1.4 screens on mobile. Users must scroll past it every time to reach content.
+
+**Solution:**
+- On mobile: Hero collapses after first visit (localStorage)
+- Show compact header: Title + "Expand" button
+- Full hero available via expand
+
+**Acceptance Criteria:**
+- [ ] First visit: Full hero shown
+- [ ] Subsequent visits: Collapsed hero (title + expand)
+- [ ] "Expand" button restores full hero
+- [ ] Setting persists in localStorage
+
+**Files:** `app/[locale]/page.tsx`, new state management
+
+---
+
+### US-068: Add Skill-Level Selector Modal
+**Priority:** P2-Medium | **Effort:** 4h | **Type:** Learning Design
+
+**Problem:** No personalized entry point. Beginners, intermediates, and advanced users all see the same overwhelming page.
+
+**Solution:**
+- Modal on first visit (or via CTA): "What's your AI experience?"
+- Options: "New to AI" / "Know the basics" / "Building with AI"
+- Selection customizes:
+  - New: Start with Tokens, highlight beginner path
+  - Basics: Start at Trunk level
+  - Building: Go directly to Tree View
+
+**Acceptance Criteria:**
+- [ ] Skill selector modal appears on first visit
+- [ ] 3 options with descriptions
+- [ ] Selection stored in localStorage
+- [ ] Affects starting point and highlights
+- [ ] Can change later via Settings
+
+**Files:** New `components/SkillSelectorModal.tsx`, `app/[locale]/page.tsx`
+
+---
+
+### Sprint 6 Summary
+
+| Story | Points | Priority | Status |
+|-------|--------|----------|--------|
+| US-060 Hero Simplification | 4h | P0-Critical | 🔲 Pending |
+| US-061 Value Proposition | 2h | P0-Critical | 🔲 Pending |
+| US-062 Time Estimates | 2h | P0-Critical | 🔲 Pending |
+| US-063 Move Demos | 3h | P1-High | 🔲 Pending |
+| US-064 Header Simplify | 2h | P1-High | 🔲 Pending |
+| US-065 Rename Views | 1h | P1-High | 🔲 Pending |
+| US-066 Vector Touch | 2h | P1-High | 🔲 Pending |
+| US-067 Collapsible Hero | 3h | P2-Medium | 🔲 Pending |
+| US-068 Skill Selector | 4h | P2-Medium | 🔲 Pending |
+
+**Total:** 23h | **Sprint Goal:** 60% clutter reduction, better learning flow
+
+**Recommended Order:**
+1. US-061 (value prop) - Quick win, major impact
+2. US-062 (time estimates) - Quick win, adult learner need
+3. US-060 (hero simplify) - Core minimalism goal
+4. US-065 (rename views) - Quick terminology fix
+5. US-064 (header simplify) - Extends existing SettingsDropdown
+6. US-063 (move demos) - Better pedagogical flow
+7. US-066 (vector touch) - Mobile fix
+8. US-067, US-068 - If time permits
+
+---
+
 *Less is More. The best code is the code you don't write.*
