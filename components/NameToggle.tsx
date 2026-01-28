@@ -10,14 +10,21 @@ interface NameToggleProps {
 
 export function NameToggle({ showSimpleNames, onChange }: NameToggleProps) {
   return (
-    <div className="inline-flex items-center gap-2 bg-white rounded-xl shadow-md p-1 border border-gray-200">
+    <div
+      className="inline-flex items-center gap-2 bg-white dark:bg-gray-800 rounded-xl shadow-md p-1 border border-gray-200 dark:border-gray-700"
+      role="group"
+      aria-label="Nimetuste režiimi valik"
+    >
       <button
         onClick={() => onChange(true)}
-        className={`relative px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${
+        className={`relative px-4 py-3 min-h-[44px] min-w-[44px] rounded-lg font-medium transition-all flex items-center gap-2 ${
           showSimpleNames
             ? 'text-white'
-            : 'text-gray-600 hover:text-gray-900'
+            : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
         }`}
+        aria-label="Lihtsad nimed"
+        aria-pressed={showSimpleNames}
+        aria-current={showSimpleNames ? 'true' : undefined}
       >
         {showSimpleNames && (
           <motion.div
@@ -32,11 +39,14 @@ export function NameToggle({ showSimpleNames, onChange }: NameToggleProps) {
 
       <button
         onClick={() => onChange(false)}
-        className={`relative px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${
+        className={`relative px-4 py-3 min-h-[44px] min-w-[44px] rounded-lg font-medium transition-all flex items-center gap-2 ${
           !showSimpleNames
             ? 'text-white'
-            : 'text-gray-600 hover:text-gray-900'
+            : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
         }`}
+        aria-label="Tehnilised nimed"
+        aria-pressed={!showSimpleNames}
+        aria-current={!showSimpleNames ? 'true' : undefined}
       >
         {!showSimpleNames && (
           <motion.div

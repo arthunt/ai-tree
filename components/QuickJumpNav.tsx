@@ -20,7 +20,8 @@ export function QuickJumpNav() {
     >
       <button
         onClick={scrollToLevels}
-        className="flex flex-col items-center gap-2 px-6 py-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all group"
+        className="flex flex-col items-center gap-2 px-6 py-3 min-h-[44px] bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all group"
+        aria-label="Keri alla ja alusta õppimist"
       >
         <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
           Alusta õppimist

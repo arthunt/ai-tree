@@ -2,12 +2,12 @@ import { TreeLevel } from './types';
 
 export function getLevelColor(levelId: string): string {
   const colors: Record<string, string> = {
-    leaves: '#8b5cf6',
-    branches: '#3b82f6',
-    trunk: '#92400e',
-    roots: '#065f46',
+    leaves: '#7c3aed',
+    branches: '#2563eb',
+    trunk: '#78350f',
+    roots: '#047857',
   };
-  return colors[levelId] || '#6b7280';
+  return colors[levelId] || '#4b5563';
 }
 
 export function getLevelGradient(levelId: string): string {
@@ -31,11 +31,11 @@ export function getComplexityLabel(complexity: 1 | 2 | 3): string {
 
 export function getComplexityColor(complexity: 1 | 2 | 3): string {
   const colors: Record<number, string> = {
-    1: 'bg-green-100 text-green-800',
-    2: 'bg-yellow-100 text-yellow-800',
-    3: 'bg-red-100 text-red-800',
+    1: 'bg-green-100 text-green-900',
+    2: 'bg-yellow-100 text-yellow-900',
+    3: 'bg-red-100 text-red-900',
   };
-  return colors[complexity] || 'bg-gray-100 text-gray-800';
+  return colors[complexity] || 'bg-gray-100 text-gray-900';
 }
 
 export function getLevelIcon(levelId: string): string {
