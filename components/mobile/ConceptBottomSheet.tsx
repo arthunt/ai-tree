@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import { motion, AnimatePresence, useDragControls } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Check, Circle } from 'lucide-react';
+import { X, Check, Circle } from 'lucide-react';
 import { Concept } from '@/lib/types';
 import { useBottomSheet, SheetState } from '@/lib/hooks/useBottomSheet';
 import { useSwipeNavigation } from '@/lib/hooks/useSwipeNavigation';
@@ -32,13 +32,13 @@ export function ConceptBottomSheet({
   const t = useTranslations('concept');
   const dragControls = useDragControls();
   const sheetRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
   const { isCompleted: checkIsCompleted } = useProgress();
 
   const [activeTab, setActiveTab] = useState<'explanation' | 'visual' | 'code'>('explanation');
 
   // Get sibling concepts for navigation
-  const currentIndex = concept ? allConcepts.findIndex(c => c.id === concept.id) : -1;
   const sameLevelConcepts = concept
     ? allConcepts.filter(c => c.level === concept.level)
     : [];
@@ -60,9 +60,11 @@ export function ConceptBottomSheet({
     initialState: 'closed',
     onClose,
     onStateChange: (newState) => {
-      // Haptic feedback on state change
+      // Haptic feedback only on meaningful transitions
       if ('vibrate' in navigator && !prefersReducedMotion) {
-        navigator.vibrate(10);
+        if (newState === 'closed' || newState === 'full') {
+          navigator.vibrate(10);
+        }
       }
     },
   });
@@ -92,7 +94,19 @@ export function ConceptBottomSheet({
     }
   }, [concept, open, close]);
 
-  // Lock body scroll when open
+  // Focus management - move focus into dialog when opened
+  useEffect(() => {
+    if (isOpen && closeButtonRef.current) {
+      const previouslyFocused = document.activeElement as HTMLElement;
+      closeButtonRef.current.focus();
+
+      return () => {
+        previouslyFocused?.focus();
+      };
+    }
+  }, [isOpen]);
+
+  // Lock body scroll when open (iOS Safari safe)
   useEffect(() => {
     if (isOpen) {
       const scrollY = window.scrollY;
@@ -106,12 +120,14 @@ export function ConceptBottomSheet({
         document.body.style.position = '';
         document.body.style.width = '';
         document.body.style.top = '';
-        window.scrollTo(0, scrollY);
+        requestAnimationFrame(() => {
+          window.scrollTo(0, scrollY);
+        });
       };
     }
   }, [isOpen]);
 
-  // Handle escape key
+  // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -131,15 +147,23 @@ export function ConceptBottomSheet({
     }
   }, [isOpen, close, prevConcept, nextConcept, onNavigate]);
 
-  // Calculate sheet height based on state
-  const getSheetHeight = useCallback((s: SheetState): string => {
-    switch (s) {
+  // Memoize sheet height
+  const sheetHeight = useMemo(() => {
+    switch (state) {
       case 'preview': return '30vh';
       case 'half': return '60vh';
       case 'full': return '92vh';
       default: return '0vh';
     }
-  }, []);
+  }, [state]);
+
+  // Tab switch handler - auto-expand for content-heavy tabs
+  const handleTabSwitch = useCallback((tab: 'explanation' | 'visual' | 'code') => {
+    setActiveTab(tab);
+    if ((tab === 'visual' || tab === 'code') && state === 'half') {
+      setState('full');
+    }
+  }, [state, setState]);
 
   if (!concept) return null;
 
@@ -167,7 +191,7 @@ export function ConceptBottomSheet({
             initial={{ y: '100%' }}
             animate={{
               y: 0,
-              height: getSheetHeight(state),
+              height: sheetHeight,
             }}
             exit={{ y: '100%' }}
             transition={{
@@ -179,7 +203,7 @@ export function ConceptBottomSheet({
             drag="y"
             dragControls={dragControls}
             dragConstraints={{ top: 0, bottom: 0 }}
-            dragElastic={0.2}
+            dragElastic={state === 'full' ? 0.05 : 0.2}
             onDragEnd={handleSheetDragEnd}
             className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 rounded-t-3xl shadow-2xl flex flex-col overflow-hidden"
             style={{
@@ -192,11 +216,11 @@ export function ConceptBottomSheet({
               className="flex-shrink-0 pt-3 pb-2 cursor-grab active:cursor-grabbing"
               onPointerDown={(e) => dragControls.start(e)}
             >
-              <div className="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto" />
+              <div className="w-10 h-1 bg-gray-400 dark:bg-gray-500 rounded-full mx-auto" />
             </div>
 
             {/* Header */}
-            <div className="flex-shrink-0 px-4 pb-3 border-b border-gray-100 dark:border-gray-700">
+            <div className="flex-shrink-0 px-5 pb-3 border-b border-gray-100 dark:border-gray-700">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <h2
@@ -205,7 +229,7 @@ export function ConceptBottomSheet({
                   >
                     {concept.title}
                   </h2>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300 truncate">
                     {concept.simpleName}
                   </p>
                 </div>
@@ -226,6 +250,7 @@ export function ConceptBottomSheet({
                   )}
                   {/* Close button */}
                   <button
+                    ref={closeButtonRef}
                     onClick={close}
                     className="p-2 min-w-[44px] min-h-[44px] rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
                     aria-label={t('closeDialog')}
@@ -237,15 +262,15 @@ export function ConceptBottomSheet({
 
               {/* Tab Navigation */}
               {(state === 'half' || state === 'full') && (
-                <div className="flex gap-1 mt-3" role="tablist">
+                <div className="flex gap-1.5 mt-3 bg-gray-100 dark:bg-gray-900 p-1 rounded-xl" role="tablist">
                   <button
                     role="tab"
                     aria-selected={activeTab === 'explanation'}
-                    onClick={() => setActiveTab('explanation')}
-                    className={`flex-1 py-2 px-3 min-h-[44px] text-sm font-medium rounded-lg transition-colors ${
+                    onClick={() => handleTabSwitch('explanation')}
+                    className={`flex-1 py-2.5 px-3 min-h-[44px] text-sm font-semibold rounded-lg transition-all ${
                       activeTab === 'explanation'
-                        ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
-                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                        ? 'bg-white dark:bg-gray-700 text-purple-700 dark:text-purple-300 shadow-sm'
+                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                     }`}
                   >
                     {t('explanation')}
@@ -253,11 +278,11 @@ export function ConceptBottomSheet({
                   <button
                     role="tab"
                     aria-selected={activeTab === 'visual'}
-                    onClick={() => setActiveTab('visual')}
-                    className={`flex-1 py-2 px-3 min-h-[44px] text-sm font-medium rounded-lg transition-colors ${
+                    onClick={() => handleTabSwitch('visual')}
+                    className={`flex-1 py-2.5 px-3 min-h-[44px] text-sm font-semibold rounded-lg transition-all ${
                       activeTab === 'visual'
-                        ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300'
-                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                        ? 'bg-white dark:bg-gray-700 text-indigo-700 dark:text-indigo-300 shadow-sm'
+                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                     }`}
                   >
                     {t('visual')}
@@ -265,11 +290,11 @@ export function ConceptBottomSheet({
                   <button
                     role="tab"
                     aria-selected={activeTab === 'code'}
-                    onClick={() => setActiveTab('code')}
-                    className={`flex-1 py-2 px-3 min-h-[44px] text-sm font-medium rounded-lg transition-colors ${
+                    onClick={() => handleTabSwitch('code')}
+                    className={`flex-1 py-2.5 px-3 min-h-[44px] text-sm font-semibold rounded-lg transition-all ${
                       activeTab === 'code'
-                        ? 'bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300'
-                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                        ? 'bg-white dark:bg-gray-700 text-slate-700 dark:text-slate-300 shadow-sm'
+                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                     }`}
                   >
                     {t('code')}
@@ -282,6 +307,7 @@ export function ConceptBottomSheet({
             <motion.div
               className="flex-1 overflow-y-auto overscroll-contain"
               drag={state === 'half' || state === 'full' ? 'x' : false}
+              dragDirectionLock
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.1}
               onDragStart={handleDragStart}

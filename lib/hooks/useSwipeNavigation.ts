@@ -51,8 +51,8 @@ export function useSwipeNavigation(
       const absX = Math.abs(offset.x);
       const absY = Math.abs(offset.y);
 
-      // Determine if this is a horizontal or vertical swipe
-      const isHorizontal = absX > absY;
+      // Determine if this is a horizontal swipe (1.5x bias to prevent accidental triggers)
+      const isHorizontal = absX > absY * 1.5;
 
       if (isHorizontal) {
         // Horizontal swipe

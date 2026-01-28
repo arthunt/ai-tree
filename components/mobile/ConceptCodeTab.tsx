@@ -21,8 +21,8 @@ export function ConceptCodeTab({ concept, className = '' }: ConceptCodeTabProps)
   if (!codeExample) {
     return (
       <div className={`flex flex-col items-center justify-center py-12 px-4 ${className}`}>
-        <div className="p-4 bg-gray-100 dark:bg-gray-700 rounded-2xl mb-4">
-          <Terminal className="h-10 w-10 text-gray-400 dark:text-gray-500" />
+        <div className="p-4 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-2xl mb-4">
+          <Terminal className="h-10 w-10 text-blue-600 dark:text-blue-400" />
         </div>
         <h3 className="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-2">
           {t('codeComingSoon')}
@@ -37,10 +37,10 @@ export function ConceptCodeTab({ concept, className = '' }: ConceptCodeTabProps)
   const whyText = codeExample.whyRelevant || codeExample.explanation;
 
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div className={`space-y-5 ${className}`}>
       {/* Why this code? - Collapsible section */}
       {whyText && (
-        <section className="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl border border-emerald-200 dark:border-emerald-700 overflow-hidden">
+        <section className="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl overflow-hidden">
           <button
             onClick={() => setWhyExpanded(!whyExpanded)}
             className="w-full flex items-center justify-between gap-2 p-4 min-h-[44px] text-left"
@@ -50,7 +50,7 @@ export function ConceptCodeTab({ concept, className = '' }: ConceptCodeTabProps)
               <div className="p-1.5 bg-emerald-500 dark:bg-emerald-600 rounded-lg">
                 <BookOpen className="h-4 w-4 text-white" />
               </div>
-              <h3 className="font-semibold text-emerald-900 dark:text-emerald-200">
+              <h3 className="font-bold text-base text-emerald-900 dark:text-emerald-200">
                 {t('whyThisCode')}
               </h3>
             </div>
@@ -80,7 +80,7 @@ export function ConceptCodeTab({ concept, className = '' }: ConceptCodeTabProps)
       )}
 
       {/* Code Block */}
-      <section className="bg-slate-50 dark:bg-slate-900/20 rounded-xl p-4 border border-slate-200 dark:border-slate-700">
+      <section className="bg-slate-50 dark:bg-slate-900/20 rounded-2xl p-4">
         <CodeBlock
           code={codeExample.code}
           language={codeExample.language}
@@ -90,19 +90,19 @@ export function ConceptCodeTab({ concept, className = '' }: ConceptCodeTabProps)
 
       {/* How to use */}
       {codeExample.howToUse && codeExample.howToUse.length > 0 && (
-        <section className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-4 border border-amber-200 dark:border-amber-700">
+        <section className="bg-amber-50 dark:bg-amber-900/20 rounded-2xl p-5">
           <div className="flex items-center gap-2 mb-3">
             <div className="p-1.5 bg-amber-500 dark:bg-amber-600 rounded-lg">
               <Lightbulb className="h-4 w-4 text-white" />
             </div>
-            <h3 className="font-semibold text-amber-900 dark:text-amber-200">
+            <h3 className="font-bold text-base text-amber-900 dark:text-amber-200">
               {t('howToUse')}
             </h3>
           </div>
-          <ul className="space-y-2">
+          <ul className="space-y-2.5">
             {codeExample.howToUse.map((tip, index) => (
-              <li key={index} className="flex items-start gap-2 text-sm text-amber-900 dark:text-amber-100">
-                <span className="text-amber-500 dark:text-amber-400 mt-0.5 flex-shrink-0">•</span>
+              <li key={index} className="flex items-start gap-2.5 text-sm text-amber-900 dark:text-amber-100">
+                <span className="text-amber-500 dark:text-amber-400 mt-0.5 flex-shrink-0 font-bold">•</span>
                 <span className="leading-relaxed">{tip}</span>
               </li>
             ))}
@@ -116,7 +116,7 @@ export function ConceptCodeTab({ concept, className = '' }: ConceptCodeTabProps)
           href={codeExample.playgroundUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full py-3 px-4 min-h-[44px] bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-colors"
+          className="flex items-center justify-center gap-2 w-full py-3.5 px-4 min-h-[48px] bg-blue-500 hover:bg-blue-600 text-white rounded-2xl font-medium transition-colors shadow-sm"
         >
           <span>{t('tryItOut')}</span>
           <ExternalLink className="h-4 w-4" />
