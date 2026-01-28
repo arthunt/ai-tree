@@ -11,6 +11,8 @@ import { LightboxSkeleton } from './LightboxSkeleton';
 import { useTranslations } from 'next-intl';
 import { useProgress } from '../lib/useProgress';
 import { useToast } from '@/lib/useToast';
+import { useIsMobile } from '@/lib/hooks/useMediaQuery';
+import { ConceptBottomSheet } from './mobile/ConceptBottomSheet';
 import {
   Users,
   Brain,
@@ -67,6 +69,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
   const { isCompleted: checkIsCompleted } = useProgress();
   const { showToast } = useToast();
   const [lastCompletedState, setLastCompletedState] = useState<boolean | null>(null);
+  const isMobile = useIsMobile();
 
   // Generate shareable URL
   const getShareUrl = () => {
@@ -227,6 +230,20 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
   }, [concept]);
 
   if (!concept) return null;
+
+  // Use mobile bottom sheet on small screens
+  if (isMobile) {
+    return (
+      <ConceptBottomSheet
+        concept={concept}
+        allConcepts={allConcepts}
+        onClose={onClose}
+        onNavigate={onNavigate}
+        isCompleted={isCompleted}
+        onToggleComplete={onToggleComplete}
+      />
+    );
+  }
 
   const IconComponent = iconMap[concept.icon] || Brain;
   const readingTime = getReadingTime(concept);
