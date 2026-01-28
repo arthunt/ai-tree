@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dendrix.ai - Living Interface</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Import Map for React & Three.js ecosystem -->
+    <script type="importmap">
+        {
+            "imports": {
+                "react": "https://esm.sh/react@18.2.0",
+                "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+                "three": "https://esm.sh/three@0.160.0",
+                "@react-three/fiber": "https://esm.sh/@react-three/fiber@8.15.14?external=react,react-dom,three",
+                "@react-three/drei": "https://esm.sh/@react-three/drei@9.96.1?external=react,react-dom,three,@react-three/fiber",
+                "framer-motion": "https://esm.sh/framer-motion@10.18.0?external=react,react-dom",
+                "lucide-react": "https://esm.sh/lucide-react@0.309.0?external=react,react-dom"
+            }
+        }
+    </script>
+
+    <!-- Babel for JSX compilation in browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body { margin: 0; background-color: #050510; color: white; overflow-x: hidden; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050510; }
+        ::-webkit-scrollbar-thumb { background: #1a1a2e; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00F0FF; }
+
+        /* Animation Keyframes for the 'Raw' state jitter */
+        @keyframes jitter {
+            0% { transform: translate(0,0); }
+            25% { transform: translate(1px, 1px); }
+            50% { transform: translate(-1px, -1px); }
+            75% { transform: translate(-1px, 1px); }
+            100% { transform: translate(1px, -1px); }
+        }
+        .jitter-mode { animation: jitter 0.2s infinite; opacity: 0.8; }
+        
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .glass-panel-cyan { border-color: rgba(0, 240, 255, 0.2); }
+        .glass-panel-orange { border-color: rgba(255, 107, 0, 0.2); }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none; /* Let clicks pass through to UI */
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel" data-type="module">
+        import React, { useState, useRef, useMemo, useEffect } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { Canvas, useFrame } from '@react-three/fiber';
+        import { Float, Stars, Text } from '@react-three/drei';
+        import * as THREE from 'three';
+        import { motion, AnimatePresence } from 'framer-motion';
+        import { Zap, Brain, ArrowRight, ShieldCheck, Activity, Database, Code, Cpu } from 'lucide-react';
+
+        // --- CONSTANTS ---
+        const COLORS = {
+            void: '#050510',
+            cyan: '#00F0FF',
+            orange: '#FF6B00',
+            white: '#ffffff',
+            gray: '#8888aa'
+        };
+
+        // --- 3D COMPONENTS ---
+
+        // Individual Neural Leaf Node
+        const NeuralLeaf = ({ position, isRAGEnabled, mouse }) => {
+            const mesh = useRef();
+            const [hovered, setHover] = useState(false);
+            
+            // Random attributes for organic feel
+            const randomPhase = useMemo(() => Math.random() * Math.PI * 2, []);
+            const randomSpeed = useMemo(() => 0.5 + Math.random() * 0.5, []);
+
+            useFrame((state) => {
+                if (!mesh.current) return;
+
+                const t = state.clock.getElapsedTime();
+                
+                // Base Movement: Organic breathing
+                // If RAG is disabled (Raw mode), the movement becomes erratic/fast
+                const speedMultiplier = isRAGEnabled ? 1 : 4;
+                const jitter = isRAGEnabled ? 0 : Math.sin(t * 20 + randomPhase) * 0.05;
+
+                mesh.current.rotation.x = (Math.cos(t * randomSpeed + randomPhase) / 2) * speedMultiplier;
+                mesh.current.rotation.y = (Math.sin(t * randomSpeed + randomPhase) / 2) * speedMultiplier;
+                
+                // Position influence by mouse (Subtle parallax)
+                // We access mouse.current from parent or simplified prop for performance
+                // Here we just do local oscillation
+                mesh.current.position.y = position[1] + Math.sin(t * speedMultiplier + randomPhase) * 0.2 + jitter;
+            });
+
+            return (
+                <Float speed={isRAGEnabled ? 2 : 10} rotationIntensity={isRAGEnabled ? 1 : 5} floatIntensity={isRAGEnabled ? 2 : 0.5}>
+                    <mesh 
+                        ref={mesh} 
+                        position={position}
+                        scale={hovered ? 1.5 : 1}
+                        onPointerOver={() => setHover(true)}
+                        onPointerOut={() => setHover(false)}
+                    >
+                        {/* Icosahedron looks techy yet organic */}
+                        <icosahedronGeometry args={[0.25, 0]} />
+                        <meshStandardMaterial 
+                            color={isRAGEnabled ? COLORS.cyan : COLORS.orange}
+                            emissive={isRAGEnabled ? COLORS.cyan : COLORS.orange}
+                            emissiveIntensity={isRAGEnabled ? 0.5 : (Math.random() * 2)} // Flicker if raw
+                            wireframe={!isRAGEnabled} // Wireframe = Raw/Unfinished
+                            transparent
+                            opacity={0.8}
+                        />
+                    </mesh>
+                </Float>
+            );
+        };
+
+        // The Cloud of Nodes
+        const NeuralSystem = ({ isRAGEnabled }) => {
+            const count = 60;
+            const particles = useMemo(() => {
+                return new Array(count).fill().map(() => [
+                    (Math.random() - 0.5) * 18, // x spread
+                    (Math.random() - 0.5) * 12, // y spread
+                    (Math.random() - 0.5) * 8   // z spread
+                ]);
+            }, []);
+
+            return (
+                <group>
+                    {/* Environment */}
+                    <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+                    <ambientLight intensity={0.2} />
+                    <pointLight position={[10, 10, 10]} intensity={1} color={COLORS.cyan} />
+                    <pointLight position={[-10, -10, -10]} intensity={0.5} color={COLORS.orange} />
+                    
+                    {/* Render Leaves */}
+                    {particles.map((pos, i) => (
+                        <NeuralLeaf key={i} position={pos} isRAGEnabled={isRAGEnabled} />
+                    ))}
+                </group>
+            );
+        };
+
+        // --- UI COMPONENTS ---
+
+        const GlassCard = ({ children, className = "", variant = "neutral" }) => {
+            let borderClass = "";
+            if (variant === "cyan") borderClass = "glass-panel-cyan shadow-[0_0_20px_rgba(0,240,255,0.1)]";
+            else if (variant === "orange") borderClass = "glass-panel-orange shadow-[0_0_20px_rgba(255,107,0,0.1)]";
+            else borderClass = "glass-panel";
+
+            return (
+                <motion.div 
+                    whileHover={{ y: -5, boxShadow: variant === 'cyan' ? '0 0 30px rgba(0,240,255,0.2)' : '0 0 30px rgba(255,107,0,0.2)' }}
+                    className={`p-6 rounded-2xl transition-all duration-300 ${borderClass} ${className}`}
+                >
+                    {children}
+                </motion.div>
+            );
+        };
+
+        const TypewriterToken = ({ word, index }) => {
+            // Animation for token appearing
+            return (
+                <motion.span
+                    initial={{ opacity: 0, y: 10, backgroundColor: COLORS.orange }}
+                    animate={{ opacity: 1, y: 0, backgroundColor: 'transparent' }}
+                    transition={{ delay: index * 0.1 }}
+                    className="inline-block px-1 border border-cyan-500/30 rounded mx-0.5 text-cyan-400 font-mono text-xs hover:bg-cyan-500/20 cursor-crosshair transition-colors"
+                >
+                    {word}
+                </motion.span>
+            );
+        };
+
+        // --- MAIN APP ---
+
+        const App = () => {
+            const [isRAGEnabled, setRAGEnabled] = useState(true);
+            const [inputValue, setInputValue] = useState("");
+            const [tokens, setTokens] = useState([]);
+
+            // Handle Input Tokenization Simulation
+            useEffect(() => {
+                if (!inputValue) {
+                    setTokens([]);
+                    return;
+                }
+                const words = inputValue.split(" ");
+                setTokens(words);
+            }, [inputValue]);
+
+            return (
+                <div className="relative min-h-screen font-sans selection:bg-cyan-500/30 selection:text-cyan-100">
+                    
+                    {/* 3D Background */}
+                    <div id="canvas-container">
+                        <Canvas camera={{ position: [0, 0, 12], fov: 45 }}>
+                            <NeuralSystem isRAGEnabled={isRAGEnabled} />
+                        </Canvas>
+                    </div>
+
+                    {/* Navbar */}
+                    <nav className="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center backdrop-blur-sm bg-black/20 border-b border-white/5">
+                        <div className="flex items-center gap-3">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-500 ${isRAGEnabled ? 'bg-cyan-500/20' : 'bg-orange-500/20'}`}>
+                                <Brain size={18} className={isRAGEnabled ? 'text-cyan-400' : 'text-orange-500'} />
+                            </div>
+                            <span className="text-xl font-bold tracking-widest text-white">DENDRIX<span className="text-xs align-top opacity-50">.AI</span></span>
+                        </div>
+                        <div className="hidden md:flex gap-8 text-sm font-medium text-gray-400">
+                            <a href="#" className="hover:text-cyan-400 transition-colors">Methodology</a>
+                            <a href="#" className="hover:text-cyan-400 transition-colors">The Stack</a>
+                            <a href="#" className="hover:text-cyan-400 transition-colors">Pricing</a>
+                        </div>
+                        <button className="px-5 py-2 rounded-full border border-white/10 hover:bg-white/10 transition text-sm">
+                            Login
+                        </button>
+                    </nav>
+
+                    {/* Main Content Container */}
+                    <main className="relative z-10 pt-32 px-4 pb-20 max-w-7xl mx-auto flex flex-col items-center">
+                        
+                        {/* HERO SECTION */}
+                        <section className="w-full text-center mb-32 min-h-[60vh] flex flex-col justify-center">
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+                            >
+                                <div className="inline-block mb-4 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-900/10 text-cyan-400 text-xs tracking-widest font-mono uppercase">
+                                    V 2.0 // Neural Architecture
+                                </div>
+                                <h1 className="text-6xl md:text-8xl font-light mb-6 tracking-tight text-white leading-tight">
+                                    Deep Roots.<br />
+                                    <span className={`${isRAGEnabled ? 'text-cyan-400 drop-shadow-[0_0_30px_rgba(0,240,255,0.4)]' : 'text-orange-500 drop-shadow-[0_0_30px_rgba(255,107,0,0.4)]'} transition-all duration-500`}>
+                                        High Reach.
+                                    </span>
+                                </h1>
+                                <p className="text-gray-400 text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
+                                    The "Train the Trainer" platform. We don't just teach you how to use agents. 
+                                    We teach you the binary soil they grow from.
+                                </p>
+
+                                {/* Interactive Input */}
+                                <div className="max-w-xl mx-auto relative group">
+                                    <div className={`absolute -inset-1 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-500 ${isRAGEnabled ? 'bg-cyan-500' : 'bg-orange-500'}`}></div>
+                                    <div className="relative flex items-center bg-black/80 rounded-full border border-white/10 p-2 pl-6">
+                                        <Code size={20} className="text-gray-500 mr-3" />
+                                        <input 
+                                            type="text" 
+                                            placeholder="What do you want to teach?" 
+                                            className="bg-transparent border-none outline-none text-lg text-white w-full placeholder-gray-600 font-light"
+                                            value={inputValue}
+                                            onChange={(e) => setInputValue(e.target.value)}
+                                        />
+                                        <button className={`p-3 rounded-full transition-colors ${isRAGEnabled ? 'bg-cyan-500 hover:bg-cyan-400' : 'bg-orange-600 hover:bg-orange-500'} text-black`}>
+                                            <ArrowRight size={20} />
+                                        </button>
+                                    </div>
+                                    
+                                    {/* Tokenizer Output */}
+                                    <div className="mt-6 min-h-[24px] flex flex-wrap justify-center gap-1">
+                                        {tokens.length > 0 && (
+                                            <span className="text-gray-600 font-mono text-xs mr-2 self-center">{`> TOKEN_STREAM:`}</span>
+                                        )}
+                                        <AnimatePresence>
+                                            {tokens.map((word, i) => (
+                                                <TypewriterToken key={i + word} word={word} index={i} />
+                                            ))}
+                                        </AnimatePresence>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </section>
+
+                        {/* SECTION 2: BENTO GRID */}
+                        <section className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mb-32">
+                            {/* Card 1: Agent Orchestration */}
+                            <GlassCard className="col-span-2 row-span-2 flex flex-col justify-between min-h-[320px]" variant={isRAGEnabled ? "cyan" : "orange"}>
+                                <div>
+                                    <div className="flex justify-between items-start mb-4">
+                                        <h3 className="text-2xl font-light text-white">Multi-Agent Orchestration</h3>
+                                        <Cpu className={isRAGEnabled ? 'text-cyan-400' : 'text-orange-500'} />
+                                    </div>
+                                    <p className="text-gray-400 text-sm max-w-md">
+                                        Visualize how agents hand off context. Move beyond simple prompts into complex, self-correcting workflows that mimic organic neural structures.
+                                    </p>
+                                </div>
+                                <div className="mt-6 h-40 rounded-lg bg-black/40 border border-white/5 relative overflow-hidden flex items-center justify-center">
+                                    <div className="absolute inset-0 grid grid-cols-6 grid-rows-4 gap-1 opacity-20">
+                                        {Array.from({ length: 24 }).map((_, i) => (
+                                            <div key={i} className={`rounded-sm ${Math.random() > 0.8 ? (isRAGEnabled ? 'bg-cyan-500' : 'bg-orange-500') : 'bg-transparent'}`}></div>
+                                        ))}
+                                    </div>
+                                    <span className="font-mono text-xs text-gray-500 tracking-widest">[ LIVE SIMULATION PREVIEW ]</span>
+                                </div>
+                            </GlassCard>
+
+                            {/* Card 2: Fine Tuning */}
+                            <GlassCard className="row-span-2" variant="neutral">
+                                <div className="flex flex-col h-full justify-between">
+                                    <div>
+                                        <Activity className="text-gray-400 mb-4" />
+                                        <h3 className="text-xl mb-2 text-white">Fine-Tuning</h3>
+                                        <p className="text-gray-400 text-xs leading-relaxed">
+                                            Adjust weights directly. Watch the loss curve flatten in real-time as you inject domain-specific knowledge.
+                                        </p>
+                                    </div>
+                                    <div className="mt-8 space-y-3">
+                                        <div className="flex justify-between text-xs font-mono text-gray-400">
+                                            <span>Accuracy</span>
+                                            <span className={isRAGEnabled ? 'text-cyan-400' : 'text-orange-500'}>98.4%</span>
+                                        </div>
+                                        <div className="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
+                                            <motion.div 
+                                                className={`h-full ${isRAGEnabled ? 'bg-cyan-500' : 'bg-orange-500'}`} 
+                                                initial={{ width: "0%" }}
+                                                whileInView={{ width: "98%" }}
+                                                transition={{ duration: 1.5 }}
+                                            ></motion.div>
+                                        </div>
+                                        <div className="flex justify-between text-xs font-mono text-gray-400">
+                                            <span>Loss</span>
+                                            <span>0.024</span>
+                                        </div>
+                                        <div className="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
+                                            <motion.div 
+                                                className="h-full bg-gray-500"
+                                                initial={{ width: "100%" }}
+                                                whileInView={{ width: "5%" }}
+                                                transition={{ duration: 1.5 }}
+                                            ></motion.div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </GlassCard>
+
+                            {/* Card 3: Code Snippet */}
+                            <GlassCard className="col-span-1 border-t-4 border-t-cyan-500/50" variant="neutral">
+                                <h3 className="text-sm font-mono mb-3 text-cyan-300">import Dendrix</h3>
+                                <div className="text-xs font-mono text-gray-500 space-y-1">
+                                    <p><span className="text-purple-400">const</span> tree = <span className="text-yellow-300">new</span> KnowledgeTree();</p>
+                                    <p>tree.<span className="text-blue-400">grow</span>(<span className="text-green-300">'marketing-agent'</span>);</p>
+                                    <p className="text-gray-600">// Ready to deploy</p>
+                                </div>
+                            </GlassCard>
+                        </section>
+
+                        {/* SECTION 3: THE STABILITY ENGINE (RAG TOGGLE) */}
+                        <section className="w-full mb-32">
+                            <GlassCard className={`relative overflow-hidden transition-all duration-500 ${!isRAGEnabled ? 'jitter-mode border-orange-500/30' : 'border-cyan-500/30'}`}>
+                                
+                                {/* Background glow for the card */}
+                                <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl ${isRAGEnabled ? 'from-cyan-500/10' : 'from-orange-500/10'} to-transparent rounded-bl-full pointer-events-none`}></div>
+
+                                <div className="flex flex-col md:flex-row items-center justify-between p-4 md:p-8 relative z-10">
+                                    <div className="max-w-lg mb-8 md:mb-0">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <Database size={24} className={isRAGEnabled ? "text-cyan-400" : "text-orange-500"} />
+                                            <h2 className="text-3xl font-light text-white">The Stability Engine</h2>
+                                        </div>
+                                        <p className="text-gray-400 mb-8 leading-relaxed">
+                                            Hallucinations are the weeds of AI. Toggle our RAG (Retrieval Augmented Generation) engine to ground your agents in truth.
+                                            <br/><br/>
+                                            <span className="text-xs font-mono text-gray-500 uppercase tracking-wider">
+                                                Current State: {isRAGEnabled ? <span className="text-cyan-400">GROUNDED</span> : <span className="text-orange-500">UNSTABLE / DREAMING</span>}
+                                            </span>
+                                        </p>
+
+                                        {/* THE TOGGLE SWITCH */}
+                                        <div className="flex items-center gap-6 select-none">
+                                            <span 
+                                                className={`text-sm font-bold tracking-wider transition-colors cursor-pointer ${!isRAGEnabled ? "text-orange-500" : "text-gray-600"}`}
+                                                onClick={() => setRAGEnabled(false)}
+                                            >
+                                                RAW MODEL
+                                            </span>
+                                            
+                                            <div 
+                                                className={`w-20 h-10 rounded-full border border-gray-700 relative cursor-pointer transition-colors duration-300 ${isRAGEnabled ? 'bg-cyan-900/30' : 'bg-orange-900/30'}`}
+                                                onClick={() => setRAGEnabled(!isRAGEnabled)}
+                                            >
+                                                <motion.div 
+                                                    className="w-8 h-8 rounded-full absolute top-1 shadow-lg"
+                                                    animate={{ 
+                                                        left: isRAGEnabled ? '42px' : '4px',
+                                                        backgroundColor: isRAGEnabled ? COLORS.cyan : COLORS.orange,
+                                                        boxShadow: isRAGEnabled ? `0 0 15px ${COLORS.cyan}` : `0 0 15px ${COLORS.orange}`
+                                                    }}
+                                                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                                />
+                                            </div>
+
+                                            <span 
+                                                className={`text-sm font-bold tracking-wider transition-colors cursor-pointer ${isRAGEnabled ? "text-cyan-400" : "text-gray-600"}`}
+                                                onClick={() => setRAGEnabled(true)}
+                                            >
+                                                RAG ENABLED
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Icon Visualization */}
+                                    <div className="hidden md:block">
+                                        <AnimatePresence mode="wait">
+                                            {isRAGEnabled ? (
+                                                <motion.div 
+                                                    key="shield"
+                                                    initial={{ opacity: 0, scale: 0.8 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    exit={{ opacity: 0, scale: 0.8 }}
+                                                >
+                                                    <ShieldCheck size={120} className="text-cyan-400 opacity-80" strokeWidth={0.5} />
+                                                </motion.div>
+                                            ) : (
+                                                <motion.div 
+                                                    key="zap"
+                                                    initial={{ opacity: 0, scale: 0.8 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    exit={{ opacity: 0, scale: 0.8 }}
+                                                >
+                                                    <Zap size={120} className="text-orange-500 opacity-80" strokeWidth={0.5} />
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                </div>
+                            </GlassCard>
+                        </section>
+
+                        {/* FOOTER */}
+                        <footer className="text-center border-t border-white/5 w-full pt-12">
+                            <div className="flex justify-center items-center gap-2 mb-4 opacity-50">
+                                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                <span className="text-xs font-mono text-gray-500">SYSTEM STATUS: ONLINE</span>
+                            </div>
+                            <p className="text-gray-600 text-sm">© 2024 Dendrix.ai. All roots reserved.</p>
+                        </footer>
+
+                    </main>
+                </div>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

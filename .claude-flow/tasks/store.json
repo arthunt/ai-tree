@@ -1,0 +1,70 @@
+{
+  "tasks": {
+    "task-1769587361548-i0uwto": {
+      "taskId": "task-1769587361548-i0uwto",
+      "type": "research",
+      "description": "UX/UI Analysis: Review Dendrix-ux.html prototype",
+      "priority": "normal",
+      "status": "pending",
+      "progress": 0,
+      "assignedTo": [],
+      "tags": [],
+      "createdAt": "2026-01-28T08:02:41.549Z",
+      "startedAt": null,
+      "completedAt": null
+    },
+    "task-1769587375046-qy6bym": {
+      "taskId": "task-1769587375046-qy6bym",
+      "type": "research",
+      "description": "Information Architecture: Evaluate tree metaphor structure (Roots→Trunk→Branches→Leaves). Assess pedagogical soundness and learning progression.",
+      "priority": "normal",
+      "status": "pending",
+      "progress": 0,
+      "assignedTo": [],
+      "tags": [],
+      "createdAt": "2026-01-28T08:02:55.046Z",
+      "startedAt": null,
+      "completedAt": null
+    },
+    "task-1769587375856-8f87dg": {
+      "taskId": "task-1769587375856-8f87dg",
+      "type": "research",
+      "description": "Multilingual Strategy: Design i18n architecture for Estonian/English support with technical term handling.",
+      "priority": "normal",
+      "status": "pending",
+      "progress": 0,
+      "assignedTo": [],
+      "tags": [],
+      "createdAt": "2026-01-28T08:02:55.856Z",
+      "startedAt": null,
+      "completedAt": null
+    },
+    "task-1769587376346-w08h9s": {
+      "taskId": "task-1769587376346-w08h9s",
+      "type": "research",
+      "description": "Learning Platform Features: Identify missing features - progress tracking, quizzes, interactive demos, certificates.",
+      "priority": "normal",
+      "status": "pending",
+      "progress": 0,
+      "assignedTo": [],
+      "tags": [],
+      "createdAt": "2026-01-28T08:02:56.346Z",
+      "startedAt": null,
+      "completedAt": null
+    },
+    "task-1769587376740-tjmbxd": {
+      "taskId": "task-1769587376740-tjmbxd",
+      "type": "research",
+      "description": "Technical Architecture: Recommend production stack - Next.js 14+, database, auth, CMS, deployment.",
+      "priority": "normal",
+      "status": "pending",
+      "progress": 0,
+      "assignedTo": [],
+      "tags": [],
+      "createdAt": "2026-01-28T08:02:56.740Z",
+      "startedAt": null,
+      "completedAt": null
+    }
+  },
+  "version": "3.0.0"
+}

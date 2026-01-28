@@ -1,0 +1,205 @@
+{
+  "version": "1.0.0",
+  "metadata": {
+    "title": "AI Teadmiste Puu (AI Knowledge Tree)",
+    "description": "Terviklik raamistik AI kontseptide õpetamiseks",
+    "created": "2025-12-04",
+    "language": "et"
+  },
+  "levels": [
+    {
+      "id": "roots",
+      "name": "JUURED",
+      "subtitle": "Fundamentaalne Mehaanika",
+      "description": "See on AI 'mootor'. Ilma mõistmata, kuidas masin keelt töötleb, tegutsed pimesi.",
+      "color": "#065f46",
+      "order": 1
+    },
+    {
+      "id": "trunk",
+      "name": "TÜVI",
+      "subtitle": "Inseneeria ja Arhitektuur",
+      "description": "Tüvi on kandev struktuur, mis toetab kõike muud.",
+      "color": "#92400e",
+      "order": 2
+    },
+    {
+      "id": "branches",
+      "name": "OKSAD",
+      "subtitle": "Rakendamine ja Agendid",
+      "description": "Oksad on teadmiste praktiline rakendamine.",
+      "color": "#3b82f6",
+      "order": 3
+    },
+    {
+      "id": "leaves",
+      "name": "LEHED JA VILJAD",
+      "subtitle": "Uuringud ja Trendid",
+      "description": "See on puu kõige kiiremini muutuv osa. Mis on täna tippteadus, on homme standard.",
+      "color": "#8b5cf6",
+      "order": 4
+    }
+  ],
+  "concepts": [
+    {
+      "id": "moe",
+      "level": "leaves",
+      "title": "Mixture of Experts (MOE)",
+      "simpleName": "Konsiilium",
+      "explanation": "Ühe suure mudeli asemel töötavad koos mitu spetsialiseerunud 'eksperti'. Iga päringu jaoks aktiveeritakse vaid vajalikud osad, säästes ressursse.",
+      "metaphor": "Arstide konsiilium. Selle asemel, et üks perearst teaks kõike, suunatakse sind kardioloogi või neuroloogi juurde vastavalt sümptomile.",
+      "icon": "users",
+      "complexity": 2
+    },
+    {
+      "id": "agi-asi",
+      "level": "leaves",
+      "title": "AGI ja ASI",
+      "simpleName": "Superintellekt",
+      "explanation": "Teekond inimtaseme intellekti (AGI) ja superintellekti (ASI) suunas. Mudelid, mis suudavad üldistada ja ületada inimvõimeid kõigis valdkondades.",
+      "metaphor": "Üliõpilane vs Einstein vs Superintellekt. Tänane AI on nagu tark tudeng. AGI on nagu geenius. ASI on midagi, mis ületab inimlikud võimed kõigis valdkondades.",
+      "icon": "brain",
+      "complexity": 3
+    },
+    {
+      "id": "green-ai",
+      "level": "leaves",
+      "title": "Green AI (Jätkusuutlikkus)",
+      "simpleName": "Roheline AI",
+      "explanation": "Fookus energiatõhususele. Kuidas treenida ja jooksutada mudeleid väiksema süsiniku jalajäljega.",
+      "metaphor": "Elektriauto. Sama sihtkoht (tulemus), aga kütusekulu ja keskkonnakahju on kordades väiksem.",
+      "icon": "leaf",
+      "complexity": 1
+    },
+    {
+      "id": "reasoning-models",
+      "level": "leaves",
+      "title": "Spetsialiseeritud Arutlusmudelid",
+      "simpleName": "Mõtleja",
+      "explanation": "Mudelid, mis on treenitud spetsiifiliselt mõtlema samm-sammult (nt o1 seeria), et lahendada keerulisi loogika- ja matemaatikaülesandeid.",
+      "metaphor": "Maletaja. Ta ei tee käiku kohe, vaid mõtleb peas läbi 10 võimalikku sammu ette.",
+      "icon": "chess-knight",
+      "complexity": 2
+    },
+    {
+      "id": "ai-agents",
+      "level": "branches",
+      "title": "AI Agendid",
+      "simpleName": "Tegija",
+      "explanation": "Autonoomsed süsteemid, mis mitte ainult ei räägi, vaid tegutsevad: kasutavad tööriistu, planeerivad ja täidavad ülesandeid iseseisvalt.",
+      "metaphor": "Töömees vs Konsultant. Konsultant (LLM) annab nõu. Töömees (Agent) võtab haamri ja parandab katuse ära.",
+      "icon": "bot",
+      "complexity": 2
+    },
+    {
+      "id": "mcp",
+      "level": "branches",
+      "title": "MCP (Model Context Protocol)",
+      "simpleName": "Ühendaja",
+      "explanation": "Standardiseeritud viis, kuidas ühendada AI mudelid väliste andmete ja tööriistadega. Väldib 'spageti-koodi' integratsioonides.",
+      "metaphor": "USB-C kaabel. Üks ja sama pistik sobib, et ühendada AI ükskõik millise seadmega (andmebaasi või programmiga).",
+      "icon": "plug",
+      "complexity": 2
+    },
+    {
+      "id": "complexity-levels",
+      "level": "branches",
+      "title": "3 Keerukuse taset",
+      "simpleName": "Kolm taset",
+      "explanation": "1. LLM (jutustaja), 2. Arutlusmudel (mõtleja), 3. Agent (tegija).",
+      "metaphor": "Köögimetafoor: 1. Retseptiraamat (LLM), 2. Peakokk, kes koostab menüü (Arutlus), 3. Kokk, kes reaalselt hakib ja küpsetab (Agent).",
+      "icon": "layers",
+      "complexity": 1
+    },
+    {
+      "id": "context-engineering",
+      "level": "trunk",
+      "title": "Kontekstitehnika (Context Engineering)",
+      "simpleName": "Lavastus",
+      "explanation": "See on 'tüvi', mis hoiab kõike püsti. Erinevus lihtsa promptimise ja süsteemse konteksti loomise vahel (keskkond, reeglid, rollid).",
+      "metaphor": "Lavastaja töö. Prompt on näitleja lause. Kontekst on lavakujundus, valgus, kostüümid ja stsenaarium, mis annavad lausele mõtte.",
+      "icon": "stage",
+      "complexity": 2
+    },
+    {
+      "id": "rag",
+      "level": "trunk",
+      "title": "RAG (Retrieval-Augmented Generation)",
+      "simpleName": "Raamatukogu",
+      "explanation": "Mudelile antakse ligipääs 'kinnisele raamatukogule' (ettevõtte andmed), et vähendada hallutsineerimist ja tõsta täpsust.",
+      "metaphor": "Avatud raamatuga eksam. AI ei pea fakte peast tuupima, ta võib need usaldusväärsest õpikust järele vaadata.",
+      "icon": "book-open",
+      "complexity": 2
+    },
+    {
+      "id": "memory",
+      "level": "trunk",
+      "title": "Mälu ja Olekuhaldus",
+      "simpleName": "Mälu",
+      "explanation": "Kuidas mudel mäletab eelmist vestlust või tegevuse hetkeseisu (state). Ilma selleta alustaks ta iga lauset nullist.",
+      "metaphor": "Märkmik. Kui sul on halb mälu, kirjutad olulise üles. AI-l on 'lühimälu' (vestluse aken) ja 'pikk mälu' (andmebaas).",
+      "icon": "notebook",
+      "complexity": 2
+    },
+    {
+      "id": "lora",
+      "level": "trunk",
+      "title": "LoRA & Peenhäälestus",
+      "simpleName": "Täiendkoolitus",
+      "explanation": "Meetodid mudeli 'ümberõpetamiseks' kindla stiili või ülesande jaoks, ilma tervet hiigel-mudelit muutmata.",
+      "metaphor": "Kursused. Ülikooli lõpetanu (baasmudel) läheb täiendkoolitusele, et saada spetsialistiks kitsal alal.",
+      "icon": "graduation-cap",
+      "complexity": 3
+    },
+    {
+      "id": "security",
+      "level": "trunk",
+      "title": "AI Turvalisus",
+      "simpleName": "Turvalisus",
+      "explanation": "Meetmed prompt injection'i ja andmelekete vastu. 'Tulemüür' AI ja maailma vahel.",
+      "metaphor": "Turvamees ööklubis. Kontrollib, kes tohib sisse tulla (sisend) ja mida tohib välja viia (väljund).",
+      "icon": "shield",
+      "complexity": 2
+    },
+    {
+      "id": "tokens",
+      "level": "roots",
+      "title": "Tokenid",
+      "simpleName": "Tekstiklotsid",
+      "explanation": "Teksti väikseimad ühikud AI jaoks. See ei ole sõna, vaid täheühend. Need määravad hinna ja kiiruse.",
+      "metaphor": "Lego klotsid. Sõna 'Banaan' ei ole üks tükk, vaid koosneb kolmest klotsist. AI ehitab lauseid klots-klotsi haaval.",
+      "icon": "blocks",
+      "complexity": 1
+    },
+    {
+      "id": "vectors",
+      "level": "roots",
+      "title": "Vektorid (Embeddings)",
+      "simpleName": "Tähenduste kaart",
+      "explanation": "Sõnade ja tähenduste tõlkimine numbrilisteks koordinaatideks ruumis. Lähedased tähendused asuvad ruumis kõrvuti.",
+      "metaphor": "GPS koordinaadid. Sõna 'Kuningas' ja 'Kuninganna' asuvad kaardil lähestikku, nagu Tallinn ja Tartu, aga 'Banaan' on teisel mandril.",
+      "icon": "map-pin",
+      "complexity": 2
+    },
+    {
+      "id": "attention",
+      "level": "roots",
+      "title": "Tähelepanu (Attention Mechanism)",
+      "simpleName": "Fookus",
+      "explanation": "Mehhanism, mis võimaldab mudelil keskenduda lause olulistele osadele, et mõista seoseid (nt kes on 'ta' lauses).",
+      "metaphor": "Taskulamp pimedas toas. AI valgustab korraga ainult neid sõnu, mis on hetkel vastuse andmiseks olulised.",
+      "icon": "flashlight",
+      "complexity": 3
+    },
+    {
+      "id": "prefill-decode",
+      "level": "roots",
+      "title": "Eeltäide vs Dekodeerimine",
+      "simpleName": "Lugemine ja kirjutamine",
+      "explanation": "Kuidas mudel teksti töötleb: algul loeb kiiresti sisse (prefill) ja siis kirjutab aeglaselt välja (decode).",
+      "metaphor": "Lugemine vs Kirjutamine. Raamatut silmadega haarata on kiire (prefill), aga sama teksti käsitsi ümber kirjutada on aeglane (decode).",
+      "icon": "book-text",
+      "complexity": 2
+    }
+  ]
+}

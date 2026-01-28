@@ -1,0 +1,107 @@
+{
+  "version": "2.0.0",
+  "project": "ai-tree",
+  "updated": "2026-01-28",
+  "status": "active",
+  "vision": "Public AI learning platform - no sign-ins, free for all",
+  "principles": ["KISS", "Less is More", "Testing-First (gradual)"],
+  "infrastructure": {
+    "github": "required",
+    "vercel": "required",
+    "supabase": "deferred",
+    "auth": "not_needed"
+  },
+  "epics": [
+    {
+      "id": "E001",
+      "name": "Accessibility & UX Fixes",
+      "priority": "P0-Critical",
+      "status": "not_started",
+      "hours": 26,
+      "stories": ["US-001", "US-002", "US-003", "US-004", "US-005"]
+    },
+    {
+      "id": "E002",
+      "name": "Testing Foundation",
+      "priority": "P0-Critical",
+      "status": "not_started",
+      "hours": 12,
+      "stories": ["US-006", "US-007", "US-008"]
+    },
+    {
+      "id": "E003",
+      "name": "Multilingual (i18n)",
+      "priority": "P1-High",
+      "status": "not_started",
+      "hours": 24,
+      "stories": ["US-009", "US-010", "US-011"]
+    },
+    {
+      "id": "E004",
+      "name": "Interactive Demonstrations",
+      "priority": "P2-Medium",
+      "status": "not_started",
+      "hours": 32,
+      "stories": ["US-012", "US-013", "US-014"]
+    },
+    {
+      "id": "E005",
+      "name": "Content Expansion",
+      "priority": "P2-Medium",
+      "status": "not_started",
+      "hours": 20,
+      "stories": ["US-015", "US-016", "US-017"]
+    },
+    {
+      "id": "E006",
+      "name": "Client-Side Progress",
+      "priority": "P3-Nice-to-have",
+      "status": "not_started",
+      "hours": 16,
+      "stories": ["US-018", "US-019"]
+    }
+  ],
+  "stories": {
+    "US-001": {"id": "US-001", "title": "Color Contrast Fix", "priority": "P0", "hours": 4, "status": "not_started", "epic": "E001"},
+    "US-002": {"id": "US-002", "title": "Keyboard Navigation", "priority": "P0", "hours": 6, "status": "not_started", "epic": "E001"},
+    "US-003": {"id": "US-003", "title": "ARIA Labels", "priority": "P1", "hours": 4, "status": "not_started", "epic": "E001"},
+    "US-004": {"id": "US-004", "title": "Mobile Responsiveness", "priority": "P1", "hours": 6, "status": "not_started", "epic": "E001"},
+    "US-005": {"id": "US-005", "title": "Dark/Light Mode", "priority": "P2", "hours": 6, "status": "not_started", "epic": "E001"},
+    "US-006": {"id": "US-006", "title": "Basic Test Infrastructure", "priority": "P0", "hours": 4, "status": "not_started", "epic": "E002"},
+    "US-007": {"id": "US-007", "title": "Component Test Examples", "priority": "P1", "hours": 4, "status": "not_started", "epic": "E002"},
+    "US-008": {"id": "US-008", "title": "E2E Smoke Test", "priority": "P2", "hours": 4, "status": "not_started", "epic": "E002"},
+    "US-009": {"id": "US-009", "title": "i18n Setup", "priority": "P1", "hours": 8, "status": "not_started", "epic": "E003"},
+    "US-010": {"id": "US-010", "title": "UI Translations", "priority": "P1", "hours": 4, "status": "not_started", "epic": "E003"},
+    "US-011": {"id": "US-011", "title": "Content Translation", "priority": "P1", "hours": 12, "status": "not_started", "epic": "E003"},
+    "US-012": {"id": "US-012", "title": "Tokenizer Visualizer", "priority": "P2", "hours": 12, "status": "not_started", "epic": "E004"},
+    "US-013": {"id": "US-013", "title": "Concept Connection Map", "priority": "P2", "hours": 8, "status": "not_started", "epic": "E004"},
+    "US-014": {"id": "US-014", "title": "Code Examples", "priority": "P2", "hours": 12, "status": "not_started", "epic": "E004"},
+    "US-015": {"id": "US-015", "title": "Prerequisite Mapping", "priority": "P2", "hours": 4, "status": "not_started", "epic": "E005"},
+    "US-016": {"id": "US-016", "title": "4-6 New Root Concepts", "priority": "P2", "hours": 8, "status": "not_started", "epic": "E005"},
+    "US-017": {"id": "US-017", "title": "Learning Paths (Static)", "priority": "P3", "hours": 8, "status": "not_started", "epic": "E005"},
+    "US-018": {"id": "US-018", "title": "Local Progress Storage", "priority": "P3", "hours": 8, "status": "not_started", "epic": "E006"},
+    "US-019": {"id": "US-019", "title": "Progress Visualization", "priority": "P3", "hours": 8, "status": "not_started", "epic": "E006"}
+  },
+  "metrics": {
+    "total_stories": 19,
+    "total_hours": 130,
+    "p0_stories": 4,
+    "p1_stories": 6,
+    "p2_stories": 7,
+    "p3_stories": 2
+  },
+  "deferred": [
+    "Supabase/Database",
+    "Authentication",
+    "Server-side Progress",
+    "Quizzes with Backend",
+    "Certificates",
+    "Instructor Tools"
+  ],
+  "next_actions": [
+    "Set up GitHub repository",
+    "Connect to Vercel",
+    "US-001: Fix color contrast",
+    "US-006: Basic test setup"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "agents": {
+    "agent-1769587428191-fwokca": {
+      "agentId": "agent-1769587428191-fwokca",
+      "agentType": "researcher",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "provider": "anthropic",
+        "task": "Analyze /Users/ak/GitHub/ai-tree project: Review Dendrix-ux.html UX prototype, evaluate tree-concepts.json pedagogy, recommend modern learning platform features and multilingual i18n strategy"
+      },
+      "createdAt": "2026-01-28T08:03:48.245Z",
+      "model": "sonnet",
+      "modelRoutedBy": "router"
+    },
+    "agent-1769587433453-80d4we": {
+      "agentId": "agent-1769587433453-80d4we",
+      "agentType": "architect",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "provider": "anthropic",
+        "task": "Design technical architecture for AI Tree learning platform: Next.js 14+, database schema, auth system, CMS, i18n, deployment strategy"
+      },
+      "createdAt": "2026-01-28T08:03:53.458Z",
+      "model": "opus",
+      "modelRoutedBy": "router"
+    }
+  },
+  "version": "3.0.0"
+}
