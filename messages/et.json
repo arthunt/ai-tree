@@ -97,7 +97,13 @@
     "technicalExplanation": "Tehniline Selgitus",
     "codeExample": "Koodinäide",
     "pressEscToClose": "Vajuta ESC või klõpsa väljaspool, et sulgeda",
-    "backToTree": "Tagasi puu juurde"
+    "backToTree": "Tagasi puu juurde",
+    "share": "Jaga seda kontseptsiooni",
+    "shareNative": "Jaga",
+    "shareTwitter": "Jaga X-is (Twitter)",
+    "shareLinkedIn": "Jaga LinkedInis",
+    "copyLink": "Kopeeri link",
+    "linkCopied": "Link kopeeritud!"
   },
   "tokenizer": {
     "title": "Tokeniseerija Demo",

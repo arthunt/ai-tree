@@ -97,7 +97,13 @@
     "technicalExplanation": "Technical Explanation",
     "codeExample": "Code Example",
     "pressEscToClose": "Press ESC or click outside to close",
-    "backToTree": "Back to Tree"
+    "backToTree": "Back to Tree",
+    "share": "Share this concept",
+    "shareNative": "Share",
+    "shareTwitter": "Share on X (Twitter)",
+    "shareLinkedIn": "Share on LinkedIn",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied!"
   },
   "tokenizer": {
     "title": "Tokenizer Demo",
