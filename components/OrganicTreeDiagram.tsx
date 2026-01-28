@@ -82,7 +82,7 @@ export function OrganicTreeDiagram({
       {/* Tree background image */}
       <div className="absolute inset-0 rounded-3xl overflow-hidden">
         <Image
-          src="/ai-tree/img/Tree-background.jpeg"
+          src="/img/tree-bg.jpg"
           alt="AI Knowledge Tree"
           fill
           className="object-contain opacity-15 mix-blend-multiply"
