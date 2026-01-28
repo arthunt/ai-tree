@@ -30,6 +30,13 @@
 - [x] 4 data issues fixed (circular deps, complexity levels)
 - [x] Accessibility improvements across all components
 
+### Sprint 1: Growth Enablers (DONE)
+- [x] US-020: Shareable Concept URLs with OG meta tags
+- [x] US-021: Progress Tracking (localStorage)
+- [x] US-022: Beginner Onboarding Path
+- [x] US-023: Share Buttons in Lightbox
+- [x] US-024: Mobile Navigation Menu
+
 ---
 
 ## Global Definition of Done (DoD)
@@ -374,18 +381,29 @@ EFFORT│                    │                    │ EFFORT
 
 ## Sprint Planning
 
-### Current Sprint (Sprint 1)
-**Duration:** 1 week | **Capacity:** 16h
+### Previous Sprint (Sprint 1) - COMPLETED
+**Duration:** 1 week | **Capacity:** 16h | **Velocity:** 18h
 
 | Story | Points | Status |
 |-------|--------|--------|
-| US-020 Shareable URLs | 4h | In Progress |
-| US-021 Progress Tracking | 6h | Pending |
-| US-022 Beginner Path | 3h | Pending |
-| US-023 Share Buttons | 2h | Pending |
-| US-024 Mobile Nav | 3h | Pending |
+| US-020 Shareable URLs | 4h | ✅ Done |
+| US-021 Progress Tracking | 6h | ✅ Done |
+| US-022 Beginner Path | 3h | ✅ Done |
+| US-023 Share Buttons | 2h | ✅ Done |
+| US-024 Mobile Nav | 3h | ✅ Done |
 
-**Sprint Goal:** Enable users to share concepts and track their learning.
+### Current Sprint (Sprint 2)
+**Duration:** 1 week | **Capacity:** 23h
+
+| Story | Points | Status |
+|-------|--------|--------|
+| US-025 Search (Cmd+K) | 6h | In Progress |
+| US-026 4 Shu Concepts | 8h | In Progress |
+| US-027 3 Branches Concepts | 6h | In Progress |
+| US-028 Time Estimates | 2h | Pending |
+| US-029 Report Issue | 1h | Pending |
+
+**Sprint Goal:** Make content discoverable and fill critical content gaps.
 
 ---
 

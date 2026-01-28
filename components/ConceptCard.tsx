@@ -21,7 +21,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { Concept } from '../lib/types';
-import { getComplexityColor, getComplexityLabel } from '../lib/utils';
+import { getComplexityColor, getComplexityLabel, getReadingTime } from '../lib/utils';
 import { useTranslations } from 'next-intl';
 
 const iconMap: Record<string, LucideIcon> = {
@@ -59,6 +59,7 @@ export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = f
   const t = useTranslations('concept');
   const isBeginnerPath = BEGINNER_PATH.includes(concept.id);
   const beginnerPathIndex = BEGINNER_PATH.indexOf(concept.id) + 1;
+  const readingTime = getReadingTime(concept);
 
   const displayText = viewMode === 'technical' ? concept.explanation : concept.metaphor;
 
@@ -91,6 +92,9 @@ export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = f
               <div className="flex items-center gap-2 flex-wrap">
                 <span className={`inline-block text-xs px-2 py-1 rounded-full font-medium ${getComplexityColor(concept.complexity)}`}>
                   {getComplexityLabel(concept.complexity)}
+                </span>
+                <span className="inline-block text-xs px-2 py-1 rounded-full font-medium bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
+                  {readingTime} {t('readingTime')}
                 </span>
                 {isBeginnerPath && (
                   <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300">

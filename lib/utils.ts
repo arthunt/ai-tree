@@ -51,3 +51,12 @@ export function getLevelIcon(levelId: string): string {
   };
   return icons[levelId] || '📍';
 }
+
+export function getReadingTime(concept: { metaphor: string; explanation: string; codeExample?: unknown }): number {
+  const wordsPerMinute = 200;
+  const text = `${concept.metaphor} ${concept.explanation}`;
+  const wordCount = text.split(/\s+/).length;
+  const baseTime = Math.ceil(wordCount / wordsPerMinute);
+  const codeBonus = concept.codeExample ? 2 : 0;
+  return Math.max(1, baseTime + codeBonus);
+}

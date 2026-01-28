@@ -245,6 +245,88 @@
       "icon": "book-text",
       "complexity": 2,
       "prerequisites": ["tokens"]
+    },
+    {
+      "id": "context-windows",
+      "level": "roots",
+      "title": "Konteksti Aknad (Context Windows)",
+      "simpleName": "Töömälu",
+      "explanation": "Konteksti aken määrab, kui palju teksti AI saab korraga meeles pidada ja töadelda. See on nagu AI 'töömälu' või 'lühiajaline mälu'. Näiteks GPT-4 suudab meeles pidada umbes 8000 tokenit (ca 6000 sõna). Kui vestlus muutub pikemaks, jääb algus 'akna' taha ja AI 'unustab' selle. Suurem konteksti aken = rohkem infot saab AI korraga kasutada, aga see on ka kallim ja aeglasem.",
+      "metaphor": "Töömälu - nagu raamatu lugemine, kus mäletad korraga vaid viimast 5 lehekülge. Vanemad leheküljed unustatakse ära. Mõni inimene (või AI mudel) suudab meeles pidada rohkem lehekülgi korraga, aga see on kurnavam ja nõuab rohkem energiat.",
+      "icon": "frame",
+      "complexity": 1,
+      "prerequisites": ["tokens"]
+    },
+    {
+      "id": "hallucinations",
+      "level": "roots",
+      "title": "Hallutsinatsioonid",
+      "simpleName": "Enesekindlad väljamõeldised",
+      "explanation": "Hallutsinatsioonid tekivad siis, kui AI genereerib teavet, mis kõlab usutavalt, aga on vale või väljamõeldud. LLM-id on treenitud ennustama järgmist tokenit, mitte kontrollima faktide õigsust. Seega võib mudel 'leiutada' nimesid, kuupäevi, viiteid või fakte, eriti kui ta ei ole kindel. See on üks suurimaid väljakutseid LLM-ide kasutamisel kriitilistes rakendustes. RAG ja tõenduspõhine genereerimine aitavad seda vähendada.",
+      "metaphor": "Enesekindlad väljamõeldised - nagu õpilane, kes arvab vastust enesekindlalt, kui ta tegelikult ei tea. Ta ei ütle 'Ma ei tea', vaid leiutab midagi, mis kõlab usutavalt. AI teeb seda sageli, sest ta on treenitud alati vastama, mitte tunnistama teadmatust.",
+      "icon": "ghost",
+      "complexity": 1,
+      "prerequisites": ["tokens"]
+    },
+    {
+      "id": "temperature-sampling",
+      "level": "trunk",
+      "title": "Temperatuur ja Valideerimine (Temperature & Sampling)",
+      "simpleName": "Loovuse nupp",
+      "explanation": "Temperatuur on parameeter, mis kontrollib AI väljundi juhuslikust ja loomingulisust. Madal temperatuur (näiteks 0.1) teeb mudeli väga ennustatavaks - ta valib alati kõige tõenäolisema tokeni. Kõrge temperatuur (näiteks 1.5) suurendab juhuslikust ja võimaldab vähem tõenäolisi valikuid. Madal temperatuur sobib faktiliste ülesannete jaoks (matemaatika, kood). Kõrge temperatuur sobib loovate ülesannete jaoks (jutustamine, brainstorming). Samuti on erinevaid valimismeetodeid (top-k, top-p/nucleus), mis mõjutavad, kuidas AI valib tokeneide vahel.",
+      "metaphor": "Loovuse nupp - madal temperatuur on kalkulaator (ennustatav, täpne), kõrge temperatuur on kunstnik (loov, aga ettearvamatum). Kui küsid '2+2=?', tahad kalkulaatorit. Kui küsid 'Kirjuta muinasjutt', tahad kunstnikku.",
+      "icon": "thermometer",
+      "complexity": 1,
+      "prerequisites": ["tokens"]
+    },
+    {
+      "id": "prompting-basics",
+      "level": "trunk",
+      "title": "Promptimise Alused (Prompting Basics)",
+      "simpleName": "Heade küsimuste esitamine",
+      "explanation": "Prompting on AI-ga suhtlemise kunst. Hea prompt on selge, spetsiifiline ja annab konteksti. Halva prompti näide: 'Räägi mulle toidust'. Hea prompti näide: 'Soovita 3 kiiret taimetoiduretsepti, mis võtavad alla 30 minuti ja sisaldavad vähemalt 20g valku.' Põhiprintsiibid: 1) Ole spetsiifiline (täpne eesmärk), 2) Anna konteksti (taust, piirangud), 3) Määra formaat (loetelu, tabel, JSON), 4) Kasuta näiteid (few-shot learning), 5) Jaga keeruline ülesanne väiksemateks osadeks (chain-of-thought).",
+      "metaphor": "Heade küsimuste esitamine - vahe 'Mis õhtuks söök?' ja 'Soovita 3 kiiret taimetoiduretsepti alla 30 minuti' on tohutu. Esimene küsimus annab liiga palju võimalusi ja ebaselge vastuse. Teine küsimus on täpne ja saad kasuliku vastuse.",
+      "icon": "message-square",
+      "complexity": 1,
+      "prerequisites": ["tokens"]
+    },
+    {
+      "id": "function-calling",
+      "level": "branches",
+      "title": "Funktsioonide Kutsumine (Function Calling)",
+      "simpleName": "AI-le käte andmine",
+      "explanation": "Function calling võimaldab LLM-idel kutsuda väliseid funktsioone ja tööriistu. Mudel ei täida funktsiooni ise, vaid genereerib struktureeritud kutse (JSON), mille rakendus täidab. Näiteks mudel võib otsustada, et ta vajab ilmaandmeid, genereerida kutse get_weather('Tallinn'), ja rakendus täidab selle ning tagastab tulemuse. Seejärel mudel kasutab seda infot vastuse genereerimiseks. See on võtmetähtsusega AI agentide jaoks - võimaldab neil kasutada andmebaase, API-sid, otsingumootoreid jne.",
+      "metaphor": "AI-le käte andmine - lastes tal kasutada tööriistu nagu veebiotsing, kalendrite kontrollimine või e-mailide saatmine. AI on nagu intern, kes ei tea kõike, aga saab helistada ekspertidele (funktsioonidele) ja saada vastuseid.",
+      "icon": "plug-2",
+      "complexity": 2,
+      "prerequisites": ["ai-agents"],
+      "codeExample": {
+        "language": "python",
+        "code": "from openai import OpenAI\nimport json\n\nclient = OpenAI()\n\n# Define available functions\ntools = [{\n    \"type\": \"function\",\n    \"function\": {\n        \"name\": \"get_weather\",\n        \"description\": \"Hangi ilmateade linna jaoks\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"city\": {\"type\": \"string\", \"description\": \"Linna nimi\"}\n            },\n            \"required\": [\"city\"]\n        }\n    }\n}]\n\n# User asks about weather\nmessages = [{\"role\": \"user\", \"content\": \"Mis ilm on homme Tallinnas?\"}]\n\nresponse = client.chat.completions.create(\n    model=\"gpt-4\",\n    messages=messages,\n    tools=tools\n)\n\n# Model decides to call function\nmessage = response.choices[0].message\nif message.tool_calls:\n    tool_call = message.tool_calls[0]\n    function_name = tool_call.function.name\n    function_args = json.loads(tool_call.function.arguments)\n    \n    # Execute function (simulated)\n    weather_result = {\"temperature\": \"8°C\", \"condition\": \"vihmane\"}\n    \n    # Send result back to model\n    messages.append(message)\n    messages.append({\n        \"role\": \"tool\",\n        \"content\": json.dumps(weather_result),\n        \"tool_call_id\": tool_call.id\n    })\n    \n    # Get final response\n    final_response = client.chat.completions.create(\n        model=\"gpt-4\",\n        messages=messages\n    )\n    print(final_response.choices[0].message.content)",
+        "explanation": "Function calling võimaldab AI-l 'otsustada', millal on vaja väliseid tööriistu kasutada. Mudel genereerib struktureeritud kutse, rakendus täidab selle, ja mudel kasutab tulemust lõpliku vastuse koostamiseks."
+      }
+    },
+    {
+      "id": "transformers",
+      "level": "roots",
+      "title": "Transformerid",
+      "simpleName": "Meisterarhitektuur",
+      "explanation": "Transformer on neuraalmõrgu arhitektuur, mis revolutsioneeris loomulike keelte töötlust 2017. aastal (paper 'Attention is All You Need'). Enne transformereid kasutati RNN-e ja LSTM-e, mis töötlesid teksti järjestikku (aeglane). Transformer töötleb kogu sisendi korraga paralleelselt, kasutades self-attention mehhanismi. See teeb mudeli palju kiiremaks ja võimaldab modelleerida pikemaid sõltuvusi. Kõik kaasaegsed LLM-id (GPT, BERT, Claude, Gemini) põhinevad transformer arhitektuuril. Põhikomponendid: multi-head attention, feed-forward võrgud, positsioonilised embeddingud, layer normalization.",
+      "metaphor": "Meisterarhitektuur - plaan ChatGPT, BERT ja kõigi kaasaegsete AI keelemudelite taga. Nagu betoonkonstruktsioon ehituses - see on standard, mille peale kõik ehitatakse. Enne transformereid oli AI nagu kivist hoone (aeglane, piiratud). Transformerid on nagu terasbetooni leiutamine - äkki said võimalikuks pilvelõhkujad.",
+      "icon": "cpu",
+      "complexity": 2,
+      "prerequisites": ["attention", "vectors"]
+    },
+    {
+      "id": "training-vs-inference",
+      "level": "roots",
+      "title": "Treenimine vs Järeldamine (Training vs Inference)",
+      "simpleName": "Kool vs Töö",
+      "explanation": "Treenimine (training) on faas, kus mudel õpib miljonite tekstinäidete põhjal. See on väga kallis (miljonid dollarid), aeglane (nädalad või kuud) ja nõuab tuhandeid GPU-sid. Mudel kohandab oma sisemisi kaalusid, et ennustada järgmist tokenit võimalikult täpselt. Järeldamine (inference) on faas, kus valmis mudel vastab kasutaja küsimustele. See on suhteliselt kiire (sekundid) ja odav (sendid), sest mudeli kaalud on juba õpitud ja neid enam ei muudeta. Analoogia: treenimine on 4 aastat ülikoolis, järeldamine on töökoha tööl rakendamine.",
+      "metaphor": "Kool vs Töö - treenimine on õppimine (kallis, aeglane, nõuab aastaid), järeldamine on õpitu rakendamine (kiire, odav, igapäevane töö). Kui mudel on kord treenitud, saab seda kasutada miljoneid kordi ilma uuesti õppimata.",
+      "icon": "graduation-cap",
+      "complexity": 1,
+      "prerequisites": ["tokens"]
     }
   ]
 }

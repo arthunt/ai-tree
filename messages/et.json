@@ -68,7 +68,8 @@
   },
   "footer": {
     "description": "AI Teadmiste Puu – Interaktiivne õppevahend AI kontseptide mõistmiseks",
-    "version": "Versioon"
+    "version": "Versioon",
+    "reportIssue": "Teata Probleemist"
   },
   "navigation": {
     "viewOptions": "Vaate valikud",
@@ -90,6 +91,7 @@
     "viewDetails": "Vaata detaile",
     "viewFullSize": "Vaata täismõõtus",
     "beginnerPath": "Algaja rada",
+    "readingTime": "min lugemist",
     "learnFirst": "Õpi enne",
     "prerequisiteHelp": "Nende teemade mõistmine aitab sul seda kontseptsiooni paremini omandada:",
     "navigateTo": "Mine teema juurde",
@@ -144,5 +146,27 @@
     "simple": "Lihtne",
     "intermediate": "Keskmine",
     "advanced": "Keeruline"
+  },
+  "search": {
+    "button": "Otsi",
+    "buttonLabel": "Ava otsing (Cmd+K)",
+    "placeholder": "Otsi kontseptsioone...",
+    "inputLabel": "Otsi AI kontseptsioone",
+    "instructions": "Kasuta nooleklahve navigeerimiseks, Enter valikuks ja Escape sulgemiseks",
+    "close": "Sulge otsing",
+    "noResults": "Kontseptsioone ei leitud",
+    "tryDifferent": "Proovi teistsugust otsingut",
+    "recentSearches": "Hiljutised otsingud",
+    "clearRecent": "Kustuta",
+    "popularConcepts": "Populaarsed kontseptsioonid",
+    "navigate": "Navigeeri",
+    "select": "Vali",
+    "resultsCount": "{count} {count, plural, one {tulemus} other {tulemust}}",
+    "level": {
+      "roots": "Juured",
+      "trunk": "Tüvi",
+      "branches": "Oksad",
+      "leaves": "Lehed"
+    }
   }
 }

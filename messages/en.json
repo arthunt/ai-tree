@@ -68,7 +68,8 @@
   },
   "footer": {
     "description": "AI Knowledge Tree – Interactive learning tool for understanding AI concepts",
-    "version": "Version"
+    "version": "Version",
+    "reportIssue": "Report Issue"
   },
   "navigation": {
     "viewOptions": "View options",
@@ -90,6 +91,7 @@
     "viewDetails": "View details",
     "viewFullSize": "View full size",
     "beginnerPath": "Beginner Path",
+    "readingTime": "min read",
     "learnFirst": "Learn first",
     "prerequisiteHelp": "Understanding these topics will help you better grasp this concept:",
     "navigateTo": "Navigate to topic",
@@ -144,5 +146,27 @@
     "simple": "Simple",
     "intermediate": "Intermediate",
     "advanced": "Advanced"
+  },
+  "search": {
+    "button": "Search",
+    "buttonLabel": "Open search (Cmd+K)",
+    "placeholder": "Search concepts...",
+    "inputLabel": "Search for AI concepts",
+    "instructions": "Use arrow keys to navigate, Enter to select, and Escape to close",
+    "close": "Close search",
+    "noResults": "No concepts found",
+    "tryDifferent": "Try a different search term",
+    "recentSearches": "Recent Searches",
+    "clearRecent": "Clear",
+    "popularConcepts": "Popular Concepts",
+    "navigate": "Navigate",
+    "select": "Select",
+    "resultsCount": "{count} {count, plural, one {result} other {results}}",
+    "level": {
+      "roots": "Roots",
+      "trunk": "Trunk",
+      "branches": "Branches",
+      "leaves": "Leaves"
+    }
   }
 }

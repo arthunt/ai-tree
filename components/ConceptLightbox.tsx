@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Lightbulb, Code2, Terminal, ArrowRight, Share2, Link2, Check, CheckCircle2, Circle } from 'lucide-react';
 import { Concept } from '../lib/types';
-import { getComplexityColor, getComplexityLabel, getLevelColor } from '../lib/utils';
+import { getComplexityColor, getComplexityLabel, getLevelColor, getReadingTime } from '../lib/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { CodeBlock } from './CodeBlock';
@@ -181,6 +181,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
   if (!concept) return null;
 
   const IconComponent = iconMap[concept.icon] || Brain;
+  const readingTime = getReadingTime(concept);
 
   // Get prerequisite concepts
   const prerequisites = concept.prerequisites
@@ -229,6 +230,9 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                   <div className="flex items-center gap-3 flex-wrap">
                     <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${getComplexityColor(concept.complexity)} bg-white`}>
                       {getComplexityLabel(concept.complexity)}
+                    </span>
+                    <span className="inline-block px-3 py-1 rounded-full text-sm font-medium bg-white/90 text-blue-900">
+                      {readingTime} {t('readingTime')}
                     </span>
                     {/* Share buttons */}
                     <div className="flex items-center gap-1" role="group" aria-label={t('share')}>
