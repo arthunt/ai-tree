@@ -86,21 +86,21 @@ export default function AITreePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
-        <div className="container mx-auto px-4 py-4 max-w-7xl">
+      {/* Header - Compact on mobile */}
+      <header className="sticky top-0 z-40 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+        <div className="container mx-auto px-3 py-2 sm:px-4 sm:py-3 max-w-7xl">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white truncate">
                 {t('header.title')}
               </h1>
-              <p className="text-sm text-gray-600 dark:text-gray-400">{t('header.description')}</p>
+              <p className="hidden sm:block text-sm text-gray-600 dark:text-gray-400">{t('header.description')}</p>
             </div>
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-3">
               {/* Search Button */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="flex items-center justify-center min-w-[44px] min-h-[44px] p-2.5 sm:px-4 sm:py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-xl hover:shadow-md hover:border-gray-400 dark:hover:border-gray-500 transition-all font-medium group"
+                className="flex items-center justify-center w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-lg sm:rounded-xl hover:shadow-md hover:border-gray-400 dark:hover:border-gray-500 transition-all font-medium group"
                 aria-label={t('search.buttonLabel')}
               >
                 <Search className="h-5 w-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200" aria-hidden="true" />
@@ -113,7 +113,7 @@ export default function AITreePage() {
               {/* Concept Map Button */}
               <Link
                 href={`/${locale}/tree-view`}
-                className="flex items-center justify-center min-w-[44px] min-h-[44px] p-2.5 sm:px-4 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:shadow-lg transition-all font-medium"
+                className="flex items-center justify-center w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg sm:rounded-xl hover:shadow-lg transition-all font-medium"
                 aria-label={t('header.treeViewAriaLabel')}
               >
                 <Network className="h-5 w-5" aria-hidden="true" />
@@ -123,6 +123,37 @@ export default function AITreePage() {
               {/* Consolidated Settings Dropdown - All breakpoints */}
               <SettingsDropdown viewMode={viewMode} onViewModeChange={setViewMode} />
             </div>
+          </div>
+        </div>
+
+        {/* Slim Level Indicator - Mobile only */}
+        <div className="sm:hidden border-t border-gray-100 dark:border-gray-800">
+          <div className="flex items-center px-3 py-1.5 gap-1">
+            {data.levels.map((level, index) => {
+              const isActive = activeLevel === level.id;
+              const isPast = data.levels.findIndex(l => l.id === activeLevel) > index;
+              return (
+                <button
+                  key={level.id}
+                  onClick={() => {
+                    const element = document.getElementById(level.id);
+                    if (element) element.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className={`flex-1 flex items-center justify-center gap-1 py-1 rounded text-xs font-medium transition-all ${
+                    isActive
+                      ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                      : isPast
+                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
+                  }`}
+                  aria-label={`Go to ${level.name}`}
+                  aria-current={isActive ? 'location' : undefined}
+                >
+                  <span className="text-sm">{level.order === 1 ? '🌱' : level.order === 2 ? '🌲' : level.order === 3 ? '🌿' : '🍃'}</span>
+                  <span className="hidden xs:inline">{level.name}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </header>
