@@ -12,9 +12,10 @@ interface TreeNavigationProps {
   activeLevel: string;
   completedCount?: number;
   totalConcepts?: number;
+  isLightboxOpen?: boolean;
 }
 
-export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalConcepts = 0 }: TreeNavigationProps) {
+export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalConcepts = 0, isLightboxOpen = false }: TreeNavigationProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = useTranslations('navigation');
@@ -35,14 +36,16 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
       {/* Mobile Navigation */}
       <div className="lg:hidden">
         {/* Mobile FAB Button */}
-        <button
-          onClick={() => setIsMobileMenuOpen(true)}
-          className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
-          aria-label={t('openNavPanel')}
-          type="button"
-        >
-          <Menu className="h-6 w-6" />
-        </button>
+        {!isLightboxOpen && (
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
+            aria-label={t('openNavPanel')}
+            type="button"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+        )}
 
         {/* Mobile Menu Overlay */}
         <AnimatePresence>
@@ -78,7 +81,7 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
                   <div>
                     <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('treeLevels')}</h2>
                     {totalConcepts > 0 && (
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-gray-500 dark:text-gray-300">
                         {completedCount}/{totalConcepts} {t('conceptsCompleted')} ({progressPercentage}%)
                       </p>
                     )}
@@ -145,7 +148,7 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
                           <div className={`font-semibold ${isActive ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                             {level.order}. {level.name}
                           </div>
-                          <div className={`text-sm ${isActive ? 'text-white/80' : 'text-gray-500 dark:text-gray-400'}`}>
+                          <div className={`text-sm ${isActive ? 'text-white/80' : 'text-gray-500 dark:text-gray-300'}`}>
                             {level.subtitle}
                           </div>
                         </div>
@@ -219,7 +222,7 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
                         <div className={`font-semibold text-sm ${isActive ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                           {level.order}. {level.name}
                         </div>
-                        <div className={`text-xs ${isActive ? 'text-white/80' : 'text-gray-500 dark:text-gray-400'}`}>
+                        <div className={`text-xs ${isActive ? 'text-white/80' : 'text-gray-500 dark:text-gray-300'}`}>
                           {level.subtitle}
                         </div>
                       </motion.div>

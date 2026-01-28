@@ -10,6 +10,7 @@ import { ViewModeToggle } from '@/components/ViewModeToggle';
 import { ConceptLightbox } from '@/components/ConceptLightbox';
 import { DarkModeToggle } from '@/components/DarkModeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { SettingsDropdown } from '@/components/SettingsDropdown';
 import { TokenizerDemo } from '@/components/TokenizerDemo';
 import { VectorDemo } from '@/components/VectorDemo';
 import { SearchModal } from '@/components/SearchModal';
@@ -116,15 +117,22 @@ export default function AITreePage() {
                 <Network className="h-5 w-5" aria-hidden="true" />
                 {t('header.treeView')}
               </Link>
-              <ViewModeToggle viewMode={viewMode} onChange={setViewMode} />
-              <DarkModeToggle />
+              {/* Settings Dropdown - Tablet only (768-1023px) */}
+              <div className="hidden md:flex lg:hidden">
+                <SettingsDropdown viewMode={viewMode} onViewModeChange={setViewMode} />
+              </div>
+              {/* Individual Controls - Mobile and Desktop */}
+              <div className="md:hidden lg:flex items-center gap-4">
+                <ViewModeToggle viewMode={viewMode} onChange={setViewMode} />
+                <DarkModeToggle />
+              </div>
             </div>
           </div>
         </div>
       </header>
 
       {/* Tree Navigation */}
-      <TreeNavigation levels={data.levels} activeLevel={activeLevel} completedCount={completedCount} totalConcepts={totalConcepts} />
+      <TreeNavigation levels={data.levels} activeLevel={activeLevel} completedCount={completedCount} totalConcepts={totalConcepts} isLightboxOpen={selectedConcept !== null} />
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden" aria-labelledby="hero-heading">

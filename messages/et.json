@@ -53,9 +53,14 @@
   },
   "viewMode": {
     "both": "Mõlemad",
-    "estonian": "Eesti keel",
-    "english": "Inglise keel",
-    "ariaLabel": "Vaate režiimi valik"
+    "simple": "Lihtne",
+    "technical": "Tehniline",
+    "ariaLabel": "Sisu režiimi valik",
+    "tooltip": {
+      "simple": "Lihtsad metafoorid ja igapäevased näited",
+      "technical": "Tehnilised selgitused arendajatele",
+      "both": "Kuva mõlemad kõrvuti"
+    }
   },
   "nameToggle": {
     "simple": "Lihtsad nimed",
@@ -65,6 +70,11 @@
   "darkMode": {
     "toggle": "Tume režiim",
     "ariaLabel": "Tume/hele režiimi valik"
+  },
+  "settings": {
+    "ariaLabel": "Ava seaded menüü",
+    "viewMode": "Vaate Režiim",
+    "theme": "Teema"
   },
   "footer": {
     "description": "AI Teadmiste Puu – Interaktiivne õppevahend AI kontseptide mõistmiseks",
@@ -79,7 +89,7 @@
     "level": "Keerukuse tase",
     "beginner": "Algaja",
     "intermediate": "Keskmine",
-    "advanced": "Keeruline"
+    "advanced": "Edasijõudnud"
   },
   "loading": {
     "default": "Laen...",
@@ -113,7 +123,9 @@
     "linkCopied": "Link kopeeritud!",
     "completed": "Omandatud",
     "markAsComplete": "Märgi omandatuks",
-    "markedComplete": "Omandatud!"
+    "markedComplete": "Omandatud!",
+    "conceptMarkedComplete": "Kontseptsioon märgitud omandatuks!",
+    "undo": "Võta tagasi"
   },
   "tokenizer": {
     "title": "Tokeniseerija Demo",
@@ -150,7 +162,7 @@
     "clickForDetails": "Kliki detailideks",
     "simple": "Lihtne",
     "intermediate": "Keskmine",
-    "advanced": "Keeruline"
+    "advanced": "Edasijõudnud"
   },
   "search": {
     "button": "Otsi",
@@ -182,7 +194,7 @@
     "reset": "Lähtesta",
     "word": "Sõna",
     "optional": "(valikuline)",
-    "wordPlaceholder": "nt cat, happy, king",
+    "wordPlaceholder": "nt kass, rõõmus, kuningas",
     "calculate": "Arvuta Sarnasus",
     "similarityScores": "Sarnasuse Skoorid:",
     "similarityHigh": "Väga sarnane",

@@ -14,8 +14,8 @@ export function ViewModeToggle({ viewMode, onChange }: ViewModeToggleProps) {
   const t = useTranslations('viewMode');
 
   const modes: { id: ViewMode; labelKey: string; icon: typeof Lightbulb }[] = [
-    { id: 'metaphor', labelKey: 'estonian', icon: Lightbulb },
-    { id: 'technical', labelKey: 'english', icon: Code2 },
+    { id: 'metaphor', labelKey: 'simple', icon: Lightbulb },
+    { id: 'technical', labelKey: 'technical', icon: Code2 },
     { id: 'both', labelKey: 'both', icon: LayoutGrid },
   ];
 
@@ -28,7 +28,7 @@ export function ViewModeToggle({ viewMode, onChange }: ViewModeToggleProps) {
       {modes.map((mode) => {
         const Icon = mode.icon;
         const isActive = viewMode === mode.id;
-        const label = t(mode.labelKey as 'both' | 'estonian' | 'english');
+        const label = t(mode.labelKey as 'both' | 'simple' | 'technical');
 
         return (
           <motion.button
@@ -40,7 +40,7 @@ export function ViewModeToggle({ viewMode, onChange }: ViewModeToggleProps) {
             `}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            aria-label={`${label} vaade`}
+            aria-label={label}
             aria-pressed={isActive}
             aria-current={isActive ? 'true' : undefined}
             type="button"

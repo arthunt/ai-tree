@@ -49,3 +49,42 @@ a:focus-visible,
   outline-offset: 2px;
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
 }
+
+/* Mobile scroll optimizations */
+@layer utilities {
+  /* Safe area padding for iOS notch/home indicator */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  /* Smooth momentum scrolling for iOS */
+  .scroll-smooth-touch {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent scroll chaining */
+  .overscroll-contain {
+    overscroll-behavior: contain;
+  }
+
+  /* Touch action for vertical scrolling */
+  .touch-pan-y {
+    touch-action: pan-y;
+  }
+}
+
+/* Support for dynamic viewport height (iOS Safari) */
+@supports (height: 100dvh) {
+  .h-screen-dynamic {
+    height: 100dvh;
+  }
+
+  .max-h-screen-dynamic {
+    max-height: 100dvh;
+  }
+}

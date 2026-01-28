@@ -9,6 +9,8 @@ import { useParams } from 'next/navigation';
 import { CodeBlock } from './CodeBlock';
 import { LightboxSkeleton } from './LightboxSkeleton';
 import { useTranslations } from 'next-intl';
+import { useProgress } from '../lib/useProgress';
+import { useToast } from '@/lib/useToast';
 import {
   Users,
   Brain,
@@ -62,6 +64,9 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
   const locale = params.locale as string;
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const { isCompleted: checkIsCompleted } = useProgress();
+  const { showToast } = useToast();
+  const [lastCompletedState, setLastCompletedState] = useState<boolean | null>(null);
 
   // Generate shareable URL
   const getShareUrl = () => {
@@ -77,6 +82,8 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
       await navigator.clipboard.writeText(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+      // Show toast notification (4s duration as per requirements)
+      showToast(t('linkCopied'), 'success', 4000);
     } catch {
       // Fallback for older browsers
       const textArea = document.createElement('textarea');
@@ -87,6 +94,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
       document.body.removeChild(textArea);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+      showToast(t('linkCopied'), 'success', 4000);
     }
   };
 
@@ -161,6 +169,33 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
     };
   }, [concept, onClose]);
 
+  // Lock body scroll when lightbox is open (mobile optimization)
+  useEffect(() => {
+    if (concept) {
+      // Store original styles
+      const originalOverflow = document.body.style.overflow;
+      const originalPosition = document.body.style.position;
+      const originalWidth = document.body.style.width;
+      const originalTop = document.body.style.top;
+      const scrollY = window.scrollY;
+
+      // Lock body scroll
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = `-${scrollY}px`;
+
+      return () => {
+        // Restore original styles and scroll position
+        document.body.style.overflow = originalOverflow;
+        document.body.style.position = originalPosition;
+        document.body.style.width = originalWidth;
+        document.body.style.top = originalTop;
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [concept]);
+
   // Focus trap
   useEffect(() => {
     if (!concept) return;
@@ -217,7 +252,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 pb-safe"
         role="dialog"
         aria-modal="true"
         aria-labelledby="concept-title"
@@ -229,7 +264,8 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           onClick={(e) => e.stopPropagation()}
-          className="relative bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto overflow-x-hidden"
+          className="relative bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] max-h-[90dvh] overflow-y-auto overflow-x-hidden overscroll-contain touch-pan-y"
+          style={{ WebkitOverflowScrolling: 'touch' }}
         >
           {isLoading ? (
             <LightboxSkeleton />
@@ -256,7 +292,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                       {canNativeShare ? (
                         <button
                           onClick={handleNativeShare}
-                          className="p-2 min-h-[36px] min-w-[36px] hover:bg-white/20 rounded-full transition-colors flex items-center justify-center focus:ring-2 focus:ring-white focus:outline-none"
+                          className="p-2 min-h-[44px] min-w-[44px] hover:bg-white/20 rounded-full transition-colors flex items-center justify-center focus:ring-2 focus:ring-white focus:outline-none"
                           aria-label={t('shareNative')}
                           type="button"
                         >
@@ -266,7 +302,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                         <>
                           <button
                             onClick={handleShareTwitter}
-                            className="p-2 min-h-[36px] min-w-[36px] hover:bg-white/20 rounded-full transition-colors flex items-center justify-center focus:ring-2 focus:ring-white focus:outline-none"
+                            className="p-2 min-h-[44px] min-w-[44px] hover:bg-white/20 rounded-full transition-colors flex items-center justify-center focus:ring-2 focus:ring-white focus:outline-none"
                             aria-label={t('shareTwitter')}
                             type="button"
                           >
@@ -276,7 +312,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                           </button>
                           <button
                             onClick={handleShareLinkedIn}
-                            className="p-2 min-h-[36px] min-w-[36px] hover:bg-white/20 rounded-full transition-colors flex items-center justify-center focus:ring-2 focus:ring-white focus:outline-none"
+                            className="p-2 min-h-[44px] min-w-[44px] hover:bg-white/20 rounded-full transition-colors flex items-center justify-center focus:ring-2 focus:ring-white focus:outline-none"
                             aria-label={t('shareLinkedIn')}
                             type="button"
                           >
@@ -288,7 +324,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                       )}
                       <button
                         onClick={handleCopyLink}
-                        className="p-2 min-h-[36px] min-w-[36px] hover:bg-white/20 rounded-full transition-colors flex items-center justify-center focus:ring-2 focus:ring-white focus:outline-none"
+                        className="p-2 min-h-[44px] min-w-[44px] hover:bg-white/20 rounded-full transition-colors flex items-center justify-center focus:ring-2 focus:ring-white focus:outline-none"
                         aria-label={copied ? t('linkCopied') : t('copyLink')}
                         type="button"
                       >
@@ -324,30 +360,51 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                 <p className="text-sm text-amber-800 dark:text-amber-300 mb-4">
                   {t('prerequisiteHelp')}
                 </p>
+                {/* Progress Counter */}
+                {(() => {
+                  const completedCount = prerequisites.filter(prereq => checkIsCompleted(prereq.id)).length;
+                  const totalCount = prerequisites.length;
+                  return (
+                    <div className="mb-4 text-sm font-medium text-amber-900 dark:text-amber-200">
+                      {completedCount} of {totalCount} prerequisites completed
+                    </div>
+                  );
+                })()}
                 <div className="flex flex-wrap gap-3">
-                  {prerequisites.map((prereq) => {
-                    const levelColor = getLevelColor(prereq.level);
+                  {prerequisites.map((prereq, index) => {
+                    const isPrereqCompleted = checkIsCompleted(prereq.id);
+                    const isFirstUncompleted = !isPrereqCompleted && index === prerequisites.findIndex(p => !checkIsCompleted(p.id));
+                    const borderColor = isPrereqCompleted ? '#10b981' : '#f59e0b'; // green-500 : amber-500
+
                     return (
                       <button
                         key={prereq.id}
                         onClick={() => handlePrerequisiteClick(prereq.id)}
                         className="group flex items-center gap-2 px-4 py-2 rounded-full transition-all hover:scale-105 hover:shadow-md focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:outline-none min-h-[44px]"
                         style={{
-                          backgroundColor: `${levelColor}20`,
-                          borderColor: levelColor,
+                          backgroundColor: isPrereqCompleted ? '#d1fae520' : '#fef3c720',
+                          borderColor: borderColor,
                           borderWidth: '2px'
                         }}
-                        aria-label={`${t('navigateTo')} ${prereq.title}`}
+                        aria-label={`${t('navigateTo')} ${prereq.title}${isPrereqCompleted ? ' (completed)' : ''}${isFirstUncompleted ? ' - Start here' : ''}`}
                       >
+                        {isPrereqCompleted && (
+                          <Check className="h-4 w-4 text-green-600 dark:text-green-400" aria-hidden="true" />
+                        )}
                         <span
                           className="font-semibold"
-                          style={{ color: levelColor }}
+                          style={{ color: isPrereqCompleted ? '#10b981' : '#f59e0b' }}
                         >
                           {prereq.simpleName}
                         </span>
+                        {isFirstUncompleted && (
+                          <span className="text-xs font-bold text-amber-700 dark:text-amber-300 ml-1">
+                            (Start here)
+                          </span>
+                        )}
                         <ArrowRight
                           className="h-4 w-4 group-hover:translate-x-1 transition-transform"
-                          style={{ color: levelColor }}
+                          style={{ color: isPrereqCompleted ? '#10b981' : '#f59e0b' }}
                         />
                       </button>
                     );
@@ -405,7 +462,27 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               {onToggleComplete && (
                 <button
-                  onClick={onToggleComplete}
+                  onClick={() => {
+                    const wasCompleted = isCompleted;
+                    setLastCompletedState(wasCompleted);
+                    onToggleComplete();
+
+                    // Show toast with undo action (5s duration as per requirements)
+                    if (!wasCompleted) {
+                      showToast(
+                        t('conceptMarkedComplete'),
+                        'success',
+                        5000,
+                        {
+                          label: t('undo'),
+                          onClick: () => {
+                            onToggleComplete();
+                            setLastCompletedState(null);
+                          },
+                        }
+                      );
+                    }
+                  }}
                   className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all min-h-[48px] focus:ring-2 focus:ring-offset-2 focus:outline-none ${
                     isCompleted
                       ? 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800 focus:ring-green-500'
@@ -426,7 +503,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                   )}
                 </button>
               )}
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+              <p className="text-gray-600 dark:text-gray-300 text-sm">
                 {t('pressEscToClose')}
               </p>
             </div>

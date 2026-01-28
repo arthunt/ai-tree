@@ -6,6 +6,8 @@ import { notFound } from 'next/navigation';
 import { locales } from '@/i18n';
 import '../globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { ToastProvider } from '@/lib/useToast';
+import { ToastContainer } from '@/components/Toast';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -49,7 +51,12 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <ToastProvider>
+              {children}
+              <ToastContainer />
+            </ToastProvider>
+          </ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>

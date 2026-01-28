@@ -339,7 +339,7 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
                         <Clock className="h-4 w-4 text-gray-400" aria-hidden="true" />
-                        <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400">
+                        <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-300">
                           {t('recentSearches')}
                         </h3>
                       </div>
@@ -370,7 +370,7 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
                 <div>
                   <div className="flex items-center gap-2 mb-3">
                     <TrendingUp className="h-4 w-4 text-gray-400" aria-hidden="true" />
-                    <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400">
+                    <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-300">
                       {t('popularConcepts')}
                     </h3>
                   </div>
@@ -399,7 +399,7 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
                             <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
                               {concept.title}
                             </div>
-                            <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                            <div className="text-xs text-gray-500 dark:text-gray-300 truncate">
                               {concept.simpleName}
                             </div>
                           </div>
@@ -455,7 +455,7 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
                         <div className="text-sm font-semibold text-gray-900 dark:text-white truncate">
                           {concept.title}
                         </div>
-                        <div className="text-xs text-gray-600 dark:text-gray-400 truncate">
+                        <div className="text-xs text-gray-600 dark:text-gray-300 truncate">
                           {concept.simpleName} • {concept.metaphor.slice(0, 60)}...
                         </div>
                       </div>
@@ -475,8 +475,8 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
             ) : (
               /* No Results */
               <div className="p-8 text-center">
-                <Search className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" aria-hidden="true" />
-                <p className="text-gray-500 dark:text-gray-400">{t('noResults')}</p>
+                <Search className="h-12 w-12 text-gray-300 dark:text-gray-400 mx-auto mb-3" aria-hidden="true" />
+                <p className="text-gray-500 dark:text-gray-300">{t('noResults')}</p>
                 <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">{t('tryDifferent')}</p>
               </div>
             )}
@@ -484,7 +484,7 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
 
           {/* Footer */}
           <div className="p-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-300">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1">
                   <kbd className="px-2 py-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded">↑</kbd>

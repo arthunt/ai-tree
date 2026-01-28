@@ -53,9 +53,14 @@
   },
   "viewMode": {
     "both": "Both",
-    "estonian": "Estonian",
-    "english": "English",
-    "ariaLabel": "View mode selection"
+    "simple": "Simple",
+    "technical": "Technical",
+    "ariaLabel": "Content mode selection",
+    "tooltip": {
+      "simple": "Simple metaphors and everyday examples",
+      "technical": "Technical explanations for developers",
+      "both": "Show both side by side"
+    }
   },
   "nameToggle": {
     "simple": "Simple names",
@@ -65,6 +70,11 @@
   "darkMode": {
     "toggle": "Dark mode",
     "ariaLabel": "Dark/light mode selection"
+  },
+  "settings": {
+    "ariaLabel": "Open settings menu",
+    "viewMode": "View Mode",
+    "theme": "Theme"
   },
   "footer": {
     "description": "AI Knowledge Tree – Interactive learning tool for understanding AI concepts",
@@ -113,7 +123,9 @@
     "linkCopied": "Link copied!",
     "completed": "Completed",
     "markAsComplete": "Mark as understood",
-    "markedComplete": "Understood!"
+    "markedComplete": "Understood!",
+    "conceptMarkedComplete": "Concept marked as complete!",
+    "undo": "Undo"
   },
   "tokenizer": {
     "title": "Tokenizer Demo",

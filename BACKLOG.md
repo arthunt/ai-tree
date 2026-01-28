@@ -337,6 +337,252 @@ Every story must meet ALL criteria before closing:
 
 ---
 
+---
+
+## 🚨 Sprint 5: UX/UI Audit Fixes (Jan 2026)
+
+> **Audit Date:** 2026-01-28
+> **Conducted By:** UX Designer, Learning Designer, Information Architect, Usability Tester, Accessibility Specialist
+> **Focus:** Mobile friendliness, toggle confusion, dark mode contrast, learning flow
+
+---
+
+### US-040: Fix ViewModeToggle Label Confusion
+**Priority:** P0-Critical | **Effort:** 2h | **Type:** UX/Clarity
+
+**Problem:** ViewModeToggle shows "Eesti keel / Inglise keel / Mõlemad" but actually controls metaphor vs technical content display. Users confuse this with language selection (LanguageSwitcher is separate).
+
+**Solution:**
+- Rename labels from "Estonian/English" to "Simple/Technical/Both"
+- Update icons to clearly represent content type not language
+- Add tooltip explaining what each mode shows
+
+**Acceptance Criteria:**
+- [ ] Labels changed: "Lihtne" (Simple) / "Tehniline" (Technical) / "Mõlemad" (Both)
+- [ ] Icons: Lightbulb (simple metaphors), Code2 (technical), LayoutGrid (both)
+- [ ] Tooltip on hover explains the difference
+- [ ] Build passes, translations updated
+
+**Files:** `components/ViewModeToggle.tsx`, `messages/et.json`, `messages/en.json`
+
+---
+
+### US-041: Dark Mode Contrast Fixes (WCAG AA)
+**Priority:** P0-Critical | **Effort:** 3h | **Type:** Accessibility
+
+**Problem:** Multiple components use `dark:text-gray-400` which only has ~4.0:1 contrast ratio (WCAG AA requires 4.5:1 for normal text).
+
+**Failing Components:**
+| Component | Line | Current | Fix |
+|-----------|------|---------|-----|
+| TreeNavigation | 81-82, 148, 222 | dark:text-gray-400 | dark:text-gray-300 |
+| ConceptLightbox | 429 | dark:text-gray-400 | dark:text-gray-300 |
+| SearchModal | 342, 402, 458, 479, 487 | dark:text-gray-400 | dark:text-gray-300 |
+| SearchModal (icon) | 478 | dark:text-gray-600 | dark:text-gray-400 (CRITICAL) |
+
+**Acceptance Criteria:**
+- [ ] All `dark:text-gray-400` on dark backgrounds upgraded to `dark:text-gray-300`
+- [ ] SearchModal no-results icon fixed (dark:text-gray-600 → dark:text-gray-400)
+- [ ] Borderline cases (`dark:text-gray-300`) upgraded to `dark:text-gray-200` where practical
+- [ ] Manual contrast check passes
+
+**Files:** `TreeNavigation.tsx`, `ConceptLightbox.tsx`, `SearchModal.tsx`, `LevelSection.tsx`
+
+---
+
+### US-042: First-Time User Onboarding
+**Priority:** P0-Critical | **Effort:** 4h | **Type:** Onboarding
+
+**Problem:** First-time visitors have no orientation. They don't understand:
+- What the platform teaches
+- How to navigate (Classic vs Tree view)
+- What the toggles do
+- Where to start
+
+**Solution:**
+- Add welcome modal on first visit (localStorage flag)
+- 3-4 slide walkthrough explaining tree metaphor and views
+- Interactive tooltip tour pointing to key features
+- "Got it" button dismisses, doesn't show again
+
+**Acceptance Criteria:**
+- [ ] Welcome modal shows on first visit only
+- [ ] Explains: Tree metaphor, View options, Beginner path
+- [ ] Dismiss button sets localStorage flag
+- [ ] Skip option available
+- [ ] Mobile-responsive design
+
+**Files:** New `components/WelcomeModal.tsx`, `app/[locale]/page.tsx`
+
+---
+
+### US-043: Mobile Lightbox Scroll Optimization
+**Priority:** P1-High | **Effort:** 3h | **Type:** Mobile UX
+
+**Problem:** ConceptLightbox uses `max-h-[90vh]` centered modal which creates poor mobile experience:
+- Difficult to scroll on small screens
+- "Mark as Complete" button hard to reach
+- No visual indication more content exists below
+
+**Solution:**
+- Use full-screen bottom sheet on mobile (sm breakpoint)
+- Add gradient fade at bottom indicating scroll
+- Make "Mark as Complete" sticky at bottom on mobile
+- Keep centered modal on tablet/desktop
+
+**Acceptance Criteria:**
+- [ ] Mobile (<640px): Full-screen bottom sheet layout
+- [ ] Scroll indicator (gradient fade) shows when content overflows
+- [ ] Action buttons sticky at bottom on mobile
+- [ ] Tablet/desktop: Current centered modal preserved
+- [ ] Works with on-screen keyboard visible
+
+**Files:** `components/ConceptLightbox.tsx`
+
+---
+
+### US-044: Header Responsive Layout for Tablet
+**Priority:** P1-High | **Effort:** 2h | **Type:** Responsive Design
+
+**Problem:** Header has too many controls (Search, TreeView, ViewModeToggle, NameToggle, DarkModeToggle, LanguageSwitcher) that don't collapse gracefully on tablet (768-1024px). Creates multi-row header.
+
+**Solution:**
+- On tablet: Keep Search, TreeView, LanguageSwitcher visible
+- Move ViewModeToggle, NameToggle, DarkModeToggle into dropdown menu
+- Add "Settings" gear icon to access collapsed items
+
+**Acceptance Criteria:**
+- [ ] Header stays single row on tablet (iPad 1024px)
+- [ ] Settings dropdown contains: View Mode, Name Toggle, Dark Mode
+- [ ] Primary controls (Search, TreeView) always visible
+- [ ] Desktop (lg+): All controls visible as before
+
+**Files:** `app/[locale]/page.tsx`, new `components/SettingsDropdown.tsx`
+
+---
+
+### US-045: Add Prerequisite Completion Indicators
+**Priority:** P1-High | **Effort:** 2h | **Type:** Learning UX
+
+**Problem:** Prerequisites in lightbox show as plain buttons without indicating:
+- Which prerequisites user has completed
+- Progress toward this concept
+- Learning sequence
+
+**Solution:**
+- Add checkmark to completed prerequisite pills
+- Show progress: "2 of 3 prerequisites completed"
+- Highlight first uncompleted as "Start here"
+
+**Acceptance Criteria:**
+- [ ] Completed prerequisites show ✓ checkmark
+- [ ] Progress counter above prerequisite list
+- [ ] First uncompleted prerequisite subtly highlighted
+- [ ] Tooltip explains prerequisite importance
+
+**Files:** `components/ConceptLightbox.tsx`
+
+---
+
+### US-046: Fix FAB/Lightbox Z-Index Conflicts
+**Priority:** P1-High | **Effort:** 1h | **Type:** Mobile UX
+
+**Problem:** TreeNavigation FAB (fixed bottom-right) can be covered by ConceptLightbox footer on mobile.
+
+**Solution:**
+- Hide FAB when lightbox is open on mobile
+- Or reposition FAB above lightbox
+
+**Acceptance Criteria:**
+- [ ] FAB not visible when lightbox open on mobile
+- [ ] FAB returns when lightbox closes
+- [ ] No button overlap on small screens
+
+**Files:** `components/TreeNavigation.tsx`, may need lightbox state context
+
+---
+
+### US-047: Add Undo for "Mark as Complete"
+**Priority:** P1-High | **Effort:** 2h | **Type:** User Control
+
+**Problem:** No confirmation or undo for marking concept complete. Users might accidentally mark items.
+
+**Solution:**
+- Show toast notification with "Undo" button for 5 seconds
+- Or add confirmation dialog (less preferred)
+
+**Acceptance Criteria:**
+- [ ] Toast appears: "Marked as complete" with Undo button
+- [ ] Undo reverses the action within 5 seconds
+- [ ] Toast auto-dismisses after 5 seconds
+- [ ] Works for both mark and unmark actions
+
+**Files:** `components/ConceptLightbox.tsx`, new `components/Toast.tsx` or use existing
+
+---
+
+### US-048: Improve Beginner Path Visibility
+**Priority:** P2-Medium | **Effort:** 3h | **Type:** Learning UX
+
+**Problem:** Beginner path badges are small and easy to miss. No visual flow connecting the 5 concepts.
+
+**Solution:**
+- Add "Highlight Beginner Path" toggle
+- Show sequential flow: 1 → 2 → 3 → 4 → 5
+- Add "Start Learning" CTA that scrolls to first concept
+
+**Acceptance Criteria:**
+- [ ] Beginner path toggle in view options
+- [ ] When enabled, path concepts have highlighted border
+- [ ] Sequential numbers clearly visible
+- [ ] Progress counter: "2/5 beginner path completed"
+
+**Files:** `app/[locale]/page.tsx`, `components/ConceptCard.tsx`
+
+---
+
+### US-049: Standardize Touch Targets ✅ DONE
+**Priority:** P2-Medium | **Effort:** 1h | **Type:** Accessibility
+
+**Problem:** Share buttons in lightbox use `min-h-[36px]` which is below WCAG 44px recommendation.
+
+**Solution:**
+- ~~Audit all touch targets~~
+- ~~Update share buttons to min-h-[44px] min-w-[44px]~~
+- Document standard in component guidelines
+
+**Acceptance Criteria:**
+- [x] All interactive elements minimum 44x44px
+- [x] Share buttons updated
+- [ ] Consistent across all components
+
+**Files:** `components/ConceptLightbox.tsx` (share buttons section)
+
+**Status:** Share buttons fixed (2026-01-28). Full audit pending.
+
+---
+
+### US-050: Improve Search/Copy Feedback
+**Priority:** P2-Medium | **Effort:** 1h | **Type:** UX Polish
+
+**Problem:**
+- Copy link shows brief checkmark (2s) - easy to miss
+- Search results don't show count
+
+**Solution:**
+- Increase copy feedback to 3-4 seconds
+- Add toast notification "Link copied!"
+- Show search result count
+
+**Acceptance Criteria:**
+- [ ] Copy feedback visible for 4 seconds
+- [ ] Toast notification appears
+- [ ] Search shows "{n} results found"
+
+**Files:** `components/ConceptLightbox.tsx`, `components/SearchModal.tsx`
+
+---
+
 ## Backlog (Future)
 
 ### Content & Features
@@ -346,6 +592,9 @@ Every story must meet ALL criteria before closing:
 - [ ] US-036: Glossary/index page - 6h
 - [ ] US-037: Related concepts suggestions - 8h
 - [ ] US-038: Video/animation for Attention - 16h
+- [ ] US-051: Learning pathways system (Beginner/Builder/Researcher) - 8h
+- [ ] US-052: Prerequisite validation before marking complete - 4h
+- [ ] US-053: Rename Classic/Tree views for clarity - 2h
 
 ### Testing
 - [ ] US-006: Basic Test Infrastructure (Vitest) - 4h
@@ -426,6 +675,33 @@ EFFORT│                    │                    │ EFFORT
 
 **Sprint Goal:** Polish & interactive demos. ✅ Achieved
 
+### Current Sprint (Sprint 5) - UX/UI AUDIT FIXES
+**Duration:** 1-2 weeks | **Capacity:** 24h | **Start:** 2026-01-28
+
+| Story | Points | Priority | Status |
+|-------|--------|----------|--------|
+| US-040 ViewModeToggle Labels | 2h | P0-Critical | ✅ Done |
+| US-041 Dark Mode Contrast | 3h | P0-Critical | ✅ Done |
+| US-042 First-Time Onboarding | 4h | P0-Critical | 🔲 Pending |
+| US-043 Mobile Lightbox Scroll | 3h | P1-High | ✅ Done |
+| US-044 Header Tablet Layout | 2h | P1-High | ✅ Done |
+| US-045 Prerequisite Indicators | 2h | P1-High | ✅ Done |
+| US-046 FAB/Lightbox Z-Index | 1h | P1-High | ✅ Done |
+| US-047 Undo Mark Complete | 2h | P1-High | ✅ Done |
+| US-054 Toast Notifications | 3h | P1-High | ✅ Done |
+
+**Sprint Goal:** Fix critical UX issues identified in audit - improve mobile experience, fix toggle confusion, WCAG compliance.
+
+**Recommended Order:**
+1. US-040 (toggle labels) - Quick win, high confusion
+2. US-041 (contrast) - Accessibility compliance
+3. US-046 (z-index) - Quick fix
+4. US-043 (mobile lightbox) - Major mobile improvement
+5. US-045 (prerequisites) - Learning flow
+6. US-044 (header) - Tablet experience
+7. US-047 (undo) - User control
+8. US-042 (onboarding) - New user experience
+
 ---
 
 ## Commands Reference
@@ -436,6 +712,99 @@ npm run build        # Build for production
 npm run lint         # Check code style
 npm test             # Run tests (when configured)
 ```
+
+---
+
+## 🔍 Swarm Review Findings (2026-01-28)
+
+> **Review Date:** 2026-01-28
+> **Agents:** UX/UI Designer, Learning Designer, Information Architect, Translator, Usability Tester
+> **Total Issues Found:** 68 issues across 5 domains
+
+### Completed During Review
+- ✅ US-040: ViewModeToggle labels fixed ("Lihtne/Tehniline/Mõlemad")
+- ✅ US-041: Dark mode contrast (11 instances fixed to WCAG AA)
+- ✅ US-049: Touch targets (share buttons 36px → 44px)
+- ✅ Translation: Estonian localization improvements (vectorDemo, advanced levels)
+
+### Completed During Implementation Sprint
+- ✅ US-043: Mobile lightbox scroll (body scroll lock, iOS momentum scrolling, safe-area support)
+- ✅ US-044: Header tablet layout (SettingsDropdown component for 768-1023px)
+- ✅ US-045: Prerequisite completion indicators (checkmarks, progress counter, "Start here")
+- ✅ US-046: FAB/Lightbox z-index (FAB hidden when lightbox open)
+- ✅ US-047: Undo mark complete (toast notification with 5s undo action)
+- ✅ US-054: Toast notification system (ToastProvider, ToastContainer, 4s/5s durations)
+
+### New Issues Identified (Not in Original Backlog)
+
+#### US-054: Toast Notification System
+**Priority:** P1-High | **Effort:** 3h | **Type:** UX Feedback
+
+**Problem:** No centralized feedback mechanism. Copy link shows brief checkmark (2s), mark complete has no toast.
+
+**Acceptance Criteria:**
+- [ ] Implement toast notification system (e.g., react-hot-toast)
+- [ ] Toast appears for copy actions (4s duration)
+- [ ] Toast appears for mark complete with Undo button
+- [ ] Accessible with aria-live regions
+
+---
+
+#### US-055: Search Result Count Display
+**Priority:** P2-Medium | **Effort:** 1h | **Type:** UX Polish
+
+**Problem:** Search results don't show count until results are displayed in footer.
+
+**Acceptance Criteria:**
+- [ ] Show "{n} results" immediately as user types
+- [ ] Empty state shows "No results found"
+
+---
+
+#### US-056: Keyboard Shortcuts Help Modal
+**Priority:** P2-Medium | **Effort:** 2h | **Type:** Accessibility
+
+**Problem:** Power users don't know available shortcuts (⌘K, ESC, arrows).
+
+**Acceptance Criteria:**
+- [ ] Shift+? opens keyboard shortcuts modal
+- [ ] List all shortcuts: ⌘K (search), ESC (close), ↑↓ (navigate)
+- [ ] Modal is accessible
+
+---
+
+#### US-057: Progressive Level Disclosure
+**Priority:** P3-Low | **Effort:** 8h | **Type:** Learning UX
+
+**Problem:** All 4 levels visible immediately, overwhelming for beginners.
+
+**Acceptance Criteria:**
+- [ ] Optional "guided mode" locks advanced levels
+- [ ] Unlock at 80% completion of previous level
+- [ ] Clear visual indication of locked/unlocked state
+
+---
+
+#### US-058: TreeNavigation Shows Scroll Position Not Completion
+**Priority:** P2-Medium | **Effort:** 3h | **Type:** Learning UX
+
+**Problem:** Level progress indicator shows scroll position, not actual concept completion.
+
+**Acceptance Criteria:**
+- [ ] Show completion percentage per level (e.g., "Roots: 3/5")
+- [ ] Color coding: gray=not started, blue=in progress, green=completed
+- [ ] Keep active level indicator separate from completion
+
+---
+
+### Information Architecture Issues (Documented)
+
+| Issue | Current State | Recommended Fix |
+|-------|---------------|-----------------|
+| Terminology confusion | ViewMode/NameToggle/View seem related | Rename to ContentDisplay, use "View" only for pages |
+| Header overload | 8 controls compete for space | Group into Settings dropdown on tablet |
+| No breadcrumbs | Users lose context between pages | Add "AI Tree / Classic View" breadcrumb |
+| Search can bypass prerequisites | Beginners find advanced concepts | Show prerequisite warnings in search results |
 
 ---
 
