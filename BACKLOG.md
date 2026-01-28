@@ -37,6 +37,13 @@
 - [x] US-023: Share Buttons in Lightbox
 - [x] US-024: Mobile Navigation Menu
 
+### Sprint 2: Discovery & Content (DONE)
+- [x] US-025: Search Functionality (Cmd+K)
+- [x] US-026: 4 Critical Shu Concepts (Context Windows, Hallucinations, Temperature, Prompting)
+- [x] US-027: 3 Critical Branches Concepts (Function Calling, Transformers, Training vs Inference)
+- [x] US-028: Time Estimates Per Concept
+- [x] US-029: Report Issue Button
+
 ---
 
 ## Global Definition of Done (DoD)
@@ -392,18 +399,27 @@ EFFORT│                    │                    │ EFFORT
 | US-023 Share Buttons | 2h | ✅ Done |
 | US-024 Mobile Nav | 3h | ✅ Done |
 
-### Current Sprint (Sprint 2)
-**Duration:** 1 week | **Capacity:** 23h
+### Previous Sprint (Sprint 2) - COMPLETED
+**Duration:** 1 week | **Capacity:** 23h | **Velocity:** 23h
 
 | Story | Points | Status |
 |-------|--------|--------|
-| US-025 Search (Cmd+K) | 6h | In Progress |
-| US-026 4 Shu Concepts | 8h | In Progress |
-| US-027 3 Branches Concepts | 6h | In Progress |
-| US-028 Time Estimates | 2h | Pending |
-| US-029 Report Issue | 1h | Pending |
+| US-025 Search (Cmd+K) | 6h | ✅ Done |
+| US-026 4 Shu Concepts | 8h | ✅ Done |
+| US-027 3 Branches Concepts | 6h | ✅ Done |
+| US-028 Time Estimates | 2h | ✅ Done |
+| US-029 Report Issue | 1h | ✅ Done |
 
-**Sprint Goal:** Make content discoverable and fill critical content gaps.
+### Current Sprint (Sprint 3-4)
+**Duration:** 2 weeks | **Capacity:** 47h
+
+| Story | Points | Status |
+|-------|--------|--------|
+| US-030 Vector Similarity Demo | 12h | Pending |
+| US-031 Loading States | 4h | Pending |
+| US-032 Basic Analytics | 4h | Pending |
+
+**Sprint Goal:** Polish & interactive demos.
 
 ---
 
