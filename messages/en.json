@@ -137,7 +137,22 @@
     "markAsComplete": "Mark as understood",
     "markedComplete": "Understood!",
     "conceptMarkedComplete": "Concept marked as complete!",
-    "undo": "Undo"
+    "undo": "Undo",
+    "simpleMode": "Simple",
+    "technicalMode": "Technical",
+    "explanation": "Explanation",
+    "visual": "Visual",
+    "code": "Code",
+    "whyThisCode": "Why this code?",
+    "howToUse": "How to use",
+    "tryItOut": "Try it out",
+    "visualComingSoon": "Visual representation coming soon",
+    "visualComingSoonDesc": "We're working on adding visual content for this concept.",
+    "codeComingSoon": "Code example coming soon",
+    "codeComingSoonDesc": "We're preparing a practical code example for this concept.",
+    "swipeHint": "Swipe left/right for prev/next concept",
+    "copyCode": "Copy code",
+    "codeCopied": "Code copied!"
   },
   "tokenizer": {
     "title": "Tokenizer Demo",

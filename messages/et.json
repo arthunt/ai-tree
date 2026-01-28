@@ -137,7 +137,22 @@
     "markAsComplete": "Märgi omandatuks",
     "markedComplete": "Omandatud!",
     "conceptMarkedComplete": "Kontseptsioon märgitud omandatuks!",
-    "undo": "Võta tagasi"
+    "undo": "Võta tagasi",
+    "simpleMode": "Lihtne",
+    "technicalMode": "Tehniline",
+    "explanation": "Selgitus",
+    "visual": "Visuaal",
+    "code": "Kood",
+    "whyThisCode": "Miks see kood?",
+    "howToUse": "Kuidas kasutada",
+    "tryItOut": "Proovi järgi",
+    "visualComingSoon": "Visuaalne esitus tuleb varsti",
+    "visualComingSoonDesc": "Töötame visuaalse sisu lisamise kallal selle kontseptsiooni jaoks.",
+    "codeComingSoon": "Koodinäide tuleb varsti",
+    "codeComingSoonDesc": "Valmistame ette praktilist koodinäidet selle kontseptsiooni jaoks.",
+    "swipeHint": "Nihuta vasakule/paremale eelmise/järgmise kontseptsiooni jaoks",
+    "copyCode": "Kopeeri kood",
+    "codeCopied": "Kood kopeeritud!"
   },
   "tokenizer": {
     "title": "Tokeniseerija Demo",

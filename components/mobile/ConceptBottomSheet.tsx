@@ -35,7 +35,7 @@ export function ConceptBottomSheet({
   const prefersReducedMotion = usePrefersReducedMotion();
   const { isCompleted: checkIsCompleted } = useProgress();
 
-  const [activeTab, setActiveTab] = useState<'metaphor' | 'technical' | 'code'>('metaphor');
+  const [activeTab, setActiveTab] = useState<'explanation' | 'visual' | 'code'>('explanation');
 
   // Get sibling concepts for navigation
   const currentIndex = concept ? allConcepts.findIndex(c => c.id === concept.id) : -1;
@@ -86,7 +86,7 @@ export function ConceptBottomSheet({
   useEffect(() => {
     if (concept) {
       open('half');
-      setActiveTab('metaphor');
+      setActiveTab('explanation');
     } else {
       close();
     }
@@ -142,8 +142,6 @@ export function ConceptBottomSheet({
   }, []);
 
   if (!concept) return null;
-
-  const hasCodeExample = !!concept.codeExample;
 
   return (
     <AnimatePresence>
@@ -242,42 +240,40 @@ export function ConceptBottomSheet({
                 <div className="flex gap-1 mt-3" role="tablist">
                   <button
                     role="tab"
-                    aria-selected={activeTab === 'metaphor'}
-                    onClick={() => setActiveTab('metaphor')}
-                    className={`flex-1 py-2 px-3 text-sm font-medium rounded-lg transition-colors ${
-                      activeTab === 'metaphor'
+                    aria-selected={activeTab === 'explanation'}
+                    onClick={() => setActiveTab('explanation')}
+                    className={`flex-1 py-2 px-3 min-h-[44px] text-sm font-medium rounded-lg transition-colors ${
+                      activeTab === 'explanation'
                         ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
                         : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                     }`}
                   >
-                    {t('simpleMetaphor')}
+                    {t('explanation')}
                   </button>
                   <button
                     role="tab"
-                    aria-selected={activeTab === 'technical'}
-                    onClick={() => setActiveTab('technical')}
-                    className={`flex-1 py-2 px-3 text-sm font-medium rounded-lg transition-colors ${
-                      activeTab === 'technical'
-                        ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
+                    aria-selected={activeTab === 'visual'}
+                    onClick={() => setActiveTab('visual')}
+                    className={`flex-1 py-2 px-3 min-h-[44px] text-sm font-medium rounded-lg transition-colors ${
+                      activeTab === 'visual'
+                        ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300'
                         : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                     }`}
                   >
-                    {t('technicalExplanation')}
+                    {t('visual')}
                   </button>
-                  {hasCodeExample && (
-                    <button
-                      role="tab"
-                      aria-selected={activeTab === 'code'}
-                      onClick={() => setActiveTab('code')}
-                      className={`flex-1 py-2 px-3 text-sm font-medium rounded-lg transition-colors ${
-                        activeTab === 'code'
-                          ? 'bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300'
-                          : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
-                      }`}
-                    >
-                      {t('codeExample')}
-                    </button>
-                  )}
+                  <button
+                    role="tab"
+                    aria-selected={activeTab === 'code'}
+                    onClick={() => setActiveTab('code')}
+                    className={`flex-1 py-2 px-3 min-h-[44px] text-sm font-medium rounded-lg transition-colors ${
+                      activeTab === 'code'
+                        ? 'bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300'
+                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    }`}
+                  >
+                    {t('code')}
+                  </button>
                 </div>
               )}
             </div>

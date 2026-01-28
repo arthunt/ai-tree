@@ -11,6 +11,23 @@ export interface CodeExample {
   language: 'python' | 'javascript' | 'typescript';
   code: string;
   explanation: string;
+  whyRelevant?: string;
+  howToUse?: string[];
+  annotations?: CodeAnnotation[];
+  playgroundUrl?: string;
+}
+
+export interface CodeAnnotation {
+  line: number;
+  text: string;
+}
+
+export interface ConceptVisual {
+  type: 'image' | 'svg' | 'demo' | 'diagram';
+  src?: string;
+  component?: string;
+  alt: string;
+  caption?: string;
 }
 
 export interface Concept {
@@ -25,6 +42,7 @@ export interface Concept {
   prerequisites?: string[];
   relatedConcepts?: string[];
   codeExample?: CodeExample;
+  visual?: ConceptVisual;
 }
 
 export interface TreeData {

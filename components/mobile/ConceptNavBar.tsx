@@ -23,115 +23,72 @@ export function ConceptNavBar({
 }: ConceptNavBarProps) {
   const t = useTranslations();
 
+  // Calculate progress percentage
+  const progressPercent = ((currentIndex + 1) / totalCount) * 100;
+
+  // Get translated level name with fallback
+  const translatedLevelName = t(`levels.${levelName}`, { default: levelName });
+
   return (
     <div className="flex-shrink-0 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-4 py-3 pb-safe">
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center justify-between gap-3">
         {/* Previous button */}
         <button
           onClick={() => prevConcept && onNavigate?.(prevConcept.id)}
           disabled={!prevConcept}
-          className={`flex items-center gap-1 px-3 py-2 min-w-[44px] min-h-[44px] rounded-lg text-sm font-medium transition-colors ${
+          className={`flex items-center gap-1.5 px-3 py-2 min-w-[44px] min-h-[44px] rounded-lg text-sm font-medium transition-colors ${
             prevConcept
               ? 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
               : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed'
           }`}
           aria-label={prevConcept ? `Previous: ${prevConcept.simpleName}` : 'No previous concept'}
         >
-          <ChevronLeft className="h-4 w-4" />
-          <span className="hidden xs:inline truncate max-w-[60px]">
-            {prevConcept?.simpleName || 'Prev'}
-          </span>
+          <ChevronLeft className="h-4 w-4 flex-shrink-0" />
+          {prevConcept && (
+            <span className="hidden xs:inline truncate max-w-[80px]">
+              {prevConcept.simpleName}
+            </span>
+          )}
         </button>
 
         {/* Progress indicator */}
-        <div className="flex flex-col items-center">
-          {/* Dots */}
-          <div className="flex items-center gap-1">
-            {Array.from({ length: Math.min(totalCount, 7) }).map((_, i) => {
-              // Show dots smartly if more than 7
-              if (totalCount <= 7) {
-                return (
-                  <div
-                    key={i}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      i === currentIndex
-                        ? 'bg-blue-500 dark:bg-blue-400'
-                        : i < currentIndex
-                        ? 'bg-blue-300 dark:bg-blue-700'
-                        : 'bg-gray-300 dark:bg-gray-600'
-                    }`}
-                  />
-                );
-              }
-              // For more than 7, show first 2, ellipsis, current area, ellipsis, last 2
-              if (i === 0 || i === 1) {
-                const showIndex = i;
-                return (
-                  <div
-                    key={i}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      showIndex === currentIndex
-                        ? 'bg-blue-500 dark:bg-blue-400'
-                        : showIndex < currentIndex
-                        ? 'bg-blue-300 dark:bg-blue-700'
-                        : 'bg-gray-300 dark:bg-gray-600'
-                    }`}
-                  />
-                );
-              }
-              if (i === 2) {
-                return <span key={i} className="text-xs text-gray-400">…</span>;
-              }
-              if (i === 3) {
-                return (
-                  <div
-                    key={i}
-                    className="w-2 h-2 rounded-full bg-blue-500 dark:bg-blue-400"
-                  />
-                );
-              }
-              if (i === 4) {
-                return <span key={i} className="text-xs text-gray-400">…</span>;
-              }
-              if (i >= 5) {
-                const showIndex = totalCount - (7 - i);
-                return (
-                  <div
-                    key={i}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      showIndex === currentIndex
-                        ? 'bg-blue-500 dark:bg-blue-400'
-                        : showIndex < currentIndex
-                        ? 'bg-blue-300 dark:bg-blue-700'
-                        : 'bg-gray-300 dark:bg-gray-600'
-                    }`}
-                  />
-                );
-              }
-              return null;
-            })}
-          </div>
+        <div className="flex-1 min-w-0 flex flex-col items-center gap-1.5">
           {/* Text indicator */}
-          <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-            {currentIndex + 1} / {totalCount} • {t(`levels.${levelName}`)}
-          </span>
+          <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+            {currentIndex + 1} / {totalCount} • {translatedLevelName}
+          </div>
+
+          {/* Progress bar */}
+          <div className="w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-blue-500 dark:bg-blue-400 rounded-full transition-all duration-300 ease-out"
+              style={{ width: `${progressPercent}%` }}
+              role="progressbar"
+              aria-valuenow={currentIndex + 1}
+              aria-valuemin={1}
+              aria-valuemax={totalCount}
+              aria-label={`Concept ${currentIndex + 1} of ${totalCount}`}
+            />
+          </div>
         </div>
 
         {/* Next button */}
         <button
           onClick={() => nextConcept && onNavigate?.(nextConcept.id)}
           disabled={!nextConcept}
-          className={`flex items-center gap-1 px-3 py-2 min-w-[44px] min-h-[44px] rounded-lg text-sm font-medium transition-colors ${
+          className={`flex items-center gap-1.5 px-3 py-2 min-w-[44px] min-h-[44px] rounded-lg text-sm font-medium transition-colors ${
             nextConcept
-              ? 'bg-blue-500 text-white hover:bg-blue-600'
+              ? 'bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700'
               : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed'
           }`}
           aria-label={nextConcept ? `Next: ${nextConcept.simpleName}` : 'No next concept'}
         >
-          <span className="hidden xs:inline truncate max-w-[60px]">
-            {nextConcept?.simpleName || 'Next'}
-          </span>
-          <ChevronRight className="h-4 w-4" />
+          {nextConcept && (
+            <span className="hidden xs:inline truncate max-w-[80px]">
+              {nextConcept.simpleName}
+            </span>
+          )}
+          <ChevronRight className="h-4 w-4 flex-shrink-0" />
         </button>
       </div>
     </div>
