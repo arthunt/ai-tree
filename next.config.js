@@ -1,18 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Output as static site for simple hosting
-  output: 'export',
-
-  // Base path if hosted at subdirectory
-  // basePath: '/ai-tree',
-
-  // Disable image optimization for static export
-  images: {
-    unoptimized: true,
-  },
+  // Vercel handles Next.js natively - no static export needed
+  // output: 'export', // Uncomment only for non-Vercel static hosting
 
   // Strict mode for better development
   reactStrictMode: true,
+
+  // Image optimization works on Vercel
+  images: {
+    // Add domains if you use external images
+    // domains: ['example.com'],
+  },
 };
 
 module.exports = nextConfig;
