@@ -1,22 +1,30 @@
 {
-  "version": "2.0.0",
+  "version": "3.0.0",
   "project": "ai-tree",
   "updated": "2026-01-28",
   "status": "active",
   "vision": "Public AI learning platform - no sign-ins, free for all",
-  "principles": ["KISS", "Less is More", "Testing-First (gradual)"],
+  "principles": ["KISS", "Less is More", "Mobile-First", "Testing-First (gradual)"],
   "infrastructure": {
     "github": "required",
     "vercel": "required",
     "supabase": "deferred",
     "auth": "not_needed"
   },
+  "current_sprint": {
+    "id": "sprint-7",
+    "name": "Mobile-First Concept Popup Redesign",
+    "priority": "P0-Critical",
+    "total_hours": 32,
+    "goal": "Transform popup into intuitive mobile learning experience with tabbed content and navigation",
+    "stories": ["US-070", "US-071", "US-072", "US-073", "US-074", "US-075"]
+  },
   "epics": [
     {
       "id": "E001",
       "name": "Accessibility & UX Fixes",
       "priority": "P0-Critical",
-      "status": "not_started",
+      "status": "completed",
       "hours": 26,
       "stories": ["US-001", "US-002", "US-003", "US-004", "US-005"]
     },
@@ -32,7 +40,7 @@
       "id": "E003",
       "name": "Multilingual (i18n)",
       "priority": "P1-High",
-      "status": "not_started",
+      "status": "completed",
       "hours": 24,
       "stories": ["US-009", "US-010", "US-011"]
     },
@@ -40,7 +48,7 @@
       "id": "E004",
       "name": "Interactive Demonstrations",
       "priority": "P2-Medium",
-      "status": "not_started",
+      "status": "completed",
       "hours": 32,
       "stories": ["US-012", "US-013", "US-014"]
     },
@@ -48,7 +56,7 @@
       "id": "E005",
       "name": "Content Expansion",
       "priority": "P2-Medium",
-      "status": "not_started",
+      "status": "completed",
       "hours": 20,
       "stories": ["US-015", "US-016", "US-017"]
     },
@@ -56,39 +64,254 @@
       "id": "E006",
       "name": "Client-Side Progress",
       "priority": "P3-Nice-to-have",
-      "status": "not_started",
+      "status": "completed",
       "hours": 16,
       "stories": ["US-018", "US-019"]
+    },
+    {
+      "id": "E007",
+      "name": "Mobile-First Concept Popup Redesign",
+      "priority": "P0-Critical",
+      "status": "in_progress",
+      "hours": 32,
+      "stories": ["US-070", "US-071", "US-072", "US-073", "US-074", "US-075"],
+      "goal": "Transform popup into intuitive mobile learning experience",
+      "problem": "Current popup mixes all content types in single scrolling view. Mobile users struggle to find content, understand position, and navigate.",
+      "solution": {
+        "tab1": "Explanation with Simple/Technical toggle",
+        "tab2": "Visual representation (diagrams, demos)",
+        "tab3": "Code samples with why/how guidance",
+        "navigation": "Prev/Next with position indicator"
+      }
     }
   ],
   "stories": {
-    "US-001": {"id": "US-001", "title": "Color Contrast Fix", "priority": "P0", "hours": 4, "status": "not_started", "epic": "E001"},
-    "US-002": {"id": "US-002", "title": "Keyboard Navigation", "priority": "P0", "hours": 6, "status": "not_started", "epic": "E001"},
-    "US-003": {"id": "US-003", "title": "ARIA Labels", "priority": "P1", "hours": 4, "status": "not_started", "epic": "E001"},
-    "US-004": {"id": "US-004", "title": "Mobile Responsiveness", "priority": "P1", "hours": 6, "status": "not_started", "epic": "E001"},
-    "US-005": {"id": "US-005", "title": "Dark/Light Mode", "priority": "P2", "hours": 6, "status": "not_started", "epic": "E001"},
-    "US-006": {"id": "US-006", "title": "Basic Test Infrastructure", "priority": "P0", "hours": 4, "status": "not_started", "epic": "E002"},
-    "US-007": {"id": "US-007", "title": "Component Test Examples", "priority": "P1", "hours": 4, "status": "not_started", "epic": "E002"},
-    "US-008": {"id": "US-008", "title": "E2E Smoke Test", "priority": "P2", "hours": 4, "status": "not_started", "epic": "E002"},
-    "US-009": {"id": "US-009", "title": "i18n Setup", "priority": "P1", "hours": 8, "status": "not_started", "epic": "E003"},
-    "US-010": {"id": "US-010", "title": "UI Translations", "priority": "P1", "hours": 4, "status": "not_started", "epic": "E003"},
-    "US-011": {"id": "US-011", "title": "Content Translation", "priority": "P1", "hours": 12, "status": "not_started", "epic": "E003"},
-    "US-012": {"id": "US-012", "title": "Tokenizer Visualizer", "priority": "P2", "hours": 12, "status": "not_started", "epic": "E004"},
-    "US-013": {"id": "US-013", "title": "Concept Connection Map", "priority": "P2", "hours": 8, "status": "not_started", "epic": "E004"},
-    "US-014": {"id": "US-014", "title": "Code Examples", "priority": "P2", "hours": 12, "status": "not_started", "epic": "E004"},
-    "US-015": {"id": "US-015", "title": "Prerequisite Mapping", "priority": "P2", "hours": 4, "status": "not_started", "epic": "E005"},
-    "US-016": {"id": "US-016", "title": "4-6 New Root Concepts", "priority": "P2", "hours": 8, "status": "not_started", "epic": "E005"},
-    "US-017": {"id": "US-017", "title": "Learning Paths (Static)", "priority": "P3", "hours": 8, "status": "not_started", "epic": "E005"},
-    "US-018": {"id": "US-018", "title": "Local Progress Storage", "priority": "P3", "hours": 8, "status": "not_started", "epic": "E006"},
-    "US-019": {"id": "US-019", "title": "Progress Visualization", "priority": "P3", "hours": 8, "status": "not_started", "epic": "E006"}
+    "US-070": {
+      "id": "US-070",
+      "title": "Explanation Tab with Persona Toggle",
+      "epic": "E007",
+      "priority": "P0",
+      "hours": 6,
+      "status": "not_started",
+      "type": "mobile-ux",
+      "dependencies": ["US-075"],
+      "agent_type": "mobile-dev",
+      "model": "sonnet",
+      "description": "Implement explanation tab with Simple/Technical toggle that persists across concepts",
+      "acceptance_criteria": [
+        "Explanation tab is default/first tab",
+        "Toggle switch: Simple (metaphor) ↔ Technical (detailed)",
+        "Toggle persists in localStorage",
+        "Smooth animation on switch",
+        "Both modes show prerequisite indicators",
+        "Mobile toggle is 44px height"
+      ],
+      "files": [
+        "components/mobile/ConceptTabContent.tsx",
+        "lib/hooks/useExplanationMode.ts"
+      ]
+    },
+    "US-071": {
+      "id": "US-071",
+      "title": "Visual Representation Tab",
+      "epic": "E007",
+      "priority": "P0",
+      "hours": 8,
+      "status": "not_started",
+      "type": "mobile-ux",
+      "dependencies": ["US-075"],
+      "agent_type": "mobile-dev",
+      "model": "sonnet",
+      "description": "Implement visual tab for diagrams, illustrations, and interactive demos",
+      "acceptance_criteria": [
+        "Visual tab shows concept-specific illustrations",
+        "Support: static images, SVG diagrams, interactive demos",
+        "Fallback placeholder for concepts without visuals",
+        "Link to existing demos (Tokenizer, Vector)",
+        "Mobile: pinch-to-zoom on images",
+        "Dark mode support",
+        "Loading skeleton"
+      ],
+      "files": [
+        "components/mobile/ConceptVisualTab.tsx",
+        "lib/types.ts",
+        "data/tree-concepts.json"
+      ]
+    },
+    "US-072": {
+      "id": "US-072",
+      "title": "Code Tab with Contextual Guidance",
+      "epic": "E007",
+      "priority": "P0",
+      "hours": 6,
+      "status": "not_started",
+      "type": "mobile-ux",
+      "dependencies": ["US-075"],
+      "agent_type": "coder",
+      "model": "sonnet",
+      "description": "Implement code tab with why/how guidance sections",
+      "acceptance_criteria": [
+        "Syntax-highlighted code example",
+        "Why this code? expandable section",
+        "How to use section with practical tips",
+        "Copy button with toast notification",
+        "Language indicator",
+        "Link to playground when available",
+        "Fallback for concepts without code"
+      ],
+      "guidance_structure": {
+        "why": "Explanation of what this demonstrates",
+        "code": "Syntax highlighted code block",
+        "how": ["Tip 1", "Tip 2", "Tip 3"],
+        "playground": "Optional CodeSandbox link"
+      },
+      "files": [
+        "components/mobile/ConceptCodeTab.tsx",
+        "lib/types.ts"
+      ]
+    },
+    "US-073": {
+      "id": "US-073",
+      "title": "Concept Navigation Bar",
+      "epic": "E007",
+      "priority": "P0",
+      "hours": 4,
+      "status": "not_started",
+      "type": "mobile-ux",
+      "dependencies": [],
+      "agent_type": "mobile-dev",
+      "model": "haiku",
+      "description": "Implement navigation bar with prev/next and position indicator",
+      "acceptance_criteria": [
+        "Navigation bar fixed at bottom",
+        "Shows: ← Prev | Progress dots | Next →",
+        "Position indicator (e.g., 3 of 7)",
+        "Current level name displayed",
+        "Swipe gestures for navigation",
+        "Keyboard shortcuts: ← → arrows",
+        "Haptic feedback on mobile",
+        "Disabled state at first/last concept"
+      ],
+      "files": [
+        "components/mobile/ConceptNavBar.tsx"
+      ]
+    },
+    "US-074": {
+      "id": "US-074",
+      "title": "Desktop Popup Alignment with Mobile Tabs",
+      "epic": "E007",
+      "priority": "P1",
+      "hours": 4,
+      "status": "not_started",
+      "type": "responsive",
+      "dependencies": ["US-070", "US-071", "US-072"],
+      "agent_type": "coder",
+      "model": "sonnet",
+      "description": "Align desktop popup with same tabbed experience as mobile",
+      "acceptance_criteria": [
+        "Desktop uses same 3-tab structure",
+        "Tabs as horizontal pills at top",
+        "Explanation toggle works same as mobile",
+        "Visual tab supports larger display",
+        "Code tab with better horizontal space",
+        "Keyboard navigation: Tab for tabs, arrows for concepts"
+      ],
+      "files": [
+        "components/ConceptLightbox.tsx"
+      ]
+    },
+    "US-075": {
+      "id": "US-075",
+      "title": "Content Data Structure Extension",
+      "epic": "E007",
+      "priority": "P0",
+      "hours": 4,
+      "status": "not_started",
+      "type": "data",
+      "dependencies": [],
+      "agent_type": "system-architect",
+      "model": "sonnet",
+      "description": "Extend concept data structure to support new tab content",
+      "acceptance_criteria": [
+        "Concept type extended with new fields",
+        "All existing concepts migrated",
+        "Validation for required vs optional fields",
+        "TypeScript types updated",
+        "Sample content for 3-5 concepts"
+      ],
+      "new_fields": {
+        "explanation": {
+          "simple": "string (metaphor/beginner-friendly)",
+          "technical": "string (detailed/terminology)"
+        },
+        "visual": {
+          "type": "image | svg | demo | diagram",
+          "src": "string (optional)",
+          "component": "string (optional, for demos)",
+          "alt": "string",
+          "caption": "string (optional)"
+        },
+        "codeExample": {
+          "code": "string",
+          "language": "string",
+          "whyRelevant": "string (NEW)",
+          "howToUse": "string[] (NEW)",
+          "annotations": "array (optional)",
+          "playgroundUrl": "string (optional)"
+        }
+      },
+      "migration_notes": [
+        "metaphor → explanation.simple",
+        "explanation → explanation.technical"
+      ],
+      "files": [
+        "lib/types.ts",
+        "data/tree-concepts.json",
+        "scripts/migrate-concepts.ts"
+      ]
+    }
+  },
+  "execution_plan": {
+    "phase1": {
+      "name": "Foundation",
+      "stories": ["US-075"],
+      "parallel": false,
+      "description": "Data structure must be ready before UI work"
+    },
+    "phase2": {
+      "name": "Tab Implementation",
+      "stories": ["US-070", "US-071", "US-072", "US-073"],
+      "parallel": true,
+      "description": "All tabs can be developed in parallel after phase 1"
+    },
+    "phase3": {
+      "name": "Integration",
+      "stories": ["US-074"],
+      "parallel": false,
+      "description": "Desktop alignment after tabs complete"
+    }
+  },
+  "swarm_config": {
+    "topology": "hierarchical",
+    "max_agents": 6,
+    "strategy": "specialized",
+    "consensus": "raft",
+    "recommended_agents": {
+      "US-075": {"type": "system-architect", "model": "sonnet"},
+      "US-070": {"type": "mobile-dev", "model": "sonnet"},
+      "US-071": {"type": "mobile-dev", "model": "sonnet"},
+      "US-072": {"type": "coder", "model": "sonnet"},
+      "US-073": {"type": "mobile-dev", "model": "haiku"},
+      "US-074": {"type": "coder", "model": "sonnet"}
+    }
   },
   "metrics": {
-    "total_stories": 19,
-    "total_hours": 130,
-    "p0_stories": 4,
-    "p1_stories": 6,
-    "p2_stories": 7,
-    "p3_stories": 2
+    "total_stories": 6,
+    "total_hours": 32,
+    "p0_stories": 5,
+    "p1_stories": 1,
+    "completed_sprints": 6,
+    "current_sprint": 7
   },
   "deferred": [
     "Supabase/Database",
@@ -97,11 +320,5 @@
     "Quizzes with Backend",
     "Certificates",
     "Instructor Tools"
-  ],
-  "next_actions": [
-    "Set up GitHub repository",
-    "Connect to Vercel",
-    "US-001: Fix color contrast",
-    "US-006: Basic test setup"
   ]
 }

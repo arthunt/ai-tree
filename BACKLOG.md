@@ -583,6 +583,284 @@ Every story must meet ALL criteria before closing:
 
 ---
 
+---
+
+## 🚨 Sprint 7: Mobile-First Concept Popup Redesign
+
+> **Created:** 2026-01-28
+> **Priority:** P0-Critical
+> **Focus:** Mobile-first popup UX with tabbed content, visual mode toggle, navigation
+> **Goal:** Transform popup into intuitive mobile learning experience with clear information hierarchy
+
+---
+
+### Epic E007: Mobile-First Concept Popup Redesign
+**Total Effort:** 28h | **Priority:** P0-Critical
+
+**Problem Statement:**
+Current popup mixes all content types (explanation, visuals, code) in a single scrolling view. Mobile users struggle to:
+- Find specific content types quickly
+- Understand their position in the learning flow
+- Navigate between concepts without closing popup
+- Switch between simple and technical explanations
+
+**Solution:** Redesign popup with:
+1. **Tab 1: Explanation** - Content with Simple ↔ Technical toggle
+2. **Tab 2: Visual** - Diagrams, illustrations, interactive demos
+3. **Tab 3: Code** - Code samples with contextual guidance ("why is this here?")
+4. **Navigation bar** - Prev/Next with position indicator
+5. **Mobile-first** - Designed for touch, optimized for small screens
+
+---
+
+### US-070: Implement Explanation Tab with Persona Toggle
+**Priority:** P0-Critical | **Effort:** 6h | **Type:** Mobile UX
+
+**User Story:**
+> As a learner, I want to toggle between simple and technical explanations in the same tab, so that I can choose my preferred learning style without switching tabs.
+
+**Acceptance Criteria:**
+- [ ] Explanation tab is the default/first tab
+- [ ] Toggle switch: "Simple" (metaphor) ↔ "Technical" (detailed)
+- [ ] Toggle persists across concepts (localStorage)
+- [ ] Smooth animation when switching between modes
+- [ ] Both modes show prerequisite indicators
+- [ ] Simple mode shows: metaphor, simple analogy, beginner-friendly language
+- [ ] Technical mode shows: detailed explanation, terminology, deeper concepts
+- [ ] Mobile: Toggle is 44px height, easy thumb reach
+
+**Technical Notes:**
+- Extend `ConceptTabContent.tsx` with toggle state
+- Store preference in localStorage: `ai-tree-explanation-mode`
+- Use Framer Motion for smooth content transition
+- Consider "Both" option for desktop (side-by-side)
+
+**Files:** `components/mobile/ConceptTabContent.tsx`, `lib/hooks/useExplanationMode.ts`
+
+---
+
+### US-071: Implement Visual Representation Tab
+**Priority:** P0-Critical | **Effort:** 8h | **Type:** Mobile UX
+
+**User Story:**
+> As a visual learner, I want a dedicated tab for diagrams and illustrations, so that I can understand concepts through visual representation.
+
+**Acceptance Criteria:**
+- [ ] Visual tab shows concept-specific illustrations
+- [ ] Support for: static images, SVG diagrams, interactive demos
+- [ ] Fallback for concepts without visuals: "Visual coming soon" placeholder
+- [ ] Link to existing demos when applicable (Tokenizer, Vector similarity)
+- [ ] Mobile-optimized: pinch-to-zoom on images
+- [ ] Dark mode support for all visuals
+- [ ] Alt text for accessibility
+- [ ] Loading skeleton while images load
+
+**Visual Content Types:**
+| Concept | Visual Type | Status |
+|---------|-------------|--------|
+| Tokens | Tokenizer Demo (interactive) | ✅ Exists |
+| Vectors | Vector Similarity Demo (interactive) | ✅ Exists |
+| Attention | Attention heatmap diagram | 🔲 Needs creation |
+| RAG | Retrieval flow diagram | 🔲 Needs creation |
+| Agents | Agent architecture diagram | 🔲 Needs creation |
+| Others | Generic concept illustrations | 🔲 Needs creation |
+
+**Technical Notes:**
+- Add `visual` field to concept data structure
+- Support types: `image`, `svg`, `demo-component`, `none`
+- Lazy load images for performance
+- Consider generating simple diagrams with Mermaid or SVG
+
+**Files:** `components/mobile/ConceptVisualTab.tsx`, `lib/types.ts`, `data/tree-concepts.json`
+
+---
+
+### US-072: Implement Code Tab with Contextual Guidance
+**Priority:** P0-Critical | **Effort:** 6h | **Type:** Mobile UX
+
+**User Story:**
+> As a developer learning AI, I want code examples with clear guidance explaining WHY the code is relevant and HOW to use it, so that I can apply the concept in my projects.
+
+**Acceptance Criteria:**
+- [ ] Code tab shows syntax-highlighted code example
+- [ ] "Why this code?" expandable section above code
+- [ ] "How to use" section below code with practical tips
+- [ ] Copy button with toast notification
+- [ ] Language indicator (Python, TypeScript, etc.)
+- [ ] Line-by-line annotations available (optional)
+- [ ] Link to playground/sandbox when available
+- [ ] Fallback for concepts without code: "Code example coming soon"
+
+**Guidance Structure:**
+```
+📖 Why this code?
+[Explanation of what this demonstrates and why it matters]
+
+[CODE BLOCK]
+
+💡 How to use
+- Tip 1: Practical usage
+- Tip 2: Common variations
+- Tip 3: When NOT to use this
+
+🔗 Try it: [CodeSandbox link] (optional)
+```
+
+**Technical Notes:**
+- Extend `codeExample` in concept data to include `whyRelevant` and `howToUse`
+- Consider adding `annotations` array for line-by-line explanations
+- Mobile: Horizontal scroll for long code lines
+
+**Files:** `components/mobile/ConceptCodeTab.tsx`, `lib/types.ts`, `data/tree-concepts.json`
+
+---
+
+### US-073: Implement Concept Navigation Bar
+**Priority:** P0-Critical | **Effort:** 4h | **Type:** Mobile UX
+
+**User Story:**
+> As a learner moving through concepts, I want clear navigation showing my position and allowing prev/next navigation, so that I understand my progress and can move freely.
+
+**Acceptance Criteria:**
+- [ ] Navigation bar fixed at bottom of popup
+- [ ] Shows: ← Prev | Progress dots | Next →
+- [ ] Progress indicator shows position in current level (e.g., "3 of 7")
+- [ ] Current level name displayed (e.g., "Roots")
+- [ ] Swipe gestures: left = next, right = prev (existing)
+- [ ] Keyboard shortcuts: ← → arrow keys
+- [ ] Haptic feedback on navigation (mobile)
+- [ ] Disabled state when at first/last concept in level
+- [ ] Option to navigate across levels or within level only
+
+**Visual Design:**
+```
+┌─────────────────────────────────────┐
+│ [← Tokens]  ●●●○○○○  [Vectors →]   │
+│           3/7 • Roots               │
+└─────────────────────────────────────┘
+```
+
+**Technical Notes:**
+- Extend existing `ConceptNavBar.tsx`
+- Add cross-level navigation toggle
+- Store navigation preference in localStorage
+
+**Files:** `components/mobile/ConceptNavBar.tsx`
+
+---
+
+### US-074: Desktop Popup Alignment with Mobile Tabs
+**Priority:** P1-High | **Effort:** 4h | **Type:** Responsive
+
+**User Story:**
+> As a desktop user, I want the same tabbed experience as mobile, so that the learning experience is consistent across devices.
+
+**Acceptance Criteria:**
+- [ ] Desktop popup uses same 3-tab structure
+- [ ] Tabs displayed as horizontal pills at top
+- [ ] Explanation toggle works same as mobile
+- [ ] Visual tab supports larger display
+- [ ] Code tab with better horizontal space
+- [ ] Navigation integrated (can be less prominent)
+- [ ] Keyboard navigation: Tab to switch tabs, arrows for concepts
+
+**Technical Notes:**
+- Refactor `ConceptLightbox.tsx` to use shared tab components
+- Conditional styling for mobile vs desktop
+- Consider side panel for navigation on wide screens
+
+**Files:** `components/ConceptLightbox.tsx`, shared components
+
+---
+
+### US-075: Content Data Structure Extension
+**Priority:** P0-Critical | **Effort:** 4h | **Type:** Data
+
+**User Story:**
+> As a content creator, I need an extended data structure that supports the new tab content, so that I can populate all tabs properly.
+
+**Acceptance Criteria:**
+- [ ] Concept type extended with new fields
+- [ ] All existing concepts migrated to new structure
+- [ ] Validation for required vs optional fields
+- [ ] TypeScript types updated
+- [ ] Sample content for 3-5 concepts as template
+
+**New Data Structure:**
+```typescript
+interface Concept {
+  // Existing fields...
+
+  // NEW: Extended explanation
+  explanation: {
+    simple: string;      // Metaphor/beginner-friendly
+    technical: string;   // Detailed/terminology
+  };
+
+  // NEW: Visual content
+  visual?: {
+    type: 'image' | 'svg' | 'demo' | 'diagram';
+    src?: string;        // For image/svg
+    component?: string;  // For demo (e.g., 'TokenizerDemo')
+    alt: string;
+    caption?: string;
+  };
+
+  // NEW: Extended code example
+  codeExample?: {
+    code: string;
+    language: string;
+    whyRelevant: string;    // NEW
+    howToUse: string[];     // NEW: Array of tips
+    annotations?: {         // NEW: Optional line annotations
+      line: number;
+      text: string;
+    }[];
+    playgroundUrl?: string; // NEW
+  };
+}
+```
+
+**Technical Notes:**
+- Migrate existing `metaphor` → `explanation.simple`
+- Migrate existing `explanation` → `explanation.technical`
+- Add migration script for data transformation
+
+**Files:** `lib/types.ts`, `data/tree-concepts.json`, `scripts/migrate-concepts.ts`
+
+---
+
+### Sprint 7 Summary
+
+| Story | Points | Priority | Status | Dependencies |
+|-------|--------|----------|--------|--------------|
+| US-075 Data Structure | 4h | P0-Critical | 🔲 Pending | None (start here) |
+| US-070 Explanation Tab | 6h | P0-Critical | 🔲 Pending | US-075 |
+| US-071 Visual Tab | 8h | P0-Critical | 🔲 Pending | US-075 |
+| US-072 Code Tab | 6h | P0-Critical | 🔲 Pending | US-075 |
+| US-073 Navigation Bar | 4h | P0-Critical | 🔲 Pending | None |
+| US-074 Desktop Alignment | 4h | P1-High | 🔲 Pending | US-070, US-071, US-072 |
+
+**Total:** 32h | **Critical Path:** US-075 → US-070/071/072 (parallel) → US-074
+
+**Recommended Order for Swarm:**
+1. **US-075** (Data Structure) - Must be first, enables all others
+2. **US-070, US-071, US-072** (Tabs) - Can run in parallel after US-075
+3. **US-073** (Navigation) - Can run in parallel with tabs
+4. **US-074** (Desktop) - Final integration after tabs complete
+
+**Swarm Agent Assignment:**
+| Story | Agent Type | Model |
+|-------|------------|-------|
+| US-075 | system-architect | sonnet |
+| US-070 | mobile-dev | sonnet |
+| US-071 | mobile-dev | sonnet |
+| US-072 | coder | sonnet |
+| US-073 | mobile-dev | haiku |
+| US-074 | coder | sonnet |
+
+---
+
 ## Backlog (Future)
 
 ### Content & Features
