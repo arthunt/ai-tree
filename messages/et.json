@@ -75,12 +75,57 @@
     "level": "Keerukuse tase",
     "beginner": "Algaja",
     "intermediate": "Keskmine",
-    "advanced": "Kõrgtase"
+    "advanced": "Keeruline"
   },
   "concept": {
     "simpleName": "Lihtne nimi",
     "explanation": "Selgitus",
     "metaphor": "Metafoor",
-    "closeAriaLabel": "Sulge detailne vaade"
+    "closeAriaLabel": "Sulge detailne vaade",
+    "closeDialog": "Sulge dialoogi aken",
+    "viewDetails": "Vaata detaile",
+    "viewFullSize": "Vaata täismõõtus",
+    "learnFirst": "Õpi enne",
+    "prerequisiteHelp": "Nende teemade mõistmine aitab sul seda kontseptsiooni paremini omandada:",
+    "navigateTo": "Mine teema juurde",
+    "simpleMetaphor": "Lihtne Metafoor",
+    "technicalExplanation": "Tehniline Selgitus",
+    "codeExample": "Koodinäide",
+    "pressEscToClose": "Vajuta ESC või klõpsa väljaspool, et sulgeda"
+  },
+  "tokenizer": {
+    "title": "Tokeniseerija Demo",
+    "subtitle": "Vaata, kuidas AI näeb teksti",
+    "showInfo": "Näita infot",
+    "hideInfo": "Peida info",
+    "inputLabel": "Sisesta tekst tokeniseerimiseks",
+    "inputPlaceholder": "Kirjuta midagi, et näha kuidas AI tokeniseerib teksti...",
+    "tokensLabel": "Tokenid:",
+    "tokenCount": "{count} {count, plural, one {token} other {tokenid}}",
+    "tokensPlaceholder": "Tokenid ilmuvad siia...",
+    "infoTitle": "Mis on tokenid?",
+    "infoText": "Keelemudelid ei näe teksti nii nagu meie. Nad jagavad teksti väiksemateks tükkideks ehk <em>tokeniteks</em>. Token võib olla sõna, sõna osa või isegi üks tärk. See demo näitab lihtsustatud versiooni!",
+    "estimatedCost": "Hinnanguline maksumus (GPT-4)",
+    "costTip": "<strong>Näpunäide:</strong> Pikemad tekstid = rohkem tokeneid = kõrgem hind. Õpi optimeerima oma prompte!",
+    "tryExamples": "Proovi näiteid:",
+    "disclaimer": "See on lihtsustatud tokeniseerija. Päris keelemudelid kasutavad keerukamaid meetodeid nagu BPE (Byte Pair Encoding) või WordPiece."
+  },
+  "navigation": {
+    "viewOptions": "Vaate valikud",
+    "levelSections": "AI kontseptide tasandid",
+    "treeLevels": "Puu tasandite navigatsioon",
+    "openNavPanel": "Ava navigatsioonipaneel",
+    "closeNavPanel": "Sulge navigatsioonipaneel",
+    "goToLevel": "Mine {level} tasandile"
+  },
+  "levelSection": {
+    "conceptCount": "{count} kontseptsiooni",
+    "concepts": "{level} kontseptsioonid"
+  },
+  "organicTree": {
+    "clickForDetails": "Kliki detailideks",
+    "simple": "Lihtne",
+    "intermediate": "Keskmine",
+    "advanced": "Keeruline"
   }
 }

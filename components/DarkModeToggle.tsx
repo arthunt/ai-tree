@@ -23,6 +23,7 @@ export function DarkModeToggle() {
       className="flex items-center justify-center min-w-[44px] min-h-[44px] p-3 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
       aria-label={t('ariaLabel')}
       title={t('toggle')}
+      type="button"
     >
       {theme === 'light' ? (
         <Moon className="h-5 w-5 text-gray-700 dark:text-gray-300" aria-hidden="true" />

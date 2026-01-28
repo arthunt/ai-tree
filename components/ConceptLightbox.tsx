@@ -6,6 +6,7 @@ import { Concept } from '../lib/types';
 import { getComplexityColor, getComplexityLabel, getLevelColor } from '../lib/utils';
 import { useEffect, useRef } from 'react';
 import { CodeBlock } from './CodeBlock';
+import { useTranslations } from 'next-intl';
 import {
   Users,
   Brain,
@@ -52,6 +53,7 @@ interface ConceptLightboxProps {
 
 export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate }: ConceptLightboxProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const t = useTranslations('concept');
 
   // Handle ESC key to close
   useEffect(() => {
@@ -161,7 +163,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                 ref={closeButtonRef}
                 onClick={onClose}
                 className="p-3 min-h-[44px] min-w-[44px] hover:bg-white/20 rounded-full transition-colors flex items-center justify-center focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600 focus:outline-none"
-                aria-label="Sulge dialoogi aken"
+                aria-label={t('closeDialog')}
                 type="button"
               >
                 <X className="h-8 w-8" />
@@ -178,10 +180,10 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                   <div className="p-2 bg-amber-500 dark:bg-amber-600 rounded-lg" aria-hidden="true">
                     <ArrowRight className="h-6 w-6 text-white" />
                   </div>
-                  <h3 id="prerequisites-heading" className="text-2xl font-bold text-amber-900 dark:text-amber-200">Õpi enne</h3>
+                  <h3 id="prerequisites-heading" className="text-2xl font-bold text-amber-900 dark:text-amber-200">{t('learnFirst')}</h3>
                 </div>
                 <p className="text-sm text-amber-800 dark:text-amber-300 mb-4">
-                  Nende teemade mõistmine aitab sul seda kontseptsiooni paremini omandada:
+                  {t('prerequisiteHelp')}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   {prerequisites.map((prereq) => {
@@ -196,7 +198,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                           borderColor: levelColor,
                           borderWidth: '2px'
                         }}
-                        aria-label={`Navigate to ${prereq.title}`}
+                        aria-label={`${t('navigateTo')} ${prereq.title}`}
                       >
                         <span
                           className="font-semibold"
@@ -221,7 +223,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                 <div className="p-2 bg-purple-500 dark:bg-purple-600 rounded-lg" aria-hidden="true">
                   <Lightbulb className="h-6 w-6 text-white" />
                 </div>
-                <h3 id="metaphor-heading" className="text-2xl font-bold text-purple-900 dark:text-purple-200">Lihtne Metafoor</h3>
+                <h3 id="metaphor-heading" className="text-2xl font-bold text-purple-900 dark:text-purple-200">{t('simpleMetaphor')}</h3>
               </div>
               <p className="text-lg text-purple-900 dark:text-purple-100 leading-relaxed italic break-words">
                 {concept.metaphor}
@@ -234,7 +236,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                 <div className="p-2 bg-blue-500 dark:bg-blue-600 rounded-lg" aria-hidden="true">
                   <Code2 className="h-6 w-6 text-white" />
                 </div>
-                <h3 id="technical-heading" className="text-2xl font-bold text-blue-900 dark:text-blue-200">Tehniline Selgitus</h3>
+                <h3 id="technical-heading" className="text-2xl font-bold text-blue-900 dark:text-blue-200">{t('technicalExplanation')}</h3>
               </div>
               <p className="text-lg text-blue-900 dark:text-blue-100 leading-relaxed break-words">
                 {concept.explanation}
@@ -248,7 +250,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
                   <div className="p-2 bg-slate-600 dark:bg-slate-700 rounded-lg" aria-hidden="true">
                     <Terminal className="h-6 w-6 text-white" />
                   </div>
-                  <h3 id="code-heading" className="text-2xl font-bold text-slate-900 dark:text-slate-200">Koodinäide</h3>
+                  <h3 id="code-heading" className="text-2xl font-bold text-slate-900 dark:text-slate-200">{t('codeExample')}</h3>
                 </div>
                 <CodeBlock
                   code={concept.codeExample.code}
@@ -262,7 +264,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
           {/* Footer */}
           <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-b-3xl border-t dark:border-gray-700">
             <p className="text-center text-gray-600 dark:text-gray-400">
-              Vajuta ESC või klõpsa väljaspool, et sulgeda
+              {t('pressEscToClose')}
             </p>
           </div>
         </motion.div>

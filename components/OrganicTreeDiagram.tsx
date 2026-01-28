@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TreeLevel, Concept } from '../lib/types';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 interface OrganicTreeDiagramProps {
   levels: TreeLevel[];
@@ -53,6 +54,7 @@ export function OrganicTreeDiagram({
   showSimpleNames = false
 }: OrganicTreeDiagramProps) {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const t = useTranslations('organicTree');
 
   const getLevelColor = (levelId: string) => {
     const colors: Record<string, string> = {
@@ -133,9 +135,9 @@ export function OrganicTreeDiagram({
           const displayName = showSimpleNames ? concept.simpleName : concept.title;
 
           return (
-            <motion.div
+            <motion.button
               key={concept.id}
-              className="absolute cursor-pointer"
+              className="absolute cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-2xl"
               style={{
                 left: `${position.xPercent}%`,
                 top: `${position.yPercent}%`,
@@ -148,6 +150,8 @@ export function OrganicTreeDiagram({
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: concept.complexity * 0.1 }}
+              aria-label={`View details for ${displayName}`}
+              type="button"
             >
               {/* Node container */}
               <motion.div
@@ -219,7 +223,7 @@ export function OrganicTreeDiagram({
                           : '#991b1b',
                       }}
                     >
-                      {concept.complexity === 1 ? 'Lihtne' : concept.complexity === 2 ? 'Keskmine' : 'Keeruline'}
+                      {concept.complexity === 1 ? t('simple') : concept.complexity === 2 ? t('intermediate') : t('advanced')}
                     </motion.div>
                   )}
                 </div>
@@ -233,12 +237,12 @@ export function OrganicTreeDiagram({
                       exit={{ opacity: 0 }}
                       className="mt-2 text-xs text-gray-500 text-center"
                     >
-                      Kliki detailideks
+                      {t('clickForDetails')}
                     </motion.div>
                   )}
                 </AnimatePresence>
               </motion.div>
-            </motion.div>
+            </motion.button>
           );
         })}
       </div>

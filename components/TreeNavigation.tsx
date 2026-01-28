@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { TreeLevel } from '../lib/types';
 import { getLevelIcon } from '../lib/utils';
+import { useTranslations } from 'next-intl';
 
 interface TreeNavigationProps {
   levels: TreeLevel[];
@@ -13,6 +14,7 @@ interface TreeNavigationProps {
 
 export function TreeNavigation({ levels, activeLevel }: TreeNavigationProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const t = useTranslations('navigation');
 
   const scrollToLevel = (levelId: string) => {
     const element = document.getElementById(levelId);
@@ -22,7 +24,7 @@ export function TreeNavigation({ levels, activeLevel }: TreeNavigationProps) {
   };
 
   return (
-    <nav className="fixed left-4 top-1/2 -translate-y-1/2 z-50 hidden lg:block" aria-label="Puu tasandite navigatsioon">
+    <nav className="fixed left-4 top-1/2 -translate-y-1/2 z-50 hidden lg:block" aria-label={t('treeLevels')}>
       <motion.div
         animate={{ width: isExpanded ? '280px' : '64px' }}
         transition={{ type: 'spring', damping: 20, stiffness: 300 }}
@@ -33,7 +35,7 @@ export function TreeNavigation({ levels, activeLevel }: TreeNavigationProps) {
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="w-full flex items-center justify-center min-h-[44px] min-w-[44px] p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors mb-2 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
-            aria-label={isExpanded ? 'Sulge navigatsioonipaneel' : 'Ava navigatsioonipaneel'}
+            aria-label={isExpanded ? t('closeNavPanel') : t('openNavPanel')}
             aria-expanded={isExpanded}
             type="button"
           >
@@ -58,7 +60,7 @@ export function TreeNavigation({ levels, activeLevel }: TreeNavigationProps) {
                   `}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  aria-label={`Mine ${level.name} tasandile`}
+                  aria-label={t('goToLevel', { level: level.name })}
                   aria-current={isActive ? 'location' : undefined}
                   type="button"
                 >

@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Info } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface Token {
   text: string;
@@ -24,6 +25,7 @@ const TOKEN_COLORS = [
 export function TokenizerDemo() {
   const [inputText, setInputText] = useState('');
   const [showInfo, setShowInfo] = useState(false);
+  const t = useTranslations('tokenizer');
 
   // Simple tokenization that splits by spaces and punctuation
   const tokens = useMemo(() => {
@@ -60,18 +62,20 @@ export function TokenizerDemo() {
             </div>
             <div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                Tokeniseerija Demo
+                {t('title')}
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Vaata, kuidas AI näeb teksti
+                {t('subtitle')}
               </p>
             </div>
           </div>
 
           <button
             onClick={() => setShowInfo(!showInfo)}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            aria-label="Näita infot"
+            className="p-2 min-h-[44px] min-w-[44px] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
+            aria-label={showInfo ? t('hideInfo') : t('showInfo')}
+            aria-expanded={showInfo}
+            type="button"
           >
             <Info className="h-5 w-5 text-gray-500 dark:text-gray-400" />
           </button>
@@ -86,11 +90,7 @@ export function TokenizerDemo() {
               exit={{ opacity: 0, height: 0 }}
               className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800"
             >
-              <p className="text-sm text-gray-700 dark:text-gray-300">
-                <strong>Mis on tokenid?</strong> Keelemudelid ei näe teksti nii nagu meie.
-                Nad jagavad teksti väiksemateks tükkideks ehk <em>tokeniteks</em>.
-                Token võib olla sõna, sõna osa või isegi üks tärk. See demo näitab lihtsustatud versiooni!
-              </p>
+              <p className="text-sm text-gray-700 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: `<strong>${t('infoTitle')}</strong> ${t('infoText')}` }} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -98,13 +98,13 @@ export function TokenizerDemo() {
         {/* Text Input */}
         <div className="mb-6">
           <label htmlFor="tokenizer-input" className="sr-only">
-            Sisesta tekst tokeniseerimiseks
+            {t('inputLabel')}
           </label>
           <textarea
             id="tokenizer-input"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            placeholder="Kirjuta midagi, et näha kuidas AI tokeniseerib teksti..."
+            placeholder={t('inputPlaceholder')}
             className="w-full min-h-[120px] p-4 rounded-xl border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20 transition-colors resize-none outline-none"
             rows={4}
           />
@@ -114,7 +114,7 @@ export function TokenizerDemo() {
         <div className="mb-6">
           <div className="flex items-center justify-between mb-3">
             <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-              Tokenid:
+              {t('tokensLabel')}
             </h4>
             {tokenCount > 0 && (
               <motion.div
@@ -123,7 +123,7 @@ export function TokenizerDemo() {
                 className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full"
               >
                 <span className="text-sm font-medium text-gray-900 dark:text-white">
-                  {tokenCount} {tokenCount === 1 ? 'token' : 'tokenid'}
+                  {t('tokenCount', { count: tokenCount })}
                 </span>
               </motion.div>
             )}
@@ -132,7 +132,7 @@ export function TokenizerDemo() {
           <div className="min-h-[100px] p-4 bg-gray-50 dark:bg-gray-900 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600">
             {tokens.length === 0 ? (
               <div className="flex items-center justify-center h-full text-gray-400 dark:text-gray-500 text-sm italic">
-                Tokenid ilmuvad siia...
+                {t('tokensPlaceholder')}
               </div>
             ) : (
               <div className="flex flex-wrap gap-2">
@@ -173,7 +173,7 @@ export function TokenizerDemo() {
           >
             <div>
               <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">
-                Hinnanguline maksumus (GPT-4)
+                {t('estimatedCost')}
               </p>
               <p className="text-lg font-bold text-gray-900 dark:text-white">
                 ~${estimatedCost.toFixed(6)}
@@ -181,10 +181,7 @@ export function TokenizerDemo() {
             </div>
 
             <div className="text-xs text-gray-600 dark:text-gray-400 max-w-xs">
-              <p>
-                <strong>Näpunäide:</strong> Pikemad tekstid = rohkem tokeneid = kõrgem hind.
-                Õpi optimeerima oma prompte!
-              </p>
+              <p dangerouslySetInnerHTML={{ __html: t('costTip') }} />
             </div>
           </motion.div>
         )}
@@ -193,7 +190,7 @@ export function TokenizerDemo() {
         {!inputText && (
           <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
             <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
-              Proovi näiteid:
+              {t('tryExamples')}
             </p>
             <div className="flex flex-wrap gap-2">
               {[
@@ -223,8 +220,7 @@ export function TokenizerDemo() {
         className="mt-4 text-center text-xs text-gray-500 dark:text-gray-400"
       >
         <p>
-          See on lihtsustatud tokeniseerija. Päris keelemudelid kasutavad
-          keerukamaid meetodeid nagu BPE (Byte Pair Encoding) või WordPiece.
+          {t('disclaimer')}
         </p>
       </motion.div>
     </div>

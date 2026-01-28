@@ -29,6 +29,10 @@ export function getComplexityLabel(complexity: 1 | 2 | 3): string {
   return labels[complexity] || 'Keskmine';
 }
 
+// Note: This function returns hardcoded Estonian labels for backwards compatibility.
+// For proper i18n, components should use the 'complexity' namespace from useTranslations
+// Example: t('complexity.beginner'), t('complexity.intermediate'), t('complexity.advanced')
+
 export function getComplexityColor(complexity: 1 | 2 | 3): string {
   const colors: Record<number, string> = {
     1: 'bg-green-100 text-green-900',

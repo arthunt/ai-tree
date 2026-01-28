@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { Concept } from '../lib/types';
 import { getComplexityColor, getComplexityLabel } from '../lib/utils';
+import { useTranslations } from 'next-intl';
 
 const iconMap: Record<string, LucideIcon> = {
   users: Users,
@@ -50,6 +51,7 @@ interface ConceptCardProps {
 
 export function ConceptCard({ concept, viewMode, index, onClick }: ConceptCardProps) {
   const IconComponent = iconMap[concept.icon] || Brain;
+  const t = useTranslations('concept');
 
   const displayText = viewMode === 'technical' ? concept.explanation : concept.metaphor;
 
@@ -63,7 +65,7 @@ export function ConceptCard({ concept, viewMode, index, onClick }: ConceptCardPr
       <button
         className="relative h-full min-h-[120px] w-full overflow-hidden rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer text-left focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
         onClick={onClick}
-        aria-label={`Vaata ${concept.title} detaile`}
+        aria-label={`${t('viewDetails')} ${concept.title}`}
         type="button"
       >
         <div className="p-5 h-full flex flex-col">
@@ -87,7 +89,7 @@ export function ConceptCard({ concept, viewMode, index, onClick }: ConceptCardPr
 
           <div className="flex items-center justify-center gap-2 pt-3 border-t border-gray-200 dark:border-gray-700 text-blue-700 dark:text-blue-400 text-sm font-medium group-hover:text-blue-800 dark:group-hover:text-blue-300 transition-colors">
             <Maximize2 className="h-4 w-4" />
-            <span>Vaata täismõõtus</span>
+            <span>{t('viewFullSize')}</span>
           </div>
         </div>
 

@@ -20,7 +20,7 @@ export function NameToggle({ showSimpleNames, onChange }: NameToggleProps) {
     >
       <button
         onClick={() => onChange(true)}
-        className={`relative px-4 py-3 min-h-[44px] min-w-[44px] rounded-lg font-medium transition-all flex items-center gap-2 ${
+        className={`relative px-4 py-3 min-h-[44px] min-w-[44px] rounded-lg font-medium transition-all flex items-center gap-2 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:outline-none ${
           showSimpleNames
             ? 'text-white'
             : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
@@ -28,6 +28,7 @@ export function NameToggle({ showSimpleNames, onChange }: NameToggleProps) {
         aria-label={t('simple')}
         aria-pressed={showSimpleNames}
         aria-current={showSimpleNames ? 'true' : undefined}
+        type="button"
       >
         {showSimpleNames && (
           <motion.div
@@ -42,7 +43,7 @@ export function NameToggle({ showSimpleNames, onChange }: NameToggleProps) {
 
       <button
         onClick={() => onChange(false)}
-        className={`relative px-4 py-3 min-h-[44px] min-w-[44px] rounded-lg font-medium transition-all flex items-center gap-2 ${
+        className={`relative px-4 py-3 min-h-[44px] min-w-[44px] rounded-lg font-medium transition-all flex items-center gap-2 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none ${
           !showSimpleNames
             ? 'text-white'
             : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
@@ -50,6 +51,7 @@ export function NameToggle({ showSimpleNames, onChange }: NameToggleProps) {
         aria-label={t('technical')}
         aria-pressed={!showSimpleNames}
         aria-current={!showSimpleNames ? 'true' : undefined}
+        type="button"
       >
         {!showSimpleNames && (
           <motion.div

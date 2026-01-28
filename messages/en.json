@@ -81,6 +81,51 @@
     "simpleName": "Simple name",
     "explanation": "Explanation",
     "metaphor": "Metaphor",
-    "closeAriaLabel": "Close detailed view"
+    "closeAriaLabel": "Close detailed view",
+    "closeDialog": "Close dialog window",
+    "viewDetails": "View details",
+    "viewFullSize": "View full size",
+    "learnFirst": "Learn first",
+    "prerequisiteHelp": "Understanding these topics will help you better grasp this concept:",
+    "navigateTo": "Navigate to topic",
+    "simpleMetaphor": "Simple Metaphor",
+    "technicalExplanation": "Technical Explanation",
+    "codeExample": "Code Example",
+    "pressEscToClose": "Press ESC or click outside to close"
+  },
+  "tokenizer": {
+    "title": "Tokenizer Demo",
+    "subtitle": "See how AI sees text",
+    "showInfo": "Show info",
+    "hideInfo": "Hide info",
+    "inputLabel": "Enter text to tokenize",
+    "inputPlaceholder": "Write something to see how AI tokenizes text...",
+    "tokensLabel": "Tokens:",
+    "tokenCount": "{count} {count, plural, one {token} other {tokens}}",
+    "tokensPlaceholder": "Tokens will appear here...",
+    "infoTitle": "What are tokens?",
+    "infoText": "Language models don't see text the way we do. They break text into smaller pieces called <em>tokens</em>. A token can be a word, part of a word, or even a single character. This demo shows a simplified version!",
+    "estimatedCost": "Estimated cost (GPT-4)",
+    "costTip": "<strong>Tip:</strong> Longer texts = more tokens = higher cost. Learn to optimize your prompts!",
+    "tryExamples": "Try examples:",
+    "disclaimer": "This is a simplified tokenizer. Real language models use more sophisticated methods like BPE (Byte Pair Encoding) or WordPiece."
+  },
+  "navigation": {
+    "viewOptions": "View options",
+    "levelSections": "AI concept levels",
+    "treeLevels": "Tree level navigation",
+    "openNavPanel": "Open navigation panel",
+    "closeNavPanel": "Close navigation panel",
+    "goToLevel": "Go to {level} level"
+  },
+  "levelSection": {
+    "conceptCount": "{count} concepts",
+    "concepts": "{level} concepts"
+  },
+  "organicTree": {
+    "clickForDetails": "Click for details",
+    "simple": "Simple",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
   }
 }

@@ -26,13 +26,14 @@ export function LanguageSwitcher() {
           <button
             key={locale}
             onClick={() => switchLanguage(locale)}
-            className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-md ${
+            className={`relative px-4 py-2 min-h-[44px] text-sm font-medium transition-colors rounded-md focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none ${
               isActive
                 ? 'text-white'
                 : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
             }`}
             aria-label={`Switch to ${locale === 'et' ? 'Estonian' : 'English'}`}
             aria-current={isActive ? 'true' : undefined}
+            type="button"
           >
             {isActive && (
               <motion.div

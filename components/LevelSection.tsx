@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { TreeLevel, Concept, ViewMode } from '../lib/types';
 import { ConceptCard } from './ConceptCard';
 import { getLevelGradient, getLevelIcon } from '../lib/utils';
+import { useTranslations } from 'next-intl';
 
 interface LevelSectionProps {
   level: TreeLevel;
@@ -14,6 +15,7 @@ interface LevelSectionProps {
 }
 
 export function LevelSection({ level, concepts, viewMode, index, onConceptClick }: LevelSectionProps) {
+  const t = useTranslations('levelSection');
   const levelColors: Record<string, { from: string; to: string; border: string; darkFrom: string; darkTo: string }> = {
     roots: { from: 'from-emerald-50/50', to: 'to-emerald-100/20', border: 'border-emerald-200', darkFrom: 'dark:from-emerald-950/50', darkTo: 'dark:to-emerald-900/20' },
     trunk: { from: 'from-amber-50/50', to: 'to-amber-100/20', border: 'border-amber-200', darkFrom: 'dark:from-amber-950/50', darkTo: 'dark:to-amber-900/20' },
@@ -88,13 +90,13 @@ export function LevelSection({ level, concepts, viewMode, index, onConceptClick 
           {/* Concept count indicator */}
           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
             <div className="h-px flex-1 bg-gradient-to-r from-gray-300 dark:from-gray-600 to-transparent" />
-            <span>{concepts.length} kontseptsiooni</span>
+            <span>{t('conceptCount', { count: concepts.length })}</span>
             <div className="h-px flex-1 bg-gradient-to-l from-gray-300 dark:from-gray-600 to-transparent" />
           </div>
         </motion.div>
 
         {/* Concepts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label={`${level.name} kontseptsioonid`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label={t('concepts', { level: level.name })}>
           {concepts.map((concept, idx) => (
             <div key={concept.id} role="listitem">
               <ConceptCard
