@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import { TreeLevel, Concept, ViewMode } from '../lib/types';
 import { ConceptCard } from './ConceptCard';
 import { SkeletonCard } from './SkeletonCard';
-import { getLevelGradient, getLevelIcon } from '../lib/utils';
+import { getLevelGradient } from '../lib/utils';
+import { LevelIcon } from './LevelIcon';
 import { useTranslations } from 'next-intl';
 
 interface LevelSectionProps {
@@ -66,7 +67,7 @@ export function LevelSection({ level, concepts, viewMode, index, onConceptClick,
               }}
               aria-hidden="true"
             >
-              <span className="text-6xl">{getLevelIcon(level.id)}</span>
+              <LevelIcon level={level.id as 'roots' | 'trunk' | 'branches' | 'leaves'} size={64} />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">

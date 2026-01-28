@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, Menu, X } from 'lucide-react';
 import { TreeLevel } from '../lib/types';
-import { getLevelIcon } from '../lib/utils';
+import { LevelIcon } from './LevelIcon';
 import { useTranslations } from 'next-intl';
 
 interface TreeNavigationProps {
@@ -143,7 +143,7 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
                         aria-current={isActive ? 'location' : undefined}
                         type="button"
                       >
-                        <span className="text-3xl">{getLevelIcon(level.id)}</span>
+                        <LevelIcon level={level.id as 'roots' | 'trunk' | 'branches' | 'leaves'} size={36} />
                         <div className="flex-1 text-left">
                           <div className={`font-semibold ${isActive ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                             {level.order}. {level.name}
@@ -209,7 +209,7 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
                   type="button"
                 >
                   <div className="flex items-center justify-center w-10 h-10 flex-shrink-0">
-                    <span className="text-2xl">{getLevelIcon(level.id)}</span>
+                    <LevelIcon level={level.id as 'roots' | 'trunk' | 'branches' | 'leaves'} size={28} />
                   </div>
                   <AnimatePresence>
                     {isExpanded && (
