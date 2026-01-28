@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "title": "AI Knowledge Tree | AI Teadmiste Puu",
+    "description": "Comprehensive interactive framework for teaching and understanding AI concepts. Terviklik interaktiivne raamistik AI kontseptide õpetamiseks ja mõistmiseks."
+  },
+  "header": {
+    "title": "AI Knowledge Tree (AI Teadmiste Puu)",
+    "description": "Comprehensive framework for teaching AI concepts",
+    "treeView": "Tree View",
+    "treeViewAriaLabel": "Go to tree view page",
+    "classicView": "Classic view",
+    "classicViewAriaLabel": "Back to classic view"
+  },
+  "hero": {
+    "title": "AI Knowledge Tree",
+    "subtitle": "A comprehensive framework for teaching AI concepts – from fundamental mechanics principles to the latest research.",
+    "classicViewTitle": "Classic View",
+    "classicViewDescription": "Scrollable level view with detailed content",
+    "currentPage": "Currently here",
+    "treeViewTitle": "Tree View",
+    "treeViewDescription": "Interactive tree with all concepts",
+    "clickHere": "Click here →",
+    "or": "or",
+    "treeEmoji": "Tree emoji",
+    "bookEmoji": "Book",
+    "startFromRoots": "Start from roots and move up or scroll freely"
+  },
+  "levels": {
+    "roots": "Roots",
+    "trunk": "Trunk",
+    "branches": "Branches",
+    "leaves": "Leaves"
+  },
+  "treeView": {
+    "title": "AI Knowledge Tree - Tree View",
+    "description": "All concepts in one view",
+    "instructionsTitle": "Interactive Tree Visualization",
+    "instructionsText": "Hover over a concept to make it grow. Click to open detailed view.",
+    "ariaLabel": "Tree view",
+    "diagramAriaLabel": "AI concepts tree diagram",
+    "legendHeading": "Tree levels legend",
+    "rootsEmoji": "Seedling emoji",
+    "trunkEmoji": "Evergreen tree emoji",
+    "branchesEmoji": "Green plant emoji",
+    "leavesEmoji": "Leaves emoji",
+    "rootsLabel": "1. Roots",
+    "trunkLabel": "2. Trunk",
+    "branchesLabel": "3. Branches",
+    "leavesLabel": "4. Leaves"
+  },
+  "viewMode": {
+    "both": "Both",
+    "estonian": "Estonian",
+    "english": "English",
+    "ariaLabel": "View mode selection"
+  },
+  "nameToggle": {
+    "simple": "Simple names",
+    "technical": "Technical names",
+    "ariaLabel": "Name display selection"
+  },
+  "darkMode": {
+    "toggle": "Dark mode",
+    "ariaLabel": "Dark/light mode selection"
+  },
+  "footer": {
+    "description": "AI Knowledge Tree – Interactive learning tool for understanding AI concepts",
+    "version": "Version"
+  },
+  "navigation": {
+    "viewOptions": "View options",
+    "levelSections": "AI concept levels"
+  },
+  "complexity": {
+    "level": "Complexity level",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
+  },
+  "concept": {
+    "simpleName": "Simple name",
+    "explanation": "Explanation",
+    "metaphor": "Metaphor",
+    "closeAriaLabel": "Close detailed view"
+  }
+}

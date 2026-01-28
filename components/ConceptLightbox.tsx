@@ -1,10 +1,11 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Lightbulb, Code2 } from 'lucide-react';
+import { X, Lightbulb, Code2, Terminal, ArrowRight } from 'lucide-react';
 import { Concept } from '../lib/types';
-import { getComplexityColor, getComplexityLabel } from '../lib/utils';
+import { getComplexityColor, getComplexityLabel, getLevelColor } from '../lib/utils';
 import { useEffect, useRef } from 'react';
+import { CodeBlock } from './CodeBlock';
 import {
   Users,
   Brain,
@@ -45,9 +46,11 @@ const iconMap: Record<string, LucideIcon> = {
 interface ConceptLightboxProps {
   concept: Concept | null;
   onClose: () => void;
+  allConcepts?: Concept[];
+  onNavigate?: (conceptId: string) => void;
 }
 
-export function ConceptLightbox({ concept, onClose }: ConceptLightboxProps) {
+export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate }: ConceptLightboxProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   // Handle ESC key to close
@@ -105,6 +108,20 @@ export function ConceptLightbox({ concept, onClose }: ConceptLightboxProps) {
 
   const IconComponent = iconMap[concept.icon] || Brain;
 
+  // Get prerequisite concepts
+  const prerequisites = concept.prerequisites
+    ? concept.prerequisites
+        .map(id => allConcepts.find(c => c.id === id))
+        .filter((c): c is Concept => c !== undefined)
+    : [];
+
+  // Handle prerequisite navigation
+  const handlePrerequisiteClick = (conceptId: string) => {
+    if (onNavigate) {
+      onNavigate(conceptId);
+    }
+  };
+
   return (
     <AnimatePresence>
       <motion.div
@@ -154,6 +171,50 @@ export function ConceptLightbox({ concept, onClose }: ConceptLightboxProps) {
 
           {/* Content */}
           <div id="concept-content" className="p-8 space-y-6">
+            {/* Prerequisites Section */}
+            {prerequisites.length > 0 && (
+              <section className="bg-gradient-to-br from-amber-50 to-amber-100/50 dark:from-amber-900/30 dark:to-amber-800/20 rounded-2xl p-6 border-2 border-amber-200 dark:border-amber-700" aria-labelledby="prerequisites-heading">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-amber-500 dark:bg-amber-600 rounded-lg" aria-hidden="true">
+                    <ArrowRight className="h-6 w-6 text-white" />
+                  </div>
+                  <h3 id="prerequisites-heading" className="text-2xl font-bold text-amber-900 dark:text-amber-200">Õpi enne</h3>
+                </div>
+                <p className="text-sm text-amber-800 dark:text-amber-300 mb-4">
+                  Nende teemade mõistmine aitab sul seda kontseptsiooni paremini omandada:
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {prerequisites.map((prereq) => {
+                    const levelColor = getLevelColor(prereq.level);
+                    return (
+                      <button
+                        key={prereq.id}
+                        onClick={() => handlePrerequisiteClick(prereq.id)}
+                        className="group flex items-center gap-2 px-4 py-2 rounded-full transition-all hover:scale-105 hover:shadow-md focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:outline-none min-h-[44px]"
+                        style={{
+                          backgroundColor: `${levelColor}20`,
+                          borderColor: levelColor,
+                          borderWidth: '2px'
+                        }}
+                        aria-label={`Navigate to ${prereq.title}`}
+                      >
+                        <span
+                          className="font-semibold"
+                          style={{ color: levelColor }}
+                        >
+                          {prereq.simpleName}
+                        </span>
+                        <ArrowRight
+                          className="h-4 w-4 group-hover:translate-x-1 transition-transform"
+                          style={{ color: levelColor }}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
+
             {/* Metaphor Section */}
             <section className="bg-gradient-to-br from-purple-50 to-purple-100/50 dark:from-purple-900/30 dark:to-purple-800/20 rounded-2xl p-6 border-2 border-purple-200 dark:border-purple-700" aria-labelledby="metaphor-heading">
               <div className="flex items-center gap-3 mb-4">
@@ -179,6 +240,23 @@ export function ConceptLightbox({ concept, onClose }: ConceptLightboxProps) {
                 {concept.explanation}
               </p>
             </section>
+
+            {/* Code Example Section */}
+            {concept.codeExample && (
+              <section className="bg-gradient-to-br from-slate-50 to-slate-100/50 dark:from-slate-900/30 dark:to-slate-800/20 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700" aria-labelledby="code-heading">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-slate-600 dark:bg-slate-700 rounded-lg" aria-hidden="true">
+                    <Terminal className="h-6 w-6 text-white" />
+                  </div>
+                  <h3 id="code-heading" className="text-2xl font-bold text-slate-900 dark:text-slate-200">Koodinäide</h3>
+                </div>
+                <CodeBlock
+                  code={concept.codeExample.code}
+                  language={concept.codeExample.language}
+                  explanation={concept.codeExample.explanation}
+                />
+              </section>
+            )}
           </div>
 
           {/* Footer */}

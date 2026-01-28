@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "title": "AI Teadmiste Puu | AI Knowledge Tree",
+    "description": "Terviklik interaktiivne raamistik AI kontseptide õpetamiseks ja mõistmiseks. Comprehensive interactive framework for teaching and understanding AI concepts."
+  },
+  "header": {
+    "title": "AI Teadmiste Puu (AI Knowledge Tree)",
+    "description": "Terviklik raamistik AI kontseptide õpetamiseks",
+    "treeView": "Puu Vaade",
+    "treeViewAriaLabel": "Liigu puu vaate lehele",
+    "classicView": "Klassikaline vaade",
+    "classicViewAriaLabel": "Tagasi klassikalisse vaatesse"
+  },
+  "hero": {
+    "title": "AI Teadmiste Puu",
+    "subtitle": "Terviklik raamistik AI kontseptide õpetamiseks – alates fundamentaalsetest mehaanikate põhimõtetest kuni kõige uuemate uuringuteni.",
+    "classicViewTitle": "Klassikaline Vaade",
+    "classicViewDescription": "Keritav tasandite vaade detailse sisuga",
+    "currentPage": "Praegu siin",
+    "treeViewTitle": "Puu Vaade",
+    "treeViewDescription": "Interaktiivne puu kõigi kontseptsioonidega",
+    "clickHere": "Kliki siia →",
+    "or": "või",
+    "treeEmoji": "Puu emotiikon",
+    "bookEmoji": "Raamat",
+    "startFromRoots": "Alusta juurtest ja liigu ülespoole või keri vabalt"
+  },
+  "levels": {
+    "roots": "Juured",
+    "trunk": "Tüvi",
+    "branches": "Oksad",
+    "leaves": "Lehed"
+  },
+  "treeView": {
+    "title": "AI Teadmiste Puu - Puu Vaade",
+    "description": "Kõik kontseptsioonid ühes vaates",
+    "instructionsTitle": "Interaktiivne Puu Visualisatsioon",
+    "instructionsText": "Liigu hiire kontseptsiooni peale, et see suureks kasvaks. Kliki detailse vaate avamiseks.",
+    "ariaLabel": "Puu vaade",
+    "diagramAriaLabel": "AI kontseptide puu diagramm",
+    "legendHeading": "Puu tasandite legend",
+    "rootsEmoji": "Idu emotiikon",
+    "trunkEmoji": "Kuuse puu emotiikon",
+    "branchesEmoji": "Roheline taim emotiikon",
+    "leavesEmoji": "Lehtede emotiikon",
+    "rootsLabel": "1. Juured",
+    "trunkLabel": "2. Tüvi",
+    "branchesLabel": "3. Oksad",
+    "leavesLabel": "4. Lehed"
+  },
+  "viewMode": {
+    "both": "Mõlemad",
+    "estonian": "Eesti keel",
+    "english": "Inglise keel",
+    "ariaLabel": "Vaate režiimi valik"
+  },
+  "nameToggle": {
+    "simple": "Lihtsad nimed",
+    "technical": "Tehnilised nimed",
+    "ariaLabel": "Nimede kuvamise valik"
+  },
+  "darkMode": {
+    "toggle": "Tume režiim",
+    "ariaLabel": "Tume/hele režiimi valik"
+  },
+  "footer": {
+    "description": "AI Teadmiste Puu – Interaktiivne õppevahend AI kontseptide mõistmiseks",
+    "version": "Versioon"
+  },
+  "navigation": {
+    "viewOptions": "Vaate valikud",
+    "levelSections": "AI kontseptide tasandid"
+  },
+  "complexity": {
+    "level": "Keerukuse tase",
+    "beginner": "Algaja",
+    "intermediate": "Keskmine",
+    "advanced": "Kõrgtase"
+  },
+  "concept": {
+    "simpleName": "Lihtne nimi",
+    "explanation": "Selgitus",
+    "metaphor": "Metafoor",
+    "closeAriaLabel": "Sulge detailne vaade"
+  }
+}

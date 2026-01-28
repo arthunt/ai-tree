@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Lightbulb, Code2, LayoutGrid } from 'lucide-react';
 import { ViewMode } from '../lib/types';
+import { useTranslations } from 'next-intl';
 
 interface ViewModeToggleProps {
   viewMode: ViewMode;
@@ -10,21 +11,24 @@ interface ViewModeToggleProps {
 }
 
 export function ViewModeToggle({ viewMode, onChange }: ViewModeToggleProps) {
-  const modes: { id: ViewMode; label: string; icon: typeof Lightbulb }[] = [
-    { id: 'metaphor', label: 'Metafoorid', icon: Lightbulb },
-    { id: 'technical', label: 'Tehniline', icon: Code2 },
-    { id: 'both', label: 'Mõlemad', icon: LayoutGrid },
+  const t = useTranslations('viewMode');
+
+  const modes: { id: ViewMode; labelKey: string; icon: typeof Lightbulb }[] = [
+    { id: 'metaphor', labelKey: 'estonian', icon: Lightbulb },
+    { id: 'technical', labelKey: 'english', icon: Code2 },
+    { id: 'both', labelKey: 'both', icon: LayoutGrid },
   ];
 
   return (
     <div
       className="flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-2"
       role="group"
-      aria-label="Vaate režiimi valik"
+      aria-label={t('ariaLabel')}
     >
       {modes.map((mode) => {
         const Icon = mode.icon;
         const isActive = viewMode === mode.id;
+        const label = t(mode.labelKey as 'both' | 'estonian' | 'english');
 
         return (
           <motion.button
@@ -36,7 +40,7 @@ export function ViewModeToggle({ viewMode, onChange }: ViewModeToggleProps) {
             `}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            aria-label={`${mode.label} vaade`}
+            aria-label={`${label} vaade`}
             aria-pressed={isActive}
             aria-current={isActive ? 'true' : undefined}
             type="button"
@@ -50,7 +54,7 @@ export function ViewModeToggle({ viewMode, onChange }: ViewModeToggleProps) {
             )}
             <span className="relative flex items-center gap-2">
               <Icon className="h-4 w-4" />
-              {mode.label}
+              {label}
             </span>
           </motion.button>
         );

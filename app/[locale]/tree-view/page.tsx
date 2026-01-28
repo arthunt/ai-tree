@@ -9,12 +9,18 @@ import { OrganicTreeDiagram } from '@/components/OrganicTreeDiagram';
 import { ConceptLightbox } from '@/components/ConceptLightbox';
 import { NameToggle } from '@/components/NameToggle';
 import { DarkModeToggle } from '@/components/DarkModeToggle';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import treeData from '@/data/tree-concepts.json';
+import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
 
 export default function TreeViewPage() {
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
   const [showSimpleNames, setShowSimpleNames] = useState(true);
   const data = treeData as TreeData;
+  const t = useTranslations();
+  const params = useParams();
+  const locale = params.locale as string;
 
   // Handle ESC key
   useEffect(() => {
@@ -36,22 +42,23 @@ export default function TreeViewPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link
-                href="/"
+                href={`/${locale}`}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                aria-label="Tagasi klassikalisse vaatesse"
+                aria-label={t('header.classicViewAriaLabel')}
               >
                 <ArrowLeft className="h-5 w-5 dark:text-gray-300" aria-hidden="true" />
-                <span className="font-medium dark:text-gray-300">Klassikaline vaade</span>
+                <span className="font-medium dark:text-gray-300">{t('header.classicView')}</span>
               </Link>
               <div className="h-6 w-px bg-gray-300 dark:bg-gray-600" />
               <div>
                 <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                  AI Teadmiste Puu - Puu Vaade
+                  {t('treeView.title')}
                 </h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Kõik kontseptsioonid ühes vaates</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t('treeView.description')}</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
+              <LanguageSwitcher />
               <NameToggle showSimpleNames={showSimpleNames} onChange={setShowSimpleNames} />
               <DarkModeToggle />
             </div>
@@ -60,7 +67,7 @@ export default function TreeViewPage() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-12 max-w-7xl" aria-label="Puu vaade">
+      <main className="container mx-auto px-4 py-12 max-w-7xl" aria-label={t('treeView.ariaLabel')}>
         {/* Instructions */}
         <section aria-labelledby="instructions-heading">
           <motion.div
@@ -69,18 +76,17 @@ export default function TreeViewPage() {
             className="text-center mb-12"
           >
             <h2 id="instructions-heading" className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Interaktiivne Puu Visualisatsioon
+              {t('treeView.instructionsTitle')}
             </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Liigu hiire kontseptsiooni peale, et see suureks kasvaks.
-            Kliki detailse vaate avamiseks.
+            {t('treeView.instructionsText')}
           </p>
           </motion.div>
         </section>
 
         {/* Tree Diagram */}
         <section aria-labelledby="tree-diagram-heading">
-          <h2 id="tree-diagram-heading" className="sr-only">AI kontseptide puu diagramm</h2>
+          <h2 id="tree-diagram-heading" className="sr-only">{t('treeView.diagramAriaLabel')}</h2>
           <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 border-2 border-gray-100 dark:border-gray-700">
           <OrganicTreeDiagram
             levels={data.levels}
@@ -93,23 +99,23 @@ export default function TreeViewPage() {
 
         {/* Legend */}
         <section aria-labelledby="legend-heading" className="mt-12 text-center">
-          <h2 id="legend-heading" className="sr-only">Puu tasandite legend</h2>
+          <h2 id="legend-heading" className="sr-only">{t('treeView.legendHeading')}</h2>
           <div className="inline-flex items-center gap-8 px-8 py-4 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700" role="list">
             <div className="flex items-center gap-2" role="listitem">
-              <span className="text-2xl" role="img" aria-label="Idu emotiikon">🌱</span>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">1. Juured</span>
+              <span className="text-2xl" role="img" aria-label={t('treeView.rootsEmoji')}>🌱</span>
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('treeView.rootsLabel')}</span>
             </div>
             <div className="flex items-center gap-2" role="listitem">
-              <span className="text-2xl" role="img" aria-label="Kuuse puu emotiikon">🌲</span>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">2. Tüvi</span>
+              <span className="text-2xl" role="img" aria-label={t('treeView.trunkEmoji')}>🌲</span>
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('treeView.trunkLabel')}</span>
             </div>
             <div className="flex items-center gap-2" role="listitem">
-              <span className="text-2xl" role="img" aria-label="Roheline taim emotiikon">🌿</span>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">3. Oksad</span>
+              <span className="text-2xl" role="img" aria-label={t('treeView.branchesEmoji')}>🌿</span>
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('treeView.branchesLabel')}</span>
             </div>
             <div className="flex items-center gap-2" role="listitem">
-              <span className="text-2xl" role="img" aria-label="Lehtede emotiikon">🍃</span>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">4. Lehed</span>
+              <span className="text-2xl" role="img" aria-label={t('treeView.leavesEmoji')}>🍃</span>
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('treeView.leavesLabel')}</span>
             </div>
           </div>
         </section>
@@ -120,6 +126,13 @@ export default function TreeViewPage() {
         <ConceptLightbox
           concept={selectedConcept}
           onClose={() => setSelectedConcept(null)}
+          allConcepts={data.concepts}
+          onNavigate={(conceptId) => {
+            const concept = data.concepts.find(c => c.id === conceptId);
+            if (concept) {
+              setSelectedConcept(concept);
+            }
+          }}
         />
       )}
     </div>

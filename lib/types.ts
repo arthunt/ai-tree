@@ -7,6 +7,12 @@ export interface TreeLevel {
   order: number;
 }
 
+export interface CodeExample {
+  language: 'python' | 'javascript' | 'typescript';
+  code: string;
+  explanation: string;
+}
+
 export interface Concept {
   id: string;
   level: 'leaves' | 'branches' | 'trunk' | 'roots';
@@ -16,6 +22,9 @@ export interface Concept {
   metaphor: string;
   icon: string;
   complexity: 1 | 2 | 3;
+  prerequisites?: string[];
+  relatedConcepts?: string[];
+  codeExample?: CodeExample;
 }
 
 export interface TreeData {

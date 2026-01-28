@@ -49,7 +49,8 @@
       "explanation": "Ühe suure mudeli asemel töötavad koos mitu spetsialiseerunud 'eksperti'. Iga päringu jaoks aktiveeritakse vaid vajalikud osad, säästes ressursse.",
       "metaphor": "Arstide konsiilium. Selle asemel, et üks perearst teaks kõike, suunatakse sind kardioloogi või neuroloogi juurde vastavalt sümptomile.",
       "icon": "users",
-      "complexity": 2
+      "complexity": 2,
+      "prerequisites": ["attention", "vectors"]
     },
     {
       "id": "agi-asi",
@@ -59,7 +60,8 @@
       "explanation": "Teekond inimtaseme intellekti (AGI) ja superintellekti (ASI) suunas. Mudelid, mis suudavad üldistada ja ületada inimvõimeid kõigis valdkondades.",
       "metaphor": "Üliõpilane vs Einstein vs Superintellekt. Tänane AI on nagu tark tudeng. AGI on nagu geenius. ASI on midagi, mis ületab inimlikud võimed kõigis valdkondades.",
       "icon": "brain",
-      "complexity": 3
+      "complexity": 3,
+      "prerequisites": ["ai-agents", "reasoning-models"]
     },
     {
       "id": "green-ai",
@@ -69,7 +71,8 @@
       "explanation": "Fookus energiatõhususele. Kuidas treenida ja jooksutada mudeleid väiksema süsiniku jalajäljega.",
       "metaphor": "Elektriauto. Sama sihtkoht (tulemus), aga kütusekulu ja keskkonnakahju on kordades väiksem.",
       "icon": "leaf",
-      "complexity": 1
+      "complexity": 1,
+      "prerequisites": ["tokens", "attention"]
     },
     {
       "id": "reasoning-models",
@@ -79,7 +82,8 @@
       "explanation": "Mudelid, mis on treenitud spetsiifiliselt mõtlema samm-sammult (nt o1 seeria), et lahendada keerulisi loogika- ja matemaatikaülesandeid.",
       "metaphor": "Maletaja. Ta ei tee käiku kohe, vaid mõtleb peas läbi 10 võimalikku sammu ette.",
       "icon": "chess-knight",
-      "complexity": 2
+      "complexity": 2,
+      "prerequisites": ["attention", "context-engineering"]
     },
     {
       "id": "ai-agents",
@@ -89,7 +93,13 @@
       "explanation": "Autonoomsed süsteemid, mis mitte ainult ei räägi, vaid tegutsevad: kasutavad tööriistu, planeerivad ja täidavad ülesandeid iseseisvalt.",
       "metaphor": "Töömees vs Konsultant. Konsultant (LLM) annab nõu. Töömees (Agent) võtab haamri ja parandab katuse ära.",
       "icon": "bot",
-      "complexity": 2
+      "complexity": 2,
+      "prerequisites": ["context-engineering", "rag"],
+      "codeExample": {
+        "language": "python",
+        "code": "from openai import OpenAI\nimport json\n\nclient = OpenAI()\n\n# Define available tools\ntools = [{\n    \"type\": \"function\",\n    \"function\": {\n        \"name\": \"get_weather\",\n        \"description\": \"Get weather for a city\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"city\": {\"type\": \"string\"}\n            },\n            \"required\": [\"city\"]\n        }\n    }\n}]\n\n# Agent loop\nmessages = [{\"role\": \"user\", \"content\": \"Mis ilm on Tallinnas?\"}]\n\nwhile True:\n    response = client.chat.completions.create(\n        model=\"gpt-4\", messages=messages, tools=tools\n    )\n    message = response.choices[0].message\n    \n    if message.tool_calls:\n        # Execute tool\n        tool_call = message.tool_calls[0]\n        result = json.dumps({\"temperature\": \"5°C\", \"condition\": \"pilvine\"})\n        messages.append({\"role\": \"tool\", \"content\": result, \"tool_call_id\": tool_call.id})\n    else:\n        # Final answer\n        print(message.content)\n        break",
+        "explanation": "AI Agent kasutab tsüklit: mõtle -> vali tööriist -> täida -> kontrolli tulemust -> korda vajaduse korral. See võimaldab autonoomselt ülesandeid lahendada."
+      }
     },
     {
       "id": "mcp",
@@ -99,7 +109,8 @@
       "explanation": "Standardiseeritud viis, kuidas ühendada AI mudelid väliste andmete ja tööriistadega. Väldib 'spageti-koodi' integratsioonides.",
       "metaphor": "USB-C kaabel. Üks ja sama pistik sobib, et ühendada AI ükskõik millise seadmega (andmebaasi või programmiga).",
       "icon": "plug",
-      "complexity": 2
+      "complexity": 2,
+      "prerequisites": ["ai-agents"]
     },
     {
       "id": "complexity-levels",
@@ -109,7 +120,8 @@
       "explanation": "1. LLM (jutustaja), 2. Arutlusmudel (mõtleja), 3. Agent (tegija).",
       "metaphor": "Köögimetafoor: 1. Retseptiraamat (LLM), 2. Peakokk, kes koostab menüü (Arutlus), 3. Kokk, kes reaalselt hakib ja küpsetab (Agent).",
       "icon": "layers",
-      "complexity": 1
+      "complexity": 1,
+      "prerequisites": ["tokens"]
     },
     {
       "id": "context-engineering",
@@ -119,7 +131,13 @@
       "explanation": "See on 'tüvi', mis hoiab kõike püsti. Erinevus lihtsa promptimise ja süsteemse konteksti loomise vahel (keskkond, reeglid, rollid).",
       "metaphor": "Lavastaja töö. Prompt on näitleja lause. Kontekst on lavakujundus, valgus, kostüümid ja stsenaarium, mis annavad lausele mõtte.",
       "icon": "stage",
-      "complexity": 2
+      "complexity": 2,
+      "prerequisites": ["tokens", "rag"],
+      "codeExample": {
+        "language": "javascript",
+        "code": "const openai = new OpenAI();\n\n// Poor context - vague prompt\nconst poorResponse = await openai.chat.completions.create({\n  model: \"gpt-4\",\n  messages: [\n    { role: \"user\", content: \"Kirjuta e-mail\" }\n  ]\n});\n\n// Rich context engineering\nconst richResponse = await openai.chat.completions.create({\n  model: \"gpt-4\",\n  messages: [\n    {\n      role: \"system\",\n      content: `Sa oled professionaalne ärikommunikatsiooni spetsialist.\n      \n      Reeglid:\n      - Kasuta formaalset tooni\n      - Hoia e-mailid lühikesed (max 150 sõna)\n      - Lisa alati CTA (call-to-action)\n      - Väldi žargooni\n      \n      Formaat:\n      Tervitus -> Kontekst -> Peamine sõnum -> CTA -> Lõpetus`\n    },\n    {\n      role: \"user\",\n      content: \"Kirjuta e-mail kliendile, kes küsib toote tarneaja kohta\"\n    }\n  ]\n});\n\nconsole.log(richResponse.choices[0].message.content);",
+        "explanation": "Kontekstitehnika tähendab süsteemse keskkonna loomist: määra roll, reeglid, formaat ja eesmärk. See muudab AI vastused palju täpsemaks ja kasulikumaks."
+      }
     },
     {
       "id": "rag",
@@ -129,7 +147,13 @@
       "explanation": "Mudelile antakse ligipääs 'kinnisele raamatukogule' (ettevõtte andmed), et vähendada hallutsineerimist ja tõsta täpsust.",
       "metaphor": "Avatud raamatuga eksam. AI ei pea fakte peast tuupima, ta võib need usaldusväärsest õpikust järele vaadata.",
       "icon": "book-open",
-      "complexity": 2
+      "complexity": 2,
+      "prerequisites": ["vectors", "memory"],
+      "codeExample": {
+        "language": "python",
+        "code": "from openai import OpenAI\nimport numpy as np\n\nclient = OpenAI()\n\n# Knowledge base\ndocuments = [\n    \"Eesti pealinn on Tallinn.\",\n    \"Tallinn asub Soome lahe ääres.\",\n    \"Python on populaarne programmeerimiskeel.\"\n]\n\n# User query\nquery = \"Mis on Eesti pealinn?\"\n\n# 1. Retrieve: Find relevant documents\nquery_emb = client.embeddings.create(\n    model=\"text-embedding-3-small\", input=query\n).data[0].embedding\n\nrelevant_docs = []\nfor doc in documents:\n    doc_emb = client.embeddings.create(\n        model=\"text-embedding-3-small\", input=doc\n    ).data[0].embedding\n    similarity = np.dot(query_emb, doc_emb)\n    relevant_docs.append((doc, similarity))\n\ntop_doc = max(relevant_docs, key=lambda x: x[1])[0]\n\n# 2. Augment: Add context to prompt\nprompt = f\"Kontekst: {top_doc}\\n\\nKüsimus: {query}\"\n\n# 3. Generate: Get answer\nresponse = client.chat.completions.create(\n    model=\"gpt-4\",\n    messages=[{\"role\": \"user\", \"content\": prompt}]\n)\nprint(response.choices[0].message.content)",
+        "explanation": "RAG leiab asjakohaseid dokumente (Retrieve), lisab need prompti (Augment) ja genereerib vastuse (Generate). Nii saab AI vastata täpselt ettevõtte andmete põhjal."
+      }
     },
     {
       "id": "memory",
@@ -139,7 +163,8 @@
       "explanation": "Kuidas mudel mäletab eelmist vestlust või tegevuse hetkeseisu (state). Ilma selleta alustaks ta iga lauset nullist.",
       "metaphor": "Märkmik. Kui sul on halb mälu, kirjutad olulise üles. AI-l on 'lühimälu' (vestluse aken) ja 'pikk mälu' (andmebaas).",
       "icon": "notebook",
-      "complexity": 2
+      "complexity": 2,
+      "prerequisites": ["vectors"]
     },
     {
       "id": "lora",
@@ -149,7 +174,8 @@
       "explanation": "Meetodid mudeli 'ümberõpetamiseks' kindla stiili või ülesande jaoks, ilma tervet hiigel-mudelit muutmata.",
       "metaphor": "Kursused. Ülikooli lõpetanu (baasmudel) läheb täiendkoolitusele, et saada spetsialistiks kitsal alal.",
       "icon": "graduation-cap",
-      "complexity": 3
+      "complexity": 3,
+      "prerequisites": ["vectors", "attention"]
     },
     {
       "id": "security",
@@ -159,7 +185,8 @@
       "explanation": "Meetmed prompt injection'i ja andmelekete vastu. 'Tulemüür' AI ja maailma vahel.",
       "metaphor": "Turvamees ööklubis. Kontrollib, kes tohib sisse tulla (sisend) ja mida tohib välja viia (väljund).",
       "icon": "shield",
-      "complexity": 2
+      "complexity": 2,
+      "prerequisites": ["tokens"]
     },
     {
       "id": "tokens",
@@ -169,7 +196,12 @@
       "explanation": "Teksti väikseimad ühikud AI jaoks. See ei ole sõna, vaid täheühend. Need määravad hinna ja kiiruse.",
       "metaphor": "Lego klotsid. Sõna 'Banaan' ei ole üks tükk, vaid koosneb kolmest klotsist. AI ehitab lauseid klots-klotsi haaval.",
       "icon": "blocks",
-      "complexity": 1
+      "complexity": 1,
+      "codeExample": {
+        "language": "python",
+        "code": "import tiktoken\n\n# Load tokenizer for GPT-4\nencoding = tiktoken.encoding_for_model(\"gpt-4\")\n\n# Tokenize text\ntext = \"Tere, kuidas sul läheb?\"\ntokens = encoding.encode(text)\n\nprint(f\"Text: {text}\")\nprint(f\"Tokens: {tokens}\")\nprint(f\"Token count: {len(tokens)}\")\n\n# Decode back to text\ndecoded = encoding.decode(tokens)\nprint(f\"Decoded: {decoded}\")",
+        "explanation": "Näide näitab, kuidas tiktoken teek muudab teksti tokeniteks. Eestikeelsed sõnad võivad vajada rohkem tokeneid kui ingliskeelsed."
+      }
     },
     {
       "id": "vectors",
@@ -179,7 +211,13 @@
       "explanation": "Sõnade ja tähenduste tõlkimine numbrilisteks koordinaatideks ruumis. Lähedased tähendused asuvad ruumis kõrvuti.",
       "metaphor": "GPS koordinaadid. Sõna 'Kuningas' ja 'Kuninganna' asuvad kaardil lähestikku, nagu Tallinn ja Tartu, aga 'Banaan' on teisel mandril.",
       "icon": "map-pin",
-      "complexity": 2
+      "complexity": 2,
+      "prerequisites": ["tokens"],
+      "codeExample": {
+        "language": "python",
+        "code": "from openai import OpenAI\nimport numpy as np\n\nclient = OpenAI()\n\n# Create embeddings\ntexts = [\"kuningas\", \"kuninganna\", \"banaan\"]\nembeddings = []\n\nfor text in texts:\n    response = client.embeddings.create(\n        model=\"text-embedding-3-small\",\n        input=text\n    )\n    embeddings.append(response.data[0].embedding)\n\n# Calculate similarity (cosine similarity)\ndef cosine_similarity(a, b):\n    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))\n\nprint(f\"Kuningas vs Kuninganna: {cosine_similarity(embeddings[0], embeddings[1]):.3f}\")\nprint(f\"Kuningas vs Banaan: {cosine_similarity(embeddings[0], embeddings[2]):.3f}\")",
+        "explanation": "Vektorid muudavad sõnad numbriteks. Lähedase tähendusega sõnad (kuningas/kuninganna) on ruumis lähemal kui erinevad sõnad (kuningas/banaan)."
+      }
     },
     {
       "id": "attention",
@@ -189,7 +227,13 @@
       "explanation": "Mehhanism, mis võimaldab mudelil keskenduda lause olulistele osadele, et mõista seoseid (nt kes on 'ta' lauses).",
       "metaphor": "Taskulamp pimedas toas. AI valgustab korraga ainult neid sõnu, mis on hetkel vastuse andmiseks olulised.",
       "icon": "flashlight",
-      "complexity": 3
+      "complexity": 3,
+      "prerequisites": ["tokens", "vectors"],
+      "codeExample": {
+        "language": "python",
+        "code": "import torch\nimport torch.nn.functional as F\n\n# Simplified attention calculation\nquery = torch.tensor([[1.0, 0.5]])  # Current word\nkeys = torch.tensor([              # Previous words\n    [1.0, 0.0],  # \"Kass\"\n    [0.5, 1.0],  # \"istus\"\n    [0.2, 0.3]   # \"toolil\"\n])\nvalues = keys  # Simplified\n\n# Calculate attention scores\nscores = torch.matmul(query, keys.T) / (keys.shape[1] ** 0.5)\nattention_weights = F.softmax(scores, dim=-1)\n\nprint(\"Attention weights:\")\nfor i, word in enumerate([\"Kass\", \"istus\", \"toolil\"]):\n    print(f\"{word}: {attention_weights[0][i]:.3f}\")\n\n# Apply attention\noutput = torch.matmul(attention_weights, values)\nprint(f\"\\nWeighted output: {output}\")",
+        "explanation": "Attention mehhanism arvutab iga sõna olulisuse teiste sõnade suhtes. Kõrgem skoor tähendab tugevamat seost."
+      }
     },
     {
       "id": "prefill-decode",
@@ -199,7 +243,8 @@
       "explanation": "Kuidas mudel teksti töötleb: algul loeb kiiresti sisse (prefill) ja siis kirjutab aeglaselt välja (decode).",
       "metaphor": "Lugemine vs Kirjutamine. Raamatut silmadega haarata on kiire (prefill), aga sama teksti käsitsi ümber kirjutada on aeglane (decode).",
       "icon": "book-text",
-      "complexity": 2
+      "complexity": 2,
+      "prerequisites": ["tokens"]
     }
   ]
 }

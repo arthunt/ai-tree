@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { GraduationCap, Heart } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface NameToggleProps {
   showSimpleNames: boolean;
@@ -9,11 +10,13 @@ interface NameToggleProps {
 }
 
 export function NameToggle({ showSimpleNames, onChange }: NameToggleProps) {
+  const t = useTranslations('nameToggle');
+
   return (
     <div
       className="inline-flex items-center gap-2 bg-white dark:bg-gray-800 rounded-xl shadow-md p-1 border border-gray-200 dark:border-gray-700"
       role="group"
-      aria-label="Nimetuste režiimi valik"
+      aria-label={t('ariaLabel')}
     >
       <button
         onClick={() => onChange(true)}
@@ -22,7 +25,7 @@ export function NameToggle({ showSimpleNames, onChange }: NameToggleProps) {
             ? 'text-white'
             : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
         }`}
-        aria-label="Lihtsad nimed"
+        aria-label={t('simple')}
         aria-pressed={showSimpleNames}
         aria-current={showSimpleNames ? 'true' : undefined}
       >
@@ -34,7 +37,7 @@ export function NameToggle({ showSimpleNames, onChange }: NameToggleProps) {
           />
         )}
         <Heart className="h-4 w-4 relative z-10" />
-        <span className="relative z-10 text-sm">Lihtsad nimed</span>
+        <span className="relative z-10 text-sm">{t('simple')}</span>
       </button>
 
       <button
@@ -44,7 +47,7 @@ export function NameToggle({ showSimpleNames, onChange }: NameToggleProps) {
             ? 'text-white'
             : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
         }`}
-        aria-label="Tehnilised nimed"
+        aria-label={t('technical')}
         aria-pressed={!showSimpleNames}
         aria-current={!showSimpleNames ? 'true' : undefined}
       >
@@ -56,7 +59,7 @@ export function NameToggle({ showSimpleNames, onChange }: NameToggleProps) {
           />
         )}
         <GraduationCap className="h-4 w-4 relative z-10" />
-        <span className="relative z-10 text-sm">Tehnilised nimed</span>
+        <span className="relative z-10 text-sm">{t('technical')}</span>
       </button>
     </div>
   );
