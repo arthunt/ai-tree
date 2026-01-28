@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { TreeLevel, Concept, ViewMode } from '../lib/types';
 import { ConceptCard } from './ConceptCard';
+import { SkeletonCard } from './SkeletonCard';
 import { getLevelGradient, getLevelIcon } from '../lib/utils';
 import { useTranslations } from 'next-intl';
 
@@ -13,9 +14,10 @@ interface LevelSectionProps {
   index: number;
   onConceptClick: (concept: Concept) => void;
   isCompleted?: (conceptId: string) => boolean;
+  isLoading?: boolean;
 }
 
-export function LevelSection({ level, concepts, viewMode, index, onConceptClick, isCompleted }: LevelSectionProps) {
+export function LevelSection({ level, concepts, viewMode, index, onConceptClick, isCompleted, isLoading = false }: LevelSectionProps) {
   const t = useTranslations('levelSection');
   const levelColors: Record<string, { from: string; to: string; border: string; darkFrom: string; darkTo: string }> = {
     roots: { from: 'from-emerald-50/50', to: 'to-emerald-100/20', border: 'border-emerald-200', darkFrom: 'dark:from-emerald-950/50', darkTo: 'dark:to-emerald-900/20' },
@@ -98,17 +100,26 @@ export function LevelSection({ level, concepts, viewMode, index, onConceptClick,
 
         {/* Concepts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label={t('concepts', { level: level.name })}>
-          {concepts.map((concept, idx) => (
-            <div key={concept.id} role="listitem">
-              <ConceptCard
-                concept={concept}
-                viewMode={viewMode}
-                index={idx}
-                onClick={() => onConceptClick(concept)}
-                isCompleted={isCompleted?.(concept.id) ?? false}
-              />
-            </div>
-          ))}
+          {isLoading ? (
+            // Show skeleton cards while loading
+            Array.from({ length: 3 }).map((_, idx) => (
+              <div key={`skeleton-${idx}`} role="listitem">
+                <SkeletonCard index={idx} />
+              </div>
+            ))
+          ) : (
+            concepts.map((concept, idx) => (
+              <div key={concept.id} role="listitem">
+                <ConceptCard
+                  concept={concept}
+                  viewMode={viewMode}
+                  index={idx}
+                  onClick={() => onConceptClick(concept)}
+                  isCompleted={isCompleted?.(concept.id) ?? false}
+                />
+              </div>
+            ))
+          )}
         </div>
       </div>
     </motion.section>

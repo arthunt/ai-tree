@@ -11,6 +11,7 @@ import { ConceptLightbox } from '@/components/ConceptLightbox';
 import { DarkModeToggle } from '@/components/DarkModeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { TokenizerDemo } from '@/components/TokenizerDemo';
+import { VectorDemo } from '@/components/VectorDemo';
 import { SearchModal } from '@/components/SearchModal';
 import treeData from '@/data/tree-concepts.json';
 import Link from 'next/link';
@@ -23,12 +24,23 @@ export default function AITreePage() {
   const [activeLevel, setActiveLevel] = useState('roots');
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const data = treeData as TreeData;
   const t = useTranslations();
   const params = useParams();
   const locale = params.locale as string;
   const { isCompleted, toggleCompleted, completedCount, getCompletionPercentage, clearProgress } = useProgress();
   const totalConcepts = data.concepts.length;
+
+  // Simulate initial loading state
+  useEffect(() => {
+    // Set a short delay to show loading state and prevent layout shift
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Track active section on scroll
   useEffect(() => {
@@ -231,6 +243,13 @@ export default function AITreePage() {
         </div>
       </section>
 
+      {/* Vector Similarity Demo Section */}
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900" aria-label="Vector similarity demo">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <VectorDemo />
+        </div>
+      </section>
+
       {/* Level Sections */}
       <main aria-label={t('navigation.levelSections')}>
         {data.levels.map((level, index) => {
@@ -244,6 +263,7 @@ export default function AITreePage() {
               index={index}
               onConceptClick={setSelectedConcept}
               isCompleted={isCompleted}
+              isLoading={isLoading}
             />
           );
         })}

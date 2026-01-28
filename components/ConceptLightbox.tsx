@@ -7,6 +7,7 @@ import { getComplexityColor, getComplexityLabel, getLevelColor, getReadingTime }
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { CodeBlock } from './CodeBlock';
+import { LightboxSkeleton } from './LightboxSkeleton';
 import { useTranslations } from 'next-intl';
 import {
   Users,
@@ -60,6 +61,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
   const params = useParams();
   const locale = params.locale as string;
   const [copied, setCopied] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Generate shareable URL
   const getShareUrl = () => {
@@ -126,6 +128,17 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
   };
 
   const canNativeShare = typeof navigator !== 'undefined' && !!navigator.share;
+
+  // Simulate loading state for smooth transition
+  useEffect(() => {
+    if (concept) {
+      setIsLoading(true);
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [concept]);
 
   // Handle ESC key to close
   useEffect(() => {
@@ -216,8 +229,12 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto overflow-x-hidden"
+          className="relative bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto overflow-x-hidden"
         >
+          {isLoading ? (
+            <LightboxSkeleton />
+          ) : (
+            <>
           {/* Header */}
           <div className="sticky top-0 bg-gradient-to-br from-blue-600 to-purple-600 text-white p-8 rounded-t-3xl">
             <div className="flex items-start justify-between gap-4">
@@ -414,6 +431,8 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], onNavigate
               </p>
             </div>
           </div>
+          </>
+          )}
         </motion.div>
       </motion.div>
     </AnimatePresence>

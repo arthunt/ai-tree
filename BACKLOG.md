@@ -44,6 +44,11 @@
 - [x] US-028: Time Estimates Per Concept
 - [x] US-029: Report Issue Button
 
+### Sprint 3-4: Polish & Demos (DONE)
+- [x] US-030: Vector Similarity Demo (interactive 2D visualization)
+- [x] US-031: Loading States & Skeletons (SkeletonCard, LightboxSkeleton, TreeDiagramSkeleton)
+- [x] US-032: Basic Analytics (Vercel Analytics with Do Not Track support)
+
 ---
 
 ## Global Definition of Done (DoD)
@@ -410,16 +415,16 @@ EFFORT│                    │                    │ EFFORT
 | US-028 Time Estimates | 2h | ✅ Done |
 | US-029 Report Issue | 1h | ✅ Done |
 
-### Current Sprint (Sprint 3-4)
-**Duration:** 2 weeks | **Capacity:** 47h
+### Previous Sprint (Sprint 3-4) - COMPLETED
+**Duration:** 2 weeks | **Capacity:** 20h | **Velocity:** 20h
 
 | Story | Points | Status |
 |-------|--------|--------|
-| US-030 Vector Similarity Demo | 12h | Pending |
-| US-031 Loading States | 4h | Pending |
-| US-032 Basic Analytics | 4h | Pending |
+| US-030 Vector Similarity Demo | 12h | ✅ Done |
+| US-031 Loading States | 4h | ✅ Done |
+| US-032 Basic Analytics | 4h | ✅ Done |
 
-**Sprint Goal:** Polish & interactive demos.
+**Sprint Goal:** Polish & interactive demos. ✅ Achieved
 
 ---
 

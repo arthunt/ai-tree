@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { TreeData, Concept } from '@/lib/types';
 import { OrganicTreeDiagram } from '@/components/OrganicTreeDiagram';
+import { TreeDiagramSkeleton } from '@/components/TreeDiagramSkeleton';
 import { ConceptLightbox } from '@/components/ConceptLightbox';
 import { NameToggle } from '@/components/NameToggle';
 import { DarkModeToggle } from '@/components/DarkModeToggle';
@@ -17,10 +18,20 @@ import { useParams } from 'next/navigation';
 export default function TreeViewPage() {
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
   const [showSimpleNames, setShowSimpleNames] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const data = treeData as TreeData;
   const t = useTranslations();
   const params = useParams();
   const locale = params.locale as string;
+
+  // Simulate loading state for tree rendering
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Handle ESC key
   useEffect(() => {
@@ -88,12 +99,16 @@ export default function TreeViewPage() {
         <section aria-labelledby="tree-diagram-heading">
           <h2 id="tree-diagram-heading" className="sr-only">{t('treeView.diagramAriaLabel')}</h2>
           <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 border-2 border-gray-100 dark:border-gray-700">
-          <OrganicTreeDiagram
-            levels={data.levels}
-            concepts={data.concepts}
-            onConceptClick={setSelectedConcept}
-            showSimpleNames={showSimpleNames}
-          />
+            {isLoading ? (
+              <TreeDiagramSkeleton />
+            ) : (
+              <OrganicTreeDiagram
+                levels={data.levels}
+                concepts={data.concepts}
+                onConceptClick={setSelectedConcept}
+                showSimpleNames={showSimpleNames}
+              />
+            )}
           </div>
         </section>
 

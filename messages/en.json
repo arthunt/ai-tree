@@ -81,7 +81,12 @@
     "intermediate": "Intermediate",
     "advanced": "Advanced"
   },
-  "loading": "Loading...",
+  "loading": {
+    "default": "Loading...",
+    "concepts": "Loading concepts...",
+    "tree": "Loading tree...",
+    "content": "Loading content..."
+  },
   "concept": {
     "simpleName": "Simple name",
     "explanation": "Explanation",
@@ -168,5 +173,27 @@
       "branches": "Branches",
       "leaves": "Leaves"
     }
+  },
+  "vectorDemo": {
+    "title": "Vector Similarity Demo",
+    "subtitle": "Explore how AI understands word meanings",
+    "showInfo": "Show info",
+    "hideInfo": "Hide info",
+    "reset": "Reset",
+    "word": "Word",
+    "optional": "(optional)",
+    "wordPlaceholder": "e.g. cat, happy, king",
+    "calculate": "Calculate Similarity",
+    "similarityScores": "Similarity Scores:",
+    "similarityHigh": "Very similar",
+    "similarityMedium": "Somewhat similar",
+    "similarityLow": "Not similar",
+    "visualization": "2D Visualization:",
+    "visualizationAriaLabel": "2D visualization of word similarities in vector space",
+    "visualizationHint": "Words closer together are more similar in meaning. Hover over points for details.",
+    "infoTitle": "What are embeddings?",
+    "infoText": "AI represents words as vectors (lists of numbers) called <em>embeddings</em>. Similar words have similar vectors. This demo uses simplified 10-dimensional vectors, but real models like GPT use 1,536+ dimensions! The 2D plot shows these high-dimensional relationships projected into a space we can see.",
+    "tryExamples": "Try examples:",
+    "disclaimer": "This demo uses pre-computed simplified embeddings. Real AI models create embeddings dynamically based on context and use thousands of dimensions for more nuanced understanding."
   }
 }

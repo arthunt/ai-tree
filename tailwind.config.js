@@ -7,7 +7,13 @@ module.exports = {
     './context/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
+        },
+      },
+    },
   },
   plugins: [],
 };

@@ -81,7 +81,12 @@
     "intermediate": "Keskmine",
     "advanced": "Keeruline"
   },
-  "loading": "Laen...",
+  "loading": {
+    "default": "Laen...",
+    "concepts": "Laen kontseptsioone...",
+    "tree": "Laen puud...",
+    "content": "Laen sisu..."
+  },
   "concept": {
     "simpleName": "Lihtne nimi",
     "explanation": "Selgitus",
@@ -168,5 +173,27 @@
       "branches": "Oksad",
       "leaves": "Lehed"
     }
+  },
+  "vectorDemo": {
+    "title": "Vektorisarnasuse Demo",
+    "subtitle": "Uuri, kuidas AI mõistab sõnade tähendusi",
+    "showInfo": "Näita infot",
+    "hideInfo": "Peida info",
+    "reset": "Lähtesta",
+    "word": "Sõna",
+    "optional": "(valikuline)",
+    "wordPlaceholder": "nt cat, happy, king",
+    "calculate": "Arvuta Sarnasus",
+    "similarityScores": "Sarnasuse Skoorid:",
+    "similarityHigh": "Väga sarnane",
+    "similarityMedium": "Mõnevõrra sarnane",
+    "similarityLow": "Pole sarnane",
+    "visualization": "2D Visualisatsioon:",
+    "visualizationAriaLabel": "2D visualisatsioon sõnade sarnasustest vektorruumis",
+    "visualizationHint": "Lähemale asetsevad sõnad on tähenduselt sarnasemad. Hoia hiirt punktide kohal detailide jaoks.",
+    "infoTitle": "Mis on embeddingud?",
+    "infoText": "AI esindab sõnu vektoritena (numbrinimikirjad) mida kutsutakse <em>embeddinguteks</em>. Sarnastel sõnadel on sarnased vektorid. See demo kasutab lihtsustatud 10-mõõtmelisi vektoreid, kuid päris mudelid nagu GPT kasutavad 1536+ mõõdet! 2D graafik näitab neid kõrgmõõtmelisi seoseid projitseerituna ruumi, mida me näeme.",
+    "tryExamples": "Proovi näiteid:",
+    "disclaimer": "See demo kasutab eelarvutatud lihtsustatud embeddinguid. Päris AI mudelid loovad embeddinguid dünaamiliselt konteksti põhjal ja kasutavad tuhandeid mõõtmeid nüansirikkama mõistmise jaoks."
   }
 }
