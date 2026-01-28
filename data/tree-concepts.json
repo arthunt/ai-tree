@@ -8,20 +8,12 @@
   },
   "levels": [
     {
-      "id": "roots",
-      "name": "JUURED",
-      "subtitle": "Fundamentaalne Mehaanika",
-      "description": "See on AI 'mootor'. Ilma mõistmata, kuidas masin keelt töötleb, tegutsed pimesi.",
-      "color": "#065f46",
-      "order": 1
-    },
-    {
-      "id": "trunk",
-      "name": "TÜVI",
-      "subtitle": "Inseneeria ja Arhitektuur",
-      "description": "Tüvi on kandev struktuur, mis toetab kõike muud.",
-      "color": "#92400e",
-      "order": 2
+      "id": "leaves",
+      "name": "LEHED JA VILJAD",
+      "subtitle": "Uuringud ja Trendid",
+      "description": "See on puu kõige kiiremini muutuv osa. Mis on täna tippteadus, on homme standard.",
+      "color": "#8b5cf6",
+      "order": 4
     },
     {
       "id": "branches",
@@ -32,12 +24,20 @@
       "order": 3
     },
     {
-      "id": "leaves",
-      "name": "LEHED JA VILJAD",
-      "subtitle": "Uuringud ja Trendid",
-      "description": "See on puu kõige kiiremini muutuv osa. Mis on täna tippteadus, on homme standard.",
-      "color": "#8b5cf6",
-      "order": 4
+      "id": "trunk",
+      "name": "TÜVI",
+      "subtitle": "Inseneeria ja Arhitektuur",
+      "description": "Tüvi on kandev struktuur, mis toetab kõike muud.",
+      "color": "#92400e",
+      "order": 2
+    },
+    {
+      "id": "roots",
+      "name": "JUURED",
+      "subtitle": "Fundamentaalne Mehaanika",
+      "description": "See on AI 'mootor'. Ilma mõistmata, kuidas masin keelt töötleb, tegutsed pimesi.",
+      "color": "#065f46",
+      "order": 1
     }
   ],
   "concepts": [

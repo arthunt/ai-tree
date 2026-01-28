@@ -21,7 +21,7 @@ import { useParams } from 'next/navigation';
 
 export default function AITreePage() {
   const [viewMode, setViewMode] = useState<ViewMode>('both');
-  const [activeLevel, setActiveLevel] = useState('roots');
+  const [activeLevel, setActiveLevel] = useState('leaves');
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
