@@ -77,6 +77,7 @@
     "intermediate": "Keskmine",
     "advanced": "Keeruline"
   },
+  "loading": "Laen...",
   "concept": {
     "simpleName": "Lihtne nimi",
     "explanation": "Selgitus",
@@ -91,7 +92,8 @@
     "simpleMetaphor": "Lihtne Metafoor",
     "technicalExplanation": "Tehniline Selgitus",
     "codeExample": "Koodinäide",
-    "pressEscToClose": "Vajuta ESC või klõpsa väljaspool, et sulgeda"
+    "pressEscToClose": "Vajuta ESC või klõpsa väljaspool, et sulgeda",
+    "backToTree": "Tagasi puu juurde"
   },
   "tokenizer": {
     "title": "Tokeniseerija Demo",
