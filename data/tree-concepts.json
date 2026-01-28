@@ -217,6 +217,12 @@
         "language": "python",
         "code": "from openai import OpenAI\nimport numpy as np\n\nclient = OpenAI()\n\n# Create embeddings\ntexts = [\"kuningas\", \"kuninganna\", \"banaan\"]\nembeddings = []\n\nfor text in texts:\n    response = client.embeddings.create(\n        model=\"text-embedding-3-small\",\n        input=text\n    )\n    embeddings.append(response.data[0].embedding)\n\n# Calculate similarity (cosine similarity)\ndef cosine_similarity(a, b):\n    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))\n\nprint(f\"Kuningas vs Kuninganna: {cosine_similarity(embeddings[0], embeddings[1]):.3f}\")\nprint(f\"Kuningas vs Banaan: {cosine_similarity(embeddings[0], embeddings[2]):.3f}\")",
         "explanation": "Vektorid muudavad sõnad numbriteks. Lähedase tähendusega sõnad (kuningas/kuninganna) on ruumis lähemal kui erinevad sõnad (kuningas/banaan)."
+      },
+      "visual": {
+        "type": "demo",
+        "component": "VectorDemo",
+        "alt": "Interactive vector similarity demo",
+        "caption": "Proovi ise – sisesta sõnad ja vaata, kui sarnased nad vektorruumis on"
       }
     },
     {
