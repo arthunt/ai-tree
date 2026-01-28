@@ -1,0 +1,118 @@
+/* DendrixLogo Animations - Very slow, subtle breathing effects */
+
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.5;
+    filter: blur(3px);
+  }
+  50% {
+    opacity: 0.9;
+    filter: blur(5px);
+  }
+}
+
+@keyframes treeShimmer {
+  0%, 100% {
+    filter: brightness(1) saturate(1);
+  }
+  50% {
+    filter: brightness(1.04) saturate(1.08);
+  }
+}
+
+@keyframes wordmarkFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Container */
+.logo {
+  position: relative;
+  display: inline-block;
+}
+
+/* Animated circles overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Tree body shimmer - very slow */
+.treeBody {
+  animation: treeShimmer 20s ease-in-out infinite;
+  will-change: filter;
+}
+
+/* Node circles - staggered breathing */
+.node {
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.node0  { animation: breathe 5.0s ease-in-out 0.0s infinite; }
+.node1  { animation: breathe 5.5s ease-in-out 0.4s infinite; }
+.node2  { animation: breathe 4.8s ease-in-out 0.8s infinite; }
+.node3  { animation: breathe 5.2s ease-in-out 1.2s infinite; }
+.node4  { animation: breathe 4.6s ease-in-out 1.6s infinite; }
+.node5  { animation: breathe 5.4s ease-in-out 2.0s infinite; }
+.node6  { animation: breathe 5.0s ease-in-out 2.4s infinite; }
+.node7  { animation: breathe 5.8s ease-in-out 0.3s infinite; }
+.node8  { animation: breathe 4.7s ease-in-out 0.7s infinite; }
+.node9  { animation: breathe 5.3s ease-in-out 1.1s infinite; }
+.node10 { animation: breathe 5.1s ease-in-out 1.5s infinite; }
+.node11 { animation: breathe 4.9s ease-in-out 1.9s infinite; }
+.node12 { animation: breathe 5.6s ease-in-out 2.3s infinite; }
+.node13 { animation: breathe 5.2s ease-in-out 2.7s infinite; }
+.node14 { animation: breathe 4.8s ease-in-out 0.5s infinite; }
+.node15 { animation: breathe 5.4s ease-in-out 0.9s infinite; }
+.node16 { animation: breathe 5.0s ease-in-out 1.3s infinite; }
+.node17 { animation: breathe 4.6s ease-in-out 1.7s infinite; }
+.node18 { animation: breathe 5.2s ease-in-out 2.1s infinite; }
+
+/* Wordmark entrance */
+.wordmark {
+  animation: wordmarkFade 1.2s ease-out 0.3s both;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .node, .node0, .node1, .node2, .node3, .node4, .node5, .node6,
+  .node7, .node8, .node9, .node10, .node11, .node12, .node13,
+  .node14, .node15, .node16, .node17, .node18 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .treeBody {
+    animation: none;
+    filter: none;
+  }
+
+  .wordmark {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

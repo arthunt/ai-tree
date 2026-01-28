@@ -12,6 +12,7 @@ import { TokenizerDemo } from '@/components/TokenizerDemo';
 import { VectorDemo } from '@/components/VectorDemo';
 import { SearchModal } from '@/components/SearchModal';
 import { SkillSelectorModal } from '@/components/SkillSelectorModal';
+import { DendrixLogo } from '@/components/DendrixLogo';
 import treeData from '@/data/tree-concepts.json';
 import Link from 'next/link';
 import { Network, Search, ChevronDown, ChevronUp } from 'lucide-react';
@@ -171,11 +172,13 @@ export default function AITreePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {/* Compact title with inline emoji */}
-            <h2 id="hero-heading" className="text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
-              <span role="img" aria-label={t('hero.treeEmoji')} className="mr-2 sm:mr-3">🌳</span>
-              {t('hero.title')}
-            </h2>
+            {/* Logo + title */}
+            <div className="flex flex-col items-center mb-4 sm:mb-6">
+              <DendrixLogo size={120} className="mb-3 sm:mb-4" />
+              <h2 id="hero-heading" className="text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white">
+                {t('hero.title')}
+              </h2>
+            </div>
 
             {/* Mobile: Collapsed view shows time + expand button */}
             <div className="sm:hidden">
