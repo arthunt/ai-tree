@@ -15,7 +15,7 @@ import { WelcomeModal } from '@/components/WelcomeModal';
 import { DendrixLogo } from '@/components/DendrixLogo';
 import treeData from '@/data/tree-concepts.json';
 import Link from 'next/link';
-import { Network, Search, Moon, Sun, Lightbulb, Code2, LayoutGrid, GraduationCap, ChevronRight } from 'lucide-react';
+import { Network, Search, Moon, Sun, Lightbulb, Code2, GraduationCap, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useTheme } from '@/context/ThemeContext';
@@ -24,7 +24,7 @@ import { CourseStructuredData } from '@/components/StructuredData';
 import { CelebrationModal } from '@/components/CelebrationModal';
 
 export default function AITreePage() {
-  const [viewMode, setViewMode] = useState<ViewMode>('both');
+  const [viewMode, setViewMode] = useState<ViewMode>('metaphor');
   const [activeLevel, setActiveLevel] = useState('leaves');
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -92,11 +92,11 @@ export default function AITreePage() {
     }
   }, [completedConcepts, totalConcepts, data.levels, data.concepts, celebratedLevels, celebratedAll, tLevel]);
 
-  // View mode icons
+  // View mode icons — toggle between simple (metaphor) and technical
   const viewModeIcons: Record<ViewMode, { icon: typeof Lightbulb; next: ViewMode }> = {
     metaphor: { icon: Lightbulb, next: 'technical' },
-    technical: { icon: Code2, next: 'both' },
-    both: { icon: LayoutGrid, next: 'metaphor' },
+    technical: { icon: Code2, next: 'metaphor' },
+    both: { icon: Lightbulb, next: 'technical' },
   };
 
   const switchLanguage = (newLocale: string) => {
@@ -233,10 +233,24 @@ export default function AITreePage() {
                 )}
               </button>
 
+              {/* Learning Paths Button */}
+              <Link
+                href={`/${locale}/learn`}
+                className={`flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white hover:shadow-lg transition-all font-medium ${
+                  isScrolled
+                    ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
+                    : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
+                }`}
+                aria-label={t('learningPaths.title')}
+              >
+                <GraduationCap className={isScrolled ? 'h-4 w-4' : 'h-5 w-5'} aria-hidden="true" />
+                {!isScrolled && <span className="hidden sm:inline ml-2">{t('learningPaths.title')}</span>}
+              </Link>
+
               {/* Concept Map Button */}
               <Link
                 href={`/${locale}/tree-view`}
-                className={`flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:shadow-lg transition-all font-medium ${
+                className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 transition-all font-medium ${
                   isScrolled
                     ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
                     : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
@@ -250,8 +264,8 @@ export default function AITreePage() {
               {/* View Mode Toggle (cycles through modes) */}
               {(() => {
                 const { icon: ViewIcon, next } = viewModeIcons[viewMode];
-                const modeLabelKey = viewMode === 'metaphor' ? 'simple' : viewMode;
-                const modeLabel = t(`viewMode.${modeLabelKey}` as 'viewMode.simple' | 'viewMode.technical' | 'viewMode.both');
+                const modeLabelKey = viewMode === 'metaphor' ? 'simple' : 'technical';
+                const modeLabel = t(`viewMode.${modeLabelKey}` as 'viewMode.simple' | 'viewMode.technical');
                 return (
                   <button
                     onClick={() => setViewMode(next)}
