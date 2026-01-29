@@ -7,7 +7,6 @@ import { useProgress } from '@/lib/useProgress';
 import { LevelSection } from '@/components/LevelSection';
 import { LevelIcon } from '@/components/LevelIcon';
 import { ConceptLightbox } from '@/components/ConceptLightbox';
-import { SettingsDropdown } from '@/components/SettingsDropdown';
 import { TokenizerDemo } from '@/components/TokenizerDemo';
 import { VectorDemo } from '@/components/VectorDemo';
 import { SearchModal } from '@/components/SearchModal';
@@ -15,9 +14,11 @@ import { SkillSelectorModal } from '@/components/SkillSelectorModal';
 import { DendrixLogo } from '@/components/DendrixLogo';
 import treeData from '@/data/tree-concepts.json';
 import Link from 'next/link';
-import { Network, Search } from 'lucide-react';
+import { Network, Search, Moon, Sun, Lightbulb, Code2, LayoutGrid } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useTheme } from '@/context/ThemeContext';
+import { locales } from '@/i18n';
 
 export default function AITreePage() {
   const [viewMode, setViewMode] = useState<ViewMode>('both');
@@ -31,8 +32,24 @@ export default function AITreePage() {
   const t = useTranslations();
   const params = useParams();
   const locale = params.locale as string;
+  const pathname = usePathname();
+  const router = useRouter();
+  const { theme, toggleTheme, mounted: themeMounted } = useTheme();
   const { isCompleted, toggleCompleted, completedCount, getCompletionPercentage, clearProgress } = useProgress();
   const totalConcepts = data.concepts.length;
+
+  // View mode icons
+  const viewModeIcons: Record<ViewMode, { icon: typeof Lightbulb; next: ViewMode }> = {
+    metaphor: { icon: Lightbulb, next: 'technical' },
+    technical: { icon: Code2, next: 'both' },
+    both: { icon: LayoutGrid, next: 'metaphor' },
+  };
+
+  const switchLanguage = (newLocale: string) => {
+    if (newLocale === locale) return;
+    const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
+    router.replace(newPathname, { scroll: false });
+  };
 
   // Simulate initial loading state
   useEffect(() => {
@@ -147,8 +164,74 @@ export default function AITreePage() {
                 {!isScrolled && <span className="hidden sm:inline ml-2">{t('header.treeView')}</span>}
               </Link>
 
-              {/* Consolidated Settings Dropdown - All breakpoints */}
-              <SettingsDropdown viewMode={viewMode} onViewModeChange={setViewMode} />
+              {/* View Mode Toggle (cycles through modes) */}
+              {(() => {
+                const { icon: ViewIcon, next } = viewModeIcons[viewMode];
+                const modeLabelKey = viewMode === 'metaphor' ? 'simple' : viewMode;
+                const modeLabel = t(`viewMode.${modeLabelKey}` as 'viewMode.simple' | 'viewMode.technical' | 'viewMode.both');
+                return (
+                  <button
+                    onClick={() => setViewMode(next)}
+                    className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all ${
+                      isScrolled
+                        ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
+                        : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-3 sm:py-2.5 rounded-lg sm:rounded-xl'
+                    }`}
+                    aria-label={`${t('settings.viewMode')}: ${modeLabel}`}
+                    title={`${t('settings.viewMode')}: ${modeLabel}`}
+                    type="button"
+                  >
+                    <ViewIcon className={`text-gray-700 dark:text-gray-300 ${isScrolled ? 'h-4 w-4' : 'h-5 w-5 sm:h-4 sm:w-4'}`} />
+                    {!isScrolled && <span className="hidden sm:inline ml-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">{modeLabel}</span>}
+                  </button>
+                );
+              })()}
+
+              {/* Language Switcher (inline pill) */}
+              <div className={`flex items-center bg-gray-100 dark:bg-gray-800 overflow-hidden ${
+                isScrolled ? 'rounded-lg' : 'rounded-lg sm:rounded-xl'
+              }`}>
+                {locales.map((loc) => (
+                  <button
+                    key={loc}
+                    onClick={() => switchLanguage(loc)}
+                    className={`font-semibold transition-colors ${
+                      isScrolled
+                        ? 'px-2 py-1.5 text-[11px]'
+                        : 'px-2.5 py-2.5 text-xs sm:text-sm min-h-[40px] sm:min-h-[44px]'
+                    } ${
+                      loc === locale
+                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700'
+                    }`}
+                    aria-label={`Switch to ${loc === 'et' ? 'Estonian' : 'English'}`}
+                    aria-current={loc === locale ? 'true' : undefined}
+                    type="button"
+                  >
+                    {loc.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+
+              {/* Dark Mode Toggle */}
+              {themeMounted && (
+                <button
+                  onClick={toggleTheme}
+                  className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all ${
+                    isScrolled
+                      ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
+                      : 'w-10 h-10 sm:min-w-[44px] sm:min-h-[44px] rounded-lg sm:rounded-xl'
+                  }`}
+                  aria-label={t('darkMode.ariaLabel')}
+                  type="button"
+                >
+                  {theme === 'light' ? (
+                    <Moon className={`text-gray-700 dark:text-gray-300 ${isScrolled ? 'h-4 w-4' : 'h-5 w-5'}`} />
+                  ) : (
+                    <Sun className={`text-gray-700 dark:text-gray-300 ${isScrolled ? 'h-4 w-4' : 'h-5 w-5'}`} />
+                  )}
+                </button>
+              )}
             </div>
           </div>
         </div>
