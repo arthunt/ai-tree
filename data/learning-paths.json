@@ -1,0 +1,44 @@
+{
+  "paths": [
+    {
+      "id": "ai-fundamentals",
+      "icon": "brain",
+      "difficulty": "beginner",
+      "estimatedMinutes": 45,
+      "concepts": ["tokens", "vectors", "attention", "transformers", "context-windows", "hallucinations"],
+      "prerequisites": []
+    },
+    {
+      "id": "prompt-engineering",
+      "icon": "message-square",
+      "difficulty": "intermediate",
+      "estimatedMinutes": 40,
+      "concepts": ["tokens", "context-windows", "temperature-sampling", "prompting-basics", "hallucinations"],
+      "prerequisites": ["ai-fundamentals"]
+    },
+    {
+      "id": "build-rag-apps",
+      "icon": "database",
+      "difficulty": "intermediate",
+      "estimatedMinutes": 50,
+      "concepts": ["vectors", "context-windows", "rag", "memory", "context-engineering"],
+      "prerequisites": ["ai-fundamentals"]
+    },
+    {
+      "id": "ai-agents-path",
+      "icon": "bot",
+      "difficulty": "advanced",
+      "estimatedMinutes": 55,
+      "concepts": ["context-engineering", "function-calling", "ai-agents", "mcp", "memory", "security"],
+      "prerequisites": ["prompt-engineering", "build-rag-apps"]
+    },
+    {
+      "id": "fine-tuning-path",
+      "icon": "sliders",
+      "difficulty": "advanced",
+      "estimatedMinutes": 35,
+      "concepts": ["tokens", "vectors", "attention", "training-vs-inference", "lora", "moe"],
+      "prerequisites": ["ai-fundamentals"]
+    }
+  ]
+}

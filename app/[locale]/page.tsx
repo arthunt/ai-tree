@@ -15,12 +15,13 @@ import { WelcomeModal } from '@/components/WelcomeModal';
 import { DendrixLogo } from '@/components/DendrixLogo';
 import treeData from '@/data/tree-concepts.json';
 import Link from 'next/link';
-import { Network, Search, Moon, Sun, Lightbulb, Code2, LayoutGrid, TreePine, Brain } from 'lucide-react';
+import { Network, Search, Moon, Sun, Lightbulb, Code2, LayoutGrid, TreePine, Brain, GraduationCap, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useTheme } from '@/context/ThemeContext';
 import { locales } from '@/i18n';
 import { CourseStructuredData } from '@/components/StructuredData';
+import { CelebrationModal } from '@/components/CelebrationModal';
 
 export default function AITreePage() {
   const [viewMode, setViewMode] = useState<ViewMode>('both');
@@ -39,8 +40,57 @@ export default function AITreePage() {
   const pathname = usePathname();
   const router = useRouter();
   const { theme, toggleTheme, mounted: themeMounted } = useTheme();
-  const { isCompleted, toggleCompleted, completedCount, getCompletionPercentage, clearProgress } = useProgress();
+  const { isCompleted, toggleCompleted, completedCount, getCompletionPercentage, clearProgress, completedConcepts } = useProgress();
   const totalConcepts = data.concepts.length;
+  const tCelebration = useTranslations('celebration');
+
+  // Celebration state
+  const [celebration, setCelebration] = useState<{
+    type: 'level' | 'all';
+    levelId?: string;
+    levelName?: string;
+    conceptCount: number;
+    nextLevelId?: string;
+    nextLevelName?: string;
+  } | null>(null);
+  const [celebratedLevels, setCelebratedLevels] = useState<Set<string>>(new Set());
+  const [celebratedAll, setCelebratedAll] = useState(false);
+
+  // Detect level/tree completion
+  useEffect(() => {
+    if (completedConcepts.length === 0) return;
+
+    // Check if all concepts are completed
+    if (!celebratedAll && completedConcepts.length === totalConcepts) {
+      setCelebratedAll(true);
+      setCelebration({
+        type: 'all',
+        conceptCount: totalConcepts,
+      });
+      return;
+    }
+
+    // Check each level
+    for (const level of data.levels) {
+      if (celebratedLevels.has(level.id)) continue;
+      const levelConcepts = data.concepts.filter(c => c.level === level.id);
+      const allDone = levelConcepts.every(c => completedConcepts.includes(c.id));
+      if (allDone && levelConcepts.length > 0) {
+        setCelebratedLevels(prev => new Set([...prev, level.id]));
+        const levelOrder = level.order;
+        const nextLevel = data.levels.find(l => l.order === levelOrder + 1);
+        setCelebration({
+          type: 'level',
+          levelId: level.id,
+          levelName: tLevel(`${level.id}.name`),
+          conceptCount: levelConcepts.length,
+          nextLevelId: nextLevel?.id,
+          nextLevelName: nextLevel ? tLevel(`${nextLevel.id}.name`) : undefined,
+        });
+        break;
+      }
+    }
+  }, [completedConcepts, totalConcepts, data.levels, data.concepts, celebratedLevels, celebratedAll, tLevel]);
 
   // View mode icons
   const viewModeIcons: Record<ViewMode, { icon: typeof Lightbulb; next: ViewMode }> = {
@@ -563,6 +613,22 @@ export default function AITreePage() {
         }}
       />
 
+      {/* Celebration Modal */}
+      <CelebrationModal
+        isOpen={celebration !== null}
+        onClose={() => setCelebration(null)}
+        type={celebration?.type || 'level'}
+        levelId={celebration?.levelId}
+        levelName={celebration?.levelName}
+        conceptCount={celebration?.conceptCount || 0}
+        nextLevelId={celebration?.nextLevelId}
+        nextLevelName={celebration?.nextLevelName}
+        onNavigateToLevel={(levelId) => {
+          const el = document.getElementById(levelId);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
+
       {/* Concept Lightbox */}
       {selectedConcept && (
         <ConceptLightbox
@@ -580,6 +646,35 @@ export default function AITreePage() {
           onToggleComplete={() => toggleCompleted(selectedConcept.id)}
         />
       )}
+
+      {/* Learning Paths CTA */}
+      <section className="py-12 sm:py-20 bg-gradient-to-r from-blue-50 via-indigo-50/50 to-purple-50 dark:from-blue-950/30 dark:via-indigo-950/20 dark:to-purple-950/30 border-t border-gray-200/50 dark:border-gray-800/50">
+        <div className="container mx-auto px-4 max-w-4xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex p-3 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mb-4">
+              <GraduationCap className="h-7 w-7 text-blue-600 dark:text-blue-400" />
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">
+              {t('learningPaths.title')}
+            </h3>
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8">
+              {t('learningPaths.subtitle')}
+            </p>
+            <Link
+              href={`/${locale}/learn`}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all"
+            >
+              {t('learningPaths.startPath')}
+              <ChevronRight className="h-5 w-5" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-gray-900 dark:bg-gray-950 text-white py-12 border-t border-gray-800/50">

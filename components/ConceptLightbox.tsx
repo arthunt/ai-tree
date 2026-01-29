@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence, useMotionValue, PanInfo } from 'framer-motion';
-import { X, Check, Circle, ChevronLeft, ChevronRight, Share2, Link2, ChevronDown, Moon, Sun } from 'lucide-react';
+import { X, Check, Circle, ChevronLeft, ChevronRight, Share2, Link2, ChevronDown, Moon, Sun, Sparkles } from 'lucide-react';
 import { Concept, TreeLevel } from '../lib/types';
 import { getComplexityColor, getComplexityLabel } from '../lib/utils';
 import { useEffect, useRef, useState, useCallback } from 'react';
@@ -74,6 +74,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
   const tNav = useTranslations('navigation');
   const tDark = useTranslations('darkMode');
   const tData = useTranslations('conceptData');
+  const tUp = useTranslations('upNext');
   const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -601,6 +602,34 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                     </motion.div>
                   )}
                 </AnimatePresence>
+
+                {/* Up Next recommendation — shown when concept is completed */}
+                {isCompleted && nextConcept && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    className="mb-3 overflow-hidden"
+                  >
+                    <button
+                      onClick={() => onNavigate?.(nextConcept.id)}
+                      className="w-full flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border border-blue-200/60 dark:border-blue-800/40 hover:shadow-md transition-all group text-left"
+                      type="button"
+                    >
+                      <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-blue-500 flex items-center justify-center">
+                        <Sparkles className="h-4 w-4 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[10px] uppercase font-bold text-blue-600 dark:text-blue-400 tracking-wide">
+                          {tUp('title')}
+                        </div>
+                        <div className="text-sm font-semibold text-gray-900 dark:text-white truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                          {tData(`${nextConcept.id}.title`)}
+                        </div>
+                      </div>
+                      <ChevronRight className="h-4 w-4 text-blue-400 group-hover:text-blue-600 transition-colors flex-shrink-0" />
+                    </button>
+                  </motion.div>
+                )}
 
                 {/* Prev / Next buttons */}
                 <div className="flex items-center justify-between gap-2">

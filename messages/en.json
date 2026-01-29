@@ -933,5 +933,75 @@
     "rag": "RAG finds relevant documents (Retrieve), adds them to the prompt (Augment), and generates an answer (Generate). This allows AI to respond accurately based on company-specific data.",
     "ai-agents": "AI Agents use a loop: think → choose tool → execute → check result → repeat if needed. This enables autonomous task completion.",
     "function-calling": "Function calling allows the AI to 'decide' when to use external tools. The model generates a structured call, your application executes it, and the model uses the result to compose the final answer."
+  },
+  "learningPaths": {
+    "title": "Learning Paths",
+    "subtitle": "Curated journeys through AI concepts. Choose a path that matches your goals.",
+    "backToHome": "Back to Home",
+    "backToPaths": "All Learning Paths",
+    "concepts": "concepts",
+    "minutes": "min",
+    "difficulty": "Difficulty",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "estimatedTime": "Estimated time",
+    "prerequisites": "Prerequisites",
+    "noPrerequisites": "No prerequisites",
+    "startPath": "Start Learning",
+    "continuePath": "Continue Learning",
+    "completed": "Completed",
+    "progress": "Progress",
+    "conceptsCompleted": "{count} of {total} completed",
+    "nextConcept": "Next up",
+    "pathComplete": "Path complete!",
+    "pathCompleteDesc": "You've completed all concepts in this learning path.",
+    "exploreMore": "Explore more paths",
+    "openConcept": "Open concept",
+    "ai-fundamentals": {
+      "title": "AI Fundamentals",
+      "description": "Build a solid foundation. Understand tokens, vectors, attention, and how transformers work under the hood.",
+      "longDescription": "This path takes you from zero to fluent in the core mechanics of modern AI. You'll learn how text becomes numbers, how models find meaning, and why transformers changed everything."
+    },
+    "prompt-engineering": {
+      "title": "Prompt Engineering",
+      "description": "Master the art of communicating with AI. Learn context windows, temperature control, and effective prompting strategies.",
+      "longDescription": "Effective prompting is the most practical AI skill you can learn today. This path teaches you how models read your input, how to control creativity vs. precision, and how to structure prompts for consistent results."
+    },
+    "build-rag-apps": {
+      "title": "Build RAG Applications",
+      "description": "Learn to build AI apps that use your own data. From embeddings to retrieval-augmented generation.",
+      "longDescription": "RAG is the most popular pattern for building enterprise AI applications. This path covers vector embeddings, context management, retrieval pipelines, and memory — everything you need to build AI that knows your data."
+    },
+    "ai-agents-path": {
+      "title": "AI Agents & Tools",
+      "description": "Build autonomous AI systems that reason, use tools, and interact with external services.",
+      "longDescription": "AI agents represent the next frontier. This path covers context engineering, function calling, agent loops, the Model Context Protocol (MCP), memory management, and security — everything needed to build reliable autonomous AI systems."
+    },
+    "fine-tuning-path": {
+      "title": "Fine-Tuning & Model Training",
+      "description": "Understand model training, inference optimization, and techniques like LoRA and Mixture of Experts.",
+      "longDescription": "Go deeper into how models are built and customized. This path covers the training pipeline, efficient fine-tuning with LoRA, inference optimization, and advanced architectures like Mixture of Experts."
+    }
+  },
+  "upNext": {
+    "title": "Up Next",
+    "sameLevel": "Continue in this level",
+    "nextLevel": "Next level",
+    "prerequisiteFor": "Unlocks",
+    "allDone": "You've explored all concepts!",
+    "allDoneDesc": "Great job! Browse the tree to revisit any concept.",
+    "browseTree": "Browse Tree"
+  },
+  "celebration": {
+    "levelComplete": "Level Complete!",
+    "levelCompleteDesc": "You've completed all {count} concepts in {level}.",
+    "allComplete": "Tree Complete!",
+    "allCompleteDesc": "You've explored all {count} concepts. You've grown from roots to leaves!",
+    "nextLevel": "Continue to {level}",
+    "shareProgress": "Share Progress",
+    "keepExploring": "Keep Exploring",
+    "awesome": "Awesome!",
+    "certificate": "Certificate of Completion"
   }
 }

@@ -933,5 +933,75 @@
     "rag": "RAG leiab asjakohaseid dokumente (Retrieve), lisab need prompti (Augment) ja genereerib vastuse (Generate). Nii saab AI vastata täpselt ettevõtte andmete põhjal.",
     "ai-agents": "AI Agent kasutab tsüklit: mõtle → vali tööriist → täida → kontrolli tulemust → korda vajaduse korral. See võimaldab autonoomselt ülesandeid lahendada.",
     "function-calling": "Function calling võimaldab AI-l 'otsustada', millal on vaja väliseid tööriistu kasutada. Mudel genereerib struktureeritud kutse, rakendus täidab selle, ja mudel kasutab tulemust lõpliku vastuse koostamiseks."
+  },
+  "learningPaths": {
+    "title": "Õpiteed",
+    "subtitle": "Kureeritud teekonnad läbi AI kontseptide. Vali rada, mis sobib sinu eesmärkidega.",
+    "backToHome": "Tagasi avalehele",
+    "backToPaths": "Kõik õpiteed",
+    "concepts": "kontseptsiooni",
+    "minutes": "min",
+    "difficulty": "Raskusaste",
+    "beginner": "Algaja",
+    "intermediate": "Keskmine",
+    "advanced": "Edasijõudnud",
+    "estimatedTime": "Hinnanguline aeg",
+    "prerequisites": "Eeldused",
+    "noPrerequisites": "Eeldusi pole",
+    "startPath": "Alusta õppimist",
+    "continuePath": "Jätka õppimist",
+    "completed": "Läbitud",
+    "progress": "Edenemine",
+    "conceptsCompleted": "{count} / {total} läbitud",
+    "nextConcept": "Järgmisena",
+    "pathComplete": "Rada läbitud!",
+    "pathCompleteDesc": "Oled läbinud kõik selle õpitee kontseptsioonid.",
+    "exploreMore": "Avasta rohkem radasid",
+    "openConcept": "Ava kontseptsioon",
+    "ai-fundamentals": {
+      "title": "AI alused",
+      "description": "Ehita tugev vundament. Mõista tokeneid, vektoreid, tähelepanumehhanismi ja kuidas transformerid töötavad.",
+      "longDescription": "See rada viib sind nullist sujuvalt AI tuummehaanikani. Õpid, kuidas tekst muutub numbriteks, kuidas mudelid leiavad tähendust ja miks transformerid muutsid kõike."
+    },
+    "prompt-engineering": {
+      "title": "Promptimise kunst",
+      "description": "Valda AI-ga suhtlemise kunsti. Õpi kontekstiakende, temperatuuri juhtimist ja tõhusaid promptimise strateegiaid.",
+      "longDescription": "Tõhus promptimine on kõige praktilisem AI oskus, mida saad täna õppida. See rada õpetab, kuidas mudelid sinu sisendit loevad, kuidas juhtida loovust vs. täpsust ja kuidas struktureerida prompte järjepidevate tulemuste saamiseks."
+    },
+    "build-rag-apps": {
+      "title": "Ehita RAG rakendusi",
+      "description": "Õpi ehitama AI rakendusi, mis kasutavad sinu enda andmeid. Embedding'idest kuni retrieval-augmented generation'ini.",
+      "longDescription": "RAG on populaarseim muster ettevõtte AI rakenduste ehitamiseks. See rada katab vektoreid, kontekstihaldust, otsinguliine ja mälu — kõike, mis on vajalik AI ehitamiseks, mis tunneb sinu andmeid."
+    },
+    "ai-agents-path": {
+      "title": "AI agendid ja tööriistad",
+      "description": "Ehita autonoomseid AI süsteeme, mis arutlevad, kasutavad tööriistu ja suhtlevad väliste teenustega.",
+      "longDescription": "AI agendid on järgmine piir. See rada katab kontekstitehnikat, funktsioonide kutsumist, agendi tsükleid, MCP protokolli, mäluhaldust ja turvalisust — kõike, mis on vajalik usaldusväärsete autonoomsete AI süsteemide ehitamiseks."
+    },
+    "fine-tuning-path": {
+      "title": "Peenhäälestus ja mudeli treenimine",
+      "description": "Mõista mudeli treenimist, järeldamise optimeerimist ja tehnikaid nagu LoRA ja Mixture of Experts.",
+      "longDescription": "Mine sügavamale sellesse, kuidas mudeleid ehitatakse ja kohandatakse. See rada katab treenimise liini, tõhusat peenhäälestust LoRA-ga, järeldamise optimeerimist ja edasijõudnud arhitektuure nagu Mixture of Experts."
+    }
+  },
+  "upNext": {
+    "title": "Järgmisena",
+    "sameLevel": "Jätka sellel tasemel",
+    "nextLevel": "Järgmine tase",
+    "prerequisiteFor": "Avab",
+    "allDone": "Oled kõik kontseptsioonid avastanud!",
+    "allDoneDesc": "Suurepärane! Sirvi puud, et mõnda kontseptsiooni uuesti vaadata.",
+    "browseTree": "Sirvi puud"
+  },
+  "celebration": {
+    "levelComplete": "Tase läbitud!",
+    "levelCompleteDesc": "Oled läbinud kõik {count} kontseptsiooni tasemel {level}.",
+    "allComplete": "Puu läbitud!",
+    "allCompleteDesc": "Oled avastanud kõik {count} kontseptsiooni. Kasvasid juurtest lehtedeni!",
+    "nextLevel": "Jätka tasemele {level}",
+    "shareProgress": "Jaga edusamme",
+    "keepExploring": "Jätka avastamist",
+    "awesome": "Vapustav!",
+    "certificate": "Lõpetamistunnistus"
   }
 }
