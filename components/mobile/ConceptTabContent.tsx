@@ -6,13 +6,14 @@ import { SheetState } from '@/lib/hooks/useBottomSheet';
 import { useExplanationMode } from '@/lib/hooks/useExplanationMode';
 import { ConceptVisualTab } from './ConceptVisualTab';
 import { ConceptCodeTab } from './ConceptCodeTab';
+import { ConceptConnectionsTab } from './ConceptConnectionsTab';
 import { useTranslations } from 'next-intl';
 import { useProgress } from '@/lib/useProgress';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ConceptTabContentProps {
   concept: Concept;
-  activeTab: 'explanation' | 'visual' | 'code';
+  activeTab: 'explanation' | 'visual' | 'code' | 'connections';
   allConcepts: Concept[];
   onNavigate?: (conceptId: string) => void;
   sheetState: SheetState;
@@ -191,6 +192,23 @@ export function ConceptTabContent({
             transition={{ duration: 0.15 }}
           >
             <ConceptCodeTab concept={concept} />
+          </motion.div>
+        )}
+
+        {/* Connections Tab */}
+        {activeTab === 'connections' && (
+          <motion.div
+            key="connections"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.15 }}
+          >
+            <ConceptConnectionsTab
+              concept={concept}
+              allConcepts={allConcepts}
+              onNavigate={onNavigate}
+            />
           </motion.div>
         )}
       </AnimatePresence>

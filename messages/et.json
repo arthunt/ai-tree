@@ -986,6 +986,19 @@
       "longDescription": "Mine sügavamale sellesse, kuidas mudeleid ehitatakse ja kohandatakse. See rada katab treenimise liini, tõhusat peenhäälestust LoRA-ga, järeldamise optimeerimist ja edasijõudnud arhitektuure nagu Mixture of Experts."
     }
   },
+  "connections": {
+    "tabLabel": "Seosed",
+    "depthTitle": "Mõiste sügavus",
+    "coreIdeaExplain": "See on fookustatud, iseseisev mõiste. Üks selge idee, mida haarata enne edasiliikumist.",
+    "connectedExplain": "See mõiste seob mitu ideed. Oluline on mõista osadevahelisi seoseid.",
+    "deepDiveExplain": "See on tihe, mitmekihiline teema. See tugineb mitmele eeltingimusele ja põimib kokku palju omavahel seotud ideid.",
+    "buildsOn": "Tugineb",
+    "buildsOnEmpty": "Eeltingimused puuduvad — see on alguspunkt!",
+    "unlocks": "Avab",
+    "unlocksEmpty": "Avasta vabalt — see mõiste seisab omaette.",
+    "sameLevel": "Sama taseme mõisted",
+    "depthLabel": "Sügavus"
+  },
   "upNext": {
     "title": "Järgmisena",
     "sameLevel": "Jätka sellel tasemel",

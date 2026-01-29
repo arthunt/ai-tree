@@ -30,13 +30,14 @@ export function ConceptBottomSheet({
   onToggleComplete,
 }: ConceptBottomSheetProps) {
   const t = useTranslations('concept');
+  const tConn = useTranslations('connections');
   const dragControls = useDragControls();
   const sheetRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
   const { isCompleted: checkIsCompleted } = useProgress();
 
-  const [activeTab, setActiveTab] = useState<'explanation' | 'visual' | 'code'>('explanation');
+  const [activeTab, setActiveTab] = useState<'explanation' | 'visual' | 'code' | 'connections'>('explanation');
 
   // Get sibling concepts for navigation
   const sameLevelConcepts = concept
@@ -158,9 +159,9 @@ export function ConceptBottomSheet({
   }, [state]);
 
   // Tab switch handler - auto-expand for content-heavy tabs
-  const handleTabSwitch = useCallback((tab: 'explanation' | 'visual' | 'code') => {
+  const handleTabSwitch = useCallback((tab: 'explanation' | 'visual' | 'code' | 'connections') => {
     setActiveTab(tab);
-    if ((tab === 'visual' || tab === 'code') && state === 'half') {
+    if ((tab === 'visual' || tab === 'code' || tab === 'connections') && state === 'half') {
       setState('full');
     }
   }, [state, setState]);
@@ -298,6 +299,18 @@ export function ConceptBottomSheet({
                     }`}
                   >
                     {t('code')}
+                  </button>
+                  <button
+                    role="tab"
+                    aria-selected={activeTab === 'connections'}
+                    onClick={() => handleTabSwitch('connections')}
+                    className={`flex-1 py-2.5 px-3 min-h-[44px] text-sm font-semibold rounded-lg transition-all ${
+                      activeTab === 'connections'
+                        ? 'bg-white dark:bg-gray-700 text-teal-700 dark:text-teal-300 shadow-sm'
+                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                    }`}
+                  >
+                    {tConn('tabLabel')}
                   </button>
                 </div>
               )}

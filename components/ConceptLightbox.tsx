@@ -76,6 +76,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
   const tData = useTranslations('conceptData');
   const tUp = useTranslations('upNext');
   const tComplexity = useTranslations('complexity');
+  const tConn = useTranslations('connections');
   const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -84,7 +85,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
   const [isLoading, setIsLoading] = useState(true);
   const { showToast } = useToast();
   const { theme, toggleTheme, mounted: themeMounted } = useTheme();
-  const [activeTab, setActiveTab] = useState<'explanation' | 'visual' | 'code'>('explanation');
+  const [activeTab, setActiveTab] = useState<'explanation' | 'visual' | 'code' | 'connections'>('explanation');
   const [showLevelPicker, setShowLevelPicker] = useState(false);
 
   // Draggable sheet state (mobile only)
@@ -200,10 +201,11 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
       }
       if (e.key === 'ArrowLeft' && prevConcept && onNavigate) onNavigate(prevConcept.id);
       if (e.key === 'ArrowRight' && nextConcept && onNavigate) onNavigate(nextConcept.id);
-      // Tab shortcuts: 1=explanation, 2=visual, 3=code
+      // Tab shortcuts: 1=explanation, 2=visual, 3=code, 4=connections
       if (e.key === '1' && !e.metaKey && !e.ctrlKey) setActiveTab('explanation');
       if (e.key === '2' && !e.metaKey && !e.ctrlKey) setActiveTab('visual');
       if (e.key === '3' && !e.metaKey && !e.ctrlKey) setActiveTab('code');
+      if (e.key === '4' && !e.metaKey && !e.ctrlKey) setActiveTab('connections');
     };
     if (concept) {
       document.addEventListener('keydown', handleKeyDown);
@@ -250,7 +252,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
     return () => document.removeEventListener('keydown', handleTab);
   }, [concept]);
 
-  const handleTabSwitch = useCallback((tab: 'explanation' | 'visual' | 'code') => {
+  const handleTabSwitch = useCallback((tab: 'explanation' | 'visual' | 'code' | 'connections') => {
     setActiveTab(tab);
   }, []);
 
@@ -484,6 +486,18 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                     }`}
                   >
                     {t('code')}
+                  </button>
+                  <button
+                    role="tab"
+                    aria-selected={activeTab === 'connections'}
+                    onClick={() => handleTabSwitch('connections')}
+                    className={`flex-1 py-1.5 sm:py-2 px-2 sm:px-3 min-h-[36px] sm:min-h-[40px] text-xs sm:text-sm font-semibold rounded-lg transition-all ${
+                      activeTab === 'connections'
+                        ? 'bg-white dark:bg-gray-700 text-teal-700 dark:text-teal-300 shadow-sm'
+                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                    }`}
+                  >
+                    {tConn('tabLabel')}
                   </button>
                 </div>
               </div>

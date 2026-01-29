@@ -986,6 +986,19 @@
       "longDescription": "Go deeper into how models are built and customized. This path covers the training pipeline, efficient fine-tuning with LoRA, inference optimization, and advanced architectures like Mixture of Experts."
     }
   },
+  "connections": {
+    "tabLabel": "Links",
+    "depthTitle": "Concept Depth",
+    "coreIdeaExplain": "This is a focused, standalone concept. One clear idea to grasp before moving on.",
+    "connectedExplain": "This concept connects multiple ideas. Understanding the relationships between parts is key.",
+    "deepDiveExplain": "This is a dense, multi-layered topic. It builds on several prerequisites and weaves together many interconnected ideas.",
+    "buildsOn": "Builds on",
+    "buildsOnEmpty": "No prerequisites — this is a starting point!",
+    "unlocks": "Unlocks",
+    "unlocksEmpty": "Explore freely — this concept stands on its own.",
+    "sameLevel": "Also at this level",
+    "depthLabel": "Depth"
+  },
   "upNext": {
     "title": "Up Next",
     "sameLevel": "Continue in this level",
