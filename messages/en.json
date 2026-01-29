@@ -170,6 +170,8 @@
     "estimatedCost": "Estimated cost (GPT-4)",
     "costTip": "<strong>Tip:</strong> Longer texts = more tokens = higher cost. Learn to optimize your prompts!",
     "tryExamples": "Try examples:",
+    "digitInsight": "<strong>Numbers split into digits!</strong> AI doesn't see \"2024\" as one number — it becomes 4 separate tokens (2, 0, 2, 4). Each digit gets its own <em>vector</em> (numerical meaning). That's why AI can struggle with math — it processes digits one by one, not as whole numbers.",
+    "subwordInsight": "<strong>Long words get split!</strong> Tokens marked with <code>##</code> are subword pieces. AI breaks unfamiliar or long words into smaller known parts, similar to how you might sound out an unfamiliar word syllable by syllable.",
     "disclaimer": "This is a simplified tokenizer. Real language models use more sophisticated methods like BPE (Byte Pair Encoding) or WordPiece."
   },
   "navigation": {

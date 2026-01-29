@@ -170,6 +170,8 @@
     "estimatedCost": "Hinnanguline maksumus (GPT-4)",
     "costTip": "<strong>Näpunäide:</strong> Pikemad tekstid = rohkem tokeneid = kõrgem hind. Õpi optimeerima oma prompte!",
     "tryExamples": "Proovi näiteid:",
+    "digitInsight": "<strong>Numbrid jagatakse numbriteks!</strong> AI ei näe \"2024\" ühe numbrina — sellest saab 4 eraldi tokenit (2, 0, 2, 4). Iga number saab oma <em>vektori</em> (numbrilise tähenduse). Seepärast võib AI matemaatikaga hädas olla — ta töötleb numbreid ükshaaval, mitte tervikuna.",
+    "subwordInsight": "<strong>Pikad sõnad jagatakse osadeks!</strong> Tokenid märgiga <code>##</code> on alamosad. AI jagab tundmatud või pikad sõnad väiksemateks tuntud osadeks, sarnaselt sellele, kuidas sa võõra sõna silphaaval välja loeksid.",
     "disclaimer": "See on lihtsustatud tokeniseerija. Päris keelemudelid kasutavad keerukamaid meetodeid nagu BPE (Byte Pair Encoding) või WordPiece."
   },
   "navigation": {

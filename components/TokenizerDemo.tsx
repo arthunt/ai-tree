@@ -9,6 +9,8 @@ interface Token {
   text: string;
   id: string;
   color: string;
+  isSubword?: boolean;
+  isDigit?: boolean;
 }
 
 const TOKEN_COLORS = [
@@ -27,17 +29,41 @@ export function TokenizerDemo() {
   const [showInfo, setShowInfo] = useState(false);
   const t = useTranslations('tokenizer');
 
-  // Simple tokenization that splits by spaces and punctuation
+  // BPE-like tokenization: splits digits individually, breaks long words into subwords
   const tokens = useMemo(() => {
     if (!inputText.trim()) return [];
 
-    // Split by spaces and punctuation while keeping the punctuation
-    const tokenTexts = inputText.match(/\w+|[^\w\s]/g) || [];
+    // Step 1: Split by spaces and punctuation
+    const rawTokens = inputText.match(/\w+|[^\w\s]/g) || [];
 
-    return tokenTexts.map((text, index) => ({
+    // Step 2: Apply BPE-like rules
+    const bpeTokens: string[] = [];
+    for (const token of rawTokens) {
+      // Split digits individually (real BPE behavior: "2024" → "2","0","2","4")
+      if (/^\d+$/.test(token)) {
+        bpeTokens.push(...token.split(''));
+      }
+      // Mixed alphanumeric: split letters from digits ("hello123" → "hello","1","2","3")
+      else if (/\d/.test(token) && /[a-zA-Z]/.test(token)) {
+        const parts = token.match(/[a-zA-Z]+|\d/g) || [token];
+        bpeTokens.push(...parts);
+      }
+      // Long words (8+): simulate subword split
+      else if (token.length >= 8 && /^[a-zA-ZäöüõÄÖÜÕ]+$/.test(token)) {
+        const mid = Math.ceil(token.length * 0.6);
+        bpeTokens.push(token.slice(0, mid), '##' + token.slice(mid));
+      }
+      else {
+        bpeTokens.push(token);
+      }
+    }
+
+    return bpeTokens.map((text, index) => ({
       text,
       id: `${text}-${index}`,
       color: TOKEN_COLORS[index % TOKEN_COLORS.length],
+      isSubword: text.startsWith('##'),
+      isDigit: /^\d$/.test(text),
     }));
   }, [inputText]);
 
@@ -153,7 +179,13 @@ export function TokenizerDemo() {
                         }
                       }}
                       exit={{ opacity: 0, scale: 0 }}
-                      className={`px-3 py-1.5 rounded-lg font-mono text-sm font-medium ${token.color} shadow-sm`}
+                      className={`px-3 py-1.5 rounded-lg font-mono text-sm font-medium shadow-sm ${
+                        token.isDigit
+                          ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200 ring-1 ring-orange-300 dark:ring-orange-700'
+                          : token.isSubword
+                            ? 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200 ring-1 ring-teal-300 dark:ring-teal-700'
+                            : token.color
+                      }`}
                     >
                       {token.text}
                     </motion.span>
@@ -186,6 +218,32 @@ export function TokenizerDemo() {
           </motion.div>
         )}
 
+        {/* Digit tokenization insight */}
+        {tokenCount > 0 && tokens.some(t => t.isDigit) && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mt-4 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-xl border border-orange-200 dark:border-orange-800"
+          >
+            <p className="text-sm text-orange-900 dark:text-orange-100">
+              <span dangerouslySetInnerHTML={{ __html: t('digitInsight') }} />
+            </p>
+          </motion.div>
+        )}
+
+        {/* Subword tokenization insight */}
+        {tokenCount > 0 && tokens.some(t => t.isSubword) && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mt-4 p-4 bg-teal-50 dark:bg-teal-900/20 rounded-xl border border-teal-200 dark:border-teal-800"
+          >
+            <p className="text-sm text-teal-900 dark:text-teal-100">
+              <span dangerouslySetInnerHTML={{ __html: t('subwordInsight') }} />
+            </p>
+          </motion.div>
+        )}
+
         {/* Example Prompts */}
         {!inputText && (
           <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
@@ -195,9 +253,9 @@ export function TokenizerDemo() {
             <div className="flex flex-wrap gap-2">
               {[
                 'Tere, maailm!',
+                'GPT-4 maksab 2024',
                 'Kunstlik intelligentsus',
                 'Machine learning is fascinating',
-                'AI õppimine on põnev',
               ].map((example) => (
                 <button
                   key={example}
