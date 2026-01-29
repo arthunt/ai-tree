@@ -20,6 +20,7 @@ import { useTranslations } from 'next-intl';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useTheme } from '@/context/ThemeContext';
 import { locales } from '@/i18n';
+import { useLocaleSwitch } from '@/lib/hooks/useLocaleSwitch';
 import { CourseStructuredData } from '@/components/StructuredData';
 import { CelebrationModal } from '@/components/CelebrationModal';
 
@@ -43,6 +44,15 @@ export default function AITreePage() {
   const { isCompleted, toggleCompleted, completedCount, getCompletionPercentage, clearProgress, completedConcepts } = useProgress();
   const totalConcepts = data.concepts.length;
   const tCelebration = useTranslations('celebration');
+
+  // In-place locale switching (no remount when popup is open)
+  const {
+    displayLocale,
+    overrideMessages,
+    isOverridden: isLocaleOverridden,
+    switchLocaleInPlace,
+    syncUrlLocale,
+  } = useLocaleSwitch();
 
   // Celebration state
   const [celebration, setCelebration] = useState<{
@@ -100,13 +110,15 @@ export default function AITreePage() {
   };
 
   const switchLanguage = (newLocale: string) => {
-    if (newLocale === locale) return;
-    // Preserve open concept across locale change
     if (selectedConcept) {
-      sessionStorage.setItem('openConceptId', selectedConcept.id);
+      // Popup is open — swap content in place, no navigation
+      switchLocaleInPlace(newLocale);
+    } else {
+      // No popup — navigate normally
+      if (newLocale === locale) return;
+      const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
+      router.replace(newPathname, { scroll: false });
     }
-    const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
-    router.replace(newPathname, { scroll: false });
   };
 
   // Simulate initial loading state
@@ -133,17 +145,13 @@ export default function AITreePage() {
     }
   }, []);
 
-  // Restore open concept after locale switch
-  useEffect(() => {
-    const pendingId = sessionStorage.getItem('openConceptId');
-    if (pendingId) {
-      sessionStorage.removeItem('openConceptId');
-      const concept = data.concepts.find(c => c.id === pendingId);
-      if (concept) {
-        setSelectedConcept(concept);
-      }
+  // On popup close, sync URL if locale was overridden
+  const handleLightboxClose = () => {
+    setSelectedConcept(null);
+    if (isLocaleOverridden) {
+      syncUrlLocale();
     }
-  }, [data.concepts]);
+  };
 
   // Derive active level data for context bar
   const activeLevelData = data.levels.find(l => l.id === activeLevel);
@@ -301,12 +309,12 @@ export default function AITreePage() {
                         ? 'px-2 py-1.5 text-[11px]'
                         : 'px-2.5 py-2.5 text-xs sm:text-sm min-h-[40px] sm:min-h-[44px]'
                     } ${
-                      loc === locale
+                      loc === displayLocale
                         ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700'
                     }`}
                     aria-label={loc === 'et' ? t('navigation.switchToEstonian') : t('navigation.switchToEnglish')}
-                    aria-current={loc === locale ? 'true' : undefined}
+                    aria-current={loc === displayLocale ? 'true' : undefined}
                     type="button"
                   >
                     {loc.toUpperCase()}
@@ -619,7 +627,7 @@ export default function AITreePage() {
       {selectedConcept && (
         <ConceptLightbox
           concept={selectedConcept}
-          onClose={() => setSelectedConcept(null)}
+          onClose={handleLightboxClose}
           allConcepts={data.concepts}
           levels={data.levels}
           onNavigate={(conceptId) => {
@@ -630,6 +638,9 @@ export default function AITreePage() {
           }}
           isCompleted={isCompleted(selectedConcept.id)}
           onToggleComplete={() => toggleCompleted(selectedConcept.id)}
+          displayLocale={displayLocale}
+          overrideMessages={overrideMessages}
+          onSwitchLocale={switchLocaleInPlace}
         />
       )}
 

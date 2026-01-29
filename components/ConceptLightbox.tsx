@@ -7,7 +7,7 @@ import { getComplexityColor } from '../lib/utils';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { LightboxSkeleton } from './LightboxSkeleton';
-import { useTranslations } from 'next-intl';
+import { useTranslations, NextIntlClientProvider } from 'next-intl';
 import { useToast } from '@/lib/useToast';
 import { useTheme } from '@/context/ThemeContext';
 import { locales } from '@/i18n';
@@ -57,6 +57,18 @@ const LEVEL_COLORS: Record<string, string> = {
   roots: 'bg-emerald-700',
 };
 
+/** Wrapper that optionally overrides the i18n context for in-place locale switching */
+function LocaleOverride({ locale, messages, children }: { locale: string; messages: Record<string, unknown> | null | undefined; children: React.ReactNode }) {
+  if (messages) {
+    return (
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        {children}
+      </NextIntlClientProvider>
+    );
+  }
+  return <>{children}</>;
+}
+
 interface ConceptLightboxProps {
   concept: Concept | null;
   onClose: () => void;
@@ -65,9 +77,51 @@ interface ConceptLightboxProps {
   onNavigate?: (conceptId: string) => void;
   isCompleted?: boolean;
   onToggleComplete?: () => void;
+  /** Currently displayed locale (may differ from URL during in-place switch) */
+  displayLocale?: string;
+  /** Override messages for in-place locale switch (null = use default) */
+  overrideMessages?: Record<string, unknown> | null;
+  /** Callback to switch locale in-place without navigation */
+  onSwitchLocale?: (locale: string) => void;
 }
 
-export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [], onNavigate, isCompleted = false, onToggleComplete }: ConceptLightboxProps) {
+export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [], onNavigate, isCompleted = false, onToggleComplete, displayLocale: displayLocaleProp, overrideMessages, onSwitchLocale }: ConceptLightboxProps) {
+  const params = useParams();
+  const effectiveLocale = displayLocaleProp || (params.locale as string);
+
+  if (!concept) return null;
+
+  // Wrap in override provider when locale has been switched in-place
+  return (
+    <LocaleOverride locale={effectiveLocale} messages={overrideMessages}>
+      <ConceptLightboxInner
+        concept={concept}
+        onClose={onClose}
+        allConcepts={allConcepts}
+        levels={levels}
+        onNavigate={onNavigate}
+        isCompleted={isCompleted}
+        onToggleComplete={onToggleComplete}
+        effectiveLocale={effectiveLocale}
+        onSwitchLocale={onSwitchLocale}
+      />
+    </LocaleOverride>
+  );
+}
+
+interface ConceptLightboxInnerProps {
+  concept: Concept;
+  onClose: () => void;
+  allConcepts: Concept[];
+  levels: TreeLevel[];
+  onNavigate?: (conceptId: string) => void;
+  isCompleted: boolean;
+  onToggleComplete?: () => void;
+  effectiveLocale: string;
+  onSwitchLocale?: (locale: string) => void;
+}
+
+function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigate, isCompleted, onToggleComplete, effectiveLocale, onSwitchLocale }: ConceptLightboxInnerProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
   const t = useTranslations('concept');
@@ -85,24 +139,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
   const [isLoading, setIsLoading] = useState(true);
   const { showToast } = useToast();
   const { theme, toggleTheme, mounted: themeMounted } = useTheme();
-  const [activeTab, setActiveTab] = useState<'explanation' | 'visual' | 'code' | 'connections'>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = sessionStorage.getItem('openConceptTab');
-      if (saved && ['explanation', 'visual', 'code', 'connections'].includes(saved)) {
-        sessionStorage.removeItem('openConceptTab');
-        return saved as 'explanation' | 'visual' | 'code' | 'connections';
-      }
-    }
-    return 'explanation';
-  });
-  // Keep active tab synced to sessionStorage so any language switcher can restore it
-  useEffect(() => {
-    if (concept) {
-      sessionStorage.setItem('openConceptTab', activeTab);
-    } else {
-      sessionStorage.removeItem('openConceptTab');
-    }
-  }, [activeTab, concept]);
+  const [activeTab, setActiveTab] = useState<'explanation' | 'visual' | 'code' | 'connections'>('explanation');
   const [showLevelPicker, setShowLevelPicker] = useState(false);
 
   // Draggable sheet state (mobile only)
@@ -112,12 +149,8 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
   const isDragging = useRef(false);
 
   // Get sibling concepts for navigation
-  const sameLevelConcepts = concept
-    ? allConcepts.filter(c => c.level === concept.level)
-    : [];
-  const levelIndex = concept
-    ? sameLevelConcepts.findIndex(c => c.id === concept.id)
-    : -1;
+  const sameLevelConcepts = allConcepts.filter(c => c.level === concept.level);
+  const levelIndex = sameLevelConcepts.findIndex(c => c.id === concept.id);
   const prevConcept = levelIndex > 0 ? sameLevelConcepts[levelIndex - 1] : null;
   const nextConcept = levelIndex < sameLevelConcepts.length - 1 ? sameLevelConcepts[levelIndex + 1] : null;
 
@@ -187,15 +220,16 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
 
   const canNativeShare = typeof navigator !== 'undefined' && !!navigator.share;
 
-  // Language switcher — preserve open concept across locale change
+  // Language switcher — swap content in place, no navigation
   const switchLanguage = (newLocale: string) => {
-    if (newLocale === locale) return;
-    if (concept) {
-      sessionStorage.setItem('openConceptId', concept.id);
-      sessionStorage.setItem('openConceptTab', activeTab);
+    if (newLocale === effectiveLocale) return;
+    if (onSwitchLocale) {
+      onSwitchLocale(newLocale);
+    } else {
+      // Fallback: navigate (old behavior)
+      const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
+      router.replace(newPathname, { scroll: false });
     }
-    const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
-    router.replace(newPathname, { scroll: false });
   };
 
   // Loading state
@@ -307,8 +341,6 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
     }
     dragY.set(0);
   }, [sheetHeight, onClose, dragY]);
-
-  if (!concept) return null;
 
   const IconComponent = iconMap[concept.icon] || Brain;
   const translatedLevelName = tNav(`levels.${concept.level}`, { default: concept.level });
@@ -428,12 +460,12 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                           key={loc}
                           onClick={() => switchLanguage(loc)}
                           className={`px-2 py-1.5 text-[11px] sm:text-xs font-semibold transition-colors ${
-                            loc === locale
+                            loc === effectiveLocale
                               ? 'bg-white/25 text-white'
                               : 'text-white/60 hover:text-white hover:bg-white/10'
                           }`}
                           aria-label={loc === 'et' ? tNav('switchToEstonian') : tNav('switchToEnglish')}
-                          aria-current={loc === locale ? 'true' : undefined}
+                          aria-current={loc === effectiveLocale ? 'true' : undefined}
                           type="button"
                         >
                           {loc.toUpperCase()}
