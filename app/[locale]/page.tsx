@@ -15,7 +15,7 @@ import { WelcomeModal } from '@/components/WelcomeModal';
 import { DendrixLogo } from '@/components/DendrixLogo';
 import treeData from '@/data/tree-concepts.json';
 import Link from 'next/link';
-import { Network, Search, Moon, Sun, Lightbulb, Code2, LayoutGrid, TreePine, Brain, GraduationCap, ChevronRight } from 'lucide-react';
+import { Network, Search, Moon, Sun, Lightbulb, Code2, LayoutGrid, GraduationCap, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useTheme } from '@/context/ThemeContext';
@@ -408,8 +408,11 @@ export default function AITreePage() {
             {/* Logo + brand */}
             <div className="flex flex-col items-center mb-6 sm:mb-8">
               <DendrixLogo size={80} className="mb-3 sm:mb-4" />
-              <span className="text-base sm:text-lg font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-4 sm:mb-6">
+              <span className="text-base sm:text-lg font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-1">
                 dendrix.ai
+              </span>
+              <span className="text-xs sm:text-sm text-gray-400 dark:text-gray-500 italic mb-4 sm:mb-6">
+                {t('brand.heroOrigin')}
               </span>
 
               {/* Narrative hook */}
@@ -441,41 +444,6 @@ export default function AITreePage() {
                 {t('levels.totalTime')}
               </p>
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Brand Narrative — Why Dendrix? */}
-      <section className="relative py-10 sm:py-16 bg-gradient-to-r from-indigo-50/50 via-purple-50/30 to-blue-50/50 dark:from-indigo-950/30 dark:via-purple-950/20 dark:to-blue-950/30">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="p-2 rounded-xl bg-indigo-100 dark:bg-indigo-900/40">
-                <TreePine className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-              </div>
-              <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">+</span>
-              <div className="p-2 rounded-xl bg-purple-100 dark:bg-purple-900/40">
-                <Brain className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-              </div>
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              {t('brand.title')}
-            </h3>
-            <p className="text-base sm:text-lg font-semibold text-indigo-700 dark:text-indigo-300 mb-4">
-              {t('brand.tagline')}
-            </p>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto mb-3">
-              {t('brand.explanation')}
-            </p>
-            <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto">
-              {t('brand.metaphor')}
-            </p>
           </motion.div>
         </div>
       </section>
@@ -678,25 +646,37 @@ export default function AITreePage() {
 
       {/* Footer */}
       <footer className="bg-gray-900 dark:bg-gray-950 text-white py-12 border-t border-gray-800/50">
-        <div className="container mx-auto px-4 max-w-7xl text-center">
-          <p className="text-gray-400 dark:text-gray-500">
-            {t('footer.description')}
-          </p>
-          <p className="text-sm text-gray-500 dark:text-gray-600 mt-2">
-            {t('footer.version')} {data.version} • {data.metadata.created}
-          </p>
-          <div className="mt-4">
-            <a
-              href="https://github.com/arthunt/ai-tree/issues/new?title=[Feedback]&body=Please%20describe%20your%20feedback%20or%20issue%20here.%0A%0A**Concept%20(if%20applicable):**%20%0A**Issue%20type:**%20Bug%20/%20Enhancement%20/%20Question%20/%20Other"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors"
-            >
-              <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-              </svg>
-              {t('footer.reportIssue')}
-            </a>
+        <div className="container mx-auto px-4 max-w-7xl">
+          {/* Why Dendrix — subtle origin story */}
+          <div className="max-w-lg mx-auto text-center mb-8 pb-8 border-b border-gray-800/50">
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-600 mb-2">
+              {t('brand.footerTitle')}
+            </p>
+            <p className="text-sm text-gray-400 dark:text-gray-500 leading-relaxed">
+              {t('brand.footerStory')}
+            </p>
+          </div>
+
+          <div className="text-center">
+            <p className="text-gray-400 dark:text-gray-500">
+              {t('footer.description')}
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-600 mt-2">
+              {t('footer.version')} {data.version} • {data.metadata.created}
+            </p>
+            <div className="mt-4">
+              <a
+                href="https://github.com/arthunt/ai-tree/issues/new?title=[Feedback]&body=Please%20describe%20your%20feedback%20or%20issue%20here.%0A%0A**Concept%20(if%20applicable):**%20%0A**Issue%20type:**%20Bug%20/%20Enhancement%20/%20Question%20/%20Other"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors"
+              >
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                </svg>
+                {t('footer.reportIssue')}
+              </a>
+            </div>
           </div>
         </div>
       </footer>

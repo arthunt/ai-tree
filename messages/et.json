@@ -34,11 +34,9 @@
     "showLess": "Näita vähem"
   },
   "brand": {
-    "title": "Miks Dendrix?",
-    "tagline": "Sinu aju kasvab nagu puu.",
-    "explanation": "Dendrix tuleb dendriitidest — sinu neuronite hargneva kujuga struktuuridest, mis võtavad vastu uut infot. Need on sõna otseses mõttes puukujulised ajurakud. Iga uus kontseptsioon loob dendriitide vahele uusi ühendusi.",
-    "metaphor": "Dendrix peegeldab seda, kuidas õppimine tegelikult toimib: alusta Juurtest (alused), kasva läbi Tüve (tehnika), hargne Oksteks (rakendused) ja jõua Lehtedeni (tipptasemel uuringud). Puu pole lihtsalt metafoor — see on bioloogia.",
-    "cta": "Kasvata oma teadmiste puud"
+    "heroOrigin": "Dendron (kreeka: puu) + dendriidid (neuronid, mis kasvavad kui sa \u00f5pid)",
+    "footerTitle": "Miks Dendrix?",
+    "footerStory": "Dendriidid on puukujulised ajurakud, mis kasvatavad uusi harusid iga kord, kui sa midagi \u00f5pid. Dendrix (dendron + dendriidid) kaardistab AI teadmisi nii, nagu sinu aju neid tegelikult salvestab \u2014 juurtest lehtedeni."
   },
   "levels": {
     "roots": "Juured",

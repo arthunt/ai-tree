@@ -34,11 +34,9 @@
     "showLess": "Show less"
   },
   "brand": {
-    "title": "Why Dendrix?",
-    "tagline": "Your brain grows like a tree.",
-    "explanation": "Dendrix comes from dendrites — the branching structures in your neurons that receive new information. They're literally tree-shaped brain cells. Every concept you learn creates new connections between dendrites.",
-    "metaphor": "Dendrix mirrors how learning actually works: start at the Roots (fundamentals), grow through the Trunk (engineering), branch out into Applications, and reach the Leaves (cutting-edge research). The tree isn't just a metaphor — it's biology.",
-    "cta": "Grow your knowledge tree"
+    "heroOrigin": "From dendron (Greek: tree) + dendrites (your neurons that grow when you learn)",
+    "footerTitle": "Why Dendrix?",
+    "footerStory": "Dendrites are tree-shaped brain cells that sprout new branches every time you learn something. Dendrix (dendron + dendrites) maps AI knowledge the way your brain actually stores it — from roots to leaves."
   },
   "levels": {
     "roots": "Roots",
