@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { TreeData, ViewMode, Concept } from '@/lib/types';
 import { useProgress } from '@/lib/useProgress';
 import { LevelSection } from '@/components/LevelSection';
-import { TreeNavigation } from '@/components/TreeNavigation';
+import { LevelIcon } from '@/components/LevelIcon';
 import { ConceptLightbox } from '@/components/ConceptLightbox';
 import { SettingsDropdown } from '@/components/SettingsDropdown';
 import { TokenizerDemo } from '@/components/TokenizerDemo';
@@ -108,24 +108,34 @@ export default function AITreePage() {
               {/* Search Button */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="flex items-center justify-center w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-lg sm:rounded-xl hover:shadow-md hover:border-gray-400 dark:hover:border-gray-500 transition-all font-medium group"
+                className={`flex items-center justify-center bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 hover:shadow-md hover:border-gray-400 dark:hover:border-gray-500 transition-all font-medium group ${
+                  isScrolled
+                    ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
+                    : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
+                }`}
                 aria-label={t('search.buttonLabel')}
               >
-                <Search className="h-5 w-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200" aria-hidden="true" />
-                <span className="hidden sm:inline ml-2">{t('search.button')}</span>
-                <kbd className="hidden lg:inline-flex items-center gap-1 ml-2 px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded">
-                  <span className="text-xs">⌘</span>K
-                </kbd>
+                <Search className={`text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 ${isScrolled ? 'h-4 w-4' : 'h-5 w-5'}`} aria-hidden="true" />
+                {!isScrolled && <span className="hidden sm:inline ml-2">{t('search.button')}</span>}
+                {!isScrolled && (
+                  <kbd className="hidden lg:inline-flex items-center gap-1 ml-2 px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded">
+                    <span className="text-xs">⌘</span>K
+                  </kbd>
+                )}
               </button>
 
               {/* Concept Map Button */}
               <Link
                 href={`/${locale}/tree-view`}
-                className="flex items-center justify-center w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg sm:rounded-xl hover:shadow-lg transition-all font-medium"
+                className={`flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:shadow-lg transition-all font-medium ${
+                  isScrolled
+                    ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
+                    : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
+                }`}
                 aria-label={t('header.treeViewAriaLabel')}
               >
-                <Network className="h-5 w-5" aria-hidden="true" />
-                <span className="hidden sm:inline ml-2">{t('header.treeView')}</span>
+                <Network className={isScrolled ? 'h-4 w-4' : 'h-5 w-5'} aria-hidden="true" />
+                {!isScrolled && <span className="hidden sm:inline ml-2">{t('header.treeView')}</span>}
               </Link>
 
               {/* Consolidated Settings Dropdown - All breakpoints */}
@@ -134,57 +144,75 @@ export default function AITreePage() {
           </div>
         </div>
 
-        {/* Active Level Context Bar - Desktop, visible when scrolled */}
+        {/* Active Level Context Bar - all viewports, visible when scrolled */}
         {isScrolled && activeLevelData && (
-          <div className="hidden sm:block border-t border-gray-100 dark:border-gray-800">
-            <div className="container mx-auto px-4 py-1.5 max-w-7xl flex items-center gap-2">
+          <div className="border-t border-gray-100 dark:border-gray-800">
+            <div className="container mx-auto px-3 py-1 sm:px-4 sm:py-1.5 max-w-7xl flex items-center gap-2">
+              <LevelIcon level={activeLevelData.id as 'roots' | 'trunk' | 'branches' | 'leaves'} size={20} />
               <span
                 className="w-5 h-5 rounded flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
                 style={{ backgroundColor: activeLevelData.color }}
               >
                 {activeLevelData.order}
               </span>
-              <span className="text-sm font-semibold text-gray-900 dark:text-white">{activeLevelData.name}</span>
-              <span className="text-xs text-gray-500 dark:text-gray-400">— {activeLevelData.subtitle}</span>
+              <span className="text-sm font-semibold text-gray-900 dark:text-white truncate">{activeLevelData.name}</span>
+              <span className="hidden sm:inline text-xs text-gray-500 dark:text-gray-400 truncate">— {activeLevelData.subtitle}</span>
+              {/* Quick level jump dots */}
+              <div className="ml-auto flex items-center gap-1.5">
+                {data.levels.map((level) => (
+                  <button
+                    key={level.id}
+                    onClick={() => {
+                      const el = document.getElementById(level.id);
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    title={level.name}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      level.id === activeLevel ? 'w-4 bg-blue-500' : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400'
+                    }`}
+                    aria-label={level.name}
+                    type="button"
+                  />
+                ))}
+              </div>
             </div>
           </div>
         )}
 
-        {/* Slim Level Indicator - Mobile only */}
-        <div className="sm:hidden border-t border-gray-100 dark:border-gray-800">
-          <div className="flex items-center px-3 py-1.5 gap-1">
-            {data.levels.map((level, index) => {
-              const isActive = activeLevel === level.id;
-              const isPast = data.levels.findIndex(l => l.id === activeLevel) > index;
-              return (
-                <button
-                  key={level.id}
-                  onClick={() => {
-                    const element = document.getElementById(level.id);
-                    if (element) element.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  title={level.name}
-                  className={`flex-1 flex items-center justify-center gap-1 py-1.5 rounded text-xs font-medium transition-all ${
-                    isActive
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-sm'
-                      : isPast
-                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
-                      : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
-                  }`}
-                  aria-label={`${t('navigation.goToLevel', { level: level.name })} (${level.order}/4)`}
-                  aria-current={isActive ? 'location' : undefined}
-                >
-                  <span className={`text-xs font-bold ${isActive ? '' : 'opacity-70'}`}>{level.order}</span>
-                  <span className="truncate">{level.name}</span>
-                </button>
-              );
-            })}
+        {/* Slim Level Indicator - Mobile only, hidden when scrolled (context bar takes over) */}
+        {!isScrolled && (
+          <div className="sm:hidden border-t border-gray-100 dark:border-gray-800">
+            <div className="flex items-center px-3 py-1.5 gap-1">
+              {data.levels.map((level, index) => {
+                const isActive = activeLevel === level.id;
+                const isPast = data.levels.findIndex(l => l.id === activeLevel) > index;
+                return (
+                  <button
+                    key={level.id}
+                    onClick={() => {
+                      const element = document.getElementById(level.id);
+                      if (element) element.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    title={level.name}
+                    className={`flex-1 flex items-center justify-center gap-1 py-1.5 rounded text-xs font-medium transition-all ${
+                      isActive
+                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-sm'
+                        : isPast
+                        ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                        : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
+                    }`}
+                    aria-label={`${t('navigation.goToLevel', { level: level.name })} (${level.order}/4)`}
+                    aria-current={isActive ? 'location' : undefined}
+                  >
+                    <span className={`text-xs font-bold ${isActive ? '' : 'opacity-70'}`}>{level.order}</span>
+                    <span className="truncate">{level.name}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
       </header>
-
-      {/* Tree Navigation */}
-      <TreeNavigation levels={data.levels} activeLevel={activeLevel} completedCount={completedCount} totalConcepts={totalConcepts} isLightboxOpen={selectedConcept !== null} />
 
       {/* Hero Section - Collapsible on Mobile */}
       <section className="relative py-8 sm:py-16 overflow-hidden" aria-labelledby="hero-heading">
