@@ -314,6 +314,7 @@ export default function AITreePage() {
           concept={selectedConcept}
           onClose={() => setSelectedConcept(null)}
           allConcepts={data.concepts}
+          levels={data.levels}
           onNavigate={(conceptId) => {
             const concept = data.concepts.find(c => c.id === conceptId);
             if (concept) {
