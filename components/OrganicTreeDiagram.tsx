@@ -55,6 +55,7 @@ export function OrganicTreeDiagram({
 }: OrganicTreeDiagramProps) {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const t = useTranslations('organicTree');
+  const tData = useTranslations('conceptData');
 
   const getLevelColor = (levelId: string) => {
     const colors: Record<string, string> = {
@@ -132,7 +133,7 @@ export function OrganicTreeDiagram({
           const color = getLevelColor(concept.level);
           const colorRgb = getLevelColorRgb(concept.level);
           const isHovered = hoveredNode === concept.id;
-          const displayName = showSimpleNames ? concept.simpleName : concept.title;
+          const displayName = showSimpleNames ? tData(`${concept.id}.simpleName`) : tData(`${concept.id}.title`);
 
           return (
             <motion.button

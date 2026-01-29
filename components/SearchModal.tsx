@@ -67,6 +67,7 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
   const resultsRef = useRef<HTMLDivElement>(null);
   const t = useTranslations('search');
   const tConcept = useTranslations('concept');
+  const tData = useTranslations('conceptData');
 
   // Load recent searches from localStorage
   useEffect(() => {
@@ -107,8 +108,14 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
       let score = 0;
       let matchedField = '';
 
+      // Use translated text for search
+      const title = tData(`${concept.id}.title`);
+      const simpleName = tData(`${concept.id}.simpleName`);
+      const metaphor = tData(`${concept.id}.metaphor`);
+      const explanation = tData(`${concept.id}.explanation`);
+
       // Search in title
-      const titleLower = concept.title.toLowerCase();
+      const titleLower = title.toLowerCase();
       searchTerms.forEach(term => {
         if (titleLower.includes(term)) {
           score += 10;
@@ -117,7 +124,7 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
       });
 
       // Search in simpleName
-      const simpleNameLower = concept.simpleName.toLowerCase();
+      const simpleNameLower = simpleName.toLowerCase();
       searchTerms.forEach(term => {
         if (simpleNameLower.includes(term)) {
           score += 8;
@@ -126,7 +133,7 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
       });
 
       // Search in metaphor
-      const metaphorLower = concept.metaphor.toLowerCase();
+      const metaphorLower = metaphor.toLowerCase();
       searchTerms.forEach(term => {
         if (metaphorLower.includes(term)) {
           score += 6;
@@ -135,7 +142,7 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
       });
 
       // Search in explanation
-      const explanationLower = concept.explanation.toLowerCase();
+      const explanationLower = explanation.toLowerCase();
       searchTerms.forEach(term => {
         if (explanationLower.includes(term)) {
           score += 4;
@@ -397,10 +404,10 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                              {concept.title}
+                              {tData(`${concept.id}.title`)}
                             </div>
                             <div className="text-xs text-gray-500 dark:text-gray-300 truncate">
-                              {concept.simpleName}
+                              {tData(`${concept.id}.simpleName`)}
                             </div>
                           </div>
                           <div
@@ -453,10 +460,10 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-semibold text-gray-900 dark:text-white truncate">
-                          {concept.title}
+                          {tData(`${concept.id}.title`)}
                         </div>
                         <div className="text-xs text-gray-600 dark:text-gray-300 truncate">
-                          {concept.simpleName} • {concept.metaphor.slice(0, 60)}...
+                          {tData(`${concept.id}.simpleName`)} • {tData(`${concept.id}.metaphor`).slice(0, 60)}...
                         </div>
                       </div>
                       <div

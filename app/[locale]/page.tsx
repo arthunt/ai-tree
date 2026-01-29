@@ -32,6 +32,7 @@ export default function AITreePage() {
   const [isWelcomeOpen, setIsWelcomeOpen] = useState(false);
   const data = treeData as TreeData;
   const t = useTranslations();
+  const tLevel = useTranslations('conceptLevels');
   const params = useParams();
   const locale = params.locale as string;
   const pathname = usePathname();
@@ -275,8 +276,8 @@ export default function AITreePage() {
               >
                 {activeLevelData.order}
               </span>
-              <span className="text-sm font-semibold text-gray-900 dark:text-white truncate">{activeLevelData.name}</span>
-              <span className="hidden sm:inline text-xs text-gray-500 dark:text-gray-400 truncate">— {activeLevelData.subtitle}</span>
+              <span className="text-sm font-semibold text-gray-900 dark:text-white truncate">{tLevel(`${activeLevelData.id}.name`)}</span>
+              <span className="hidden sm:inline text-xs text-gray-500 dark:text-gray-400 truncate">— {tLevel(`${activeLevelData.id}.subtitle`)}</span>
               {/* Quick level jump dots */}
               <div className="ml-auto flex items-center gap-1.5">
                 {data.levels.map((level) => (
@@ -286,11 +287,11 @@ export default function AITreePage() {
                       const el = document.getElementById(level.id);
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    title={level.name}
+                    title={tLevel(`${level.id}.name`)}
                     className={`w-2 h-2 rounded-full transition-all ${
                       level.id === activeLevel ? 'w-4 bg-blue-500' : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400'
                     }`}
-                    aria-label={level.name}
+                    aria-label={tLevel(`${level.id}.name`)}
                     type="button"
                   />
                 ))}
@@ -313,7 +314,7 @@ export default function AITreePage() {
                       const element = document.getElementById(level.id);
                       if (element) element.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    title={level.name}
+                    title={tLevel(`${level.id}.name`)}
                     className={`flex-1 flex items-center justify-center gap-1 py-1.5 rounded text-xs font-medium transition-all ${
                       isActive
                         ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-sm'
@@ -321,11 +322,11 @@ export default function AITreePage() {
                         ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
                         : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
                     }`}
-                    aria-label={`${t('navigation.goToLevel', { level: level.name })} (${level.order}/4)`}
+                    aria-label={`${t('navigation.goToLevel', { level: tLevel(`${level.id}.name`) })} (${level.order}/4)`}
                     aria-current={isActive ? 'location' : undefined}
                   >
                     <span className={`text-xs font-bold ${isActive ? '' : 'opacity-70'}`}>{level.order}</span>
-                    <span className="truncate">{level.name}</span>
+                    <span className="truncate">{tLevel(`${level.id}.name`)}</span>
                   </button>
                 );
               })}

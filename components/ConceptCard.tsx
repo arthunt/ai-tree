@@ -56,11 +56,13 @@ interface ConceptCardProps {
 export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = false }: ConceptCardProps) {
   const IconComponent = iconMap[concept.icon] || Brain;
   const t = useTranslations('concept');
+  const tData = useTranslations('conceptData');
   const isBeginnerPath = BEGINNER_PATH.includes(concept.id);
   const beginnerPathIndex = BEGINNER_PATH.indexOf(concept.id) + 1;
   const readingTime = getReadingTime(concept);
 
-  const displayText = viewMode === 'technical' ? concept.explanation : concept.metaphor;
+  const title = tData(`${concept.id}.title`);
+  const displayText = viewMode === 'technical' ? tData(`${concept.id}.explanation`) : tData(`${concept.id}.metaphor`);
 
   return (
     <div
@@ -73,7 +75,7 @@ export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = f
             : 'border-gray-200/60 dark:border-gray-700/50 hover:border-blue-300/60 dark:hover:border-blue-500/30'
         }`}
         onClick={onClick}
-        aria-label={`${t('viewDetails')} ${concept.title}`}
+        aria-label={`${t('viewDetails')} ${title}`}
         type="button"
       >
         <div className="p-5 h-full flex flex-col">
@@ -83,7 +85,7 @@ export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = f
             </div>
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                {concept.title}
+                {title}
               </h3>
               <div className="flex items-center gap-2 flex-wrap">
                 <span className={`inline-block text-xs px-2 py-1 rounded-full font-medium ${getComplexityColor(concept.complexity)}`}>

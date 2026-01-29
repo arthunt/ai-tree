@@ -73,6 +73,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
   const t = useTranslations('concept');
   const tNav = useTranslations('navigation');
   const tDark = useTranslations('darkMode');
+  const tData = useTranslations('conceptData');
   const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -159,7 +160,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
     const url = getShareUrl();
     if (navigator.share) {
       try {
-        await navigator.share({ title: concept?.title, text: concept?.metaphor, url });
+        await navigator.share({ title: concept ? tData(`${concept.id}.title`) : '', text: concept ? tData(`${concept.id}.metaphor`) : '', url });
       } catch { /* cancelled */ }
     }
   };
@@ -342,14 +343,14 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                     </div>
                     <div className="flex-1 min-w-0">
                       <h2 id="concept-title" className="text-sm sm:text-lg font-bold truncate">
-                        {concept.title}
+                        {tData(`${concept.id}.title`)}
                       </h2>
                       <div className="flex items-center gap-2 mt-0.5">
                         <span className={`inline-block px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs font-medium ${getComplexityColor(concept.complexity)} bg-white`}>
                           {getComplexityLabel(concept.complexity)}
                         </span>
                         <span className="text-white/70 text-[11px] sm:text-xs truncate">
-                          {concept.simpleName}
+                          {tData(`${concept.id}.simpleName`)}
                         </span>
                       </div>
                     </div>
@@ -540,10 +541,10 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                             ? 'w-6 h-2.5 bg-blue-500 dark:bg-blue-400'
                             : 'w-2.5 h-2.5 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'
                         }`}
-                        aria-label={`${c.simpleName} (${i + 1}/${sameLevelConcepts.length})`}
+                        aria-label={`${tData(`${c.id}.simpleName`)} (${i + 1}/${sameLevelConcepts.length})`}
                         aria-current={isActive ? 'true' : undefined}
                         type="button"
-                        title={c.simpleName}
+                        title={tData(`${c.id}.simpleName`)}
                       />
                     );
                   })}
@@ -588,7 +589,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                                       }`}
                                       type="button"
                                     >
-                                      {c.simpleName}
+                                      {tData(`${c.id}.simpleName`)}
                                     </button>
                                   );
                                 })}
@@ -611,13 +612,13 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                         ? 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
                         : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-50'
                     }`}
-                    aria-label={prevConcept ? `Previous: ${prevConcept.simpleName}` : 'No previous concept'}
+                    aria-label={prevConcept ? `Previous: ${tData(`${prevConcept.id}.simpleName`)}` : 'No previous concept'}
                     type="button"
                   >
                     <ChevronLeft className="h-4 w-4 flex-shrink-0" />
                     {prevConcept && (
                       <span className="hidden sm:inline truncate max-w-[100px] text-xs">
-                        {prevConcept.simpleName}
+                        {tData(`${prevConcept.id}.simpleName`)}
                       </span>
                     )}
                   </button>
@@ -635,12 +636,12 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                         ? 'bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700'
                         : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-50'
                     }`}
-                    aria-label={nextConcept ? `Next: ${nextConcept.simpleName}` : 'No next concept'}
+                    aria-label={nextConcept ? `Next: ${tData(`${nextConcept.id}.simpleName`)}` : 'No next concept'}
                     type="button"
                   >
                     {nextConcept && (
                       <span className="hidden sm:inline truncate max-w-[100px] text-xs">
-                        {nextConcept.simpleName}
+                        {tData(`${nextConcept.id}.simpleName`)}
                       </span>
                     )}
                     <ChevronRight className="h-4 w-4 flex-shrink-0" />

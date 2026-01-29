@@ -20,6 +20,7 @@ interface LevelSectionProps {
 
 export function LevelSection({ level, concepts, viewMode, index, onConceptClick, isCompleted, isLoading = false }: LevelSectionProps) {
   const t = useTranslations('levelSection');
+  const tLevel = useTranslations('conceptLevels');
   const levelColors: Record<string, { from: string; to: string; border: string; darkFrom: string; darkTo: string }> = {
     roots: { from: 'from-emerald-50/40', to: 'to-emerald-100/10', border: 'border-emerald-200', darkFrom: 'dark:from-emerald-950/30', darkTo: 'dark:to-emerald-900/10' },
     trunk: { from: 'from-amber-50/40', to: 'to-amber-100/10', border: 'border-amber-200', darkFrom: 'dark:from-amber-950/30', darkTo: 'dark:to-amber-900/10' },
@@ -95,14 +96,14 @@ export function LevelSection({ level, concepts, viewMode, index, onConceptClick,
                   {level.order}
                 </span>
                 <h2 id={`level-heading-${level.id}`} className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
-                  {level.name}
+                  {tLevel(`${level.id}.name`)}
                 </h2>
               </div>
               <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 font-medium mb-3">
-                {level.subtitle}
+                {tLevel(`${level.id}.subtitle`)}
               </p>
               <p className="text-base text-gray-800 dark:text-gray-300 max-w-3xl leading-relaxed">
-                {level.description}
+                {tLevel(`${level.id}.description`)}
               </p>
             </div>
           </div>
@@ -119,7 +120,7 @@ export function LevelSection({ level, concepts, viewMode, index, onConceptClick,
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
           role="list"
-          aria-label={t('concepts', { level: level.name })}
+          aria-label={t('concepts', { level: tLevel(`${level.id}.name`) })}
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

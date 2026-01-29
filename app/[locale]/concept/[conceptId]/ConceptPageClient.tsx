@@ -23,6 +23,8 @@ export function ConceptPageClient({
 }: ConceptPageClientProps) {
   const router = useRouter();
   const t = useTranslations();
+  const tData = useTranslations('conceptData');
+  const tLevel = useTranslations('conceptLevels');
   const [concept, setConcept] = useState<Concept | null>(null);
 
   useEffect(() => {
@@ -76,7 +78,7 @@ export function ConceptPageClient({
             </button>
             <div className="flex-1" />
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              {level?.name} • {concept.title}
+              {level ? tLevel(`${level.id}.name`) : ''} • {tData(`${concept.id}.title`)}
             </span>
           </div>
         </div>

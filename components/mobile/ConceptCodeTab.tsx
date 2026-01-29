@@ -14,6 +14,7 @@ interface ConceptCodeTabProps {
 
 export function ConceptCodeTab({ concept, className = '' }: ConceptCodeTabProps) {
   const t = useTranslations('concept');
+  const tCode = useTranslations('codeExplanations');
   const [whyExpanded, setWhyExpanded] = useState(true);
   const codeExample = concept.codeExample;
 
@@ -34,7 +35,9 @@ export function ConceptCodeTab({ concept, className = '' }: ConceptCodeTabProps)
     );
   }
 
-  const whyText = codeExample.whyRelevant || codeExample.explanation;
+  // Use translated code explanation, falling back to JSON data
+  const translatedExplanation = tCode(concept.id);
+  const whyText = translatedExplanation !== concept.id ? translatedExplanation : (codeExample.whyRelevant || codeExample.explanation);
 
   return (
     <div className={`space-y-5 ${className}`}>

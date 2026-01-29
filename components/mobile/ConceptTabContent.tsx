@@ -26,6 +26,7 @@ export function ConceptTabContent({
   sheetState,
 }: ConceptTabContentProps) {
   const t = useTranslations('concept');
+  const tData = useTranslations('conceptData');
   const { isCompleted: checkIsCompleted } = useProgress();
   const { mode, setMode } = useExplanationMode();
 
@@ -41,7 +42,7 @@ export function ConceptTabContent({
     return (
       <div className="p-5">
         <p className="text-gray-700 dark:text-gray-300 line-clamp-3 leading-relaxed">
-          {concept.metaphor}
+          {tData(`${concept.id}.metaphor`)}
         </p>
       </div>
     );
@@ -106,7 +107,7 @@ export function ConceptTabContent({
                     </h3>
                   </div>
                   <p className="text-purple-900 dark:text-purple-100 leading-loose text-[15px]">
-                    {concept.metaphor}
+                    {tData(`${concept.id}.metaphor`)}
                   </p>
                 </motion.section>
               ) : (
@@ -127,7 +128,7 @@ export function ConceptTabContent({
                     </h3>
                   </div>
                   <p className="text-blue-900 dark:text-blue-100 leading-loose text-[15px]">
-                    {concept.explanation}
+                    {tData(`${concept.id}.explanation`)}
                   </p>
                 </motion.section>
               )}
@@ -156,7 +157,7 @@ export function ConceptTabContent({
                         }`}
                       >
                         {isPrereqCompleted && <Check className="h-3 w-3" />}
-                        <span>{prereq.simpleName}</span>
+                        <span>{tData(`${prereq.id}.simpleName`)}</span>
                         <ArrowRight className="h-3 w-3" />
                       </button>
                     );

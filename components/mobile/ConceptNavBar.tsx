@@ -22,6 +22,7 @@ export function ConceptNavBar({
   levelName,
 }: ConceptNavBarProps) {
   const t = useTranslations();
+  const tData = useTranslations('conceptData');
 
   // Calculate progress percentage
   const progressPercent = ((currentIndex + 1) / totalCount) * 100;
@@ -41,12 +42,12 @@ export function ConceptNavBar({
               ? 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
               : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-50'
           }`}
-          aria-label={prevConcept ? `Previous: ${prevConcept.simpleName}` : 'No previous concept'}
+          aria-label={prevConcept ? `Previous: ${tData(`${prevConcept.id}.simpleName`)}` : 'No previous concept'}
         >
           <ChevronLeft className="h-4 w-4 flex-shrink-0" />
           {prevConcept && (
             <span className="hidden xs:inline truncate max-w-[80px]">
-              {prevConcept.simpleName}
+              {tData(`${prevConcept.id}.simpleName`)}
             </span>
           )}
         </button>
@@ -81,11 +82,11 @@ export function ConceptNavBar({
               ? 'bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700'
               : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-50'
           }`}
-          aria-label={nextConcept ? `Next: ${nextConcept.simpleName}` : 'No next concept'}
+          aria-label={nextConcept ? `Next: ${tData(`${nextConcept.id}.simpleName`)}` : 'No next concept'}
         >
           {nextConcept && (
             <span className="hidden xs:inline truncate max-w-[80px]">
-              {nextConcept.simpleName}
+              {tData(`${nextConcept.id}.simpleName`)}
             </span>
           )}
           <ChevronRight className="h-4 w-4 flex-shrink-0" />
