@@ -5,17 +5,64 @@ import { Concept } from '@/lib/types';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 
+const svgLoading = () => <div className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-xl h-64" />;
+
 const TokenizerDemo = dynamic(() => import('@/components/TokenizerDemo').then(mod => ({ default: mod.TokenizerDemo })), {
-  loading: () => <div className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-xl h-64" />,
+  loading: svgLoading,
 });
 
 const VectorDemo = dynamic(() => import('@/components/VectorDemo').then(mod => ({ default: mod.VectorDemo })), {
-  loading: () => <div className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-xl h-64" />,
+  loading: svgLoading,
 });
+
+// SVG visual components (lazy-loaded)
+const AttentionSVG = dynamic(() => import('@/components/visuals/AttentionSVG').then(mod => ({ default: mod.AttentionSVG })), { loading: svgLoading });
+const PrefillDecodeSVG = dynamic(() => import('@/components/visuals/PrefillDecodeSVG').then(mod => ({ default: mod.PrefillDecodeSVG })), { loading: svgLoading });
+const ContextWindowSVG = dynamic(() => import('@/components/visuals/ContextWindowSVG').then(mod => ({ default: mod.ContextWindowSVG })), { loading: svgLoading });
+const HallucinationsSVG = dynamic(() => import('@/components/visuals/HallucinationsSVG').then(mod => ({ default: mod.HallucinationsSVG })), { loading: svgLoading });
+const TrainingInferenceSVG = dynamic(() => import('@/components/visuals/TrainingInferenceSVG').then(mod => ({ default: mod.TrainingInferenceSVG })), { loading: svgLoading });
+const TransformersSVG = dynamic(() => import('@/components/visuals/TransformersSVG').then(mod => ({ default: mod.TransformersSVG })), { loading: svgLoading });
+const ContextEngineeringSVG = dynamic(() => import('@/components/visuals/ContextEngineeringSVG').then(mod => ({ default: mod.ContextEngineeringSVG })), { loading: svgLoading });
+const RagPipelineSVG = dynamic(() => import('@/components/visuals/RagPipelineSVG').then(mod => ({ default: mod.RagPipelineSVG })), { loading: svgLoading });
+const MemoryTypesSVG = dynamic(() => import('@/components/visuals/MemoryTypesSVG').then(mod => ({ default: mod.MemoryTypesSVG })), { loading: svgLoading });
+const LoraSVG = dynamic(() => import('@/components/visuals/LoraSVG').then(mod => ({ default: mod.LoraSVG })), { loading: svgLoading });
+const SecuritySVG = dynamic(() => import('@/components/visuals/SecuritySVG').then(mod => ({ default: mod.SecuritySVG })), { loading: svgLoading });
+const TemperatureSVG = dynamic(() => import('@/components/visuals/TemperatureSVG').then(mod => ({ default: mod.TemperatureSVG })), { loading: svgLoading });
+const PromptingBasicsSVG = dynamic(() => import('@/components/visuals/PromptingBasicsSVG').then(mod => ({ default: mod.PromptingBasicsSVG })), { loading: svgLoading });
+const AgentLoopSVG = dynamic(() => import('@/components/visuals/AgentLoopSVG').then(mod => ({ default: mod.AgentLoopSVG })), { loading: svgLoading });
+const McpArchitectureSVG = dynamic(() => import('@/components/visuals/McpArchitectureSVG').then(mod => ({ default: mod.McpArchitectureSVG })), { loading: svgLoading });
+const ComplexityLevelsSVG = dynamic(() => import('@/components/visuals/ComplexityLevelsSVG').then(mod => ({ default: mod.ComplexityLevelsSVG })), { loading: svgLoading });
+const FunctionCallingSVG = dynamic(() => import('@/components/visuals/FunctionCallingSVG').then(mod => ({ default: mod.FunctionCallingSVG })), { loading: svgLoading });
+const MoeSVG = dynamic(() => import('@/components/visuals/MoeSVG').then(mod => ({ default: mod.MoeSVG })), { loading: svgLoading });
+const AgiAsiSVG = dynamic(() => import('@/components/visuals/AgiAsiSVG').then(mod => ({ default: mod.AgiAsiSVG })), { loading: svgLoading });
+const GreenAiSVG = dynamic(() => import('@/components/visuals/GreenAiSVG').then(mod => ({ default: mod.GreenAiSVG })), { loading: svgLoading });
+const ReasoningModelsSVG = dynamic(() => import('@/components/visuals/ReasoningModelsSVG').then(mod => ({ default: mod.ReasoningModelsSVG })), { loading: svgLoading });
 
 const demoComponents: Record<string, React.ComponentType> = {
   TokenizerDemo,
   VectorDemo,
+  // SVG visuals
+  AttentionSVG,
+  PrefillDecodeSVG,
+  ContextWindowSVG,
+  HallucinationsSVG,
+  TrainingInferenceSVG,
+  TransformersSVG,
+  ContextEngineeringSVG,
+  RagPipelineSVG,
+  MemoryTypesSVG,
+  LoraSVG,
+  SecuritySVG,
+  TemperatureSVG,
+  PromptingBasicsSVG,
+  AgentLoopSVG,
+  McpArchitectureSVG,
+  ComplexityLevelsSVG,
+  FunctionCallingSVG,
+  MoeSVG,
+  AgiAsiSVG,
+  GreenAiSVG,
+  ReasoningModelsSVG,
 };
 
 interface ConceptVisualTabProps {
@@ -44,8 +91,8 @@ export function ConceptVisualTab({ concept, className = '' }: ConceptVisualTabPr
     );
   }
 
-  // Demo component
-  if (visual.type === 'demo' && visual.component) {
+  // Component-based visual (demo or svg with component reference)
+  if ((visual.type === 'demo' || visual.type === 'svg') && visual.component) {
     const DemoComponent = demoComponents[visual.component];
     if (!DemoComponent) {
       return (

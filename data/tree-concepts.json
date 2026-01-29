@@ -50,7 +50,13 @@
       "metaphor": "Arstide konsiilium. Selle asemel, et üks perearst püüaks kõike teada, suunatakse sind kardioloogi või neuroloogi juurde. Iga arst keskendub ühele valdkonnale ja on seal ekspert.",
       "icon": "users",
       "complexity": 2,
-      "prerequisites": ["attention", "vectors"]
+      "prerequisites": ["attention", "vectors"],
+      "visual": {
+        "type": "svg",
+        "component": "MoeSVG",
+        "alt": "Mixture of Experts routing diagram",
+        "caption": "Router directing inputs to specialized expert networks"
+      }
     },
     {
       "id": "agi-asi",
@@ -61,7 +67,13 @@
       "metaphor": "Üliõpilane vs Einstein vs Superintellekt. Tänane AI on nagu tark tudeng. AGI on nagu geenius. ASI on midagi, mis ületab inimlikud võimed kõigis valdkondades.",
       "icon": "brain",
       "complexity": 3,
-      "prerequisites": ["ai-agents", "attention"]
+      "prerequisites": ["ai-agents", "attention"],
+      "visual": {
+        "type": "svg",
+        "component": "AgiAsiSVG",
+        "alt": "AGI to ASI capability spectrum",
+        "caption": "From narrow AI to artificial general intelligence and beyond"
+      }
     },
     {
       "id": "green-ai",
@@ -72,7 +84,13 @@
       "metaphor": "Elektriauto. Sama sihtkoht (tulemus), aga kütusekulu ja keskkonnakahju on kordades väiksem.",
       "icon": "leaf",
       "complexity": 2,
-      "prerequisites": ["tokens", "attention"]
+      "prerequisites": ["tokens", "attention"],
+      "visual": {
+        "type": "svg",
+        "component": "GreenAiSVG",
+        "alt": "Green AI energy comparison",
+        "caption": "Comparing compute and energy costs of small vs large models"
+      }
     },
     {
       "id": "reasoning-models",
@@ -83,7 +101,13 @@
       "metaphor": "Maletaja vs kiirmale. Kiirmales vastab sa koheselt (nagu tavaline AI). Tõsises maleturniiri mõtled sa 5-10 minutit, kaalud erinevaid käike, kujutad tulevikku ette. Arutlusmudel töötab samamoodi - aeglasem, aga parem tulemuse.",
       "icon": "chess-knight",
       "complexity": 2,
-      "prerequisites": ["attention", "context-engineering"]
+      "prerequisites": ["attention", "context-engineering"],
+      "visual": {
+        "type": "svg",
+        "component": "ReasoningModelsSVG",
+        "alt": "Chain-of-thought reasoning flow",
+        "caption": "Step-by-step reasoning from question to verified answer"
+      }
     },
     {
       "id": "ai-agents",
@@ -95,6 +119,12 @@
       "icon": "bot",
       "complexity": 2,
       "prerequisites": ["context-engineering", "rag"],
+      "visual": {
+        "type": "svg",
+        "component": "AgentLoopSVG",
+        "alt": "AI Agent observe-think-act loop",
+        "caption": "The autonomous agent cycle: observe, think, act, repeat"
+      },
       "codeExample": {
         "language": "python",
         "code": "from openai import OpenAI\nimport json\n\nclient = OpenAI()\n\n# Define available tools\ntools = [{\n    \"type\": \"function\",\n    \"function\": {\n        \"name\": \"get_weather\",\n        \"description\": \"Get weather for a city\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"city\": {\"type\": \"string\"}\n            },\n            \"required\": [\"city\"]\n        }\n    }\n}]\n\n# Agent loop\nmessages = [{\"role\": \"user\", \"content\": \"Mis ilm on Tallinnas?\"}]\n\nwhile True:\n    response = client.chat.completions.create(\n        model=\"gpt-4\", messages=messages, tools=tools\n    )\n    message = response.choices[0].message\n    \n    if message.tool_calls:\n        # Execute tool\n        tool_call = message.tool_calls[0]\n        result = json.dumps({\"temperature\": \"5°C\", \"condition\": \"pilvine\"})\n        messages.append({\"role\": \"tool\", \"content\": result, \"tool_call_id\": tool_call.id})\n    else:\n        # Final answer\n        print(message.content)\n        break",
@@ -110,7 +140,13 @@
       "metaphor": "USB-C kaabel. Vanasti oli igal seadmel erinev pistik (frustreeriv!). USB-C on universaalne - sobib kõigile. Samamoodi MCP ühendab AI ükskõik millise andmebaasi või programmiga ilma spetsiaalse koodita.",
       "icon": "plug",
       "complexity": 2,
-      "prerequisites": ["ai-agents"]
+      "prerequisites": ["ai-agents"],
+      "visual": {
+        "type": "svg",
+        "component": "McpArchitectureSVG",
+        "alt": "MCP client-server-tools architecture",
+        "caption": "Universal protocol connecting AI to any data source or tool"
+      }
     },
     {
       "id": "complexity-levels",
@@ -121,7 +157,13 @@
       "metaphor": "Köögimetafoor: 1. Retseptiraamat (LLM), 2. Peakokk, kes koostab menüü (Arutlus), 3. Kokk, kes reaalselt hakib ja küpsetab (Agent).",
       "icon": "layers",
       "complexity": 1,
-      "prerequisites": ["tokens"]
+      "prerequisites": ["tokens"],
+      "visual": {
+        "type": "svg",
+        "component": "ComplexityLevelsSVG",
+        "alt": "Three complexity levels pyramid",
+        "caption": "From simple LLM to reasoning model to autonomous agent"
+      }
     },
     {
       "id": "context-engineering",
@@ -133,6 +175,12 @@
       "icon": "stage",
       "complexity": 2,
       "prerequisites": ["tokens"],
+      "visual": {
+        "type": "svg",
+        "component": "ContextEngineeringSVG",
+        "alt": "Prompt anatomy with system, context, user sections",
+        "caption": "Building the full context: role, rules, format, and examples"
+      },
       "codeExample": {
         "language": "javascript",
         "code": "const openai = new OpenAI();\n\n// Poor context - vague prompt\nconst poorResponse = await openai.chat.completions.create({\n  model: \"gpt-4\",\n  messages: [\n    { role: \"user\", content: \"Kirjuta e-mail\" }\n  ]\n});\n\n// Rich context engineering\nconst richResponse = await openai.chat.completions.create({\n  model: \"gpt-4\",\n  messages: [\n    {\n      role: \"system\",\n      content: `Sa oled professionaalne ärikommunikatsiooni spetsialist.\n      \n      Reeglid:\n      - Kasuta formaalset tooni\n      - Hoia e-mailid lühikesed (max 150 sõna)\n      - Lisa alati CTA (call-to-action)\n      - Väldi žargooni\n      \n      Formaat:\n      Tervitus -> Kontekst -> Peamine sõnum -> CTA -> Lõpetus`\n    },\n    {\n      role: \"user\",\n      content: \"Kirjuta e-mail kliendile, kes küsib toote tarneaja kohta\"\n    }\n  ]\n});\n\nconsole.log(richResponse.choices[0].message.content);",
@@ -149,6 +197,12 @@
       "icon": "book-open",
       "complexity": 2,
       "prerequisites": ["vectors", "memory"],
+      "visual": {
+        "type": "svg",
+        "component": "RagPipelineSVG",
+        "alt": "RAG pipeline: query, embed, search, retrieve, generate",
+        "caption": "Retrieval-Augmented Generation: find relevant docs, then answer"
+      },
       "codeExample": {
         "language": "python",
         "code": "from openai import OpenAI\nimport numpy as np\n\nclient = OpenAI()\n\n# Knowledge base\ndocuments = [\n    \"Eesti pealinn on Tallinn.\",\n    \"Tallinn asub Soome lahe ääres.\",\n    \"Python on populaarne programmeerimiskeel.\"\n]\n\n# User query\nquery = \"Mis on Eesti pealinn?\"\n\n# 1. Retrieve: Find relevant documents\nquery_emb = client.embeddings.create(\n    model=\"text-embedding-3-small\", input=query\n).data[0].embedding\n\nrelevant_docs = []\nfor doc in documents:\n    doc_emb = client.embeddings.create(\n        model=\"text-embedding-3-small\", input=doc\n    ).data[0].embedding\n    similarity = np.dot(query_emb, doc_emb)\n    relevant_docs.append((doc, similarity))\n\ntop_doc = max(relevant_docs, key=lambda x: x[1])[0]\n\n# 2. Augment: Add context to prompt\nprompt = f\"Kontekst: {top_doc}\\n\\nKüsimus: {query}\"\n\n# 3. Generate: Get answer\nresponse = client.chat.completions.create(\n    model=\"gpt-4\",\n    messages=[{\"role\": \"user\", \"content\": prompt}]\n)\nprint(response.choices[0].message.content)",
@@ -164,7 +218,13 @@
       "metaphor": "Märkmik. Kui teil on halb mälu, kirjutate olulise üles. AI-l on 'lühimälu' nagu paberi kulu (piiratud ruum) ja 'pikk mälu' nagu süstemaatiline märkmik (saab hiljem üles leida).",
       "icon": "notebook",
       "complexity": 2,
-      "prerequisites": ["vectors"]
+      "prerequisites": ["vectors"],
+      "visual": {
+        "type": "svg",
+        "component": "MemoryTypesSVG",
+        "alt": "Memory types: buffer, summary, vector store, episodic",
+        "caption": "Short-term buffer and long-term memory systems for AI"
+      }
     },
     {
       "id": "lora",
@@ -175,7 +235,13 @@
       "metaphor": "Kursused. Ülikooli lõpetanu (baasmudel) läheb lühikursusele, et saada spetsialistiks kitsal alal (näiteks meditsiinitekstid). Ta ei pea uuesti kogu ülikooli käima, vaid õpib lihtsalt ühte valdkonda süvitsi.",
       "icon": "graduation-cap",
       "complexity": 3,
-      "prerequisites": ["vectors", "attention"]
+      "prerequisites": ["vectors", "attention"],
+      "visual": {
+        "type": "svg",
+        "component": "LoraSVG",
+        "alt": "LoRA low-rank adapter architecture",
+        "caption": "Fine-tuning with small adapter layers instead of full model retraining"
+      }
     },
     {
       "id": "security",
@@ -186,7 +252,13 @@
       "metaphor": "Turvamees ööklubis. Kontrollib, kes tohib sisse tulla (sisend) ja mida tohib välja viia (väljund).",
       "icon": "shield",
       "complexity": 2,
-      "prerequisites": ["tokens"]
+      "prerequisites": ["tokens"],
+      "visual": {
+        "type": "svg",
+        "component": "SecuritySVG",
+        "alt": "AI security threat map",
+        "caption": "Prompt injection, jailbreaks, and data leakage defense zones"
+      }
     },
     {
       "id": "tokens",
@@ -197,6 +269,12 @@
       "metaphor": "Lego klotsid. Sõna 'Banaan' ei ole üks tükk, vaid koosneb kolmest klotsist. AI ehitab lauseid klots-klotsi haaval.",
       "icon": "blocks",
       "complexity": 1,
+      "visual": {
+        "type": "demo",
+        "component": "TokenizerDemo",
+        "alt": "Interactive tokenizer demo",
+        "caption": "Type text to see how AI breaks it into tokens"
+      },
       "codeExample": {
         "language": "python",
         "code": "import tiktoken\n\n# Load tokenizer for GPT-4\nencoding = tiktoken.encoding_for_model(\"gpt-4\")\n\n# Tokenize text\ntext = \"Tere, kuidas sul läheb?\"\ntokens = encoding.encode(text)\n\nprint(f\"Text: {text}\")\nprint(f\"Tokens: {tokens}\")\nprint(f\"Token count: {len(tokens)}\")\n\n# Decode back to text\ndecoded = encoding.decode(tokens)\nprint(f\"Decoded: {decoded}\")",
@@ -235,6 +313,12 @@
       "icon": "flashlight",
       "complexity": 2,
       "prerequisites": ["tokens", "vectors"],
+      "visual": {
+        "type": "svg",
+        "component": "AttentionSVG",
+        "alt": "Attention mechanism heatmap",
+        "caption": "How AI focuses on relevant words when processing a sentence"
+      },
       "codeExample": {
         "language": "python",
         "code": "import torch\nimport torch.nn.functional as F\n\n# Simplified attention calculation\nquery = torch.tensor([[1.0, 0.5]])  # Current word\nkeys = torch.tensor([              # Previous words\n    [1.0, 0.0],  # \"Kass\"\n    [0.5, 1.0],  # \"istus\"\n    [0.2, 0.3]   # \"toolil\"\n])\nvalues = keys  # Simplified\n\n# Calculate attention scores\nscores = torch.matmul(query, keys.T) / (keys.shape[1] ** 0.5)\nattention_weights = F.softmax(scores, dim=-1)\n\nprint(\"Attention weights:\")\nfor i, word in enumerate([\"Kass\", \"istus\", \"toolil\"]):\n    print(f\"{word}: {attention_weights[0][i]:.3f}\")\n\n# Apply attention\noutput = torch.matmul(attention_weights, values)\nprint(f\"\\nWeighted output: {output}\")",
@@ -250,7 +334,13 @@
       "metaphor": "Lugemine vs Kirjutamine. Raamatut silmadega lugeda on kiire - sa haarad terve lõigu ühekorraga (prefill). Aga sama teksti käsitsi ümber kirjutada võtab palju kauem, sest pead iga tähe järjest kirjutama (decode).",
       "icon": "book-text",
       "complexity": 2,
-      "prerequisites": ["tokens"]
+      "prerequisites": ["tokens"],
+      "visual": {
+        "type": "svg",
+        "component": "PrefillDecodeSVG",
+        "alt": "Prefill vs decode phases diagram",
+        "caption": "Two phases: batch reading (prefill) then sequential writing (decode)"
+      }
     },
     {
       "id": "context-windows",
@@ -261,7 +351,13 @@
       "metaphor": "Töömälu - nagu raamatu lugemine, kus mäletad korraga vaid viimast 5 lehekülge. Vanemad leheküljed unustatakse ära. Mõni inimene (või AI mudel) suudab meeles pidada rohkem lehekülgi korraga, aga see on kurnavam ja nõuab rohkem energiat.",
       "icon": "frame",
       "complexity": 1,
-      "prerequisites": ["tokens"]
+      "prerequisites": ["tokens"],
+      "visual": {
+        "type": "svg",
+        "component": "ContextWindowSVG",
+        "alt": "Context window filling with tokens",
+        "caption": "How the context window fills up and older tokens are forgotten"
+      }
     },
     {
       "id": "hallucinations",
@@ -272,7 +368,13 @@
       "metaphor": "Enesekindlad väljamõeldised - nagu õpilane, kes arvab vastust enesekindlalt, kui ta tegelikult ei tea. Ta ei ütle 'Ma ei tea', vaid leiutab midagi, mis kõlab usutavalt. AI teeb seda sageli, sest ta on treenitud alati vastama, mitte tunnistama teadmatust.",
       "icon": "ghost",
       "complexity": 1,
-      "prerequisites": ["tokens"]
+      "prerequisites": ["tokens"],
+      "visual": {
+        "type": "svg",
+        "component": "HallucinationsSVG",
+        "alt": "Hallucination comparison: confident-wrong vs correct",
+        "caption": "When AI confidently generates plausible but incorrect information"
+      }
     },
     {
       "id": "temperature-sampling",
@@ -283,7 +385,13 @@
       "metaphor": "Loovuse nupp - madal temperatuur on kalkulaator (ennustatav, täpne), kõrge temperatuur on kunstnik (loov, aga ettearvamatum). Kui küsid '2+2=?', tahad kalkulaatorit. Kui küsid 'Kirjuta muinasjutt', tahad kunstnikku.",
       "icon": "thermometer",
       "complexity": 1,
-      "prerequisites": ["tokens"]
+      "prerequisites": ["tokens"],
+      "visual": {
+        "type": "svg",
+        "component": "TemperatureSVG",
+        "alt": "Temperature slider showing output randomness",
+        "caption": "Low temperature = predictable, high temperature = creative"
+      }
     },
     {
       "id": "prompting-basics",
@@ -294,7 +402,13 @@
       "metaphor": "Heade küsimuste esitamine - vahe 'Mis õhtuks söök?' ja 'Soovita 3 kiiret taimetoiduretsepti alla 30 minuti' on tohutu. Esimene küsimus annab liiga palju võimalusi ja ebaselge vastuse. Teine küsimus on täpne ja saad kasuliku vastuse.",
       "icon": "message-square",
       "complexity": 1,
-      "prerequisites": ["tokens"]
+      "prerequisites": ["tokens"],
+      "visual": {
+        "type": "svg",
+        "component": "PromptingBasicsSVG",
+        "alt": "Good vs bad prompt comparison",
+        "caption": "Side-by-side comparison of vague vs specific prompts"
+      }
     },
     {
       "id": "function-calling",
@@ -306,6 +420,12 @@
       "icon": "plug-2",
       "complexity": 2,
       "prerequisites": ["ai-agents"],
+      "visual": {
+        "type": "svg",
+        "component": "FunctionCallingSVG",
+        "alt": "Function calling sequence diagram",
+        "caption": "AI decides to call a function, app executes it, AI uses the result"
+      },
       "codeExample": {
         "language": "python",
         "code": "from openai import OpenAI\nimport json\n\nclient = OpenAI()\n\n# Define available functions\ntools = [{\n    \"type\": \"function\",\n    \"function\": {\n        \"name\": \"get_weather\",\n        \"description\": \"Hangi ilmateade linna jaoks\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"city\": {\"type\": \"string\", \"description\": \"Linna nimi\"}\n            },\n            \"required\": [\"city\"]\n        }\n    }\n}]\n\n# User asks about weather\nmessages = [{\"role\": \"user\", \"content\": \"Mis ilm on homme Tallinnas?\"}]\n\nresponse = client.chat.completions.create(\n    model=\"gpt-4\",\n    messages=messages,\n    tools=tools\n)\n\n# Model decides to call function\nmessage = response.choices[0].message\nif message.tool_calls:\n    tool_call = message.tool_calls[0]\n    function_name = tool_call.function.name\n    function_args = json.loads(tool_call.function.arguments)\n    \n    # Execute function (simulated)\n    weather_result = {\"temperature\": \"8°C\", \"condition\": \"vihmane\"}\n    \n    # Send result back to model\n    messages.append(message)\n    messages.append({\n        \"role\": \"tool\",\n        \"content\": json.dumps(weather_result),\n        \"tool_call_id\": tool_call.id\n    })\n    \n    # Get final response\n    final_response = client.chat.completions.create(\n        model=\"gpt-4\",\n        messages=messages\n    )\n    print(final_response.choices[0].message.content)",
@@ -321,7 +441,13 @@
       "metaphor": "Meisterarhitektuur - plaan ChatGPT, BERT ja kõigi kaasaegsete AI keelemudelite taga. Nagu betoonkonstruktsioon ehituses - see on standard, mille peale kõik ehitatakse. Enne transformereid oli AI nagu kivist hoone (aeglane, piiratud). Transformerid on nagu terasbetooni leiutamine - äkki said võimalikuks pilvelõhkujad.",
       "icon": "cpu",
       "complexity": 2,
-      "prerequisites": ["attention", "vectors"]
+      "prerequisites": ["attention", "vectors"],
+      "visual": {
+        "type": "svg",
+        "component": "TransformersSVG",
+        "alt": "Transformer architecture diagram",
+        "caption": "The architecture behind GPT, BERT, Claude, and all modern LLMs"
+      }
     },
     {
       "id": "training-vs-inference",
@@ -332,7 +458,13 @@
       "metaphor": "Kool vs Töö - treenimine on õppimine (kallis, aeglane, nõuab aastaid), järeldamine on õpitu rakendamine (kiire, odav, igapäevane töö). Kui mudel on kord treenitud, saab seda kasutada miljoneid kordi ilma uuesti õppimata.",
       "icon": "graduation-cap",
       "complexity": 1,
-      "prerequisites": ["tokens"]
+      "prerequisites": ["tokens"],
+      "visual": {
+        "type": "svg",
+        "component": "TrainingInferenceSVG",
+        "alt": "Training vs inference phases",
+        "caption": "Expensive learning phase vs fast application phase"
+      }
     }
   ]
 }
