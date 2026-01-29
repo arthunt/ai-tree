@@ -26,6 +26,7 @@ export default function AITreePage() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isHeroExpanded, setIsHeroExpanded] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isSkillSelectorOpen, setIsSkillSelectorOpen] = useState(false);
   const data = treeData as TreeData;
   const t = useTranslations();
@@ -44,11 +45,15 @@ export default function AITreePage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Track active section on scroll
+  // Derive active level data for context bar
+  const activeLevelData = data.levels.find(l => l.id === activeLevel);
+
+  // Track active section on scroll + header fold
   useEffect(() => {
     const handleScroll = () => {
-      const sections = data.levels.map(level => level.id);
+      setIsScrolled(window.scrollY > 200);
 
+      const sections = data.levels.map(level => level.id);
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -61,8 +66,8 @@ export default function AITreePage() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [data.levels]);
@@ -87,15 +92,17 @@ export default function AITreePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-      {/* Header - Compact on mobile */}
+      {/* Header - Compact on mobile, shrinks on scroll */}
       <header className="sticky top-0 z-40 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
-        <div className="container mx-auto px-3 py-2 sm:px-4 sm:py-3 max-w-7xl">
+        <div className={`container mx-auto max-w-7xl transition-all duration-300 ${isScrolled ? 'px-3 py-1 sm:px-4 sm:py-1.5' : 'px-3 py-2 sm:px-4 sm:py-3'}`}>
           <div className="flex items-center justify-between">
             <div className="min-w-0 flex-1">
-              <h1 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white truncate">
+              <h1 className={`font-bold text-gray-900 dark:text-white truncate transition-all duration-300 ${isScrolled ? 'text-sm sm:text-base' : 'text-lg sm:text-2xl'}`}>
                 {t('header.title')}
               </h1>
-              <p className="hidden sm:block text-sm text-gray-600 dark:text-gray-400">{t('header.description')}</p>
+              {!isScrolled && (
+                <p className="hidden sm:block text-sm text-gray-600 dark:text-gray-400">{t('header.description')}</p>
+              )}
             </div>
             <div className="flex items-center gap-1.5 sm:gap-3">
               {/* Search Button */}
@@ -126,6 +133,22 @@ export default function AITreePage() {
             </div>
           </div>
         </div>
+
+        {/* Active Level Context Bar - Desktop, visible when scrolled */}
+        {isScrolled && activeLevelData && (
+          <div className="hidden sm:block border-t border-gray-100 dark:border-gray-800">
+            <div className="container mx-auto px-4 py-1.5 max-w-7xl flex items-center gap-2">
+              <span
+                className="w-5 h-5 rounded flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
+                style={{ backgroundColor: activeLevelData.color }}
+              >
+                {activeLevelData.order}
+              </span>
+              <span className="text-sm font-semibold text-gray-900 dark:text-white">{activeLevelData.name}</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">— {activeLevelData.subtitle}</span>
+            </div>
+          </div>
+        )}
 
         {/* Slim Level Indicator - Mobile only */}
         <div className="sm:hidden border-t border-gray-100 dark:border-gray-800">
