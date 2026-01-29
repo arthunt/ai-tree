@@ -128,10 +128,13 @@
     "reportIssue": "Report Issue"
   },
   "complexity": {
-    "level": "Complexity level",
-    "beginner": "Beginner",
-    "intermediate": "Intermediate",
-    "advanced": "Advanced"
+    "level": "Concept depth",
+    "1": "Core Idea",
+    "2": "Connected",
+    "3": "Deep Dive",
+    "tooltip1": "A single, focused concept — one clear idea to grasp",
+    "tooltip2": "Multiple ideas that link together — understanding relationships between parts",
+    "tooltip3": "Dense, multi-layered topic with many prerequisites and interconnections"
   },
   "loading": {
     "default": "Loading...",
@@ -243,9 +246,9 @@
   },
   "organicTree": {
     "clickForDetails": "Click for details",
-    "simple": "Simple",
-    "intermediate": "Intermediate",
-    "advanced": "Advanced"
+    "simple": "Core Idea",
+    "intermediate": "Connected",
+    "advanced": "Deep Dive"
   },
   "search": {
     "button": "Search",

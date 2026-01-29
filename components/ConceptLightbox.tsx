@@ -3,7 +3,7 @@
 import { motion, AnimatePresence, useMotionValue, PanInfo } from 'framer-motion';
 import { X, Check, Circle, ChevronLeft, ChevronRight, Share2, Link2, ChevronDown, Moon, Sun, Sparkles } from 'lucide-react';
 import { Concept, TreeLevel } from '../lib/types';
-import { getComplexityColor, getComplexityLabel } from '../lib/utils';
+import { getComplexityColor } from '../lib/utils';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { LightboxSkeleton } from './LightboxSkeleton';
@@ -75,6 +75,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
   const tDark = useTranslations('darkMode');
   const tData = useTranslations('conceptData');
   const tUp = useTranslations('upNext');
+  const tComplexity = useTranslations('complexity');
   const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -347,8 +348,8 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                         {tData(`${concept.id}.title`)}
                       </h2>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className={`inline-block px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs font-medium ${getComplexityColor(concept.complexity)} bg-white`}>
-                          {getComplexityLabel(concept.complexity)}
+                        <span className={`inline-block px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs font-medium bg-white/90 dark:bg-white/10 ${getComplexityColor(concept.complexity)}`}>
+                          {tComplexity(String(concept.complexity))}
                         </span>
                         <span className="text-white/70 text-[11px] sm:text-xs truncate">
                           {tData(`${concept.id}.simpleName`)}

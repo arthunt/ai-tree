@@ -20,26 +20,13 @@ export function getLevelGradient(levelId: string): string {
   return gradients[levelId] || 'from-gray-500/10 to-gray-400/5';
 }
 
-export function getComplexityLabel(complexity: 1 | 2 | 3): string {
-  const labels: Record<number, string> = {
-    1: 'Algaja',
-    2: 'Keskmine',
-    3: 'Keeruline',
-  };
-  return labels[complexity] || 'Keskmine';
-}
-
-// Note: This function returns hardcoded Estonian labels for backwards compatibility.
-// For proper i18n, components should use the 'complexity' namespace from useTranslations
-// Example: t('complexity.beginner'), t('complexity.intermediate'), t('complexity.advanced')
-
 export function getComplexityColor(complexity: 1 | 2 | 3): string {
   const colors: Record<number, string> = {
-    1: 'bg-green-100 text-green-900',
-    2: 'bg-yellow-100 text-yellow-900',
-    3: 'bg-red-100 text-red-900',
+    1: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300',
+    2: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300',
+    3: 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300',
   };
-  return colors[complexity] || 'bg-gray-100 text-gray-900';
+  return colors[complexity] || 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
 }
 
 export function getLevelIcon(levelId: string): string {

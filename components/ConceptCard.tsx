@@ -20,7 +20,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { Concept } from '../lib/types';
-import { getComplexityColor, getComplexityLabel, getReadingTime } from '../lib/utils';
+import { getComplexityColor, getReadingTime } from '../lib/utils';
 import { useTranslations } from 'next-intl';
 
 const iconMap: Record<string, LucideIcon> = {
@@ -57,6 +57,7 @@ export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = f
   const IconComponent = iconMap[concept.icon] || Brain;
   const t = useTranslations('concept');
   const tData = useTranslations('conceptData');
+  const tComplexity = useTranslations('complexity');
   const isBeginnerPath = BEGINNER_PATH.includes(concept.id);
   const beginnerPathIndex = BEGINNER_PATH.indexOf(concept.id) + 1;
   const readingTime = getReadingTime(concept);
@@ -88,8 +89,11 @@ export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = f
                 {title}
               </h3>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className={`inline-block text-xs px-2 py-1 rounded-full font-medium ${getComplexityColor(concept.complexity)}`}>
-                  {getComplexityLabel(concept.complexity)}
+                <span
+                  className={`inline-block text-xs px-2 py-1 rounded-full font-medium ${getComplexityColor(concept.complexity)}`}
+                  title={tComplexity(`tooltip${concept.complexity}`)}
+                >
+                  {tComplexity(String(concept.complexity))}
                 </span>
                 <span className="inline-block text-xs px-2 py-1 rounded-full font-medium bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
                   {readingTime} {t('readingTime')}

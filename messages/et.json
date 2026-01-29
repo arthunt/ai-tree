@@ -128,10 +128,13 @@
     "reportIssue": "Teata Probleemist"
   },
   "complexity": {
-    "level": "Keerukuse tase",
-    "beginner": "Algaja",
-    "intermediate": "Keskmine",
-    "advanced": "Edasijõudnud"
+    "level": "Mõiste sügavus",
+    "1": "Põhiidee",
+    "2": "Seostatud",
+    "3": "Süvateema",
+    "tooltip1": "Üks selge ja fookustatud mõiste — üks põhiidee",
+    "tooltip2": "Mitu omavahel seotud ideed — nõuab seoste mõistmist",
+    "tooltip3": "Tihe, mitmekihiline teema paljude eelduste ja seostega"
   },
   "loading": {
     "default": "Laen...",
@@ -243,9 +246,9 @@
   },
   "organicTree": {
     "clickForDetails": "Kliki detailideks",
-    "simple": "Lihtne",
-    "intermediate": "Keskmine",
-    "advanced": "Edasijõudnud"
+    "simple": "Põhiidee",
+    "intermediate": "Seostatud",
+    "advanced": "Süvateema"
   },
   "search": {
     "button": "Otsi",

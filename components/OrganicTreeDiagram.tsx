@@ -210,19 +210,13 @@ export function OrganicTreeDiagram({
                     <motion.div
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="mt-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide"
-                      style={{
-                        background: concept.complexity === 1
-                          ? '#d1fae5'
+                      className={`mt-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide ${
+                        concept.complexity === 1
+                          ? 'bg-emerald-100 text-emerald-800'
                           : concept.complexity === 2
-                          ? '#fef3c7'
-                          : '#fee2e2',
-                        color: concept.complexity === 1
-                          ? '#065f46'
-                          : concept.complexity === 2
-                          ? '#92400e'
-                          : '#991b1b',
-                      }}
+                          ? 'bg-amber-100 text-amber-800'
+                          : 'bg-purple-100 text-purple-800'
+                      }`}
                     >
                       {concept.complexity === 1 ? t('simple') : concept.complexity === 2 ? t('intermediate') : t('advanced')}
                     </motion.div>
