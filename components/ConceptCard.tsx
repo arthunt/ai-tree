@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import {
   Users,
   Brain,
@@ -64,10 +63,7 @@ export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = f
   const displayText = viewMode === 'technical' ? concept.explanation : concept.metaphor;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
+    <div
       className="group h-full"
     >
       <button
@@ -105,7 +101,7 @@ export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = f
             </div>
           </div>
 
-          <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3 mb-4 flex-1">
+          <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-2 mb-4 flex-1">
             {displayText}
           </p>
 
@@ -125,6 +121,6 @@ export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = f
           </div>
         )}
       </button>
-    </motion.div>
+    </div>
   );
 }

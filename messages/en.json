@@ -29,6 +29,7 @@
     "beginnerPathDesc": "Start here! Understand the basics in ~30 minutes.",
     "startWithTokens": "Start with Tokens",
     "startLearning": "Start Learning",
+    "hook": "You already use AI. Now understand how it works.",
     "showMore": "Show more",
     "showLess": "Show less"
   },
@@ -180,6 +181,18 @@
     "goToLevel": "Go to {level} level",
     "currentLevel": "Current",
     "conceptsCompleted": "concepts understood"
+  },
+  "journey": {
+    "title": "Your Learning Path",
+    "subtitle": "From everyday AI to deep understanding — like growing a tree from roots to leaves.",
+    "roots": "Foundation",
+    "rootsDesc": "Tokens, vectors & the building blocks",
+    "trunk": "Core Mechanics",
+    "trunkDesc": "How models learn and generate",
+    "branches": "Applications",
+    "branchesDesc": "RAG, agents & real-world tools",
+    "leaves": "Mastery",
+    "leavesDesc": "Fine-tuning, safety & beyond"
   },
   "levelSection": {
     "conceptCount": "{count} concepts",

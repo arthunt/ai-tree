@@ -29,6 +29,7 @@
     "beginnerPathDesc": "Alusta siit! ~30 minutiga saad põhitõdedest aru.",
     "startWithTokens": "Alusta Tokenitega",
     "startLearning": "Alusta Õppimist",
+    "hook": "Sa juba kasutad AI-d. Nüüd mõista, kuidas see töötab.",
     "showMore": "Näita rohkem",
     "showLess": "Näita vähem"
   },
@@ -180,6 +181,18 @@
     "goToLevel": "Mine {level} tasandile",
     "currentLevel": "Praegune",
     "conceptsCompleted": "kontseptsiooni omandatud"
+  },
+  "journey": {
+    "title": "Sinu Õpitee",
+    "subtitle": "Igapäevasest AI-st sügava mõistmiseni — nagu puu kasvatamine juurtest lehtedeni.",
+    "roots": "Alus",
+    "rootsDesc": "Tokenid, vektorid ja ehituskivid",
+    "trunk": "Tuummehhaanika",
+    "trunkDesc": "Kuidas mudelid õpivad ja loovad",
+    "branches": "Rakendused",
+    "branchesDesc": "RAG, agendid ja päris tööriistad",
+    "leaves": "Meisterlikkus",
+    "leavesDesc": "Peenhäälestamine, ohutus ja edasi"
   },
   "levelSection": {
     "conceptCount": "{count} kontseptsiooni",

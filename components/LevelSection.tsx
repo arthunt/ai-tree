@@ -29,12 +29,27 @@ export function LevelSection({ level, concepts, viewMode, index, onConceptClick,
 
   const colors = levelColors[level.id] || levelColors.roots;
 
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+  };
+
   return (
     <motion.section
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: index * 0.2 }}
-      className="relative py-20 border-t-4"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="relative py-16 sm:py-24 border-t-4"
       id={level.id}
       style={{ borderTopColor: level.color }}
       aria-labelledby={`level-heading-${level.id}`}
@@ -53,39 +68,40 @@ export function LevelSection({ level, concepts, viewMode, index, onConceptClick,
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Enhanced Level Header */}
         <motion.div
-          initial={{ x: -50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: index * 0.2 + 0.1 }}
+          initial={{ x: -30, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
           className="mb-12"
         >
-          <div className="flex items-start gap-6 mb-6">
+          <div className="flex items-start gap-4 sm:gap-6 mb-6">
             <div
-              className="p-4 rounded-2xl shadow-lg"
+              className="p-3 sm:p-4 rounded-2xl shadow-lg"
               style={{
                 background: `linear-gradient(135deg, ${level.color}20, ${level.color}10)`,
                 border: `2px solid ${level.color}40`,
               }}
               aria-hidden="true"
             >
-              <LevelIcon level={level.id as 'roots' | 'trunk' | 'branches' | 'leaves'} size={64} />
+              <LevelIcon level={level.id as 'roots' | 'trunk' | 'branches' | 'leaves'} size={48} />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
                 <span
-                  className="text-2xl font-bold px-3 py-1 rounded-lg text-white"
+                  className="text-xl font-bold px-2.5 py-0.5 rounded-lg text-white"
                   style={{ backgroundColor: level.color }}
                   aria-hidden="true"
                 >
                   {level.order}
                 </span>
-                <h2 id={`level-heading-${level.id}`} className="text-4xl font-bold text-gray-900 dark:text-white">
+                <h2 id={`level-heading-${level.id}`} className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
                   {level.name}
                 </h2>
               </div>
-              <p className="text-xl text-gray-700 dark:text-gray-300 font-medium mb-3">
+              <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 font-medium mb-3">
                 {level.subtitle}
               </p>
-              <p className="text-gray-800 dark:text-gray-300 max-w-3xl leading-relaxed">
+              <p className="text-base text-gray-800 dark:text-gray-300 max-w-3xl leading-relaxed">
                 {level.description}
               </p>
             </div>
@@ -99,29 +115,36 @@ export function LevelSection({ level, concepts, viewMode, index, onConceptClick,
           </div>
         </motion.div>
 
-        {/* Concepts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label={t('concepts', { level: level.name })}>
+        {/* Concepts Grid with staggered reveal */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          role="list"
+          aria-label={t('concepts', { level: level.name })}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+        >
           {isLoading ? (
-            // Show skeleton cards while loading
             Array.from({ length: 3 }).map((_, idx) => (
               <div key={`skeleton-${idx}`} role="listitem">
                 <SkeletonCard index={idx} />
               </div>
             ))
           ) : (
-            concepts.map((concept, idx) => (
-              <div key={concept.id} role="listitem">
+            concepts.map((concept) => (
+              <motion.div key={concept.id} role="listitem" variants={cardVariants}>
                 <ConceptCard
                   concept={concept}
                   viewMode={viewMode}
-                  index={idx}
+                  index={0}
                   onClick={() => onConceptClick(concept)}
                   isCompleted={isCompleted?.(concept.id) ?? false}
                 />
-              </div>
+              </motion.div>
             ))
           )}
-        </div>
+        </motion.div>
       </div>
     </motion.section>
   );
