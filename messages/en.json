@@ -127,10 +127,6 @@
     "version": "Version",
     "reportIssue": "Report Issue"
   },
-  "navigation": {
-    "viewOptions": "View options",
-    "levelSections": "AI concept levels"
-  },
   "complexity": {
     "level": "Complexity level",
     "beginner": "Beginner",
@@ -145,7 +141,6 @@
   },
   "concept": {
     "simpleName": "Simple name",
-    "explanation": "Explanation",
     "metaphor": "Metaphor",
     "closeAriaLabel": "Close detailed view",
     "closeDialog": "Close dialog window",
@@ -222,7 +217,13 @@
     "conceptsCompleted": "concepts understood",
     "backToTop": "Back to top",
     "switchToEstonian": "Switch to Estonian",
-    "switchToEnglish": "Switch to English"
+    "switchToEnglish": "Switch to English",
+    "levels": {
+      "roots": "Roots",
+      "trunk": "Trunk",
+      "branches": "Branches",
+      "leaves": "Leaves"
+    }
   },
   "journey": {
     "title": "Your Learning Path",

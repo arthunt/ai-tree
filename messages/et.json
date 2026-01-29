@@ -127,10 +127,6 @@
     "version": "Versioon",
     "reportIssue": "Teata Probleemist"
   },
-  "navigation": {
-    "viewOptions": "Vaate valikud",
-    "levelSections": "AI kontseptide tasandid"
-  },
   "complexity": {
     "level": "Keerukuse tase",
     "beginner": "Algaja",
@@ -145,7 +141,6 @@
   },
   "concept": {
     "simpleName": "Lihtne nimi",
-    "explanation": "Selgitus",
     "metaphor": "Metafoor",
     "closeAriaLabel": "Sulge detailne vaade",
     "closeDialog": "Sulge dialoogi aken",
@@ -222,7 +217,13 @@
     "conceptsCompleted": "kontseptsiooni omandatud",
     "backToTop": "Tagasi üles",
     "switchToEstonian": "Lülitu eesti keelele",
-    "switchToEnglish": "Lülitu inglise keelele"
+    "switchToEnglish": "Lülitu inglise keelele",
+    "levels": {
+      "roots": "Juured",
+      "trunk": "Tüvi",
+      "branches": "Oksad",
+      "leaves": "Lehed"
+    }
   },
   "journey": {
     "title": "Sinu Õpitee",
