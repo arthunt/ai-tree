@@ -443,22 +443,20 @@ export default function AITreePage() {
                 isLoading={isLoading}
               />
 
-              {/* Tokenizer Demo - after Roots (tokens concept) */}
+              {/* Interactive Demos - after Roots (tokens & vectors are roots concepts) */}
               {level.id === 'roots' && (
-                <section className="py-16 bg-white dark:bg-gray-900" aria-label={t('tokenizer.title')}>
-                  <div className="container mx-auto px-4 max-w-7xl">
-                    <TokenizerDemo />
-                  </div>
-                </section>
-              )}
-
-              {/* Vector Demo - after Trunk (embeddings concept) */}
-              {level.id === 'trunk' && (
-                <section className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900" aria-label={t('vectorDemo.title')}>
-                  <div className="container mx-auto px-4 max-w-7xl">
-                    <VectorDemo />
-                  </div>
-                </section>
+                <>
+                  <section className="py-16 bg-white dark:bg-gray-900" aria-label={t('tokenizer.title')}>
+                    <div className="container mx-auto px-4 max-w-7xl">
+                      <TokenizerDemo />
+                    </div>
+                  </section>
+                  <section className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900" aria-label={t('vectorDemo.title')}>
+                    <div className="container mx-auto px-4 max-w-7xl">
+                      <VectorDemo />
+                    </div>
+                  </section>
+                </>
               )}
             </div>
           );
