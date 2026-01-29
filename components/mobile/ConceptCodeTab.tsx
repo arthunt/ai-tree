@@ -15,8 +15,23 @@ interface ConceptCodeTabProps {
 export function ConceptCodeTab({ concept, className = '' }: ConceptCodeTabProps) {
   const t = useTranslations('concept');
   const tCode = useTranslations('codeExplanations');
+  const tSnippets = useTranslations('codeSnippets');
   const [whyExpanded, setWhyExpanded] = useState(true);
   const codeExample = concept.codeExample;
+
+  // Replace {{placeholder}} tokens in code with translated strings
+  const translateCode = (code: string): string => {
+    return code.replace(/\{\{(\w+)\}\}/g, (_match, key) => {
+      const path = `${concept.id}.${key}`;
+      try {
+        const value = tSnippets(path);
+        // next-intl returns the key path if not found
+        return value === path ? key : value;
+      } catch {
+        return key;
+      }
+    });
+  };
 
   // No code example - show placeholder
   if (!codeExample) {
@@ -85,7 +100,7 @@ export function ConceptCodeTab({ concept, className = '' }: ConceptCodeTabProps)
       {/* Code Block */}
       <section className="bg-slate-50 dark:bg-slate-900/20 rounded-2xl p-4">
         <CodeBlock
-          code={codeExample.code}
+          code={translateCode(codeExample.code)}
           language={codeExample.language}
           explanation=""
         />

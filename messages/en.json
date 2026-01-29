@@ -198,6 +198,10 @@
     "estimatedCost": "Estimated cost (GPT-4)",
     "costTip": "<strong>Tip:</strong> Longer texts = more tokens = higher cost. Learn to optimize your prompts!",
     "tryExamples": "Try examples:",
+    "example1": "Hello, world!",
+    "example2": "GPT-4 costs 2024",
+    "example3": "Artificial intelligence",
+    "example4": "Machine learning is fascinating",
     "digitInsight": "<strong>Numbers split into digits!</strong> AI doesn't see \"2024\" as one number — it becomes 4 separate tokens (2, 0, 2, 4). Each digit gets its own <em>vector</em> (numerical meaning). That's why AI can struggle with math — it processes digits one by one, not as whole numbers.",
     "subwordInsight": "<strong>Long words get split!</strong> Tokens marked with <code>##</code> are subword pieces. AI breaks unfamiliar or long words into smaller known parts, similar to how you might sound out an unfamiliar word syllable by syllable.",
     "disclaimer": "This is a simplified tokenizer. Real language models use more sophisticated methods like BPE (Byte Pair Encoding) or WordPiece."
@@ -300,6 +304,16 @@
     "infoTitle": "What are embeddings?",
     "infoText": "AI represents words as vectors (lists of numbers) called <em>embeddings</em>. Similar words have similar vectors. This demo uses simplified 10-dimensional vectors, but real models like GPT use 1,536+ dimensions! The 2D plot shows these high-dimensional relationships projected into a space we can see.",
     "tryExamples": "Try examples:",
+    "exampleLabel1": "king, queen, prince",
+    "exampleWords1": "king, queen, prince",
+    "exampleLabel2": "cat, dog, car",
+    "exampleWords2": "cat, dog, car",
+    "exampleLabel3": "happy, sad, angry",
+    "exampleWords3": "happy, sad, angry",
+    "exampleLabel4": "apple, banana, pizza",
+    "exampleWords4": "apple, banana, pizza",
+    "exampleLabel5": "computer, phone, tree",
+    "exampleWords5": "computer, phone, tree",
     "disclaimer": "This demo uses pre-computed simplified embeddings. Real AI models create embeddings dynamically based on context and use thousands of dimensions for more nuanced understanding."
   },
   "codeBlock": {
@@ -794,6 +808,74 @@
       "name": "LEAVES & FRUITS",
       "subtitle": "Research & Trends",
       "description": "This is the fastest-changing part of the tree. What is cutting-edge today is standard tomorrow."
+    }
+  },
+  "codeSnippets": {
+    "tokens": {
+      "sampleText": "Hello, how are you?",
+      "comment_load": "Load tokenizer for GPT-4",
+      "comment_tokenize": "Tokenize text",
+      "comment_decode": "Decode back to text"
+    },
+    "vectors": {
+      "word1": "king",
+      "word2": "queen",
+      "word3": "banana",
+      "comment_create": "Create embeddings",
+      "comment_similarity": "Calculate similarity (cosine similarity)",
+      "result1": "King vs Queen",
+      "result2": "King vs Banana"
+    },
+    "attention": {
+      "comment_simplified": "Simplified attention calculation",
+      "comment_current": "Current word",
+      "comment_previous": "Previous words",
+      "comment_simplified2": "Simplified",
+      "comment_scores": "Calculate attention scores",
+      "word1": "Cat",
+      "word2": "sat",
+      "word3": "chair",
+      "comment_apply": "Apply attention"
+    },
+    "ai-agents": {
+      "comment_tools": "Define available tools",
+      "comment_loop": "Agent loop",
+      "userMessage": "What is the weather in London?",
+      "toolResult_temp": "5°C",
+      "toolResult_cond": "cloudy",
+      "comment_execute": "Execute tool",
+      "comment_final": "Final answer"
+    },
+    "context-engineering": {
+      "comment_poor": "Poor context - vague prompt",
+      "poorPrompt": "Write an email",
+      "systemPrompt": "You are a professional business communication specialist.\n      \n      Rules:\n      - Use a formal tone\n      - Keep emails short (max 150 words)\n      - Always include a CTA (call-to-action)\n      - Avoid jargon\n      \n      Format:\n      Greeting -> Context -> Main message -> CTA -> Closing",
+      "userPrompt": "Write an email to a client asking about product delivery time"
+    },
+    "rag": {
+      "comment_kb": "Knowledge base",
+      "doc1": "The capital of Estonia is Tallinn.",
+      "doc2": "Tallinn is located on the Gulf of Finland.",
+      "doc3": "Python is a popular programming language.",
+      "comment_query": "User query",
+      "query": "What is the capital of Estonia?",
+      "comment_retrieve": "1. Retrieve: Find relevant documents",
+      "comment_augment": "2. Augment: Add context to prompt",
+      "promptTemplate": "Context: {top_doc}\\n\\nQuestion: {query}",
+      "comment_generate": "3. Generate: Get answer"
+    },
+    "function-calling": {
+      "comment_define": "Define available functions",
+      "toolDescription": "Get weather forecast for a city",
+      "paramDescription": "City name",
+      "comment_user": "User asks about weather",
+      "userMessage": "What will the weather be like tomorrow in London?",
+      "comment_decides": "Model decides to call function",
+      "comment_execute": "Execute function (simulated)",
+      "toolResult_temp": "8°C",
+      "toolResult_cond": "rainy",
+      "comment_sendBack": "Send result back to model",
+      "comment_getFinal": "Get final response"
     }
   },
   "codeExplanations": {

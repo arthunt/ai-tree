@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { TreeLevel, Concept } from '../lib/types';
 import { getLevelIcon } from '../lib/utils';
+import { useTranslations } from 'next-intl';
 import {
   Users, Brain, Leaf, Bot, Plug, Layers, BookOpen,
   Notebook, GraduationCap, Shield, MapPin, Flashlight,
@@ -24,6 +25,7 @@ interface TreeDiagramProps {
 }
 
 export function TreeDiagram({ levels, concepts, onConceptClick }: TreeDiagramProps) {
+  const tLevel = useTranslations('conceptLevels');
   const getLevelConcepts = (levelId: string) =>
     concepts.filter(c => c.level === levelId);
 
@@ -177,7 +179,7 @@ export function TreeDiagram({ levels, concepts, onConceptClick }: TreeDiagramPro
                 className="text-sm font-bold"
                 fill={color}
               >
-                {level.order}. {level.name}
+                {level.order}. {tLevel(`${level.id}.name`)}
               </text>
             </g>
           );

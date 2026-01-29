@@ -252,10 +252,10 @@ export function TokenizerDemo() {
             </p>
             <div className="flex flex-wrap gap-2">
               {[
-                'Tere, maailm!',
-                'GPT-4 maksab 2024',
-                'Kunstlik intelligentsus',
-                'Machine learning is fascinating',
+                t('example1'),
+                t('example2'),
+                t('example3'),
+                t('example4'),
               ].map((example) => (
                 <button
                   key={example}

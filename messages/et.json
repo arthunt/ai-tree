@@ -198,6 +198,10 @@
     "estimatedCost": "Hinnanguline maksumus (GPT-4)",
     "costTip": "<strong>Näpunäide:</strong> Pikemad tekstid = rohkem tokeneid = kõrgem hind. Õpi optimeerima oma prompte!",
     "tryExamples": "Proovi näiteid:",
+    "example1": "Tere, maailm!",
+    "example2": "GPT-4 maksab 2024",
+    "example3": "Kunstlik intelligentsus",
+    "example4": "Machine learning is fascinating",
     "digitInsight": "<strong>Numbrid jagatakse numbriteks!</strong> AI ei näe \"2024\" ühe numbrina — sellest saab 4 eraldi tokenit (2, 0, 2, 4). Iga number saab oma <em>vektori</em> (numbrilise tähenduse). Seepärast võib AI matemaatikaga hädas olla — ta töötleb numbreid ükshaaval, mitte tervikuna.",
     "subwordInsight": "<strong>Pikad sõnad jagatakse osadeks!</strong> Tokenid märgiga <code>##</code> on alamosad. AI jagab tundmatud või pikad sõnad väiksemateks tuntud osadeks, sarnaselt sellele, kuidas sa võõra sõna silphaaval välja loeksid.",
     "disclaimer": "See on lihtsustatud tokeniseerija. Päris keelemudelid kasutavad keerukamaid meetodeid nagu BPE (Byte Pair Encoding) või WordPiece."
@@ -300,6 +304,16 @@
     "infoTitle": "Mis on embeddingud?",
     "infoText": "AI esindab sõnu vektoritena (numbrinimikirjad) mida kutsutakse <em>embeddinguteks</em>. Sarnastel sõnadel on sarnased vektorid. See demo kasutab lihtsustatud 10-mõõtmelisi vektoreid, kuid päris mudelid nagu GPT kasutavad 1536+ mõõdet! 2D graafik näitab neid kõrgmõõtmelisi seoseid projitseerituna ruumi, mida me näeme.",
     "tryExamples": "Proovi näiteid:",
+    "exampleLabel1": "kuningas, kuninganna, prints",
+    "exampleWords1": "king, queen, prince",
+    "exampleLabel2": "kass, koer, auto",
+    "exampleWords2": "cat, dog, car",
+    "exampleLabel3": "rõõmus, kurb, vihane",
+    "exampleWords3": "happy, sad, angry",
+    "exampleLabel4": "õun, banaan, pitsa",
+    "exampleWords4": "apple, banana, pizza",
+    "exampleLabel5": "arvuti, telefon, puu",
+    "exampleWords5": "computer, phone, tree",
     "disclaimer": "See demo kasutab eelarvutatud lihtsustatud embeddinguid. Päris AI mudelid loovad embeddinguid dünaamiliselt konteksti põhjal ja kasutavad tuhandeid mõõtmeid nüansirikkama mõistmise jaoks."
   },
   "codeBlock": {
@@ -794,6 +808,74 @@
       "name": "LEHED JA VILJAD",
       "subtitle": "Uuringud ja Trendid",
       "description": "See on puu kõige kiiremini muutuv osa. Mis on täna tippteadus, on homme standard."
+    }
+  },
+  "codeSnippets": {
+    "tokens": {
+      "sampleText": "Tere, kuidas sul läheb?",
+      "comment_load": "Laadi GPT-4 tokeniseerija",
+      "comment_tokenize": "Tokeniseeri tekst",
+      "comment_decode": "Dekodeeri tagasi tekstiks"
+    },
+    "vectors": {
+      "word1": "kuningas",
+      "word2": "kuninganna",
+      "word3": "banaan",
+      "comment_create": "Loo embeddingud",
+      "comment_similarity": "Arvuta sarnasus (kosinussarnasus)",
+      "result1": "Kuningas vs Kuninganna",
+      "result2": "Kuningas vs Banaan"
+    },
+    "attention": {
+      "comment_simplified": "Lihtsustatud attention arvutus",
+      "comment_current": "Praegune sõna",
+      "comment_previous": "Eelmised sõnad",
+      "comment_simplified2": "Lihtsustatud",
+      "comment_scores": "Arvuta attention skoorid",
+      "word1": "Kass",
+      "word2": "istus",
+      "word3": "toolil",
+      "comment_apply": "Rakenda attention"
+    },
+    "ai-agents": {
+      "comment_tools": "Määra saadaolevad tööriistad",
+      "comment_loop": "Agendi tsükkel",
+      "userMessage": "Mis ilm on Tallinnas?",
+      "toolResult_temp": "5°C",
+      "toolResult_cond": "pilvine",
+      "comment_execute": "Täida tööriist",
+      "comment_final": "Lõplik vastus"
+    },
+    "context-engineering": {
+      "comment_poor": "Kehv kontekst - ebamäärane prompt",
+      "poorPrompt": "Kirjuta e-mail",
+      "systemPrompt": "Sa oled professionaalne ärikommunikatsiooni spetsialist.\n      \n      Reeglid:\n      - Kasuta formaalset tooni\n      - Hoia e-mailid lühikesed (max 150 sõna)\n      - Lisa alati CTA (call-to-action)\n      - Väldi žargooni\n      \n      Formaat:\n      Tervitus -> Kontekst -> Peamine sõnum -> CTA -> Lõpetus",
+      "userPrompt": "Kirjuta e-mail kliendile, kes küsib toote tarneaja kohta"
+    },
+    "rag": {
+      "comment_kb": "Teadmistebaas",
+      "doc1": "Eesti pealinn on Tallinn.",
+      "doc2": "Tallinn asub Soome lahe ääres.",
+      "doc3": "Python on populaarne programmeerimiskeel.",
+      "comment_query": "Kasutaja päring",
+      "query": "Mis on Eesti pealinn?",
+      "comment_retrieve": "1. Otsi: Leia asjakohased dokumendid",
+      "comment_augment": "2. Täienda: Lisa kontekst prompti",
+      "promptTemplate": "Kontekst: {top_doc}\\n\\nKüsimus: {query}",
+      "comment_generate": "3. Genereeri: Saa vastus"
+    },
+    "function-calling": {
+      "comment_define": "Määra saadaolevad funktsioonid",
+      "toolDescription": "Hangi ilmateade linna jaoks",
+      "paramDescription": "Linna nimi",
+      "comment_user": "Kasutaja küsib ilma kohta",
+      "userMessage": "Mis ilm on homme Tallinnas?",
+      "comment_decides": "Mudel otsustab funktsiooni kutsuda",
+      "comment_execute": "Täida funktsioon (simuleeritud)",
+      "toolResult_temp": "8°C",
+      "toolResult_cond": "vihmane",
+      "comment_sendBack": "Saada tulemus tagasi mudelile",
+      "comment_getFinal": "Saa lõplik vastus"
     }
   },
   "codeExplanations": {

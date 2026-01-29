@@ -148,12 +148,12 @@ function reduce2D(vectors: number[][]): [number, number][] {
   });
 }
 
-const EXAMPLE_SETS = [
-  { label: 'king, queen, prince', words: ['king', 'queen', 'prince'] },
-  { label: 'cat, dog, car', words: ['cat', 'dog', 'car'] },
-  { label: 'happy, sad, angry', words: ['happy', 'sad', 'angry'] },
-  { label: 'apple, banana, pizza', words: ['apple', 'banana', 'pizza'] },
-  { label: 'computer, phone, tree', words: ['computer', 'phone', 'tree'] },
+const EXAMPLE_WORDS = [
+  ['king', 'queen', 'prince'],
+  ['cat', 'dog', 'car'],
+  ['happy', 'sad', 'angry'],
+  ['apple', 'banana', 'pizza'],
+  ['computer', 'phone', 'tree'],
 ];
 
 export function VectorDemo() {
@@ -166,6 +166,11 @@ export function VectorDemo() {
   const [hoveredPoint, setHoveredPoint] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const t = useTranslations('vectorDemo');
+
+  const exampleSets = useMemo(() => EXAMPLE_WORDS.map((words, i) => ({
+    label: t(`exampleLabel${i + 1}`),
+    words: t(`exampleWords${i + 1}`).split(', '),
+  })), [t]);
 
   const availableWords = useMemo(() => Object.keys(WORD_EMBEDDINGS).sort(), []);
 
@@ -216,7 +221,7 @@ export function VectorDemo() {
     }
   };
 
-  const loadExample = (example: typeof EXAMPLE_SETS[0]) => {
+  const loadExample = (example: { label: string; words: string[] }) => {
     setWord1(example.words[0] || '');
     setWord2(example.words[1] || '');
     setWord3(example.words[2] || '');
@@ -723,7 +728,7 @@ export function VectorDemo() {
               {t('tryExamples')}
             </p>
             <div className="flex flex-wrap gap-1.5">
-              {EXAMPLE_SETS.map((example) => (
+              {exampleSets.map((example) => (
                 <button
                   key={example.label}
                   onClick={() => loadExample(example)}

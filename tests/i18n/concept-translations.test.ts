@@ -118,6 +118,80 @@ describe('i18n concept translations completeness', () => {
     });
   });
 
+  describe('tokenizer demo examples', () => {
+    const EXAMPLE_KEYS = ['example1', 'example2', 'example3', 'example4'];
+
+    it('en.json has all tokenizer example keys', () => {
+      const tokenizer = (enMessages as Record<string, Record<string, string>>).tokenizer;
+      for (const key of EXAMPLE_KEYS) {
+        expect(tokenizer[key], `Missing en.json tokenizer.${key}`).toBeDefined();
+        expect(tokenizer[key].length, `Empty en.json tokenizer.${key}`).toBeGreaterThan(0);
+      }
+    });
+
+    it('et.json has all tokenizer example keys', () => {
+      const tokenizer = (etMessages as Record<string, Record<string, string>>).tokenizer;
+      for (const key of EXAMPLE_KEYS) {
+        expect(tokenizer[key], `Missing et.json tokenizer.${key}`).toBeDefined();
+        expect(tokenizer[key].length, `Empty et.json tokenizer.${key}`).toBeGreaterThan(0);
+      }
+    });
+  });
+
+  describe('vectorDemo example sets', () => {
+    const EXAMPLE_INDICES = [1, 2, 3, 4, 5];
+
+    it('en.json has all vectorDemo example keys', () => {
+      const vectorDemo = (enMessages as Record<string, Record<string, string>>).vectorDemo;
+      for (const i of EXAMPLE_INDICES) {
+        expect(vectorDemo[`exampleLabel${i}`], `Missing en.json vectorDemo.exampleLabel${i}`).toBeDefined();
+        expect(vectorDemo[`exampleWords${i}`], `Missing en.json vectorDemo.exampleWords${i}`).toBeDefined();
+      }
+    });
+
+    it('et.json has all vectorDemo example keys', () => {
+      const vectorDemo = (etMessages as Record<string, Record<string, string>>).vectorDemo;
+      for (const i of EXAMPLE_INDICES) {
+        expect(vectorDemo[`exampleLabel${i}`], `Missing et.json vectorDemo.exampleLabel${i}`).toBeDefined();
+        expect(vectorDemo[`exampleWords${i}`], `Missing et.json vectorDemo.exampleWords${i}`).toBeDefined();
+      }
+    });
+  });
+
+  describe('codeSnippets namespace', () => {
+    const SNIPPET_CONCEPTS = ['tokens', 'vectors', 'attention', 'ai-agents', 'context-engineering', 'rag', 'function-calling'];
+
+    it('en.json has codeSnippets namespace', () => {
+      expect((enMessages as Record<string, unknown>).codeSnippets).toBeDefined();
+    });
+
+    it('et.json has codeSnippets namespace', () => {
+      expect((etMessages as Record<string, unknown>).codeSnippets).toBeDefined();
+    });
+
+    it('en.json has codeSnippets entries for all concepts with code', () => {
+      const snippets = (enMessages as Record<string, Record<string, Record<string, string>>>).codeSnippets;
+      for (const id of SNIPPET_CONCEPTS) {
+        expect(snippets[id], `Missing en.json codeSnippets.${id}`).toBeDefined();
+        expect(Object.keys(snippets[id]).length, `Empty en.json codeSnippets.${id}`).toBeGreaterThan(0);
+      }
+    });
+
+    it('et.json has codeSnippets entries for all concepts with code', () => {
+      const snippets = (etMessages as Record<string, Record<string, Record<string, string>>>).codeSnippets;
+      for (const id of SNIPPET_CONCEPTS) {
+        expect(snippets[id], `Missing et.json codeSnippets.${id}`).toBeDefined();
+        expect(Object.keys(snippets[id]).length, `Empty et.json codeSnippets.${id}`).toBeGreaterThan(0);
+      }
+    });
+
+    it('en.json and et.json have the same codeSnippets concept IDs', () => {
+      const enIds = Object.keys((enMessages as Record<string, Record<string, unknown>>).codeSnippets).sort();
+      const etIds = Object.keys((etMessages as Record<string, Record<string, unknown>>).codeSnippets).sort();
+      expect(enIds).toEqual(etIds);
+    });
+  });
+
   describe('translation quality checks', () => {
     it('en.json and et.json translations are different (not copy-paste)', () => {
       // Check a sample of concepts to ensure English != Estonian

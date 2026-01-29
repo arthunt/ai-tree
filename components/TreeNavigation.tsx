@@ -19,6 +19,7 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = useTranslations('navigation');
+  const tLevel = useTranslations('conceptLevels');
 
   const scrollToLevel = (levelId: string) => {
     const element = document.getElementById(levelId);
@@ -139,17 +140,17 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
                             : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
                           }
                         `}
-                        aria-label={t('goToLevel', { level: level.name })}
+                        aria-label={t('goToLevel', { level: tLevel(`${level.id}.name`) })}
                         aria-current={isActive ? 'location' : undefined}
                         type="button"
                       >
                         <LevelIcon level={level.id as 'roots' | 'trunk' | 'branches' | 'leaves'} size={36} />
                         <div className="flex-1 text-left">
                           <div className={`font-semibold ${isActive ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
-                            {level.order}. {level.name}
+                            {level.order}. {tLevel(`${level.id}.name`)}
                           </div>
                           <div className={`text-sm ${isActive ? 'text-white/80' : 'text-gray-500 dark:text-gray-300'}`}>
-                            {level.subtitle}
+                            {tLevel(`${level.id}.subtitle`)}
                           </div>
                         </div>
                         {isActive && (
@@ -204,7 +205,7 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
                   `}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  aria-label={t('goToLevel', { level: level.name })}
+                  aria-label={t('goToLevel', { level: tLevel(`${level.id}.name`) })}
                   aria-current={isActive ? 'location' : undefined}
                   type="button"
                 >
@@ -220,10 +221,10 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
                         className="flex-1 text-left overflow-hidden"
                       >
                         <div className={`font-semibold text-sm ${isActive ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
-                          {level.order}. {level.name}
+                          {level.order}. {tLevel(`${level.id}.name`)}
                         </div>
                         <div className={`text-xs ${isActive ? 'text-white/80' : 'text-gray-500 dark:text-gray-300'}`}>
-                          {level.subtitle}
+                          {tLevel(`${level.id}.subtitle`)}
                         </div>
                       </motion.div>
                     )}
