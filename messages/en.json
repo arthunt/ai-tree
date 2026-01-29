@@ -81,7 +81,9 @@
   },
   "darkMode": {
     "toggle": "Dark mode",
-    "ariaLabel": "Dark/light mode selection"
+    "ariaLabel": "Dark/light mode selection",
+    "switchToDark": "Switch to dark mode",
+    "switchToLight": "Switch to light mode"
   },
   "settings": {
     "ariaLabel": "Open settings menu",
@@ -631,5 +633,176 @@
       "verified": "✅ Verified & accurate",
       "bestFor": "Best for: Math, Code, Logic & Complex Reasoning"
     }
+  },
+  "conceptData": {
+    "moe": {
+      "title": "Mixture of Experts (MoE)",
+      "simpleName": "Council of Experts",
+      "explanation": "MoE models activate only a few specialized 'experts' for each query instead of using the full model. Like a large company where different departments handle different tasks — you don't need accounting to answer marketing questions. This makes the model faster and cheaper while maintaining quality.",
+      "metaphor": "Imagine going to a large hospital with different specialists. The receptionist (router) reads your symptoms and sends you only to the relevant doctors — not to all 100 specialists. If you have a skin issue, you see the dermatologist. If it's a broken bone, you see the orthopedist. The hospital is huge, but you only use 2-3 specialists per visit. That's exactly how MoE works: 8 expert sub-models, but only 2 activate per query."
+    },
+    "agi-asi": {
+      "title": "AGI and ASI",
+      "simpleName": "Superintelligence",
+      "explanation": "AGI (Artificial General Intelligence) would be AI that matches human capability across all cognitive tasks — learning, reasoning, creativity, common sense. ASI (Artificial Superintelligence) would surpass human intelligence in every domain. Today's AI is 'narrow' — excellent at specific tasks but lacking general understanding. The path from narrow AI to AGI to ASI is uncertain, with estimates ranging from decades to never.",
+      "metaphor": "Think of it as an educational journey: Today's AI is like a brilliant student who aces one exam but fails others (Narrow AI). AGI would be like Einstein — world-class at everything from physics to music to conversation. ASI would be an intelligence so far beyond Einstein that we can't even comprehend what it would understand — like trying to explain quantum physics to a goldfish."
+    },
+    "green-ai": {
+      "title": "Green AI (Sustainability)",
+      "simpleName": "Green AI",
+      "explanation": "Training large AI models consumes enormous energy — GPT-3 training emitted as much CO₂ as 5 cars over their lifetime. Green AI focuses on making models more efficient: smaller models with similar performance, optimized training methods, better hardware utilization, and running inference efficiently. Techniques like model distillation, quantization, and efficient architectures reduce both cost and environmental impact.",
+      "metaphor": "It's like the shift from gas-guzzling SUVs to electric cars. Early AI models were powerful but wasteful — like a Hummer getting 10 mpg. Green AI is about getting the same performance from a Tesla — optimized, efficient, and sustainable. You still get where you need to go, but with 90% less energy consumption."
+    },
+    "reasoning-models": {
+      "title": "Specialized Reasoning Models",
+      "simpleName": "The Thinker",
+      "explanation": "Reasoning models (like OpenAI's o1 or o3) don't just predict the next word — they 'think' through problems step-by-step before answering. They use chain-of-thought reasoning internally, checking their work and exploring different approaches. This makes them much better at complex tasks like mathematics, coding, and logic puzzles, though they're slower and more expensive than standard models.",
+      "metaphor": "It's the difference between speed chess and tournament chess. A regular LLM is like a speed chess player — fast, intuitive, often brilliant, but sometimes makes mistakes under time pressure. A reasoning model is like a grandmaster taking 30 minutes per move, considering multiple strategies, anticipating consequences, and double-checking before committing. The reasoning model is slower, but it rarely makes logical errors."
+    },
+    "ai-agents": {
+      "title": "AI Agents",
+      "simpleName": "The Doer",
+      "explanation": "AI Agents are autonomous systems that can use tools, make decisions, and execute multi-step tasks with minimal human intervention. Unlike a chatbot that just responds, an agent can: read your emails, search the web, write code, run it, debug errors, and complete the task. They operate in a loop: observe → reason → act → observe results → continue. Agents use function calling and tool integration to interact with the real world.",
+      "metaphor": "The difference between a consultant and a worker. A regular chatbot is a consultant: you ask a question, get advice, but YOU do the work. An AI agent is a worker you hire: you say 'organize my travel to New York next week,' and it books flights, finds hotels, adds calendar events, and sends you a summary. You supervise, but the agent handles execution."
+    },
+    "mcp": {
+      "title": "MCP (Model Context Protocol)",
+      "simpleName": "The Connector",
+      "explanation": "MCP is an open standard that lets AI models securely connect to external data sources and tools — databases, APIs, file systems, business software — through a unified interface. Instead of each AI tool building custom integrations, MCP provides one protocol that works everywhere. It's like USB for AI: plug in once, work with any compatible model or tool.",
+      "metaphor": "Remember when every phone had a different charging cable — Nokia, iPhone, Samsung all needed different connectors? Then USB-C came along and solved everything. MCP is the same idea for AI. Before MCP, connecting Claude to your database required custom code; connecting GPT required different code. With MCP, you write one connector and any MCP-compatible AI can use it. One cable, all devices."
+    },
+    "complexity-levels": {
+      "title": "3 Complexity Levels",
+      "simpleName": "Three Levels",
+      "explanation": "AI systems operate at three levels of sophistication: (1) LLM Level — pure text prediction, fast, stateless; (2) Reasoning Level — chain-of-thought, multi-step problem solving, slower but more accurate; (3) Agent Level — autonomous task execution with tools, memory, and decision loops. Each level builds on the previous one, adding capability and complexity. You choose the level based on your task: simple questions → LLM, complex reasoning → Reasoning model, autonomous work → Agent.",
+      "metaphor": "Think of a kitchen: (1) Cookbook (LLM) — you give it a recipe request, it spits out instructions. Fast, no thinking. (2) Chef (Reasoning) — you ask for a meal, the chef plans the menu, considers ingredient availability, timing, and presentation. Takes longer but higher quality. (3) Personal Cook (Agent) — you say 'I'm hungry,' and they check your fridge, order missing ingredients, cook the meal, plate it, and clean up. Full autonomy."
+    },
+    "function-calling": {
+      "title": "Function Calling",
+      "simpleName": "Giving AI Hands",
+      "explanation": "Function calling lets LLMs call external functions to retrieve data or perform actions they can't do on their own. The model decides when to call a function, generates the parameters, your code executes it, and the model uses the result to continue the conversation. For example, 'What's the weather?' → model calls get_weather(location='New York') → your code fetches real data → model formats the response. This turns LLMs from pure chatbots into systems that can interact with the real world.",
+      "metaphor": "Imagine hiring a brilliant intern who knows everything but has no hands. They can analyze, write, plan — but can't open doors, press buttons, or fetch files. Function calling is like giving them a phone to call specialists: 'Call the weather service for the forecast,' 'Call the database team for customer data,' 'Call the email API to send this message.' The intern (LLM) orchestrates; the specialists (functions) do the physical work."
+    },
+    "context-engineering": {
+      "title": "Context Engineering",
+      "simpleName": "Stage Direction",
+      "explanation": "Context engineering means carefully constructing the full environment in which the AI operates — not just the question, but the role, rules, format expectations, examples, and constraints. A well-engineered context includes: system role ('you are an expert Python developer'), constraints ('max 50 lines, no external libraries'), format ('return JSON'), and examples (few-shot learning). This dramatically improves response quality, consistency, and safety.",
+      "metaphor": "Think of it like directing a theater actor. You don't just hand them a script and hope for the best. You set the stage (environment), define their character (role), explain the tone (constraints), show them examples of similar performances (few-shot), and specify the desired outcome (format). A vague prompt is like saying 'act.' A well-engineered context is a full director's brief that guides the performance exactly where you want it."
+    },
+    "rag": {
+      "title": "RAG (Retrieval-Augmented Generation)",
+      "simpleName": "The Library",
+      "explanation": "RAG combines information retrieval with text generation. Instead of relying only on the model's training data (which can be outdated or incomplete), RAG first searches a database for relevant documents, then feeds them into the prompt as context. The flow: (1) User asks a question → (2) System searches vector database for relevant docs → (3) Top results are added to the prompt → (4) LLM generates answer based on retrieved context. This grounds responses in your specific data and reduces hallucinations.",
+      "metaphor": "It's like an open-book exam vs. a closed-book exam. Without RAG, the AI relies purely on memory — what it learned during training. With RAG, the AI can quickly search through a library (your database), find relevant pages, and cite them while answering. You ask 'What's our refund policy?' → RAG finds the official policy document → AI quotes it directly. Always up-to-date, always grounded in real data."
+    },
+    "memory": {
+      "title": "Memory and State Management",
+      "simpleName": "Memory",
+      "explanation": "AI memory comes in two forms: (1) Short-term — the conversation context window (last N tokens the model can 'see'), temporary, limited by model capacity; (2) Long-term — external storage (databases, vector stores) that persists across sessions. Short-term memory is like working memory; long-term is like keeping notes. Advanced systems combine both: storing facts, preferences, and conversation history in a database, then retrieving relevant pieces when needed.",
+      "metaphor": "Think of short-term memory as your notebook during a meeting — you can see the last few pages, but older notes scroll off. Long-term memory is your filing cabinet — everything is saved permanently, and you can search for it later. A smart assistant might remember 'user prefers dark roast coffee' in long-term storage, then retrieve it weeks later when you ask about coffee recommendations."
+    },
+    "lora": {
+      "title": "LoRA & Fine-Tuning",
+      "simpleName": "Continuing Education",
+      "explanation": "LoRA (Low-Rank Adaptation) is a technique for fine-tuning large models efficiently. Instead of retraining all billions of parameters (expensive, slow), LoRA freezes the base model and trains small 'adapter' layers — just 0.1% of the parameters. This makes fine-tuning 100x cheaper and faster while achieving similar results. You can swap adapters easily: one for medical text, one for legal, one for code. The base model stays unchanged.",
+      "metaphor": "Imagine you have a brilliant university graduate (base model) who knows general knowledge. Instead of sending them back to university for 4 years (full fine-tuning) to specialize in law, you give them a short 3-month course (LoRA adapter). They keep all their general knowledge but gain specialized legal expertise. Later, you can swap the legal course for a medical course, and they adapt instantly. Same graduate, different specializations, minimal retraining."
+    },
+    "security": {
+      "title": "AI Security",
+      "simpleName": "Security",
+      "explanation": "AI security involves protecting against three main attack surfaces: (1) Input attacks — prompt injection, jailbreaking attempts to bypass rules; (2) Model attacks — training data poisoning, extracting private information the model memorized; (3) Output attacks — generating harmful content, leaking sensitive data. Defenses include input validation, output filtering, alignment training (RLHF), and defense-in-depth strategies that protect at every layer.",
+      "metaphor": "Think of AI security like a nightclub bouncer working at three checkpoints: (1) The entrance (input) — checking IDs, rejecting troublemakers trying to sneak in with fake prompts; (2) The interior (model) — trained staff ensuring guests behave, no one's spiking drinks (poisoning training data); (3) The exit (output) — making sure no one leaves with stolen property or dangerous items (harmful outputs). You need protection at all three points, not just one."
+    },
+    "temperature-sampling": {
+      "title": "Temperature & Sampling",
+      "simpleName": "Creativity Knob",
+      "explanation": "Temperature controls the randomness of AI outputs by adjusting the probability distribution over next-token predictions. Low temperature (0.0-0.3) makes the model deterministic and conservative — always picking the most likely word. High temperature (1.0-2.0) flattens the distribution, making unlikely words more probable, increasing creativity but risking incoherence. For factual tasks, use low temperature. For creative writing or brainstorming, use higher values. Sampling strategies like top-k and top-p further refine this control.",
+      "metaphor": "Temperature is like the dial on a creativity machine. At 0 (freezing cold), the machine is a calculator — always gives the same answer, predictable, safe. At 0.7 (room temperature), it's balanced — natural, varied, but still coherent. At 2.0 (boiling hot), it's a wild artist throwing paint randomly — creative chaos, often nonsensical. For 'What is 2+2?' use cold (0). For 'Write a surrealist poem,' use hot (1.5)."
+    },
+    "prompting-basics": {
+      "title": "Prompting Basics",
+      "simpleName": "Asking Good Questions",
+      "explanation": "Effective prompting follows key principles: (1) Be specific — vague requests get vague answers; (2) Provide context — background info helps the model understand your needs; (3) Specify format — tell the model how to structure the output (bullet points, JSON, table); (4) Use examples — show the model what you want (few-shot learning); (5) Break down complex tasks — chain multiple simpler prompts instead of one giant request. Good prompts are clear, structured, and provide enough information for the model to succeed.",
+      "metaphor": "It's like asking someone for dinner recommendations. Bad: 'Tell me about food.' (Too vague! Which food? For what occasion?) Good: 'Suggest 3 vegetarian restaurants in downtown Seattle, under $30 per person, open on Sundays, with outdoor seating.' The second prompt is specific (vegetarian), gives context (location, budget, day), sets format (3 suggestions), and defines constraints (outdoor seating). You'll get exactly what you need."
+    },
+    "training-vs-inference": {
+      "title": "Training vs Inference",
+      "simpleName": "School vs Work",
+      "explanation": "Training is the expensive, one-time process of teaching the model by exposing it to billions of text examples, adjusting trillions of parameters over weeks or months. This costs millions of dollars and requires thousands of GPUs. Inference is the cheap, fast process of using the trained model to answer questions — milliseconds per query, costing fractions of a cent. Training happens once; inference happens millions of times daily. The model weights are frozen during inference — no learning happens when you chat with ChatGPT.",
+      "metaphor": "Training is like going to medical school — years of study, huge investment, learning from thousands of cases. Inference is like a doctor seeing patients — quick consultations using knowledge already learned. The doctor doesn't relearn medicine for each patient; they apply existing expertise. Similarly, ChatGPT doesn't retrain when you ask a question; it applies patterns learned during training. One expensive education, millions of cheap applications."
+    },
+    "tokens": {
+      "title": "Tokens",
+      "simpleName": "Text Blocks",
+      "explanation": "Tokens are the smallest units of text that AI models process. A token can be a word ('hello'), part of a word ('auto' + 'mobile'), or even a single character. English words average ~1.3 tokens; uncommon words may split into multiple tokens. Tokens matter because they determine: (1) Cost — APIs charge per token; (2) Speed — more tokens = slower processing; (3) Context limits — models have maximum token capacity (e.g., 128K tokens = ~96K words). Understanding tokenization helps you optimize prompts and predict costs.",
+      "metaphor": "Think of tokens as Lego blocks used to build sentences. Common words like 'the' or 'is' are single blocks. Longer or rare words like 'antidisestablishmentarianism' might be broken into several smaller blocks that snap together. The AI doesn't see letters; it sees these blocks. When you pay for API usage, you're paying per block, not per word. So efficient prompting means using fewer blocks to say the same thing."
+    },
+    "vectors": {
+      "title": "Vectors (Embeddings)",
+      "simpleName": "Meaning Map",
+      "explanation": "Vectors (embeddings) represent words and concepts as lists of numbers in high-dimensional space. Similar meanings cluster together — 'king' and 'queen' are close; 'king' and 'banana' are far apart. This numerical representation enables AI to perform semantic math: king - man + woman ≈ queen. Modern models use 1,536+ dimensions. Vectors power semantic search, recommendations, and similarity matching. They're generated by neural networks trained to place related concepts near each other in this abstract space.",
+      "metaphor": "Imagine every word has GPS coordinates, but in 1,536-dimensional space instead of just latitude/longitude. Words with similar meanings are geographically close. 'Happy' and 'joyful' might be neighbors at coordinates [0.2, 0.8, 0.3...]. 'Sad' is far away at [-0.5, -0.2, 0.1...]. When you search 'cheap flights,' the system finds documents near those coordinates in meaning-space, even if they use different words like 'affordable airfare.' Distance in this space = similarity in meaning."
+    },
+    "attention": {
+      "title": "Attention Mechanism",
+      "simpleName": "Focus",
+      "explanation": "Attention lets models dynamically focus on relevant parts of the input when processing each word. When reading 'The cat sat on the mat,' the model can look back at 'cat' when processing 'it' later. Attention computes a weighted score for every word pair — high scores mean strong relationship, low scores mean weak. Multi-head attention uses several parallel attention mechanisms to capture different types of relationships (syntax, semantics, etc.). This mechanism replaced older sequential models and enabled the transformer revolution.",
+      "metaphor": "Imagine reading a sentence with a flashlight in a dark room. When you reach the word 'she,' you shine the light back to find who 'she' refers to — maybe 'Maria' mentioned earlier. The brightness of the light (attention weight) is strongest on 'Maria' and dimmer on irrelevant words like 'the' or 'and.' The model does this for every word, simultaneously, building a web of relationships. That's attention: dynamically highlighting what matters for understanding each piece of text."
+    },
+    "prefill-decode": {
+      "title": "Prefill vs Decode",
+      "simpleName": "Reading vs Writing",
+      "explanation": "LLM inference has two phases: (1) Prefill — processing your entire input prompt in parallel, building the context representation. Fast, parallel computation. (2) Decode — generating the response one token at a time, sequentially. Slow, each token depends on the previous ones. Prefill might take 50ms for a 1000-token prompt; decoding might take 50ms per token. This is why reading your question is instant but generating a long answer takes time. Optimizations like KV-caching speed up decoding by reusing computations.",
+      "metaphor": "Think of prefill as reading a whole book page at once — your eyes scan the entire page in seconds (parallel processing). Decoding is like handwriting a response, one letter at a time — you can't write the 10th letter before the 9th (sequential). This is why ChatGPT 'understands' your long question instantly (prefill) but streams the answer slowly, word by word (decode). Reading is fast; writing takes time."
+    },
+    "context-windows": {
+      "title": "Context Windows",
+      "simpleName": "Working Memory",
+      "explanation": "The context window is the maximum amount of text (in tokens) a model can process at once — both your input and its output combined. GPT-3.5 has 4K tokens (~3K words); GPT-4 has 8K-128K; Claude has up to 200K. When you exceed the limit, older tokens get 'forgotten' — they scroll out of the window. Larger windows enable longer conversations, bigger documents, and more context, but cost more and run slower. Managing context effectively is crucial for complex tasks.",
+      "metaphor": "Think of the context window as RAM (working memory) in a computer. A model with a 4K token window is like having 4GB RAM — fine for simple tasks, but you can't load huge files. A 200K window is like 64GB RAM — you can work with entire books at once. When you exceed capacity, the system 'forgets' old data to make room for new. A chatbot with a small window might forget what you said 10 messages ago, just like you might forget details from a book's first chapter by the time you reach the end."
+    },
+    "hallucinations": {
+      "title": "Hallucinations",
+      "simpleName": "Confident Fabrications",
+      "explanation": "Hallucinations occur when AI generates plausible-sounding but factually incorrect information. LLMs predict the next word based on patterns, not truth — they don't access a fact database. If the model hasn't seen correct info or the question is ambiguous, it may 'fill in the blanks' with convincing nonsense. The danger: hallucinations are presented with the same confidence as facts. Mitigation strategies include RAG (grounding in real data), citations, fact-checking, and using smaller temperatures for factual tasks.",
+      "metaphor": "Imagine asking a student a question they don't know the answer to. Instead of saying 'I don't know,' they confidently make up an answer that sounds right. 'Who invented the telephone?' — 'Thomas Edison, in 1875, in Boston.' Sounds plausible! But it's wrong (Alexander Graham Bell, 1876). The student isn't lying; they're pattern-matching from partial knowledge. AI does the same: it generates statistically likely text, not verified truth. Always fact-check important claims, just like you would with a confident but unreliable student."
+    },
+    "transformers": {
+      "title": "Transformers",
+      "simpleName": "Master Architecture",
+      "explanation": "Transformers are the neural network architecture that powers nearly all modern LLMs (GPT, Claude, Llama, etc.). Introduced in 2017, transformers revolutionized AI by enabling parallel processing and long-range dependencies through attention mechanisms. The architecture has two main components: multi-head attention (which words relate to which) and feed-forward layers (transformation and processing). Stacking dozens of these layers creates models with billions of parameters. Transformers replaced older sequential models (RNNs) and enabled the current AI boom.",
+      "metaphor": "Think of transformers as the architectural innovation that enabled skyscrapers. Before steel-frame construction, buildings were limited to ~10 stories due to structural constraints. Steel frames changed everything — suddenly you could build 100+ stories by stacking modular, reinforced units. Transformers did the same for AI: before them, models were limited by sequential processing (like brick-stacking). Transformers introduced parallel processing and attention (like steel frames), enabling massive scale. Now we stack 96 transformer layers to build GPT-4, just like stacking floors to build the Empire State Building."
+    }
+  },
+  "conceptLevels": {
+    "roots": {
+      "name": "ROOTS",
+      "subtitle": "Fundamental Mechanics",
+      "description": "This is the AI 'engine'. Without understanding how the machine processes language, you're operating blind."
+    },
+    "trunk": {
+      "name": "TRUNK",
+      "subtitle": "Engineering & Architecture",
+      "description": "The trunk is the supporting structure that holds everything else up."
+    },
+    "branches": {
+      "name": "BRANCHES",
+      "subtitle": "Applications & Agents",
+      "description": "Branches are the practical application of knowledge."
+    },
+    "leaves": {
+      "name": "LEAVES & FRUITS",
+      "subtitle": "Research & Trends",
+      "description": "This is the fastest-changing part of the tree. What is cutting-edge today is standard tomorrow."
+    }
+  },
+  "codeExplanations": {
+    "tokens": "This example shows how the tiktoken library converts text into tokens. Estonian words may require more tokens than English words.",
+    "vectors": "Vectors convert words into numbers. Words with similar meanings (king/queen) are closer in space than different words (king/banana).",
+    "attention": "The attention mechanism calculates the importance of each word relative to other words. Higher scores indicate stronger relationships.",
+    "context-engineering": "Context engineering means creating a systematic environment: define the role, rules, format, and goal. This makes AI responses much more accurate and useful.",
+    "rag": "RAG finds relevant documents (Retrieve), adds them to the prompt (Augment), and generates an answer (Generate). This allows AI to respond accurately based on company-specific data.",
+    "ai-agents": "AI Agents use a loop: think → choose tool → execute → check result → repeat if needed. This enables autonomous task completion.",
+    "function-calling": "Function calling allows the AI to 'decide' when to use external tools. The model generates a structured call, your application executes it, and the model uses the result to compose the final answer."
   }
 }

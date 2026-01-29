@@ -81,7 +81,9 @@
   },
   "darkMode": {
     "toggle": "Tume režiim",
-    "ariaLabel": "Tume/hele režiimi valik"
+    "ariaLabel": "Tume/hele režiimi valik",
+    "switchToDark": "Lülita tumedale režiimile",
+    "switchToLight": "Lülita heledaale režiimile"
   },
   "settings": {
     "ariaLabel": "Ava seaded menüü",
@@ -631,5 +633,176 @@
       "verified": "✅ Kontrollitud ja täpne",
       "bestFor": "Parim: Matemaatika, Kood, Loogika ja Keerukas arutlus"
     }
+  },
+  "conceptData": {
+    "moe": {
+      "title": "Mixture of Experts (MOE)",
+      "simpleName": "Konsiilium",
+      "explanation": "MoE (Mixture of Experts) mudel aktiveerib iga päringu jaoks vaid mõned spetsialiseeritud 'eksperdid', mitte kogu mudelit. Nagu suur ettevõte, kus erinevad osakonnad tegelevad erinevate ülesannetega — raamatupidamine ei pea vastama turundusküsimustele. See teeb mudeli kiiremaks ja odavamaks, säilitades kvaliteedi.",
+      "metaphor": "Kujuta ette, et lähed suurde haiglasse, kus on erinevad spetsialistid. Registraator (ruuter) loeb sinu sümptomeid ja suunab sind ainult asjakohaste arstide juurde — mitte kõigi 100 spetsialisti juurde. Kui sul on nahaprobleem, lähed dermatoloogi juurde. Kui luumurd, siis ortopeed. Haigla on tohutu, aga sa kasutad ainult 2-3 spetsialisti visiidi kohta. Täpselt nii töötab MoE: 8 ekspert-alamudelit, kuid ainult 2 aktiveeruvad päringu kohta."
+    },
+    "agi-asi": {
+      "title": "AGI ja ASI",
+      "simpleName": "Superintellekt",
+      "explanation": "AGI (Artificial General Intelligence) oleks tehisintellekt, mis vastab inimese võimekusele kõigis kognitiivsetes ülesannetes — õppimine, arutlemine, loovus, terve mõistus. ASI (Artificial Superintelligence) ületaks inimintellekti igas valdkonnas. Tänapäeva AI on 'kitsas' — suurepärane konkreetsetes ülesannetes, kuid puudub üldine mõistmine. Tee kitsast AI-st AGI-ni ja ASI-ni on ebakindel, hinnangud ulatuvad kümnekonnast aastast 'mitte kunagi'.",
+      "metaphor": "Mõtle sellest kui hariduslikust teekonnast: Tänapäeva AI on nagu hiilgav õpilane, kes saab ühe eksamiga väga hea hinde, aga kukub teiste läbi (Kitsas AI). AGI oleks nagu Einstein — maailmatasemel kõiges alates füüsikast kuni muusika ja vestluseni. ASI oleks intelligentsus nii kaugel Einsteinile, et me ei suuda isegi mõista, mida see mõistaks — nagu üritada kvantfüüsikat kullakalale selgitada."
+    },
+    "green-ai": {
+      "title": "Green AI (Jätkusuutlikkus)",
+      "simpleName": "Roheline AI",
+      "explanation": "Suurte AI mudelite treenimine kulutab tohutu koguse energiat — GPT-3 treenimine tootis sama palju CO₂ kui 5 autot kogu nende eluea jooksul. Green AI keskendub mudelite tõhusamaks muutmisele: väiksemad mudelid sarnase jõudlusega, optimeeritud treeningmeetodid, parem riistvara kasutamine ja tõhus järeldamine. Tehnikad nagu mudeli destilleerimine, kvantimine ja tõhusad arhitektuurid vähendavad nii kulusid kui ka keskkonnamõju.",
+      "metaphor": "See on nagu üleminek kütusekuradest elektriautodele. Varajased AI mudelid olid võimsad, kuid raiskavad — nagu Hummer, mis kulus 23L/100km. Green AI tähendab sama jõudluse saavutamist Teslaga — optimeeritud, tõhus ja jätkusuutlik. Jõuad ikka sinna, kuhu vaja, aga 90% väiksema energiakuluga."
+    },
+    "reasoning-models": {
+      "title": "Spetsialiseeritud Arutlusmudelid",
+      "simpleName": "Mõtleja",
+      "explanation": "Arutlusmudelid (nagu OpenAI o1 või o3) ei ennusta lihtsalt järgmist sõna — nad 'mõtlevad' probleemide üle samm-sammualt enne vastamist. Nad kasutavad sisemiselt ahel-mõtte arutlust, kontrollivad oma tööd ja uurivad erinevaid lähenemisi. See teeb nad palju paremaks keerukates ülesannetes nagu matemaatika, kodeerimine ja loogikaülesanded, kuigi nad on aeglasemad ja kallimad kui standardmudelid.",
+      "metaphor": "See on nagu erinevus kiir- ja turniirimale vahel. Tavaline LLM on nagu kiirmale mängija — kiire, intuitiivne, sageli briljantne, aga vahel teeb ajasurve all vigu. Arutlusmudel on nagu suurmeister, kes võtab 30 minutit käigu kohta, kaalub mitut strateegiat, ennustab tagajärgi ja kontrollib kahekordselt enne otsustamist. Arutlusmudel on aeglasem, aga teeb harva loogikavigu."
+    },
+    "ai-agents": {
+      "title": "AI Agendid",
+      "simpleName": "Tegija",
+      "explanation": "AI Agendid on autonoomsed süsteemid, mis saavad kasutada tööriistu, teha otsuseid ja täita mitme-sammulisi ülesandeid minimaalse inimsekkumisega. Erinevalt vestlusrobotist, kes lihtsalt vastab, saab agent: lugeda su e-kirju, otsida veebist, kirjutada koodi, käivitada seda, parandada vigu ja lõpetada ülesande. Nad töötavad tsüklis: täheldamine → arutlemine → tegutsemine → tulemuste täheldamine → jätkamine. Agendid kasutavad funktsioonide kutsumist ja tööriistade integratsiooni reaalse maailmaga suhtlemiseks.",
+      "metaphor": "Erinevus konsultandi ja töötaja vahel. Tavaline vestlusrobot on konsultant: küsid küsimust, saad nõu, aga SINA teed töö ära. AI agent on töötaja, kelle palkad: ütled 'organiseeri minu reis New Yorki järgmisel nädalal' ja ta broneerib lennud, leiab hotellid, lisab kalendrisse sündmused ja saadab sulle kokkuvõtte. Sina jälgid, aga agent hoolitseb täitmise eest."
+    },
+    "mcp": {
+      "title": "MCP (Model Context Protocol)",
+      "simpleName": "Ühendaja",
+      "explanation": "MCP on avatud standard, mis võimaldab AI mudelitel turvaliselt ühenduda väliste andmeallikate ja tööriistadega — andmebaasid, API-d, failisüsteemid, äritarkvara — ühtse liidese kaudu. Selle asemel, et iga AI tööriist ehitaks kohandatud integratsioonid, pakub MCP ühte protokolli, mis töötab kõikjal. See on nagu USB AI jaoks: ühenda üks kord, tööta mis tahes ühilduva mudeli või tööriistaga.",
+      "metaphor": "Mäleta, kui igal telefonil oli erinev laadimiskaabel — Nokia, iPhone, Samsung vajasid kõik erinevaid ühendusi? Siis tuli USB-C ja lahendas kõik. MCP on sama idee AI jaoks. Enne MCP-d nõudis Claude'i andmebaasiga ühendamine kohandatud koodi; GPT-ga ühendamine nõudis erinevat koodi. MCP-ga kirjutad ühe ühendaja ja mis tahes MCP-ühilduv AI saab seda kasutada. Üks kaabel, kõik seadmed."
+    },
+    "complexity-levels": {
+      "title": "3 Keerukuse taset",
+      "simpleName": "Kolm taset",
+      "explanation": "AI süsteemid töötavad kolmel keerukuse tasemel: (1) LLM tase — puhas teksti ennustamine, kiire, olekuta; (2) Arutluse tase — ahelmõtte, mitme-sammuline probleemi lahendamine, aeglasem aga täpsem; (3) Agendi tase — autonoomne ülesannete täitmine tööriistade, mälu ja otsustustsüklitega. Iga tase ehitab eelmisele, lisades võimekust ja keerukust. Valid taseme vastavalt ülesandele: lihtsad küsimused → LLM, keeruline arutlus → Arutlusmudel, autonoomne töö → Agent.",
+      "metaphor": "Mõtle köögist: (1) Retseptiraamat (LLM) — annad talle retsepti päringu, see sülitab välja juhised. Kiire, mõtlemist pole. (2) Kokk (Arutlus) — küsid toitu, kokk planeerib menüü, arvestab koostisosade kättesaadavust, ajastust ja esitlust. Võtab kauem, aga kõrgem kvaliteet. (3) Isiklik Kokk (Agent) — ütled 'olen näljane' ja nad kontrollivad su külmkappi, tellivad puuduvad koostisosad, keedavad toidu, kaunistab selle ja koristavad ära. Täielik autonoomia."
+    },
+    "function-calling": {
+      "title": "Funktsioonide Kutsumine (Function Calling)",
+      "simpleName": "AI-le käte andmine",
+      "explanation": "Funktsioonide kutsumine võimaldab LLM-idel kutsuda väliseid funktsioone, et hankida andmeid või sooritada tegevusi, mida nad ise ei suuda. Mudel otsustab, millal funktsiooni kutsuda, genereerib parameetrid, su kood täidab selle ja mudel kasutab tulemust vestluse jätkamiseks. Näiteks 'Milline on ilm?' → mudel kutsub get_weather(location='Tallinn') → su kood hangib päris andmed → mudel vormindab vastuse. See muudab LLM-id puhastest vestlusrobotitest süsteemideks, mis saavad reaalse maailmaga suhelda.",
+      "metaphor": "Kujuta ette, et palkad hiilgava praktikandi, kes teab kõike, aga kellel pole käsi. Nad saavad analüüsida, kirjutada, planeerida — aga ei saa uksi avada, nuppe vajutada ega faile tuua. Funktsioonide kutsumine on nagu anda neile telefon spetsialistide kutsumiseks: 'Helista ilmateenistusele prognoosi saamiseks,' 'Helista andmebaasi tiimile kliendiandmete saamiseks,' 'Helista e-posti API-le selle sõnumi saatmiseks.' Praktikant (LLM) orkestreeriv; spetsialistid (funktsioonid) teevad füüsilise töö."
+    },
+    "context-engineering": {
+      "title": "Kontekstitehnika (Context Engineering)",
+      "simpleName": "Lavastus",
+      "explanation": "Kontekstitehnika tähendab hoolikat keskkonna konstrueerimist, milles AI töötab — mitte ainult küsimust, vaid rolli, reegleid, formaadi ootusi, näiteid ja piiranguid. Hästi projekteeritud kontekst hõlmab: süsteemi rolli ('oled ekspert Python arendaja'), piiranguid ('max 50 rida, ilma väliste teekideta'), formaati ('tagasta JSON'), ja näiteid (few-shot õppimine). See parandab dramaatiliselt vastuse kvaliteeti, järjepidevust ja ohutust.",
+      "metaphor": "Mõtle sellest kui teatri näitleja juhendamisest. Sa ei anna lihtsalt neile käsikirja ja loodad paremat. Sa seadistad lava (keskkond), määratled nende tegelase (roll), selgitad tooni (piirangud), näitad neile näiteid sarnastest esitustest (few-shot), ja täpsustada soovitud tulemust (formaat). Ebamäärane päring on nagu öelda 'mängi.' Hästi projekteeritud kontekst on täielik lavastaja juhis, mis juhib esitust täpselt sinna, kuhu soovid."
+    },
+    "rag": {
+      "title": "RAG (Retrieval-Augmented Generation)",
+      "simpleName": "Raamatukogu",
+      "explanation": "RAG ühendab info otsimise teksti genereerimisega. Selle asemel, et tugineda ainult mudeli treeninguandmetele (mis võivad olla aegunud või mittetäielikud), otsib RAG esmalt andmebaasist asjakohaseid dokumente, seejärel lisab need prompti kontekstina. Voog: (1) Kasutaja esitab küsimuse → (2) Süsteem otsib vektorandmebaasist asjakohaseid dokumente → (3) Parimad tulemused lisatakse prompti → (4) LLM genereerib vastuse tuginedes otsitud kontekstile. See ankurdab vastused sinu konkreetsete andmetega ja vähendab hallutsinatsioone.",
+      "metaphor": "See on nagu avatud raamatu eksam vs suletud raamatu eksam. Ilma RAG-ita tugineb AI puhtalt mälule — sellele, mida ta treeningu ajal õppis. RAG-iga saab AI kiiresti otsida läbi raamatukogu (sinu andmebaas), leida asjakohased leheküljed ja tsiteerida neid vastates. Küsid 'Mis on meie tagastamispoliitika?' → RAG leiab ametliku poliitika dokumendi → AI tsiteerib seda otse. Alati ajakohane, alati põhineb päris andmetel."
+    },
+    "memory": {
+      "title": "Mälu ja Olekuhaldus",
+      "simpleName": "Mälu",
+      "explanation": "AI mälu tuleb kahes vormis: (1) Lühiajaline — vestluse kontekstiaken (viimased N tokenit, mida mudel 'näeb'), ajutine, piiratud mudeli võimekusega; (2) Pikaajaline — väline salvestus (andmebaasid, vektori hoidlad), mis püsib sessioonide vahel. Lühiajaline mälu on nagu töömälu; pikaajaline on nagu märkmete pidamine. Edasijõudnud süsteemid ühendavad mõlemad: salvestades faktid, eelistused ja vestluste ajaloo andmebaasi, seejärel tuua asjakohased tükid vajaduse korral.",
+      "metaphor": "Mõtle lühiajalisest mälist kui su märkmikust koosoleku ajal — näed viimaseid lehekülgi, aga vanemad märkmed kerivad välja. Pikaajaline mälu on su toimikukapp — kõik on salvestatud püsivalt ja saad seda hiljem otsida. Tark assistent võib meelde jätta 'kasutaja eelistab tumedat rösti kohvi' pikaajalist salvestuses, seejärel tuua selle nädalate pärast kui küsid kohvi soovitusi."
+    },
+    "lora": {
+      "title": "LoRA & Peenhäälestus",
+      "simpleName": "Täiendkoolitus",
+      "explanation": "LoRA (Low-Rank Adaptation) on tehnika suurte mudelite tõhusaks peenhäälestamiseks. Selle asemel, et uuesti treenida kõiki miljardeid parameetreid (kallis, aeglane), külmutab LoRA baasmudeli ja treenib väikeseid 'adapteri' kihte — ainult 0,1% parameetritest. See teeb peenhäälestuse 100x odavamaks ja kiiremaks, saavutades sarnased tulemused. Võid vahetada adapterid lihtsalt: üks meditsiinilise teksti jaoks, üks õigusliku, üks koodi jaoks. Baasmudel jääb muutumatuks.",
+      "metaphor": "Kujuta ette, et sul on hiilgav ülikooli lõpetanu (baasmudel), kes teab üldist teadmist. Selle asemel, et saata nad tagasi ülikooli 4 aastaks (täielik peenhäälestus) õigusalas spetsialiseeruma, annad neile lühikese 3-kuulise kursuse (LoRA adapter). Nad säilitavad kogu oma üldise teadmise, aga omandavad spetsialiseeritud õigusekspertiisi. Hiljem võid vahetada õiguskursuse meditsiinilise kursuse vastu ja nad kohanevad koheselt. Sama lõpetanu, erinevad spetsialiseerumised, minimaalne ümbertreenimine."
+    },
+    "security": {
+      "title": "AI Turvalisus",
+      "simpleName": "Turvalisus",
+      "explanation": "AI turvalisus hõlmab kaitset kolme peamise rünnakupinna vastu: (1) Sisendi rünnakud — promti süstimine, 'jailbreaking' katsed reeglite mööda hiilimiseks; (2) Mudeli rünnakud — treeninguandmete mürgitamine, privaatse info väljavõtmine, mida mudel mäletas; (3) Väljundi rünnakud — kahjuliku sisu genereerimine, tundliku andme lekitamine. Kaitsed hõlmavad sisendi valideerimist, väljundi filtreerimist, joondamise treeningu (RLHF) ja sügavkaitse strateegiaid, mis kaitsevad igal kihil.",
+      "metaphor": "Mõtle AI turvalisusest nagu ööklubi turvamehe töötamine kolmel kontrollpunktil: (1) Sissepääs (sisend) — ID-de kontrollimine, häirijate tagasilükkamine, kes üritavad valeprompedega sisse lipsata; (2) Sisemus (mudel) — koolitatud personal tagab, et külalised käituvad, keegi ei mürgita jooke (treeninguandmete mürgitamine); (3) Väljapääs (väljund) — veendumine, et keegi ei lahku varastatud varandusega või ohtlike esemetega (kahjulikud väljundid). Vajad kaitset kõigis kolmes punktis, mitte ainult ühes."
+    },
+    "temperature-sampling": {
+      "title": "Temperatuur ja Valideerimine (Temperature & Sampling)",
+      "simpleName": "Loovuse nupp",
+      "explanation": "Temperatuur kontrollib AI väljundite juhuslikust, reguleerides tõenäosusjaotust järgmise tokeni ennustuste üle. Madal temperatuur (0,0-0,3) teeb mudeli deterministlikuks ja konservatiivseks — alati valides kõige tõenäolisema sõna. Kõrge temperatuur (1,0-2,0) tasandab jaotust, muutes ebatõenäolised sõnad tõenäolisemaks, suurendades loovust, kuid riskides ebakoherentsusega. Faktiliste ülesannete jaoks kasuta madalat temperatuuri. Loomingulise kirjutamise või ajurünnaku jaoks kasuta kõrgemaid väärtusi. Valimisstrateegiad nagu top-k ja top-p täpsustavad seda kontrolli veelgi.",
+      "metaphor": "Temperatuur on nagu loovusmasina ketas. 0-l (külmkülm), masin on kalkulaator — annab alati sama vastuse, ennustatav, turvaline. 0,7-l (toatemperatuur), see on tasakaalus — loomulik, varieeruv, aga ikka koherentne. 2,0-l (keev kuum), see on metsik kunstnik, kes viskab värvi juhuslikult — loov kaos, sageli mõttetu. 'Mis on 2+2?' kasuta külma (0). 'Kirjuta sürrealistlik luuletus' kasuta kuuma (1,5)."
+    },
+    "prompting-basics": {
+      "title": "Promptimise Alused (Prompting Basics)",
+      "simpleName": "Heade küsimuste esitamine",
+      "explanation": "Tõhus promptimine järgib põhiprintsiipe: (1) Ole konkreetne — ebamäärased päringud saavad ebamäärased vastused; (2) Anna kontekst — taustinfo aitab mudelil mõista su vajadusi; (3) Määra formaat — ütle mudelile, kuidas väljundit struktureerida (punktid, JSON, tabel); (4) Kasuta näiteid — näita mudelile, mida soovid (few-shot õppimine); (5) Jaga keerukad ülesanded — ahel mitu lihtsamat prompti ühe hiigelsuure päringu asemel. Head promptid on selged, struktureeritud ja pakuvad piisavalt infot, et mudel saaks edukalt olla.",
+      "metaphor": "See on nagu kellelgi õhtusöögiks soovituste küsimine. Halb: 'Räägi mulle toidust.' (Liiga ebamäärane! Milline toit? Milliseks puhuks?) Hea: 'Soovita 3 taimetoidu restorani Tallinna kesklinnas, alla 30€ inimese kohta, pühapäeval avatud, väliistumisega.' Teine prompt on konkreetne (taimetoit), annab konteksti (asukoht, eelarve, päev), seab formaati (3 soovitust) ja määratleb piiranguid (väliistumine). Saad täpselt, mida vajad."
+    },
+    "training-vs-inference": {
+      "title": "Treenimine vs Järeldamine (Training vs Inference)",
+      "simpleName": "Kool vs Töö",
+      "explanation": "Treenimine on kallis, ühekordne protsess mudeli õpetamiseks, paljastades seda miljarditele teksti näidetele, kohandades triljoneid parameetreid nädalate või kuude jooksul. See maksab miljoneid dollareid ja nõuab tuhandeid GPU-sid. Järeldamine on odav, kiire protsess treenitud mudeli kasutamiseks küsimustele vastamiseks — millisekundid päringu kohta, maksab sente murdosi. Treenimine toimub üks kord; järeldamine toimub miljoneid kordi päevas. Mudeli kaalud on järeldamise ajal külmutatud — õppimist ei toimu, kui ChatGPT-ga vestled.",
+      "metaphor": "Treenimine on nagu arstikõrgkooli minek — aastad õppimist, tohutu investeering, õppimine tuhandetest juhtudest. Järeldamine on nagu arst, kes näeb patsiente — kiired konsultatsioonid kasutades juba õpitud teadmisi. Arst ei õpi meditsiin uuesti iga patsiendi jaoks; nad rakendavad olemasolevat ekspertiisi. Sarnaselt ei treeni ChatGPT uuesti, kui küsimuse esitad; see rakendab mustreid, mis õpiti treeningu ajal. Üks kallis haridus, miljonid odavad rakendused."
+    },
+    "tokens": {
+      "title": "Tokenid",
+      "simpleName": "Tekstiklotsid",
+      "explanation": "Tokenid on väiksaimad teksti ühikud, mida AI mudelid töötlevad. Token võib olla sõna ('tere'), sõna osa ('auto' + 'mobil') või isegi üks tärk. Inglise sõnad on keskmiselt ~1,3 tokenit; ebatavalised sõnad võivad jaguneda mitmeks tokeniks. Tokenid on olulised, sest nad määravad: (1) Kulu — API-d küsivad tasu tokeni kohta; (2) Kiirus — rohkem tokeneid = aeglasem töötlemine; (3) Konteksti piirid — mudelitel on maksimaalne tokenivõime (nt 128K tokenit = ~96K sõna). Tokenimise mõistmine aitab optimeerida prompte ja ennustada kulusid.",
+      "metaphor": "Mõtle tokenitest kui Lego klotsdest, mida kasutatakse lausete ehitamiseks. Tavalised sõnad nagu 'ja' või 'on' on üksikud klotsid. Pikemad või haruldased sõnad nagu 'ebaseaduspärastusvastane' võivad jaguneda mitmeks väiksemaks klotsiks, mis kokku pannakse. AI ei näe tähti; ta näeb neid klotse. Kui maksad API kasutamise eest, maksad klotsi kohta, mitte sõna kohta. Seega tõhus promptimine tähendab vähemate klotside kasutamist sama asja ütlemiseks."
+    },
+    "vectors": {
+      "title": "Vektorid (Embeddings)",
+      "simpleName": "Tähenduste kaart",
+      "explanation": "Vektorid (embeddingud) esindavad sõnu ja kontseptsioone numbritega kõrgmõõtmelises ruumis. Sarnased tähendused koonduvad kokku — 'kuningas' ja 'kuninganna' on lähedal; 'kuningas' ja 'banaan' on kaugel. See numbriline esindamine võimaldab AI-l teha semantilist matemaatikat: kuningas - mees + naine ≈ kuninganna. Kaasaegsed mudelid kasutavad 1536+ mõõdet. Vektorid toetavad semantilist otsingut, soovitusi ja sarnasuse sobitamist. Nad genereeritakse närvivõrkude abil, mis on treenitud asetama seotud kontseptsioonid selles abstraktses ruumis üksteise lähedale.",
+      "metaphor": "Kujuta ette, et igal sõnal on GPS koordinaadid, aga 1536-mõõtmelises ruumis mitte lihtsalt laiuskraad/pikkuskraad. Sarnase tähendusega sõnad on geograafiliselt lähedal. 'Rõõmus' ja 'õnnelik' võivad olla naabrid koordinaatidel [0,2, 0,8, 0,3...]. 'Kurb' on kaugel [-0,5, -0,2, 0,1...]. Kui otsid 'odavaid lende', leiab süsteem dokumendid nende koordinaatide lähedal tähendus-ruumis, isegi kui nad kasutavad erinevaid sõnu nagu 'taskukohane lennuliiklus.' Kaugus selles ruumis = sarnasus tähenduses."
+    },
+    "attention": {
+      "title": "Tähelepanu (Attention Mechanism)",
+      "simpleName": "Fookus",
+      "explanation": "Tähelepanu võimaldab mudelitel dünaamiliselt keskenduda sisendi asjakohastele osadele iga sõna töötlemisel. Kui loetakse 'Kass istus matil,' võib mudel vaadata tagasi 'kass'-le kui töötleb 'see' hiljem. Tähelepanu arvutab kaalutud skoori iga sõnapaari kohta — kõrged skoorid tähendavad tugevat seost, madalad skoorid tähendavad nõrka. Mitmepealine tähelepanu kasutab mitmeid paralleelseid tähelepanu mehhanisme, et hõivata erinevat tüüpi seoseid (süntaks, semantika jne). See mehhanism asendas vanemad järjestikused mudelid ja võimaldas transformeri revolutsiooni.",
+      "metaphor": "Kujuta ette lause lugemist taskulambiga pimedas toas. Kui jõuad sõna 'ta' juurde, paistutad valgust tagasi, et leida, kellele 'ta' viitab — võib-olla 'Mari' mainiti varem. Valguse heledus (tähelepanu kaal) on tugevaim 'Mari' peal ja tuhmim ebaolulistel sõnadel nagu 'ja' või 'aga.' Mudel teeb seda iga sõna jaoks, samaaegselt, ehitades seoste võrgu. See on tähelepanu: dünaamiliselt esile tõstmine, mis on oluline iga teksti tüki mõistmiseks."
+    },
+    "prefill-decode": {
+      "title": "Eeltäide vs Dekodeerimine",
+      "simpleName": "Lugemine ja kirjutamine",
+      "explanation": "LLM järeldamisel on kaks faasi: (1) Eeltäide — töötleb kogu sisendprompt paralleelselt, ehitades konteksti esindust. Kiire, paralleelne arvutus. (2) Dekodeerimine — genereerib vastuse ühe tokeni kaupa, järjestikku. Aeglane, iga token sõltub eelnevatest. Eeltäide võib võtta 50ms 1000-tokenilise prompti jaoks; dekodeerimine võib võtta 50ms tokeni kohta. Seepärast on su küsimuse lugemine kohene, aga pika vastuse genereerimine võtab aega. Optimeerimised nagu KV-cache kiirendavad dekodeerimist arvutuste taaskasutamisega.",
+      "metaphor": "Mõtle eeltäitmisest kui kogu raamatu lehe lugemisest korraga — su silmad skaneerivad kogu lehe sekunditega (paralleelne töötlemine). Dekodeerimine on nagu käsitsi vastuse kirjutamine, üks täht korraga — sa ei saa kirjutada 10. tähte enne 9. (järjestikune). Seepärast 'mõistab' ChatGPT su pikka küsimust koheselt (eeltäide), aga voolab vastust aeglaselt, sõna sõna haaval (dekodeerimine). Lugemine on kiire; kirjutamine võtab aega."
+    },
+    "context-windows": {
+      "title": "Konteksti Aknad (Context Windows)",
+      "simpleName": "Töömälu",
+      "explanation": "Kontekstiaken on maksimaalne teksti hulk (tokenites), mida mudel saab korraga töödelda — nii sinu sisend kui ka selle väljund kokku. GPT-3.5-l on 4K tokenit (~3K sõna); GPT-4-l on 8K-128K; Claude'il on kuni 200K. Kui ületad piiri, vanemad tokenid 'unustatakse' — nad kerivad aknast välja. Suuremad aknad võimaldavad pikemaid vestlusi, suuremaid dokumente ja rohkem konteksti, aga maksavad rohkem ja töötavad aeglasemalt. Konteksti tõhus haldamine on kriitiline keerukate ülesannete jaoks.",
+      "metaphor": "Mõtle konteksti aknast kui RAM-mälust (töömälu) arvutis. Mudel 4K tokeni aknaga on nagu 4GB RAM-ga — sobib lihtsamatele ülesannetele, aga sa ei saa suuri faile laadida. 200K aken on nagu 64GB RAM — saad töötada terve raamatuga korraga. Kui ületad võimekust, süsteem 'unustab' vana andmed, et teha ruumi uutele. Vestlusrobot väikse aknaga võib unustada, mida sa ütlesid 10 sõnumit tagasi, just nagu võid unustada detaile raamatu esimesest peatükist, kui jõuad lõppu."
+    },
+    "hallucinations": {
+      "title": "Hallutsinatsioonid",
+      "simpleName": "Enesekindlad väljamõeldised",
+      "explanation": "Hallutsinatsioonid tekivad, kui AI genereerib usutavalt kõlavat, kuid faktiliselt valet informatsiooni. LLM-id ennustavad järgmist sõna mustrite põhjal, mitte tõde — nad ei pääse ligi faktide andmebaasile. Kui mudel pole näinud õiget infot või küsimus on ebamäärane, võib ta 'täita tühikud' veenva jama. Oht: hallutsinatsioonid esitatakse sama enesekindlusega kui faktid. Leevendamise strateegiad hõlmavad RAG (ankurdamine päris andmetesse), tsitaate, faktide kontrolli ja madalamate temperatuuride kasutamist faktiliste ülesannete jaoks.",
+      "metaphor": "Kujuta ette õpilaselt küsimuse küsimist, millele nad ei tea vastust. Selle asemel, et öelda 'Ma ei tea,' nad enesekindlalt mõtlevad välja vastuse, mis kõlab õigesti. 'Kes leiutas telefoni?' — 'Thomas Edison, 1875. aastal, Bostonis.' Kõlab usutavalt! Aga see on vale (Alexander Graham Bell, 1876). Õpilane ei valeta; nad sobitavad mustreid osalisest teadmisest. AI teeb sama: genereerib statistiliselt tõenäolise teksti, mitte kontrollitud tõde. Kontrolli alati olulisi väiteid, just nagu teeksid enesekindla, kuid ebausaldusväärsuse õpilasega."
+    },
+    "transformers": {
+      "title": "Transformerid",
+      "simpleName": "Meisterarhitektuur",
+      "explanation": "Transformerid on närvivõrgu arhitektuur, mis toetab peaaegu kõiki kaasaegseid LLM-e (GPT, Claude, Llama jne). 2017. aastal tutvustatud transformerid revolutsioneerisid AI-d, võimaldades paralleelset töötlust ja pikkade vahemaade sõltuvusi tähelepanu mehhanismide kaudu. Arhitektuuril on kaks peamist komponenti: mitmepealine tähelepanu (millised sõnad seostuvad millistega) ja edasisuunamis kihid (teisendamine ja töötlemine). Kümnete selliste kihtide virnastamine loob mudelid miljardite parameetritega. Transformerid asendusid vanemad järjestikused mudelid (RNN-id) ja võimaldasid praegust AI buumi.",
+      "metaphor": "Mõtle transformeridest kui arhitektuurse uuendusena, mis võimaldas pilvelõhkujaid. Enne teraskarkassi ehitust olid hooned piiratud ~10 korrusega struktuuriliste piirangute tõttu. Teraskarkassid muutsid kõike — äkitselt võisid ehitada 100+ korrust, virnastades modulaarseid, tugevdatud üksuseid. Transformerid tegid sama AI jaoks: enne neid olid mudelid piiratud järjestikuse töötlusega (nagu telliste virnastamine). Transformerid tutvustasid paralleelset töötlust ja tähelepanu (nagu teraskarkassid), võimaldades massiivset skaala. Nüüd virnastame 96 transformeri kihti GPT-4 ehitamiseks, just nagu virnastame korruseid Empire State Building ehitamiseks."
+    }
+  },
+  "conceptLevels": {
+    "roots": {
+      "name": "JUURED",
+      "subtitle": "Fundamentaalne Mehaanika",
+      "description": "See on AI 'mootor'. Ilma mõistmata, kuidas masin keelt töötleb, tegutsed pimesi."
+    },
+    "trunk": {
+      "name": "TÜVI",
+      "subtitle": "Inseneeria ja Arhitektuur",
+      "description": "Tüvi on kandev struktuur, mis toetab kõike muud."
+    },
+    "branches": {
+      "name": "OKSAD",
+      "subtitle": "Rakendamine ja Agendid",
+      "description": "Oksad on teadmiste praktiline rakendamine."
+    },
+    "leaves": {
+      "name": "LEHED JA VILJAD",
+      "subtitle": "Uuringud ja Trendid",
+      "description": "See on puu kõige kiiremini muutuv osa. Mis on täna tippteadus, on homme standard."
+    }
+  },
+  "codeExplanations": {
+    "tokens": "Näide näitab, kuidas tiktoken teek muudab teksti tokeniteks. Eestikeelsed sõnad võivad vajada rohkem tokeneid kui ingliskeelsed.",
+    "vectors": "Vektorid muudavad sõnad numbriteks. Lähedase tähendusega sõnad (kuningas/kuninganna) on ruumis lähemal kui erinevad sõnad (kuningas/banaan).",
+    "attention": "Attention mehhanism arvutab iga sõna olulisuse teiste sõnade suhtes. Kõrgem skoor tähendab tugevamat seost.",
+    "context-engineering": "Kontekstitehnika tähendab süsteemse keskkonna loomist: määra roll, reeglid, formaat ja eesmärk. See muudab AI vastused palju täpsemaks ja kasulikumaks.",
+    "rag": "RAG leiab asjakohaseid dokumente (Retrieve), lisab need prompti (Augment) ja genereerib vastuse (Generate). Nii saab AI vastata täpselt ettevõtte andmete põhjal.",
+    "ai-agents": "AI Agent kasutab tsüklit: mõtle → vali tööriist → täida → kontrolli tulemust → korda vajaduse korral. See võimaldab autonoomselt ülesandeid lahendada.",
+    "function-calling": "Function calling võimaldab AI-l 'otsustada', millal on vaja väliseid tööriistu kasutada. Mudel genereerib struktureeritud kutse, rakendus täidab selle, ja mudel kasutab tulemust lõpliku vastuse koostamiseks."
   }
 }

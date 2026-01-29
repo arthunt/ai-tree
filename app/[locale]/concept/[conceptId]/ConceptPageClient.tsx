@@ -52,7 +52,7 @@ export function ConceptPageClient({
           className="text-center"
         >
           <div className="text-6xl mb-4">🌳</div>
-          <p className="text-gray-600 dark:text-gray-400">{t('loading') || 'Loading...'}</p>
+          <p className="text-gray-600 dark:text-gray-400">{t('loading.default')}</p>
         </motion.div>
       </div>
     );
@@ -72,7 +72,7 @@ export function ConceptPageClient({
               className="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
             >
               <ArrowLeft className="h-5 w-5" />
-              <span>{t('concept.backToTree') || 'Back to Tree'}</span>
+              <span>{t('concept.backToTree')}</span>
             </button>
             <div className="flex-1" />
             <span className="text-sm text-gray-500 dark:text-gray-400">

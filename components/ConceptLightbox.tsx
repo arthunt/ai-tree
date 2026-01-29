@@ -71,7 +71,8 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
   const t = useTranslations('concept');
-  const tNav = useTranslations();
+  const tNav = useTranslations('navigation');
+  const tDark = useTranslations('darkMode');
   const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -408,7 +409,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                               ? 'bg-white/25 text-white'
                               : 'text-white/60 hover:text-white hover:bg-white/10'
                           }`}
-                          aria-label={`Switch to ${loc === 'et' ? 'Estonian' : 'English'}`}
+                          aria-label={loc === 'et' ? tNav('switchToEstonian') : tNav('switchToEnglish')}
                           aria-current={loc === locale ? 'true' : undefined}
                           type="button"
                         >
@@ -422,7 +423,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                       <button
                         onClick={toggleTheme}
                         className="p-2 min-w-[36px] min-h-[36px] hover:bg-white/20 rounded-full transition-colors flex items-center justify-center text-white/70 hover:text-white"
-                        aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+                        aria-label={theme === 'light' ? tDark('switchToDark') : tDark('switchToLight')}
                         type="button"
                       >
                         {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}

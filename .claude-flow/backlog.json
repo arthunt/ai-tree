@@ -12,22 +12,28 @@
     "auth": "not_needed"
   },
   "current_sprint": {
-    "id": "sprint-8",
-    "name": "i18n Completion",
-    "priority": "P1-High",
-    "total_hours": 12,
-    "goal": "Complete i18n coverage for all visual and UI components",
-    "stories": ["US-076", "US-077", "US-078"],
-    "completed": ["US-076"]
-  },
-  "next_sprint": {
-    "id": "sprint-7",
-    "name": "Mobile-First Concept Popup Redesign",
+    "id": "sprint-9",
+    "name": "English Content Translation",
     "priority": "P0-Critical",
-    "total_hours": 32,
-    "goal": "Transform popup into intuitive mobile learning experience with tabbed content and navigation",
-    "stories": ["US-070", "US-071", "US-072", "US-073", "US-074", "US-075"]
+    "total_hours": 20,
+    "goal": "100% English content - every user-facing string through i18n, including concept data",
+    "stories": ["US-080", "US-081", "US-082", "US-083", "US-084", "US-085"],
+    "completed": []
   },
+  "previous_sprints": [
+    {
+      "id": "sprint-8",
+      "name": "i18n Completion",
+      "status": "completed",
+      "stories": ["US-076", "US-077", "US-078"]
+    },
+    {
+      "id": "sprint-7",
+      "name": "Mobile-First Concept Popup Redesign",
+      "status": "completed",
+      "stories": ["US-070", "US-071", "US-072", "US-073", "US-074", "US-075"]
+    }
+  ],
   "epics": [
     {
       "id": "E001",
@@ -41,18 +47,19 @@
       "id": "E002",
       "name": "Testing Foundation",
       "priority": "P0-Critical",
-      "status": "not_started",
+      "status": "in_progress",
       "hours": 12,
-      "stories": ["US-006", "US-007", "US-008"]
+      "stories": ["US-006", "US-007", "US-008"],
+      "note": "US-006/007 done (46 tests). US-008 (E2E) pending."
     },
     {
       "id": "E003",
       "name": "Multilingual (i18n)",
       "priority": "P1-High",
-      "status": "completed",
-      "hours": 36,
-      "stories": ["US-009", "US-010", "US-011", "US-076", "US-077", "US-078"],
-      "note": "All i18n complete. US-076/077/078 done 2026-01-29."
+      "status": "in_progress",
+      "hours": 56,
+      "stories": ["US-009", "US-010", "US-011", "US-076", "US-077", "US-078", "US-080", "US-081", "US-082", "US-083"],
+      "note": "UI chrome i18n complete. Concept DATA content still Estonian-only. Sprint 9 addresses this."
     },
     {
       "id": "E004",
@@ -84,18 +91,148 @@
       "priority": "P0-Critical",
       "status": "completed",
       "hours": 32,
-      "stories": ["US-070", "US-071", "US-072", "US-073", "US-074", "US-075"],
-      "goal": "Transform popup into intuitive mobile learning experience",
-      "problem": "Current popup mixes all content types in single scrolling view. Mobile users struggle to find content, understand position, and navigate.",
-      "solution": {
-        "tab1": "Explanation with Simple/Technical toggle",
-        "tab2": "Visual representation (diagrams, demos)",
-        "tab3": "Code samples with why/how guidance",
-        "navigation": "Prev/Next with position indicator"
+      "stories": ["US-070", "US-071", "US-072", "US-073", "US-074", "US-075"]
+    },
+    {
+      "id": "E010",
+      "name": "English Content Translation Finalization",
+      "priority": "P0-Critical",
+      "status": "not_started",
+      "hours": 20,
+      "stories": ["US-080", "US-081", "US-082", "US-083", "US-084", "US-085"],
+      "problem": "tree-concepts.json has ALL content in Estonian only. English users see Estonian titles, explanations, metaphors in concept cards, popups, search, and navigation.",
+      "scope": {
+        "concepts": 23,
+        "concept_fields": 4,
+        "levels": 4,
+        "level_fields": 3,
+        "code_explanations": 6,
+        "misc_strings": 4,
+        "total_strings": 112
       }
     }
   ],
   "stories": {
+    "US-080": {
+      "id": "US-080",
+      "title": "Create English Concept Data in i18n Message Files",
+      "epic": "E010",
+      "priority": "P0",
+      "hours": 8,
+      "status": "not_started",
+      "type": "i18n-content",
+      "dependencies": [],
+      "agent_type": "coder",
+      "model": "sonnet",
+      "description": "Add concepts namespace to en.json with English translations for all 23 concepts (title, simpleName, explanation, metaphor). Move existing Estonian text to et.json concepts namespace.",
+      "acceptance_criteria": [
+        "concepts namespace in en.json with 23 concepts × 4 fields",
+        "concepts namespace in et.json with matching Estonian keys",
+        "Natural English translations (not machine-translated)",
+        "All 23 concept IDs covered"
+      ],
+      "concept_ids": [
+        "tokens", "vectors", "attention", "transformers",
+        "prefill-decode", "context-windows", "hallucinations", "temperature-sampling", "prompting-basics", "context-engineering", "training-vs-inference",
+        "rag", "memory", "lora", "security", "function-calling", "complexity-levels",
+        "moe", "agi-asi", "green-ai", "reasoning-models", "ai-agents", "mcp"
+      ],
+      "files": ["messages/en.json", "messages/et.json"]
+    },
+    "US-081": {
+      "id": "US-081",
+      "title": "Wire Components to Use i18n Concept Data",
+      "epic": "E010",
+      "priority": "P0",
+      "hours": 6,
+      "status": "not_started",
+      "type": "i18n-wiring",
+      "dependencies": ["US-080", "US-082"],
+      "agent_type": "coder",
+      "model": "sonnet",
+      "description": "Update 10+ components to read concept text from useTranslations('concepts') instead of concept.title etc.",
+      "acceptance_criteria": [
+        "Components use t(`${concept.id}.title`) pattern",
+        "tree-concepts.json retains structural data only",
+        "Fallback to JSON data if key missing",
+        "All affected components updated"
+      ],
+      "components_to_update": [
+        "ConceptCard.tsx",
+        "ConceptLightbox.tsx",
+        "ConceptBottomSheet.tsx",
+        "ConceptTabContent.tsx",
+        "ConceptCodeTab.tsx",
+        "ConceptNavBar.tsx",
+        "SearchModal.tsx",
+        "LevelSection.tsx",
+        "OrganicTreeDiagram.tsx",
+        "ConceptPageClient.tsx",
+        "app/[locale]/page.tsx"
+      ]
+    },
+    "US-082": {
+      "id": "US-082",
+      "title": "Translate Level Data to English",
+      "epic": "E010",
+      "priority": "P0",
+      "hours": 2,
+      "status": "not_started",
+      "type": "i18n-content",
+      "dependencies": [],
+      "agent_type": "coder",
+      "model": "haiku",
+      "description": "Add conceptLevels namespace with English translations for 4 levels (name, subtitle, description)",
+      "level_mapping": {
+        "roots": {"name": "ROOTS", "subtitle": "Fundamental Mechanics"},
+        "trunk": {"name": "TRUNK", "subtitle": "Engineering & Architecture"},
+        "branches": {"name": "BRANCHES", "subtitle": "Applications & Agents"},
+        "leaves": {"name": "LEAVES & FRUITS", "subtitle": "Research & Trends"}
+      },
+      "files": ["messages/en.json", "messages/et.json", "LevelSection.tsx", "app/[locale]/page.tsx"]
+    },
+    "US-083": {
+      "id": "US-083",
+      "title": "Fix Remaining Hardcoded Strings in Active Components",
+      "epic": "E010",
+      "priority": "P1",
+      "hours": 1,
+      "status": "not_started",
+      "type": "i18n-cleanup",
+      "dependencies": [],
+      "agent_type": "coder",
+      "model": "haiku",
+      "description": "Fix 2 hardcoded aria-labels in ConceptLightbox.tsx and 2 fallback strings in ConceptPageClient.tsx",
+      "files": ["components/ConceptLightbox.tsx", "app/[locale]/concept/[conceptId]/ConceptPageClient.tsx"]
+    },
+    "US-084": {
+      "id": "US-084",
+      "title": "Clean Up Legacy Unused Components",
+      "epic": "E010",
+      "priority": "P2",
+      "hours": 1,
+      "status": "not_started",
+      "type": "cleanup",
+      "dependencies": [],
+      "agent_type": "coder",
+      "model": "haiku",
+      "description": "Delete unused HeroSection.tsx and ImprovedTreeDiagram.tsx (hardcoded Estonian, not imported anywhere)",
+      "files": ["components/HeroSection.tsx", "components/ImprovedTreeDiagram.tsx"]
+    },
+    "US-085": {
+      "id": "US-085",
+      "title": "Update Tests for i18n Concept Data",
+      "epic": "E010",
+      "priority": "P1",
+      "hours": 2,
+      "status": "not_started",
+      "type": "testing",
+      "dependencies": ["US-081"],
+      "agent_type": "tester",
+      "model": "sonnet",
+      "description": "Tests verifying every concept ID has matching keys in both en.json and et.json with all required fields",
+      "files": ["tests/data/tree-concepts.test.ts", "tests/i18n/concept-translations.test.ts"]
+    },
     "US-070": {
       "id": "US-070",
       "title": "Explanation Tab with Persona Toggle",
@@ -103,23 +240,7 @@
       "priority": "P0",
       "hours": 6,
       "status": "completed",
-      "type": "mobile-ux",
-      "dependencies": ["US-075"],
-      "agent_type": "mobile-dev",
-      "model": "sonnet",
-      "description": "Implement explanation tab with Simple/Technical toggle that persists across concepts",
-      "acceptance_criteria": [
-        "Explanation tab is default/first tab",
-        "Toggle switch: Simple (metaphor) ↔ Technical (detailed)",
-        "Toggle persists in localStorage",
-        "Smooth animation on switch",
-        "Both modes show prerequisite indicators",
-        "Mobile toggle is 44px height"
-      ],
-      "files": [
-        "components/mobile/ConceptTabContent.tsx",
-        "lib/hooks/useExplanationMode.ts"
-      ]
+      "type": "mobile-ux"
     },
     "US-071": {
       "id": "US-071",
@@ -128,25 +249,7 @@
       "priority": "P0",
       "hours": 8,
       "status": "completed",
-      "type": "mobile-ux",
-      "dependencies": ["US-075"],
-      "agent_type": "mobile-dev",
-      "model": "sonnet",
-      "description": "Implement visual tab for diagrams, illustrations, and interactive demos",
-      "acceptance_criteria": [
-        "Visual tab shows concept-specific illustrations",
-        "Support: static images, SVG diagrams, interactive demos",
-        "Fallback placeholder for concepts without visuals",
-        "Link to existing demos (Tokenizer, Vector)",
-        "Mobile: pinch-to-zoom on images",
-        "Dark mode support",
-        "Loading skeleton"
-      ],
-      "files": [
-        "components/mobile/ConceptVisualTab.tsx",
-        "lib/types.ts",
-        "data/tree-concepts.json"
-      ]
+      "type": "mobile-ux"
     },
     "US-072": {
       "id": "US-072",
@@ -155,30 +258,7 @@
       "priority": "P0",
       "hours": 6,
       "status": "completed",
-      "type": "mobile-ux",
-      "dependencies": ["US-075"],
-      "agent_type": "coder",
-      "model": "sonnet",
-      "description": "Implement code tab with why/how guidance sections",
-      "acceptance_criteria": [
-        "Syntax-highlighted code example",
-        "Why this code? expandable section",
-        "How to use section with practical tips",
-        "Copy button with toast notification",
-        "Language indicator",
-        "Link to playground when available",
-        "Fallback for concepts without code"
-      ],
-      "guidance_structure": {
-        "why": "Explanation of what this demonstrates",
-        "code": "Syntax highlighted code block",
-        "how": ["Tip 1", "Tip 2", "Tip 3"],
-        "playground": "Optional CodeSandbox link"
-      },
-      "files": [
-        "components/mobile/ConceptCodeTab.tsx",
-        "lib/types.ts"
-      ]
+      "type": "mobile-ux"
     },
     "US-073": {
       "id": "US-073",
@@ -187,24 +267,7 @@
       "priority": "P0",
       "hours": 4,
       "status": "completed",
-      "type": "mobile-ux",
-      "dependencies": [],
-      "agent_type": "mobile-dev",
-      "model": "haiku",
-      "description": "Implement navigation bar with prev/next and position indicator",
-      "acceptance_criteria": [
-        "Navigation bar fixed at bottom",
-        "Shows: ← Prev | Progress dots | Next →",
-        "Position indicator (e.g., 3 of 7)",
-        "Current level name displayed",
-        "Swipe gestures for navigation",
-        "Keyboard shortcuts: ← → arrows",
-        "Haptic feedback on mobile",
-        "Disabled state at first/last concept"
-      ],
-      "files": [
-        "components/mobile/ConceptNavBar.tsx"
-      ]
+      "type": "mobile-ux"
     },
     "US-074": {
       "id": "US-074",
@@ -213,83 +276,7 @@
       "priority": "P1",
       "hours": 4,
       "status": "completed",
-      "type": "responsive",
-      "dependencies": ["US-070", "US-071", "US-072"],
-      "agent_type": "coder",
-      "model": "sonnet",
-      "description": "Align desktop popup with same tabbed experience as mobile",
-      "acceptance_criteria": [
-        "Desktop uses same 3-tab structure",
-        "Tabs as horizontal pills at top",
-        "Explanation toggle works same as mobile",
-        "Visual tab supports larger display",
-        "Code tab with better horizontal space",
-        "Keyboard navigation: Tab for tabs, arrows for concepts"
-      ],
-      "files": [
-        "components/ConceptLightbox.tsx"
-      ]
-    },
-    "US-076": {
-      "id": "US-076",
-      "title": "Translate 16 SVG Visual Components",
-      "epic": "E003",
-      "priority": "P1",
-      "hours": 6,
-      "status": "completed",
-      "type": "i18n",
-      "dependencies": [],
-      "agent_type": "coder",
-      "model": "sonnet",
-      "description": "Replace hardcoded text in 16 SVG components with useTranslations() and add visuals.* keys to en.json and et.json",
-      "completed_date": "2026-01-29",
-      "commit": "91b6143"
-    },
-    "US-077": {
-      "id": "US-077",
-      "title": "Translate Remaining 5 SVG Components",
-      "epic": "E003",
-      "priority": "P1",
-      "hours": 3,
-      "status": "completed",
-      "type": "i18n",
-      "dependencies": [],
-      "agent_type": "coder",
-      "model": "haiku",
-      "description": "Translate AgiAsiSVG, FunctionCallingSVG, GreenAiSVG, MoeSVG, ReasoningModelsSVG to use useTranslations()",
-      "files": [
-        "components/visuals/AgiAsiSVG.tsx",
-        "components/visuals/FunctionCallingSVG.tsx",
-        "components/visuals/GreenAiSVG.tsx",
-        "components/visuals/MoeSVG.tsx",
-        "components/visuals/ReasoningModelsSVG.tsx",
-        "messages/en.json",
-        "messages/et.json"
-      ]
-    },
-    "US-078": {
-      "id": "US-078",
-      "title": "Translate Remaining UI Components",
-      "epic": "E003",
-      "priority": "P1",
-      "hours": 3,
-      "status": "completed",
-      "type": "i18n",
-      "dependencies": [],
-      "agent_type": "coder",
-      "model": "haiku",
-      "description": "Translate hardcoded strings in HeroSection, CodeBlock, QuickJumpNav, TreeDiagramSkeleton, Toast, page.tsx, LanguageSwitcher",
-      "files": [
-        "components/HeroSection.tsx",
-        "components/CodeBlock.tsx",
-        "components/QuickJumpNav.tsx",
-        "components/TreeDiagramSkeleton.tsx",
-        "components/Toast.tsx",
-        "app/[locale]/page.tsx",
-        "components/LanguageSwitcher.tsx",
-        "messages/en.json",
-        "messages/et.json"
-      ]
+      "type": "responsive"
     },
     "US-075": {
       "id": "US-075",
@@ -298,68 +285,60 @@
       "priority": "P0",
       "hours": 4,
       "status": "completed",
-      "type": "data",
-      "dependencies": [],
-      "agent_type": "system-architect",
-      "model": "sonnet",
-      "description": "Extend concept data structure to support new tab content",
-      "acceptance_criteria": [
-        "Concept type extended with new fields",
-        "All existing concepts migrated",
-        "Validation for required vs optional fields",
-        "TypeScript types updated",
-        "Sample content for 3-5 concepts"
-      ],
-      "new_fields": {
-        "explanation": {
-          "simple": "string (metaphor/beginner-friendly)",
-          "technical": "string (detailed/terminology)"
-        },
-        "visual": {
-          "type": "image | svg | demo | diagram",
-          "src": "string (optional)",
-          "component": "string (optional, for demos)",
-          "alt": "string",
-          "caption": "string (optional)"
-        },
-        "codeExample": {
-          "code": "string",
-          "language": "string",
-          "whyRelevant": "string (NEW)",
-          "howToUse": "string[] (NEW)",
-          "annotations": "array (optional)",
-          "playgroundUrl": "string (optional)"
-        }
-      },
-      "migration_notes": [
-        "metaphor → explanation.simple",
-        "explanation → explanation.technical"
-      ],
-      "files": [
-        "lib/types.ts",
-        "data/tree-concepts.json",
-        "scripts/migrate-concepts.ts"
-      ]
+      "type": "data"
+    },
+    "US-076": {
+      "id": "US-076",
+      "title": "Translate 16 SVG Visual Components",
+      "epic": "E003",
+      "priority": "P1",
+      "hours": 6,
+      "status": "completed",
+      "type": "i18n"
+    },
+    "US-077": {
+      "id": "US-077",
+      "title": "Translate Remaining 5 SVG Components",
+      "epic": "E003",
+      "priority": "P1",
+      "hours": 3,
+      "status": "completed",
+      "type": "i18n"
+    },
+    "US-078": {
+      "id": "US-078",
+      "title": "Translate Remaining UI Components",
+      "epic": "E003",
+      "priority": "P1",
+      "hours": 3,
+      "status": "completed",
+      "type": "i18n"
     }
   },
   "execution_plan": {
     "phase1": {
-      "name": "Foundation",
-      "stories": ["US-075"],
-      "parallel": false,
-      "description": "Data structure must be ready before UI work"
+      "name": "Content Translation",
+      "stories": ["US-080", "US-082"],
+      "parallel": true,
+      "description": "English concept data + level data can be done in parallel"
     },
     "phase2": {
-      "name": "Tab Implementation",
-      "stories": ["US-070", "US-071", "US-072", "US-073"],
+      "name": "Cleanup",
+      "stories": ["US-083", "US-084"],
       "parallel": true,
-      "description": "All tabs can be developed in parallel after phase 1"
+      "description": "Fix hardcoded strings + remove unused components"
     },
     "phase3": {
-      "name": "Integration",
-      "stories": ["US-074"],
+      "name": "Component Wiring",
+      "stories": ["US-081"],
       "parallel": false,
-      "description": "Desktop alignment after tabs complete"
+      "description": "Wire all components to read from i18n. Requires phase 1 complete."
+    },
+    "phase4": {
+      "name": "Verification",
+      "stories": ["US-085"],
+      "parallel": false,
+      "description": "Tests to verify translation completeness"
     }
   },
   "swarm_config": {
@@ -368,22 +347,22 @@
     "strategy": "specialized",
     "consensus": "raft",
     "recommended_agents": {
-      "US-075": {"type": "system-architect", "model": "sonnet"},
-      "US-070": {"type": "mobile-dev", "model": "sonnet"},
-      "US-071": {"type": "mobile-dev", "model": "sonnet"},
-      "US-072": {"type": "coder", "model": "sonnet"},
-      "US-073": {"type": "mobile-dev", "model": "haiku"},
-      "US-074": {"type": "coder", "model": "sonnet"}
+      "US-080": {"type": "coder", "model": "sonnet"},
+      "US-081": {"type": "coder", "model": "sonnet"},
+      "US-082": {"type": "coder", "model": "haiku"},
+      "US-083": {"type": "coder", "model": "haiku"},
+      "US-084": {"type": "coder", "model": "haiku"},
+      "US-085": {"type": "tester", "model": "sonnet"}
     }
   },
   "metrics": {
-    "total_stories": 9,
-    "total_hours": 44,
-    "p0_stories": 5,
-    "p1_stories": 4,
-    "completed_sprints": 6,
-    "current_sprint": 8,
-    "next_sprint": 7
+    "total_stories": 15,
+    "total_hours": 64,
+    "p0_stories": 8,
+    "p1_stories": 5,
+    "p2_stories": 2,
+    "completed_sprints": 8,
+    "current_sprint": 9
   },
   "deferred": [
     "Supabase/Database",

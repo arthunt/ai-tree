@@ -654,10 +654,217 @@ Every story must meet ALL criteria before closing:
 | Story | Points | Priority | Status |
 |-------|--------|----------|--------|
 | US-076 Translate 16 SVG visuals | 6h | P1-High | ✅ Done |
-| US-077 Translate 5 remaining SVGs | 3h | P1-High | 🔲 Pending |
-| US-078 Translate UI components | 3h | P1-High | 🔲 Pending |
+| US-077 Translate 5 remaining SVGs | 3h | P1-High | ✅ Done |
+| US-078 Translate UI components | 3h | P1-High | ✅ Done |
 
 **Total:** 12h | **Sprint Goal:** 100% i18n coverage across all components
+
+---
+
+## 🌐 Sprint 9: English Content Translation (Concept Data)
+
+> **Created:** 2026-01-29
+> **Priority:** P0-Critical
+> **Focus:** Translate all concept data content to English via i18n message files
+> **Problem:** `tree-concepts.json` contains ALL content in Estonian only — titles, explanations, metaphors, simple names, level names. English users see Estonian text in concept cards, popups, search results, and navigation.
+
+---
+
+### Epic E010: English Content Translation Finalization
+**Total Effort:** 20h | **Priority:** P0-Critical
+
+**Problem Statement:**
+The i18n infrastructure (next-intl) is in place and UI chrome is fully translated. However, the core learning content — concept titles, explanations, metaphors, and level labels — lives in `data/tree-concepts.json` as Estonian-only strings. These are rendered directly via `concept.title`, `concept.explanation`, `concept.metaphor`, etc. across 10+ components. English-language users see Estonian text for all 23 concepts and 4 levels.
+
+**Scope:**
+- 23 concepts × 4 text fields each (title, simpleName, explanation, metaphor) = **92 strings**
+- 4 levels × 3 text fields each (name, subtitle, description) = **12 strings**
+- 6 code examples × 1 explanation field = **6 strings**
+- 2 component aria-labels in ConceptLightbox
+- 2 fallback strings in ConceptPageClient
+- **Total: ~112 translatable strings**
+
+---
+
+### US-080: Create English Concept Data in i18n Message Files
+**Priority:** P0-Critical | **Effort:** 8h | **Type:** i18n Content
+
+**User Story:**
+> As an English-speaking learner, I want to read all concept titles, explanations, and metaphors in English, so that I can understand the AI learning content in my language.
+
+**Acceptance Criteria:**
+- [ ] Add `concepts` namespace to `messages/en.json` with English translations for all 23 concepts
+- [ ] Each concept entry includes: `title`, `simpleName`, `explanation`, `metaphor`
+- [ ] Add `conceptLevels` namespace with English translations for 4 levels (name, subtitle, description)
+- [ ] Add `codeExamples` namespace with English translations for 6 code example explanations
+- [ ] Verify `messages/et.json` has matching Estonian keys (move existing data from JSON)
+- [ ] Translations are natural English, not machine-translated
+
+**Concept IDs to translate (23):**
+
+| Level | Concepts |
+|-------|----------|
+| Roots (4) | `tokens`, `vectors`, `attention`, `transformers` |
+| Trunk (7) | `prefill-decode`, `context-windows`, `hallucinations`, `temperature-sampling`, `prompting-basics`, `context-engineering`, `training-vs-inference` |
+| Branches (6) | `rag`, `memory`, `lora`, `security`, `function-calling`, `complexity-levels` |
+| Leaves (6) | `moe`, `agi-asi`, `green-ai`, `reasoning-models`, `ai-agents`, `mcp` |
+
+**Files:** `messages/en.json`, `messages/et.json`
+
+---
+
+### US-081: Wire Components to Use i18n Concept Data
+**Priority:** P0-Critical | **Effort:** 6h | **Type:** i18n Wiring
+
+**User Story:**
+> As a developer, I want concept data to be rendered from i18n message files based on the active locale, so that content automatically switches between Estonian and English.
+
+**Acceptance Criteria:**
+- [ ] Components read concept text from `useTranslations('concepts')` instead of `concept.title` etc.
+- [ ] Lookup pattern: `t(\`${concept.id}.title\`)`, `t(\`${concept.id}.explanation\`)`, etc.
+- [ ] `tree-concepts.json` retains structural data only (id, level, icon, complexity, prerequisites, visual, codeExample.code/language)
+- [ ] Fallback to JSON data if translation key is missing (graceful degradation)
+- [ ] All affected components updated (see list below)
+
+**Components to update (10+):**
+- `ConceptCard.tsx` — title, explanation/metaphor display
+- `ConceptLightbox.tsx` — title, simpleName, plus 2 aria-labels
+- `ConceptBottomSheet.tsx` — title, simpleName
+- `ConceptTabContent.tsx` — metaphor, explanation
+- `ConceptCodeTab.tsx` — code explanation
+- `ConceptNavBar.tsx` — concept title in nav
+- `SearchModal.tsx` — search through translated text
+- `LevelSection.tsx` — level name/subtitle/description
+- `OrganicTreeDiagram.tsx` — concept labels
+- `ConceptPageClient.tsx` — remove fallback strings
+- `app/[locale]/page.tsx` — level rendering
+
+**Technical approach:**
+```tsx
+// Before:
+<h2>{concept.title}</h2>
+<p>{concept.explanation}</p>
+
+// After:
+const tc = useTranslations('concepts');
+<h2>{tc(`${concept.id}.title`)}</h2>
+<p>{tc(`${concept.id}.explanation`)}</p>
+```
+
+**Files:** All components listed above
+
+---
+
+### US-082: Translate Level Data to English
+**Priority:** P0-Critical | **Effort:** 2h | **Type:** i18n Content
+
+**User Story:**
+> As an English-speaking learner, I want level headings (Roots, Trunk, Branches, Leaves) and their descriptions in English, so that the tree structure makes sense in my language.
+
+**Acceptance Criteria:**
+- [ ] `conceptLevels` namespace in `messages/en.json` with 4 levels × 3 fields
+- [ ] Level names: ROOTS, TRUNK, BRANCHES, LEAVES (English)
+- [ ] Level subtitles translated (e.g., "Fundamentaalne Mehaanika" → "Fundamental Mechanics")
+- [ ] Level descriptions translated to natural English
+- [ ] Components read level text from i18n instead of `level.name`, `level.subtitle`, `level.description`
+- [ ] `messages/et.json` updated with matching Estonian keys
+
+**Current Estonian → Required English:**
+
+| Field | Estonian | English |
+|-------|---------|---------|
+| roots.name | JUURED | ROOTS |
+| roots.subtitle | Fundamentaalne Mehaanika | Fundamental Mechanics |
+| trunk.name | TÜVI | TRUNK |
+| trunk.subtitle | Inseneeria ja Arhitektuur | Engineering & Architecture |
+| branches.name | OKSAD | BRANCHES |
+| branches.subtitle | Rakendamine ja Agendid | Applications & Agents |
+| leaves.name | LEHED JA VILJAD | LEAVES & FRUITS |
+| leaves.subtitle | Uuringud ja Trendid | Research & Trends |
+
+**Files:** `messages/en.json`, `messages/et.json`, `LevelSection.tsx`, `app/[locale]/page.tsx`
+
+---
+
+### US-083: Fix Remaining Hardcoded Strings in Active Components
+**Priority:** P1-High | **Effort:** 1h | **Type:** i18n Cleanup
+
+**User Story:**
+> As a developer maintaining the codebase, I want all remaining hardcoded strings moved to i18n, so that nothing is missed.
+
+**Acceptance Criteria:**
+- [ ] `ConceptLightbox.tsx`: 2 aria-labels use `t()` instead of hardcoded English
+- [ ] `ConceptPageClient.tsx`: Remove 2 English fallback strings (`'Loading...'`, `'Back to Tree'`)
+- [ ] Verify no other active components have hardcoded text
+
+**Files:** `components/ConceptLightbox.tsx`, `app/[locale]/concept/[conceptId]/ConceptPageClient.tsx`
+
+---
+
+### US-084: Clean Up Legacy Unused Components
+**Priority:** P2-Medium | **Effort:** 1h | **Type:** Cleanup
+
+**User Story:**
+> As a developer, I want unused legacy components removed, so that the codebase is clean and there's no confusion about which components are active.
+
+**Acceptance Criteria:**
+- [ ] Delete or archive `components/HeroSection.tsx` (hardcoded Estonian, not imported anywhere)
+- [ ] Delete or archive `components/ImprovedTreeDiagram.tsx` (hardcoded Estonian, not imported anywhere)
+- [ ] Verify no other components reference these files
+- [ ] Update any stale backlog references
+
+**Files:** `components/HeroSection.tsx`, `components/ImprovedTreeDiagram.tsx`
+
+---
+
+### US-085: Update Tests for i18n Concept Data
+**Priority:** P1-High | **Effort:** 2h | **Type:** Testing
+
+**User Story:**
+> As a developer, I want tests to verify that i18n concept data is complete and consistent across locales, so that no translations are missing.
+
+**Acceptance Criteria:**
+- [ ] Test: Every concept ID in `tree-concepts.json` has matching keys in both `en.json` and `et.json`
+- [ ] Test: Every concept has all 4 required translated fields (title, simpleName, explanation, metaphor)
+- [ ] Test: Every level has all 3 required translated fields (name, subtitle, description)
+- [ ] Test: No empty translation values
+- [ ] Update existing `tree-concepts.test.ts` to reflect structural-only JSON
+
+**Files:** `tests/data/tree-concepts.test.ts`, new `tests/i18n/concept-translations.test.ts`
+
+---
+
+### Sprint 9 Summary
+
+| Story | Points | Priority | Status | Dependencies |
+|-------|--------|----------|--------|--------------|
+| US-080 English concept data | 8h | P0-Critical | 🔲 Pending | None (start here) |
+| US-082 English level data | 2h | P0-Critical | 🔲 Pending | None |
+| US-081 Wire components to i18n | 6h | P0-Critical | 🔲 Pending | US-080, US-082 |
+| US-083 Fix hardcoded strings | 1h | P1-High | 🔲 Pending | None |
+| US-084 Clean up legacy components | 1h | P2-Medium | 🔲 Pending | None |
+| US-085 Update tests | 2h | P1-High | 🔲 Pending | US-081 |
+
+**Total:** 20h | **Sprint Goal:** 100% English content — every user-facing string through i18n
+
+**Critical Path:** US-080 + US-082 → US-081 → US-085
+
+**Recommended Order for Swarm:**
+1. **US-080 + US-082** (Content translation) — Can run in parallel, no code deps
+2. **US-083 + US-084** (Cleanup) — Independent, can run in parallel with above
+3. **US-081** (Wire components) — Requires US-080/082 complete
+4. **US-085** (Tests) — After wiring is done
+
+**Swarm Agent Assignment:**
+
+| Story | Agent Type | Model |
+|-------|------------|-------|
+| US-080 | researcher + coder | sonnet |
+| US-081 | coder | sonnet |
+| US-082 | coder | haiku |
+| US-083 | coder | haiku |
+| US-084 | coder | haiku |
+| US-085 | tester | sonnet |
 
 ---
 
@@ -910,12 +1117,12 @@ interface Concept {
 
 | Story | Points | Priority | Status | Dependencies |
 |-------|--------|----------|--------|--------------|
-| US-075 Data Structure | 4h | P0-Critical | 🔲 Pending | None (start here) |
-| US-070 Explanation Tab | 6h | P0-Critical | 🔲 Pending | US-075 |
-| US-071 Visual Tab | 8h | P0-Critical | 🔲 Pending | US-075 |
-| US-072 Code Tab | 6h | P0-Critical | 🔲 Pending | US-075 |
-| US-073 Navigation Bar | 4h | P0-Critical | 🔲 Pending | None |
-| US-074 Desktop Alignment | 4h | P1-High | 🔲 Pending | US-070, US-071, US-072 |
+| US-075 Data Structure | 4h | P0-Critical | ✅ Done | None |
+| US-070 Explanation Tab | 6h | P0-Critical | ✅ Done | US-075 |
+| US-071 Visual Tab | 8h | P0-Critical | ✅ Done | US-075 |
+| US-072 Code Tab | 6h | P0-Critical | ✅ Done | US-075 |
+| US-073 Navigation Bar | 4h | P0-Critical | ✅ Done | None |
+| US-074 Desktop Alignment | 4h | P1-High | ✅ Done | US-070, US-071, US-072 |
 
 **Total:** 32h | **Critical Path:** US-075 → US-070/071/072 (parallel) → US-074
 
@@ -951,8 +1158,8 @@ interface Concept {
 - [ ] US-053: Rename Classic/Tree views for clarity - 2h
 
 ### Testing
-- [ ] US-006: Basic Test Infrastructure (Vitest) - 4h
-- [ ] US-007: Component Test Examples - 4h
+- [x] US-006: Basic Test Infrastructure (Vitest) - 4h ✅
+- [x] US-007: Component Test Examples (46 tests) - 4h ✅
 - [ ] US-008: E2E Smoke Test (Playwright) - 4h
 
 ### Deferred (Only When Needed)
@@ -1036,7 +1243,7 @@ EFFORT│                    │                    │ EFFORT
 |-------|--------|----------|--------|
 | US-040 ViewModeToggle Labels | 2h | P0-Critical | ✅ Done |
 | US-041 Dark Mode Contrast | 3h | P0-Critical | ✅ Done |
-| US-042 First-Time Onboarding | 4h | P0-Critical | 🔲 Pending |
+| US-042 First-Time Onboarding | 4h | P0-Critical | ✅ Done |
 | US-043 Mobile Lightbox Scroll | 3h | P1-High | ✅ Done |
 | US-044 Header Tablet Layout | 2h | P1-High | ✅ Done |
 | US-045 Prerequisite Indicators | 2h | P1-High | ✅ Done |
