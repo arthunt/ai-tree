@@ -15,11 +15,12 @@ import { WelcomeModal } from '@/components/WelcomeModal';
 import { DendrixLogo } from '@/components/DendrixLogo';
 import treeData from '@/data/tree-concepts.json';
 import Link from 'next/link';
-import { Network, Search, Moon, Sun, Lightbulb, Code2, LayoutGrid } from 'lucide-react';
+import { Network, Search, Moon, Sun, Lightbulb, Code2, LayoutGrid, TreePine, Brain } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useTheme } from '@/context/ThemeContext';
 import { locales } from '@/i18n';
+import { CourseStructuredData } from '@/components/StructuredData';
 
 export default function AITreePage() {
   const [viewMode, setViewMode] = useState<ViewMode>('both');
@@ -137,6 +138,9 @@ export default function AITreePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50/50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+      {/* Structured Data for SEO */}
+      <CourseStructuredData locale={locale} conceptCount={totalConcepts} />
+
       {/* Header - Compact on mobile, shrinks on scroll */}
       <header className="sticky top-0 z-40 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200/60 dark:border-gray-800/60">
         <div className={`container mx-auto max-w-7xl transition-all duration-300 ${isScrolled ? 'px-3 py-1 sm:px-4 sm:py-1.5' : 'px-3 py-2 sm:px-4 sm:py-3'}`}>
@@ -387,6 +391,41 @@ export default function AITreePage() {
                 {t('levels.totalTime')}
               </p>
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Brand Narrative — Why Dendrix? */}
+      <section className="relative py-10 sm:py-16 bg-gradient-to-r from-indigo-50/50 via-purple-50/30 to-blue-50/50 dark:from-indigo-950/30 dark:via-purple-950/20 dark:to-blue-950/30">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6 }}
+            className="text-center"
+          >
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="p-2 rounded-xl bg-indigo-100 dark:bg-indigo-900/40">
+                <TreePine className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+              </div>
+              <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">+</span>
+              <div className="p-2 rounded-xl bg-purple-100 dark:bg-purple-900/40">
+                <Brain className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+              </div>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              {t('brand.title')}
+            </h3>
+            <p className="text-base sm:text-lg font-semibold text-indigo-700 dark:text-indigo-300 mb-4">
+              {t('brand.tagline')}
+            </p>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto mb-3">
+              {t('brand.explanation')}
+            </p>
+            <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto">
+              {t('brand.metaphor')}
+            </p>
           </motion.div>
         </div>
       </section>

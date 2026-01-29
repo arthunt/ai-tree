@@ -15,6 +15,8 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://dendrix.ai';
+
 export async function generateMetadata({
   params,
 }: {
@@ -27,7 +29,39 @@ export async function generateMetadata({
   return {
     title: metadata.title,
     description: metadata.description,
-    keywords: ['AI', 'machine learning', 'education', 'Estonian', 'tehisintellekt', 'õppimine'],
+    keywords: locale === 'et'
+      ? ['AI', 'tehisintellekt', 'masinõpe', 'õppimine', 'AI koolitus', 'Dendrix']
+      : ['AI', 'artificial intelligence', 'machine learning', 'education', 'AI training', 'Dendrix'],
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: {
+        et: `${BASE_URL}/et`,
+        en: `${BASE_URL}/en`,
+        'x-default': `${BASE_URL}/et`,
+      },
+    },
+    openGraph: {
+      type: 'website',
+      locale: locale === 'et' ? 'et_EE' : 'en_US',
+      url: `${BASE_URL}/${locale}`,
+      title: metadata.title,
+      description: metadata.description,
+      siteName: 'Dendrix.ai',
+      images: [
+        {
+          url: `${BASE_URL}/${locale}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: metadata.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: metadata.title,
+      description: metadata.description,
+    },
+    metadataBase: new URL(BASE_URL),
   };
 }
 

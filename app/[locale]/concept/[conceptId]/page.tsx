@@ -46,6 +46,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
+    alternates: {
+      canonical: `${baseUrl}/${locale}/concept/${conceptId}`,
+      languages: {
+        et: `${baseUrl}/et/concept/${conceptId}`,
+        en: `${baseUrl}/en/concept/${conceptId}`,
+        'x-default': `${baseUrl}/et/concept/${conceptId}`,
+      },
+    },
     openGraph: {
       title,
       description,
@@ -59,6 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
     },
+    metadataBase: new URL(baseUrl),
   };
 }
 
