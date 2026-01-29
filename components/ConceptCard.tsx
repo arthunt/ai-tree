@@ -71,10 +71,10 @@ export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = f
       className="group h-full"
     >
       <button
-        className={`relative h-full min-h-[120px] w-full overflow-hidden rounded-xl border-2 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer text-left focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none ${
+        className={`relative h-full min-h-[120px] w-full overflow-hidden rounded-2xl border bg-white/70 dark:bg-gray-800/60 backdrop-blur-sm hover:bg-white/90 dark:hover:bg-gray-800/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer text-left focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none ${
           isCompleted
-            ? 'border-green-400 dark:border-green-600 ring-2 ring-green-200 dark:ring-green-800'
-            : 'border-gray-200 dark:border-gray-700'
+            ? 'border-green-400/60 dark:border-green-500/40 ring-1 ring-green-200/50 dark:ring-green-800/30'
+            : 'border-gray-200/60 dark:border-gray-700/50 hover:border-blue-300/60 dark:hover:border-blue-500/30'
         }`}
         onClick={onClick}
         aria-label={`${t('viewDetails')} ${concept.title}`}
@@ -82,8 +82,8 @@ export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = f
       >
         <div className="p-5 h-full flex flex-col">
           <div className="flex items-start gap-3 mb-3">
-            <div className="p-2 rounded-lg bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900 dark:to-purple-900 group-hover:from-blue-100 group-hover:to-purple-100 dark:group-hover:from-blue-800 dark:group-hover:to-purple-800 transition-colors">
-              <IconComponent className="h-5 w-5 text-blue-700 dark:text-blue-300" />
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 dark:from-blue-400/15 dark:to-purple-400/15 group-hover:from-blue-500/20 group-hover:to-purple-500/20 transition-colors ring-1 ring-blue-500/10 dark:ring-blue-400/10">
+              <IconComponent className="h-5 w-5 text-blue-600 dark:text-blue-400" />
             </div>
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
@@ -109,18 +109,18 @@ export function ConceptCard({ concept, viewMode, index, onClick, isCompleted = f
             {displayText}
           </p>
 
-          <div className="flex items-center justify-center gap-2 pt-3 border-t border-gray-200 dark:border-gray-700 text-blue-700 dark:text-blue-400 text-sm font-medium group-hover:text-blue-800 dark:group-hover:text-blue-300 transition-colors">
+          <div className="flex items-center justify-center gap-2 pt-3 border-t border-gray-200/50 dark:border-gray-700/50 text-blue-600 dark:text-blue-400 text-sm font-medium group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
             <Maximize2 className="h-4 w-4" />
             <span>{t('viewFullSize')}</span>
           </div>
         </div>
 
-        {/* Hover overlay effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/5 group-hover:to-purple-500/5 transition-all duration-300 pointer-events-none rounded-xl" />
+        {/* Hover gradient border glow */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/[0.04] group-hover:to-purple-500/[0.06] transition-all duration-500 pointer-events-none rounded-2xl" />
 
         {/* Completion indicator */}
         {isCompleted && (
-          <div className="absolute top-2 right-2 p-1 bg-green-500 rounded-full shadow-lg" aria-label={t('completed')}>
+          <div className="absolute top-3 right-3 p-1 bg-green-500/90 backdrop-blur-sm rounded-full shadow-lg ring-2 ring-green-400/30" aria-label={t('completed')}>
             <CheckCircle2 className="h-4 w-4 text-white" />
           </div>
         )}

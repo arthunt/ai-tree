@@ -21,10 +21,10 @@ interface LevelSectionProps {
 export function LevelSection({ level, concepts, viewMode, index, onConceptClick, isCompleted, isLoading = false }: LevelSectionProps) {
   const t = useTranslations('levelSection');
   const levelColors: Record<string, { from: string; to: string; border: string; darkFrom: string; darkTo: string }> = {
-    roots: { from: 'from-emerald-50/50', to: 'to-emerald-100/20', border: 'border-emerald-200', darkFrom: 'dark:from-emerald-950/50', darkTo: 'dark:to-emerald-900/20' },
-    trunk: { from: 'from-amber-50/50', to: 'to-amber-100/20', border: 'border-amber-200', darkFrom: 'dark:from-amber-950/50', darkTo: 'dark:to-amber-900/20' },
-    branches: { from: 'from-blue-50/50', to: 'to-blue-100/20', border: 'border-blue-200', darkFrom: 'dark:from-blue-950/50', darkTo: 'dark:to-blue-900/20' },
-    leaves: { from: 'from-purple-50/50', to: 'to-purple-100/20', border: 'border-purple-200', darkFrom: 'dark:from-purple-950/50', darkTo: 'dark:to-purple-900/20' },
+    roots: { from: 'from-emerald-50/40', to: 'to-emerald-100/10', border: 'border-emerald-200', darkFrom: 'dark:from-emerald-950/30', darkTo: 'dark:to-emerald-900/10' },
+    trunk: { from: 'from-amber-50/40', to: 'to-amber-100/10', border: 'border-amber-200', darkFrom: 'dark:from-amber-950/30', darkTo: 'dark:to-amber-900/10' },
+    branches: { from: 'from-blue-50/40', to: 'to-blue-100/10', border: 'border-blue-200', darkFrom: 'dark:from-blue-950/30', darkTo: 'dark:to-blue-900/10' },
+    leaves: { from: 'from-purple-50/40', to: 'to-purple-100/10', border: 'border-purple-200', darkFrom: 'dark:from-purple-950/30', darkTo: 'dark:to-purple-900/10' },
   };
 
   const colors = levelColors[level.id] || levelColors.roots;

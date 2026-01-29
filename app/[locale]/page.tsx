@@ -91,9 +91,9 @@ export default function AITreePage() {
   }, [selectedConcept]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50/50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
       {/* Header - Compact on mobile, shrinks on scroll */}
-      <header className="sticky top-0 z-40 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+      <header className="sticky top-0 z-40 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200/60 dark:border-gray-800/60">
         <div className={`container mx-auto max-w-7xl transition-all duration-300 ${isScrolled ? 'px-3 py-1 sm:px-4 sm:py-1.5' : 'px-3 py-2 sm:px-4 sm:py-3'}`}>
           <div className="flex items-center justify-between">
             <div className="min-w-0 flex-1">
@@ -216,7 +216,9 @@ export default function AITreePage() {
 
       {/* Hero Section - Collapsible on Mobile */}
       <section className="relative py-8 sm:py-16 overflow-hidden" aria-labelledby="hero-heading">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-blue-950 dark:via-purple-950 dark:to-pink-950 -z-10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50/50 to-purple-50 dark:from-gray-900 dark:via-blue-950/40 dark:to-purple-950/30 -z-10" />
+        {/* Decorative radial glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl -z-10 pointer-events-none opacity-60" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(168,85,247,0.08) 40%, transparent 70%)' }} />
         <div className="container mx-auto px-4 max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -378,7 +380,7 @@ export default function AITreePage() {
       )}
 
       {/* Footer */}
-      <footer className="bg-gray-900 dark:bg-gray-950 text-white py-12">
+      <footer className="bg-gray-900 dark:bg-gray-950 text-white py-12 border-t border-gray-800/50">
         <div className="container mx-auto px-4 max-w-7xl text-center">
           <p className="text-gray-400 dark:text-gray-500">
             {t('footer.description')}

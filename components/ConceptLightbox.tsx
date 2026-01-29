@@ -181,6 +181,10 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
       }
       if (e.key === 'ArrowLeft' && prevConcept && onNavigate) onNavigate(prevConcept.id);
       if (e.key === 'ArrowRight' && nextConcept && onNavigate) onNavigate(nextConcept.id);
+      // Tab shortcuts: 1=explanation, 2=visual, 3=code
+      if (e.key === '1' && !e.metaKey && !e.ctrlKey) setActiveTab('explanation');
+      if (e.key === '2' && !e.metaKey && !e.ctrlKey) setActiveTab('visual');
+      if (e.key === '3' && !e.metaKey && !e.ctrlKey) setActiveTab('code');
     };
     if (concept) {
       document.addEventListener('keydown', handleKeyDown);
@@ -277,24 +281,23 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end sm:items-center sm:justify-center"
+        className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-end sm:items-center sm:justify-center"
         role="dialog"
         aria-modal="true"
         aria-labelledby="concept-title"
       >
         <motion.div
           ref={sheetRef}
-          initial={{ y: '100%', opacity: 0.5 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: '100%', opacity: 0 }}
-          transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+          initial={{ y: '100%', opacity: 0.5, scale: 0.98 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          exit={{ y: '100%', opacity: 0, scale: 0.98 }}
+          transition={{ type: 'spring', damping: 28, stiffness: 280 }}
           onClick={(e) => e.stopPropagation()}
-          className="relative bg-white dark:bg-gray-800 w-full sm:max-w-2xl sm:rounded-2xl rounded-t-2xl shadow-2xl flex flex-col overflow-hidden"
+          className="relative bg-white dark:bg-gray-900 w-full sm:max-w-4xl sm:rounded-2xl rounded-t-2xl shadow-2xl flex flex-col overflow-hidden sm:border sm:border-white/10"
           style={{
             height: `${sheetHeight}dvh`,
             maxHeight: 'calc(100dvh - 1rem)',
             WebkitOverflowScrolling: 'touch',
-            // On desktop (sm+), override to fixed height
           }}
         >
           {isLoading ? (
@@ -315,7 +318,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
               </motion.div>
 
               {/* Compact Header */}
-              <div className="flex-shrink-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2.5 sm:px-5 sm:py-4 sm:rounded-t-2xl">
+              <div className="flex-shrink-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white px-4 py-2.5 sm:px-6 sm:py-4 sm:rounded-t-2xl">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2.5 flex-1 min-w-0">
                     <div className="p-1.5 sm:p-2 bg-white/20 backdrop-blur-sm rounded-xl flex-shrink-0" aria-hidden="true">
@@ -389,7 +392,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
               </div>
 
               {/* Tab Bar */}
-              <div className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2.5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+              <div className="flex-shrink-0 px-3 py-1.5 sm:px-6 sm:py-2.5 border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/80">
                 <div className="flex gap-1 bg-gray-200/80 dark:bg-gray-800 p-1 rounded-xl" role="tablist">
                   <button
                     role="tab"
@@ -430,10 +433,21 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                 </div>
               </div>
 
-              {/* Scrollable Content */}
-              <div
+              {/* Scrollable Content with swipe navigation on mobile */}
+              <motion.div
                 className="flex-1 overflow-y-auto overscroll-contain"
                 style={{ WebkitOverflowScrolling: 'touch' }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.15}
+                onDragEnd={(_, info) => {
+                  const threshold = 60;
+                  if (info.offset.x < -threshold && nextConcept && onNavigate) {
+                    onNavigate(nextConcept.id);
+                  } else if (info.offset.x > threshold && prevConcept && onNavigate) {
+                    onNavigate(prevConcept.id);
+                  }
+                }}
               >
                 <ConceptTabContent
                   concept={concept}
@@ -442,10 +456,10 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                   onNavigate={onNavigate}
                   sheetState="full"
                 />
-              </div>
+              </motion.div>
 
               {/* Navigation Bar with dot indicators + level switcher */}
-              <div className="flex-shrink-0 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 sm:px-4 py-2 pb-safe">
+              <div className="flex-shrink-0 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/80 px-3 sm:px-6 py-2 pb-safe">
                 {/* Level switcher + dot indicators */}
                 <div className="flex items-center justify-center gap-2 mb-1.5">
                   {/* Level name (clickable to open picker) */}
