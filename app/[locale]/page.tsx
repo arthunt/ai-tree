@@ -101,6 +101,10 @@ export default function AITreePage() {
 
   const switchLanguage = (newLocale: string) => {
     if (newLocale === locale) return;
+    // Preserve open concept across locale change
+    if (selectedConcept) {
+      sessionStorage.setItem('openConceptId', selectedConcept.id);
+    }
     const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
     router.replace(newPathname, { scroll: false });
   };

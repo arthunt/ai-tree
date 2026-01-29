@@ -85,7 +85,24 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
   const [isLoading, setIsLoading] = useState(true);
   const { showToast } = useToast();
   const { theme, toggleTheme, mounted: themeMounted } = useTheme();
-  const [activeTab, setActiveTab] = useState<'explanation' | 'visual' | 'code' | 'connections'>('explanation');
+  const [activeTab, setActiveTab] = useState<'explanation' | 'visual' | 'code' | 'connections'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('openConceptTab');
+      if (saved && ['explanation', 'visual', 'code', 'connections'].includes(saved)) {
+        sessionStorage.removeItem('openConceptTab');
+        return saved as 'explanation' | 'visual' | 'code' | 'connections';
+      }
+    }
+    return 'explanation';
+  });
+  // Keep active tab synced to sessionStorage so any language switcher can restore it
+  useEffect(() => {
+    if (concept) {
+      sessionStorage.setItem('openConceptTab', activeTab);
+    } else {
+      sessionStorage.removeItem('openConceptTab');
+    }
+  }, [activeTab, concept]);
   const [showLevelPicker, setShowLevelPicker] = useState(false);
 
   // Draggable sheet state (mobile only)
@@ -175,6 +192,7 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
     if (newLocale === locale) return;
     if (concept) {
       sessionStorage.setItem('openConceptId', concept.id);
+      sessionStorage.setItem('openConceptTab', activeTab);
     }
     const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
     router.replace(newPathname, { scroll: false });
