@@ -56,7 +56,7 @@ export function FunctionCallingSVG({ className = '' }: FunctionCallingSVGProps) 
         <line x1="85" y1="110" x2="220" y2="110" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowhead)" />
         <rect x="100" y="95" width="110" height="12" fill="white" fillOpacity="0.9" />
         <text x="155" y="104" textAnchor="middle" fontSize="10" fill="currentColor">
-          "What's the weather?"
+          {`"What's the weather?"`}
         </text>
 
         {/* Message 2: AI to Function (JSON) */}
@@ -83,7 +83,7 @@ export function FunctionCallingSVG({ className = '' }: FunctionCallingSVGProps) 
         <line x1="220" y1="210" x2="85" y2="210" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowhead)" />
         <rect x="100" y="195" width="115" height="12" fill="white" fillOpacity="0.9" />
         <text x="157.5" y="204" textAnchor="middle" fontSize="10" fill="currentColor">
-          "It's 5°C and rainy"
+          {`"It's 5°C and rainy"`}
         </text>
 
         {/* Bottom note */}

@@ -19,7 +19,7 @@ export function TransformersSVG() {
           <text x="400" y="105" fontSize="14" fontWeight="600" textAnchor="middle" fill="currentColor">
             INPUT TEXT
           </text>
-          <text x="520" y="105" fontSize="12" fill="currentColor" opacity="0.7">"Hello world"</text>
+          <text x="520" y="105" fontSize="12" fill="currentColor" opacity="0.7">{`"Hello world"`}</text>
         </g>
 
         {/* Arrow down */}

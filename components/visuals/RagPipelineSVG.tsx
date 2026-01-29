@@ -14,7 +14,7 @@ export function RagPipelineSVG({ className = '' }: { className?: string }) {
         {/* Query box */}
         <rect x="30" y="80" width="100" height="60" rx="8" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" strokeWidth="2"/>
         <text x="80" y="105" fontSize="14" fontWeight="bold" fill="currentColor" textAnchor="middle">Query</text>
-        <text x="80" y="125" fontSize="11" fill="currentColor" opacity="0.8" textAnchor="middle">"What is RAG?"</text>
+        <text x="80" y="125" fontSize="11" fill="currentColor" opacity="0.8" textAnchor="middle">{`"What is RAG?"`}</text>
 
         {/* Arrow 1 */}
         <path d="M 130 110 L 180 110" stroke="#f59e0b" strokeWidth="3" markerEnd="url(#arrow1)"/>
@@ -75,9 +75,9 @@ export function RagPipelineSVG({ className = '' }: { className?: string }) {
         {/* Final answer */}
         <rect x="540" y="280" width="160" height="80" rx="8" fill="#f59e0b" fillOpacity="0.15" stroke="#f59e0b" strokeWidth="2"/>
         <text x="620" y="305" fontSize="14" fontWeight="bold" fill="currentColor" textAnchor="middle">Answer</text>
-        <text x="620" y="325" fontSize="11" fill="currentColor" opacity="0.8" textAnchor="middle">"RAG is Retrieval-</text>
+        <text x="620" y="325" fontSize="11" fill="currentColor" opacity="0.8" textAnchor="middle">{`"RAG is Retrieval-`}</text>
         <text x="620" y="342" fontSize="11" fill="currentColor" opacity="0.8" textAnchor="middle">Augmented Generation,</text>
-        <text x="620" y="359" fontSize="11" fill="currentColor" opacity="0.8" textAnchor="middle">which enhances..."</text>
+        <text x="620" y="359" fontSize="11" fill="currentColor" opacity="0.8" textAnchor="middle">{`which enhances..."`}</text>
 
         {/* Arrow from GENERATE to Answer */}
         <path d="M 620 160 L 620 280" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrow-answer)"/>

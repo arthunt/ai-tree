@@ -30,7 +30,7 @@ export function ContextWindowSVG() {
             ACTIVE CONTEXT
           </text>
           <text x="350" y="135" fontSize="12" textAnchor="middle" fill="white" opacity="0.9">
-            Model can "see" and use this
+            {`Model can "see" and use this`}
           </text>
 
           {/* Available space (empty) */}

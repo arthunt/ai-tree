@@ -37,7 +37,7 @@ export function HallucinationsSVG() {
           <line x1="70" y1="177" x2="200" y2="177" stroke="#dc2626" strokeWidth="2"/>
 
           <text x="70" y="200" fontSize="13" fill="currentColor">
-            as part of the World's Fair in Paris.
+            {`as part of the World's Fair in Paris.`}
           </text>
 
           {/* Confidence bar */}
@@ -70,7 +70,7 @@ export function HallucinationsSVG() {
           </text>
 
           <text x="440" y="200" fontSize="13" fill="currentColor">
-            as part of the World's Fair in Paris.
+            {`as part of the World's Fair in Paris.`}
           </text>
 
           {/* Confidence bar */}
@@ -98,7 +98,7 @@ export function HallucinationsSVG() {
         </text>
 
         <text x="70" y="372" fontSize="13" fill="currentColor">
-          • They don't know when they're making things up — they just predict likely next words
+          {`• They don't know when they're making things up — they just predict likely next words`}
         </text>
 
         <text x="70" y="394" fontSize="13" fill="currentColor">

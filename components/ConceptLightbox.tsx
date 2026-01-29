@@ -1,14 +1,16 @@
 'use client';
 
 import { motion, AnimatePresence, useMotionValue, PanInfo } from 'framer-motion';
-import { X, Check, Circle, ChevronLeft, ChevronRight, Share2, Link2, ChevronDown } from 'lucide-react';
+import { X, Check, Circle, ChevronLeft, ChevronRight, Share2, Link2, ChevronDown, Moon, Sun } from 'lucide-react';
 import { Concept, TreeLevel } from '../lib/types';
 import { getComplexityColor, getComplexityLabel } from '../lib/utils';
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { LightboxSkeleton } from './LightboxSkeleton';
 import { useTranslations } from 'next-intl';
 import { useToast } from '@/lib/useToast';
+import { useTheme } from '@/context/ThemeContext';
+import { locales } from '@/i18n';
 import { ConceptTabContent } from './mobile/ConceptTabContent';
 import {
   Users,
@@ -71,10 +73,13 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
   const t = useTranslations('concept');
   const tNav = useTranslations();
   const params = useParams();
+  const pathname = usePathname();
+  const router = useRouter();
   const locale = params.locale as string;
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { showToast } = useToast();
+  const { theme, toggleTheme, mounted: themeMounted } = useTheme();
   const [activeTab, setActiveTab] = useState<'explanation' | 'visual' | 'code'>('explanation');
   const [showLevelPicker, setShowLevelPicker] = useState(false);
 
@@ -159,6 +164,13 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
   };
 
   const canNativeShare = typeof navigator !== 'undefined' && !!navigator.share;
+
+  // Language switcher
+  const switchLanguage = (newLocale: string) => {
+    if (newLocale === locale) return;
+    const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
+    router.replace(newPathname, { scroll: false });
+  };
 
   // Loading state
   useEffect(() => {
@@ -378,6 +390,42 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
                         {copied ? <Check className="h-4 w-4 text-green-300" /> : <Link2 className="h-4 w-4" />}
                       </button>
                     )}
+
+                    {/* Divider */}
+                    <div className="w-px h-5 bg-white/20 mx-0.5" />
+
+                    {/* Language switcher (compact) */}
+                    <div className="flex items-center bg-white/10 rounded-full overflow-hidden">
+                      {locales.map((loc) => (
+                        <button
+                          key={loc}
+                          onClick={() => switchLanguage(loc)}
+                          className={`px-2 py-1.5 text-[11px] sm:text-xs font-semibold transition-colors ${
+                            loc === locale
+                              ? 'bg-white/25 text-white'
+                              : 'text-white/60 hover:text-white hover:bg-white/10'
+                          }`}
+                          aria-label={`Switch to ${loc === 'et' ? 'Estonian' : 'English'}`}
+                          aria-current={loc === locale ? 'true' : undefined}
+                          type="button"
+                        >
+                          {loc.toUpperCase()}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Dark mode toggle (compact) */}
+                    {themeMounted && (
+                      <button
+                        onClick={toggleTheme}
+                        className="p-2 min-w-[36px] min-h-[36px] hover:bg-white/20 rounded-full transition-colors flex items-center justify-center text-white/70 hover:text-white"
+                        aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+                        type="button"
+                      >
+                        {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+                      </button>
+                    )}
+
                     <button
                       ref={closeButtonRef}
                       onClick={onClose}

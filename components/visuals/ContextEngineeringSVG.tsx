@@ -46,7 +46,7 @@ export function ContextEngineeringSVG({ className = '' }: { className?: string }
         <rect x="80" y="400" width="440" height="50" rx="8" fill="#10b981" fillOpacity="0.2" stroke="#10b981" strokeWidth="2"/>
         <circle cx="110" cy="425" r="18" fill="#10b981" fillOpacity="0.3"/>
         <text x="110" y="430" fontSize="16" fill="#10b981" textAnchor="middle" fontWeight="bold">Q</text>
-        <text x="145" y="430" fontSize="14" fontWeight="bold" fill="currentColor">User Query: "Analyze Q4 performance"</text>
+        <text x="145" y="430" fontSize="14" fontWeight="bold" fill="currentColor">{`User Query: "Analyze Q4 performance"`}</text>
 
         {/* Arrow and conclusion */}
         <path d="M 300 460 L 300 485" stroke="#f59e0b" strokeWidth="3" markerEnd="url(#arrowhead)"/>

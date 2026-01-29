@@ -55,13 +55,13 @@ export function TemperatureSVG({ className = '' }: { className?: string }) {
             Example Output
           </text>
           <text x="150" y="350" fontSize="11" fill="currentColor" textAnchor="middle">
-            "The cat sat on the
+            {`"The cat sat on the`}
           </text>
           <text x="150" y="370" fontSize="11" fill="currentColor" textAnchor="middle">
             mat. The cat sat on
           </text>
           <text x="150" y="390" fontSize="11" fill="currentColor" textAnchor="middle">
-            the mat. The cat..."
+            {`the mat. The cat..."`}
           </text>
           <text x="150" y="415" fontSize="10" fontStyle="italic" fill="#3b82f6" textAnchor="middle">
             (repetitive, safe)
@@ -98,13 +98,13 @@ export function TemperatureSVG({ className = '' }: { className?: string }) {
             Example Output
           </text>
           <text x="375" y="350" fontSize="11" fill="currentColor" textAnchor="middle">
-            "The cat rested on
+            {`"The cat rested on`}
           </text>
           <text x="375" y="370" fontSize="11" fill="currentColor" textAnchor="middle">
             the warm mat,
           </text>
           <text x="375" y="390" fontSize="11" fill="currentColor" textAnchor="middle">
-            watching birds..."
+            {`watching birds..."`}
           </text>
           <text x="375" y="415" fontSize="10" fontStyle="italic" fill="#f59e0b" textAnchor="middle">
             (natural, coherent)
@@ -141,13 +141,13 @@ export function TemperatureSVG({ className = '' }: { className?: string }) {
             Example Output
           </text>
           <text x="600" y="350" fontSize="11" fill="currentColor" textAnchor="middle">
-            "Quantum bicycle
+            {`"Quantum bicycle`}
           </text>
           <text x="600" y="370" fontSize="11" fill="currentColor" textAnchor="middle">
             dreams! Purple
           </text>
           <text x="600" y="390" fontSize="11" fill="currentColor" textAnchor="middle">
-            elephant Tuesday..."
+            {`elephant Tuesday..."`}
           </text>
           <text x="600" y="415" fontSize="10" fontStyle="italic" fill="#ef4444" textAnchor="middle">
             (random, incoherent)

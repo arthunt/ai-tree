@@ -1,0 +1,324 @@
+{
+  "testDate": "2026-01-28",
+  "platform": "AI Tree",
+  "testType": "Functional and UX Testing",
+  "findings": [
+    {
+      "component": "ConceptLightbox",
+      "testCase": "Mobile scroll behavior with max-h-[90vh]",
+      "result": "partial",
+      "issue": "Lightbox uses max-h-[90vh] which may be difficult to scroll on mobile devices with small screens. Content overflow is handled with overflow-y-auto but may require significant scrolling on content-heavy concepts.",
+      "userImpact": "Users with smaller mobile screens (< 700px height) may experience difficulty accessing all content, especially in concepts with long explanations and code examples. Requires multiple scroll gestures.",
+      "recommendation": "Consider implementing one of: (1) Increase max-h to 95vh for mobile, (2) Add sticky footer/header with transparent gradient to indicate more content, (3) Implement collapsible sections for Metaphor/Technical/Code to reduce vertical space",
+      "severity": "medium",
+      "wcagLevel": "AA - 2.5.8 Target Size"
+    },
+    {
+      "component": "ConceptLightbox",
+      "testCase": "Mark as Complete undo functionality",
+      "result": "fail",
+      "issue": "No undo mechanism exists for 'Mark as Complete' action. Once clicked, the only way to reverse is to click again, but there's no visual feedback that this is possible. State persists to localStorage immediately.",
+      "userImpact": "Accidental clicks cannot be undone easily. Users who mistakenly mark concepts as complete must remember to click again, with no guidance that unmarking is possible.",
+      "recommendation": "Add one of: (1) Toast notification with 'Undo' button (3-5 seconds), (2) Confirmation dialog for first-time users, (3) Visual indicator on the button showing it's toggleable (e.g., 'Click again to unmark'), (4) Bulk management UI in progress panel",
+      "severity": "medium",
+      "wcagLevel": "AA - 3.3.4 Error Prevention"
+    },
+    {
+      "component": "ConceptLightbox",
+      "testCase": "Copy link feedback timing (2 seconds)",
+      "result": "partial",
+      "issue": "Copy link feedback changes icon from Link2 to Check for only 2 seconds (lines 79, 89). This may be too brief for users to notice, especially if they look away after clicking.",
+      "userImpact": "Users may miss the confirmation feedback and click multiple times, or be uncertain whether the copy action succeeded.",
+      "recommendation": "Increase feedback duration to 3-4 seconds. Consider adding: (1) Toast notification with 'Link copied to clipboard' message, (2) Brief haptic feedback on mobile, (3) Aria-live announcement for screen readers",
+      "severity": "low",
+      "wcagLevel": "AA - 3.3.1 Error Identification"
+    },
+    {
+      "component": "ConceptLightbox",
+      "testCase": "Focus trap implementation",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Focus trap is correctly implemented (lines 165-192). Tab/Shift+Tab navigation works properly, keeping focus within the modal. Close button receives initial focus (line 155).",
+      "severity": null,
+      "wcagLevel": "AA - 2.4.3 Focus Order"
+    },
+    {
+      "component": "ConceptLightbox",
+      "testCase": "Keyboard shortcuts (ESC to close)",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "ESC key handling is properly implemented (lines 143-162). Works as expected for closing the lightbox.",
+      "severity": null,
+      "wcagLevel": "AA - 2.1.1 Keyboard"
+    },
+    {
+      "component": "ConceptLightbox",
+      "testCase": "Prerequisite navigation keyboard support",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Prerequisite buttons have proper focus states (focus:ring-2), min-h-[44px] for touch targets, and aria-labels. Navigation works well.",
+      "severity": null,
+      "wcagLevel": "AA - 2.4.4 Link Purpose"
+    },
+    {
+      "component": "SearchModal",
+      "testCase": "Result count display",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Result count is displayed in footer (lines 504-506) with proper conditional rendering. Shows 'X results' only when there are search results.",
+      "severity": null,
+      "wcagLevel": "AA - 1.4.1 Use of Color"
+    },
+    {
+      "component": "SearchModal",
+      "testCase": "Search result relevance and ranking",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Fuzzy search implementation is sophisticated with weighted scoring (title: 10, simpleName: 8, metaphor: 6, explanation: 4). Results are sorted by relevance and limited to top 8.",
+      "severity": null,
+      "wcagLevel": "N/A"
+    },
+    {
+      "component": "SearchModal",
+      "testCase": "Keyboard navigation (arrows, enter, ESC)",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Full keyboard support implemented (lines 189-219): Arrow up/down for navigation, Enter to select, ESC to close. Selected item scrolls into view automatically.",
+      "severity": null,
+      "wcagLevel": "AA - 2.1.1 Keyboard"
+    },
+    {
+      "component": "SearchModal",
+      "testCase": "Focus trap implementation",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Focus trap properly implemented (lines 248-276) with Tab/Shift+Tab handling. Input receives focus on open (lines 237-246).",
+      "severity": null,
+      "wcagLevel": "AA - 2.4.3 Focus Order"
+    },
+    {
+      "component": "SearchModal",
+      "testCase": "Recent searches persistence",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Recent searches are saved to localStorage (lines 72-98) with max 5 items. Clear functionality provided. Good UX pattern.",
+      "severity": null,
+      "wcagLevel": "N/A"
+    },
+    {
+      "component": "SearchModal",
+      "testCase": "Empty state and no results handling",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Proper empty states: Shows recent searches and popular concepts when empty (lines 336-420), helpful 'No results' message with suggestions (lines 476-481).",
+      "severity": null,
+      "wcagLevel": "AA - 3.3.2 Labels or Instructions"
+    },
+    {
+      "component": "TreeNavigation",
+      "testCase": "Mobile FAB z-index conflict with lightbox",
+      "result": "partial",
+      "issue": "Mobile FAB button has z-50 (line 40), same as lightbox backdrop (ConceptLightbox line 220) and SearchModal (line 287). This may cause stacking context issues where FAB could appear above modal backdrops.",
+      "userImpact": "FAB may be clickable through modal overlays, allowing users to open navigation while lightbox/search is open. This breaks modal focus trap and creates confusing UX.",
+      "recommendation": "Implement proper z-index hierarchy: (1) FAB: z-40, (2) Navigation bottom sheet: z-50, (3) Lightbox/Search modals: z-50, (4) Consider hiding FAB when modals are open using state management",
+      "severity": "medium",
+      "wcagLevel": "AA - 2.4.3 Focus Order"
+    },
+    {
+      "component": "TreeNavigation",
+      "testCase": "Mobile bottom sheet max-h-[70vh]",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Mobile navigation uses max-h-[70vh] (line 66) which is more reasonable than lightbox's 90vh. Good scrollability with handle bar for drag gesture recognition.",
+      "severity": null,
+      "wcagLevel": "AA - 1.4.4 Resize Text"
+    },
+    {
+      "component": "TreeNavigation",
+      "testCase": "Progress tracking display",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Progress is clearly displayed with percentage, count (lines 80-83), and visual progress bar (lines 100-107). Includes level indicator dots (lines 110-122).",
+      "severity": null,
+      "wcagLevel": "AA - 1.4.1 Use of Color"
+    },
+    {
+      "component": "TreeNavigation",
+      "testCase": "Touch target sizes for mobile",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "All buttons meet WCAG touch target requirements: FAB is 56x56px (w-14 h-14), navigation items min-h-[56px], close button 44x44px (w-11 h-11).",
+      "severity": null,
+      "wcagLevel": "AAA - 2.5.5 Target Size"
+    },
+    {
+      "component": "CodeBlock",
+      "testCase": "Copy code feedback timing (2 seconds)",
+      "result": "partial",
+      "issue": "Same issue as ConceptLightbox copy link - 2 second feedback duration (line 31) may be too brief.",
+      "userImpact": "Users may miss the 'Kopeeritud!' confirmation and be uncertain whether code was copied successfully.",
+      "recommendation": "Increase to 3-4 seconds. Code blocks are frequently used, so clear feedback is important. Consider toast notification for consistency.",
+      "severity": "low",
+      "wcagLevel": "AA - 3.3.1 Error Identification"
+    },
+    {
+      "component": "CodeBlock",
+      "testCase": "Copy button accessibility",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Copy button has proper aria-label (line 51), focus ring (focus:ring-2), and visual feedback. Good implementation.",
+      "severity": null,
+      "wcagLevel": "AA - 4.1.2 Name, Role, Value"
+    },
+    {
+      "component": "Global",
+      "testCase": "Cmd+K / Ctrl+K search shortcut",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Global keyboard shortcut properly implemented in page.tsx (lines 68-84). Prevents default browser behavior. Well documented in UI.",
+      "severity": null,
+      "wcagLevel": "AA - 2.1.1 Keyboard"
+    },
+    {
+      "component": "Global",
+      "testCase": "Toast notification system",
+      "result": "fail",
+      "issue": "No toast notification system found in the codebase. All feedback is inline (icon changes, button text changes) with no persistent notification mechanism.",
+      "userImpact": "Users lack consistent, accessible feedback for actions like 'copy link', 'mark complete', 'save progress'. Important actions may go unnoticed if user looks away.",
+      "recommendation": "Implement toast notification system using: (1) react-hot-toast or similar library, (2) Custom toast component with aria-live=\"polite\" for screen readers, (3) Consistent timing (3-5 seconds), (4) Dismissible with close button",
+      "severity": "high",
+      "wcagLevel": "AA - 4.1.3 Status Messages"
+    },
+    {
+      "component": "Global",
+      "testCase": "Loading states and skeleton screens",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Loading states implemented with SkeletonCard and LightboxSkeleton. 300-500ms delay prevents flash of loading content. Good UX pattern.",
+      "severity": null,
+      "wcagLevel": "N/A"
+    },
+    {
+      "component": "ConceptLightbox",
+      "testCase": "Share functionality accessibility",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Share buttons have proper aria-labels, min touch targets (min-h-[36px] min-w-[36px]), focus rings. Native share API used when available. Good mobile support.",
+      "severity": null,
+      "wcagLevel": "AA - 2.5.5 Target Size"
+    },
+    {
+      "component": "Global",
+      "testCase": "Dark mode toggle accessibility",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Dark mode toggle present in header. Proper dark: variants used throughout. No contrast issues detected in code review.",
+      "severity": null,
+      "wcagLevel": "AA - 1.4.3 Contrast"
+    },
+    {
+      "component": "ConceptLightbox",
+      "testCase": "Prerequisites section progressive disclosure",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Prerequisites are always visible when present (no collapse). This is appropriate given their importance for learning path. Clear visual hierarchy with amber color coding.",
+      "severity": null,
+      "wcagLevel": "N/A"
+    },
+    {
+      "component": "SearchModal",
+      "testCase": "Search input placeholder and instructions",
+      "result": "pass",
+      "issue": null,
+      "userImpact": null,
+      "recommendation": "Input has proper placeholder (line 309), aria-label (line 311), and sr-only instructions (lines 327-329). Good accessibility practices.",
+      "severity": null,
+      "wcagLevel": "AA - 3.3.2 Labels or Instructions"
+    }
+  ],
+  "summary": {
+    "totalTests": 25,
+    "passed": 18,
+    "partial": 4,
+    "failed": 3,
+    "passRate": "72%",
+    "criticalIssues": [
+      "No toast notification system for user feedback",
+      "Mark as Complete has no undo mechanism",
+      "Z-index conflicts between FAB and modal overlays"
+    ],
+    "recommendations": {
+      "highPriority": [
+        "Implement toast notification system with aria-live regions",
+        "Fix z-index hierarchy for mobile FAB and modals",
+        "Add undo mechanism for 'Mark as Complete' action"
+      ],
+      "mediumPriority": [
+        "Increase copy feedback timing from 2s to 3-4s globally",
+        "Improve lightbox mobile scroll UX (consider 95vh or collapsible sections)",
+        "Add sticky gradient indicators in lightbox to show more content"
+      ],
+      "lowPriority": [
+        "Add haptic feedback on mobile for key actions",
+        "Consider confirmation dialog for first-time mark complete",
+        "Add bulk progress management UI"
+      ]
+    },
+    "wcagCompliance": {
+      "level": "AA",
+      "overallAssessment": "Generally compliant with WCAG 2.1 AA",
+      "violations": [
+        "4.1.3 Status Messages - Missing toast/notification system",
+        "3.3.4 Error Prevention - No undo for destructive actions"
+      ],
+      "warnings": [
+        "2.5.8 Target Size - Mobile lightbox scroll may be difficult on small screens",
+        "2.4.3 Focus Order - Z-index conflicts may break focus management"
+      ]
+    }
+  },
+  "missingKeyboardShortcuts": [
+    "Arrow keys in lightbox to navigate to next/previous concept",
+    "Shift+? to show keyboard shortcuts help",
+    "Ctrl+/ to toggle view mode (metaphor/technical/both)",
+    "Ctrl+P to toggle progress panel",
+    "Ctrl+M to mark current concept as complete from card view"
+  ],
+  "missingFocusTraps": [],
+  "userFeedbackMechanisms": {
+    "implemented": [
+      "Icon changes (Link2 → Check, Circle → CheckCircle2)",
+      "Button text changes (Kopeeri → Kopeeritud!)",
+      "Aria-label updates",
+      "Focus rings on interactive elements",
+      "Loading skeletons",
+      "Progress bars and percentages"
+    ],
+    "missing": [
+      "Toast notifications",
+      "Undo mechanism",
+      "Persistent status messages",
+      "Haptic feedback on mobile",
+      "Audio feedback for screen readers",
+      "Confirmation dialogs for important actions"
+    ]
+  }
+}

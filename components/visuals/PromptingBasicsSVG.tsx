@@ -22,7 +22,7 @@ export function PromptingBasicsSVG({ className = '' }: { className?: string }) {
           {/* Bad prompt text */}
           <rect x="70" y="120" width="260" height="50" rx="6" fill="#fee2e2" className="dark:fill-gray-900" stroke="#ef4444" strokeWidth="1.5"/>
           <text x="200" y="145" fontSize="13" fill="currentColor" textAnchor="middle">
-            "Tell me about food"
+            {`"Tell me about food"`}
           </text>
 
           {/* Arrow */}
@@ -36,13 +36,13 @@ export function PromptingBasicsSVG({ className = '' }: { className?: string }) {
           {/* Vague result */}
           <rect x="70" y="195" width="260" height="60" rx="6" fill="#fca5a5" fillOpacity="0.2" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="3,3"/>
           <text x="200" y="215" fontSize="11" fill="currentColor" opacity="0.8" textAnchor="middle">
-            "Food is a substance that..."
+            {`"Food is a substance that..."`}
           </text>
           <text x="200" y="232" fontSize="11" fill="currentColor" opacity="0.8" textAnchor="middle">
             [vague essay about food]
           </text>
           <text x="200" y="249" fontSize="11" fill="currentColor" opacity="0.8" textAnchor="middle">
-            "...provides nutrition..."
+            {`"...provides nutrition..."`}
           </text>
         </g>
 
@@ -57,10 +57,10 @@ export function PromptingBasicsSVG({ className = '' }: { className?: string }) {
           {/* Good prompt text */}
           <rect x="420" y="120" width="260" height="50" rx="6" fill="#d1fae5" className="dark:fill-gray-900" stroke="#10b981" strokeWidth="1.5"/>
           <text x="550" y="137" fontSize="11" fill="currentColor" textAnchor="middle">
-            "List 3 vegetarian recipes
+            {`"List 3 vegetarian recipes`}
           </text>
           <text x="550" y="153" fontSize="11" fill="currentColor" textAnchor="middle">
-            under 30 min with 20g+ protein"
+            {`under 30 min with 20g+ protein"`}
           </text>
 
           {/* Arrow */}

@@ -1,0 +1,149 @@
+[
+  {
+    "component": "ViewModeToggle.tsx",
+    "issue": "CRITICAL: Misleading labels - toggle shows 'Eesti keel / Inglise keel / Mõlemad' (Estonian/English/Both) but actually controls content TYPE (metaphor/technical/both), NOT language. This is extremely confusing for users.",
+    "severity": "critical",
+    "fix": "Change translation keys from 'estonian/english/both' to 'metaphor/technical/both'. Update messages/en.json and messages/et.json to use keys like 'metaphorView', 'technicalView', 'bothViews' instead of 'estonian', 'english', 'both'.",
+    "line": "17-19"
+  },
+  {
+    "component": "ViewModeToggle.tsx",
+    "issue": "WCAG AA contrast violation in inactive state: dark:text-gray-300 has only ~4.5:1 ratio on dark:bg-gray-800, borderline for WCAG AA compliance",
+    "severity": "high",
+    "fix": "Change 'text-gray-600 dark:text-gray-300' to 'text-gray-700 dark:text-gray-200' for better contrast (7:1+ ratio)",
+    "line": "39"
+  },
+  {
+    "component": "ConceptLightbox.tsx",
+    "issue": "WCAG AA contrast violation: dark:text-gray-400 used in multiple places with only ~4.0:1 ratio (needs 4.5:1 for body text)",
+    "severity": "high",
+    "fix": "Replace all instances of 'dark:text-gray-400' with 'dark:text-gray-300' for 7:1+ contrast ratio",
+    "line": "429"
+  },
+  {
+    "component": "ConceptLightbox.tsx",
+    "issue": "Touch target too small: Share buttons are only 36px (min-h-[36px] min-w-[36px]) when WCAG requires 44px minimum",
+    "severity": "high",
+    "fix": "Change all share button classes from 'min-h-[36px] min-w-[36px]' to 'min-h-[44px] min-w-[44px]' (p-2 → p-3)",
+    "line": "259, 269, 279, 291"
+  },
+  {
+    "component": "ConceptLightbox.tsx",
+    "issue": "Prerequisite help text has low contrast: text-amber-800 dark:text-amber-300 may not meet WCAG AA on colored backgrounds",
+    "severity": "medium",
+    "fix": "Test contrast ratio and potentially darken to dark:text-amber-200 or add background with better contrast",
+    "line": "324-325"
+  },
+  {
+    "component": "ConceptLightbox.tsx",
+    "issue": "Modal z-index is 50 which may conflict with TreeNavigation FAB (also z-50)",
+    "severity": "medium",
+    "fix": "Increase ConceptLightbox z-index to z-[60] to ensure it always appears above navigation",
+    "line": "220"
+  },
+  {
+    "component": "SearchModal.tsx",
+    "issue": "WCAG contrast violations: Multiple instances of dark:text-gray-400 used for interactive text (insufficient contrast)",
+    "severity": "high",
+    "fix": "Replace 'dark:text-gray-400' with 'dark:text-gray-300' on lines with interactive content (buttons, labels)",
+    "line": "342, 363, 402, 458, 487"
+  },
+  {
+    "component": "SearchModal.tsx",
+    "issue": "Search modal z-index is 50, same as TreeNavigation - potential stacking context conflict",
+    "severity": "medium",
+    "fix": "Increase SearchModal z-index to z-[55] to ensure proper layering above navigation",
+    "line": "287"
+  },
+  {
+    "component": "SearchModal.tsx",
+    "issue": "Footer text uses text-gray-500 dark:text-gray-400 which may not meet WCAG AA for small text (12px/text-xs)",
+    "severity": "medium",
+    "fix": "Change to 'text-gray-600 dark:text-gray-300' or increase font size to text-sm",
+    "line": "487"
+  },
+  {
+    "component": "TreeNavigation.tsx",
+    "issue": "Mobile FAB z-index is 50, which conflicts with ConceptLightbox and SearchModal (both also z-50)",
+    "severity": "high",
+    "fix": "Change FAB z-index to z-40 so modals (z-50+) appear above it",
+    "line": "40"
+  },
+  {
+    "component": "TreeNavigation.tsx",
+    "issue": "WCAG contrast violation: dark:text-gray-400 used for subtitle text in mobile menu",
+    "severity": "high",
+    "fix": "Change 'dark:text-gray-400' to 'dark:text-gray-300' for better contrast",
+    "line": "148"
+  },
+  {
+    "component": "TreeNavigation.tsx",
+    "issue": "WCAG contrast violation: dark:text-gray-400 used for descriptive text in desktop navigation",
+    "severity": "high",
+    "fix": "Change 'dark:text-gray-400' to 'dark:text-gray-300'",
+    "line": "222"
+  },
+  {
+    "component": "TreeNavigation.tsx",
+    "issue": "Desktop navigation button min-h is 44px but combined with p-3 padding may create tap target issues on touch devices",
+    "severity": "low",
+    "fix": "Verify actual tap target size is ≥44px after padding calculation, or explicitly set min-w-[44px]",
+    "line": "199"
+  },
+  {
+    "component": "page.tsx",
+    "issue": "Header layout complexity: 6 controls in header (Language, Search, TreeView link, ViewMode toggle, DarkMode toggle) may be overwhelming on tablet/mobile",
+    "severity": "medium",
+    "fix": "Consider grouping controls into a hamburger menu on tablet (<1024px) or moving ViewMode toggle to a less prominent position",
+    "line": "98-121"
+  },
+  {
+    "component": "page.tsx",
+    "issue": "Search button shows Cmd icon on all platforms - should show Ctrl on Windows/Linux",
+    "severity": "low",
+    "fix": "Detect platform and show ⌘K on Mac, Ctrl+K on Windows/Linux using navigator.platform or userAgent",
+    "line": "107-109"
+  },
+  {
+    "component": "page.tsx",
+    "issue": "Hero subtitle text uses dark:text-gray-300 which is acceptable but could be improved for better readability",
+    "severity": "low",
+    "fix": "Consider dark:text-gray-200 for slightly better contrast on dark backgrounds",
+    "line": "142"
+  },
+  {
+    "component": "page.tsx",
+    "issue": "Footer GitHub link uses text-gray-400 dark:text-gray-500 - very low contrast in dark mode",
+    "severity": "medium",
+    "fix": "Change to 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'",
+    "line": "311"
+  },
+  {
+    "component": "Global - Z-index Strategy",
+    "issue": "Z-index conflicts: Multiple components use z-50 (TreeNavigation FAB, ConceptLightbox, SearchModal), creating unpredictable stacking",
+    "severity": "high",
+    "fix": "Implement z-index hierarchy: Navigation (z-40) < Modals (z-50) < Lightboxes (z-60) < Critical alerts (z-70)",
+    "line": "N/A"
+  },
+  {
+    "component": "Global - Color Palette",
+    "issue": "Inconsistent use of gray shades: gray-400, gray-500, gray-600 used interchangeably for similar purposes",
+    "severity": "medium",
+    "fix": "Create design system documentation specifying: gray-700 (high contrast), gray-600 (medium), gray-500 (low priority), gray-400 (disabled only)",
+    "line": "N/A"
+  },
+  {
+    "component": "Global - Responsive Design",
+    "issue": "No clear breakpoint strategy for tablet devices (768px-1024px) - some controls show/hide inconsistently",
+    "severity": "medium",
+    "fix": "Define explicit tablet breakpoint behavior: header should show hamburger menu at <1024px, consolidating ViewMode + Language + DarkMode toggles",
+    "line": "N/A"
+  },
+  {
+    "component": "messages/en.json & messages/et.json",
+    "issue": "ViewMode translation keys are misleading: 'estonian'/'english'/'both' should describe content type, not language",
+    "severity": "critical",
+    "fix": "Rename keys to: 'metaphorView': 'Simple metaphors', 'technicalView': 'Technical explanations', 'bothViews': 'Both views'",
+    "line": "en.json:55-57, et.json:55-57"
+  }
+]

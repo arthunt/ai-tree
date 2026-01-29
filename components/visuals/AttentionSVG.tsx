@@ -50,7 +50,7 @@ export function AttentionSVG() {
 
         {/* Current word: "ta" */}
         <text x="400" y="190" fontSize="14" fontWeight="600" textAnchor="middle" fill="currentColor">
-          When processing "ta" (it/she/he):
+          {`When processing "ta" (it/she/he):`}
         </text>
 
         {/* Strong attention: ta → Mari */}
@@ -81,7 +81,7 @@ export function AttentionSVG() {
           Attention shows which words are important for understanding each word
         </text>
         <text x="400" y="335" fontSize="13" textAnchor="middle" fill="currentColor" opacity="0.8">
-          "ta" (it/she) pays strong attention to "Mari" to know who is being referred to.
+          {`"ta" (it/she) pays strong attention to "Mari" to know who is being referred to.`}
         </text>
         <text x="400" y="360" fontSize="13" textAnchor="middle" fill="currentColor" opacity="0.8">
           Arrow thickness = attention strength. This helps the model understand relationships.
