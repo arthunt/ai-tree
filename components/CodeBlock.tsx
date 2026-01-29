@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Check, Copy } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface CodeBlockProps {
   code: string;
@@ -23,6 +24,7 @@ const languageColors = {
 
 export function CodeBlock({ code, language, explanation }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
+  const t = useTranslations('codeBlock');
 
   const copyToClipboard = async () => {
     try {
@@ -48,17 +50,17 @@ export function CodeBlock({ code, language, explanation }: CodeBlockProps) {
           <button
             onClick={copyToClipboard}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-700 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-500 text-white text-sm font-medium transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            aria-label={copied ? 'Kopeeritud!' : 'Kopeeri kood'}
+            aria-label={copied ? t('copiedAriaLabel') : t('copyAriaLabel')}
           >
             {copied ? (
               <>
                 <Check className="h-4 w-4" />
-                <span>Kopeeritud!</span>
+                <span>{t('copied')}</span>
               </>
             ) : (
               <>
                 <Copy className="h-4 w-4" />
-                <span>Kopeeri</span>
+                <span>{t('copy')}</span>
               </>
             )}
           </button>
@@ -85,7 +87,7 @@ export function CodeBlock({ code, language, explanation }: CodeBlockProps) {
       {explanation && (
         <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
           <p className="text-sm text-green-900 dark:text-green-100 leading-relaxed">
-            <span className="font-semibold">💡 Selgitus: </span>
+            <span className="font-semibold">{t('explanation')}</span>
             {explanation}
           </p>
         </div>

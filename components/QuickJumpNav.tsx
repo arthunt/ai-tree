@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function QuickJumpNav() {
+  const t = useTranslations('quickJump');
+
   const scrollToLevels = () => {
     const firstLevel = document.getElementById('roots');
     if (firstLevel) {
@@ -21,10 +24,10 @@ export function QuickJumpNav() {
       <button
         onClick={scrollToLevels}
         className="flex flex-col items-center gap-2 px-6 py-3 min-h-[44px] bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all group"
-        aria-label="Keri alla ja alusta õppimist"
+        aria-label={t('ariaLabel')}
       >
         <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-          Alusta õppimist
+          {t('startLearning')}
         </span>
         <motion.div
           animate={{ y: [0, 4, 0] }}

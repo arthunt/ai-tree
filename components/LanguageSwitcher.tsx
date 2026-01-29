@@ -3,12 +3,14 @@
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { locales } from '@/i18n';
+import { useTranslations } from 'next-intl';
 
 export function LanguageSwitcher() {
   const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
   const currentLocale = params.locale as string;
+  const t = useTranslations('navigation');
 
   const switchLanguage = (newLocale: string) => {
     if (newLocale === currentLocale) return;
@@ -31,7 +33,7 @@ export function LanguageSwitcher() {
                 ? 'text-white'
                 : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
             }`}
-            aria-label={`Switch to ${locale === 'et' ? 'Estonian' : 'English'}`}
+            aria-label={locale === 'et' ? t('switchToEstonian') : t('switchToEnglish')}
             aria-current={isActive ? 'true' : undefined}
             type="button"
           >

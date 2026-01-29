@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, Info, AlertCircle } from 'lucide-react';
 import { Toast as ToastType, useToast } from '@/lib/useToast';
+import { useTranslations } from 'next-intl';
 
 const iconMap = {
   success: CheckCircle,
@@ -34,6 +35,7 @@ const colorMap = {
 
 function ToastItem({ toast }: { toast: ToastType }) {
   const { dismissToast } = useToast();
+  const t = useTranslations('toast');
   const Icon = iconMap[toast.type];
   const colors = colorMap[toast.type];
 
@@ -82,7 +84,7 @@ function ToastItem({ toast }: { toast: ToastType }) {
       <button
         onClick={() => dismissToast(toast.id)}
         className={`${colors.icon} hover:opacity-70 transition-opacity p-1 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-current min-h-[24px] min-w-[24px] flex items-center justify-center flex-shrink-0`}
-        aria-label="Close notification"
+        aria-label={t('closeAriaLabel')}
       >
         <X className="h-4 w-4" />
       </button>

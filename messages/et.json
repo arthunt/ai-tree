@@ -182,7 +182,10 @@
     "closeNavPanel": "Sulge navigatsioonipaneel",
     "goToLevel": "Mine {level} tasandile",
     "currentLevel": "Praegune",
-    "conceptsCompleted": "kontseptsiooni omandatud"
+    "conceptsCompleted": "kontseptsiooni omandatud",
+    "backToTop": "Tagasi üles",
+    "switchToEstonian": "Lülitu eesti keelele",
+    "switchToEnglish": "Lülitu inglise keelele"
   },
   "journey": {
     "title": "Sinu Õpitee",
@@ -270,6 +273,23 @@
     "infoText": "AI esindab sõnu vektoritena (numbrinimikirjad) mida kutsutakse <em>embeddinguteks</em>. Sarnastel sõnadel on sarnased vektorid. See demo kasutab lihtsustatud 10-mõõtmelisi vektoreid, kuid päris mudelid nagu GPT kasutavad 1536+ mõõdet! 2D graafik näitab neid kõrgmõõtmelisi seoseid projitseerituna ruumi, mida me näeme.",
     "tryExamples": "Proovi näiteid:",
     "disclaimer": "See demo kasutab eelarvutatud lihtsustatud embeddinguid. Päris AI mudelid loovad embeddinguid dünaamiliselt konteksti põhjal ja kasutavad tuhandeid mõõtmeid nüansirikkama mõistmise jaoks."
+  },
+  "codeBlock": {
+    "copied": "Kopeeritud!",
+    "copiedAriaLabel": "Kopeeritud!",
+    "copy": "Kopeeri",
+    "copyAriaLabel": "Kopeeri kood",
+    "explanation": "💡 Selgitus: "
+  },
+  "quickJump": {
+    "ariaLabel": "Keri alla ja alusta õppimist",
+    "startLearning": "Alusta õppimist"
+  },
+  "skeleton": {
+    "loadingTree": "Laadin puud..."
+  },
+  "toast": {
+    "closeAriaLabel": "Sulge teade"
   },
   "visuals": {
     "attention": {
@@ -530,6 +550,60 @@
       "outputDefense": "Väljundi filtreerimine ja piirangud",
       "summaryTitle": "Sügavkaitse: Kaitse igal kihil",
       "summaryDesc": "Üksik kaitse ei piisa — kombineeri sisendi, mudeli ja väljundi kaitseid"
+    },
+    "agiAsi": {
+      "title": "AI võimekuse spekter",
+      "narrowAi": "Kitsas AI",
+      "today": "(Tänapäev)",
+      "agi": "AGI",
+      "future": "(Tulevik?)",
+      "agiDesc1": "Hea KÕIGES",
+      "agiDesc2": "inimülesannetes",
+      "asi": "ASI",
+      "hypothetical": "(Hüpoteetiline)",
+      "asiDesc1": "Ületab KÕIK",
+      "asiDesc2": "inimvõimed",
+      "weAreHere": "Me oleme siin"
+    },
+    "functionCalling": {
+      "title": "Funktsioonide kutsumine: AI-le käte andmine",
+      "user": "KASUTAJA",
+      "aiModel": "AI MUDEL",
+      "function": "FUNKTSIOON",
+      "questionExample": "\"Milline on ilm?\"",
+      "answerExample": "\"5°C ja sajab vihma\"",
+      "aiGenerates": "AI genereerib kutse",
+      "appExecutes": "Sinu rakendus täidab selle"
+    },
+    "greenAi": {
+      "title": "Roheline AI: Energiatõhusus",
+      "trainingCost": "Treenimiskulu",
+      "co2Emissions": "CO₂ heitmed",
+      "inferenceCost": "Järeldamiskulu (päringu kohta)",
+      "reduction": "90% vähenemine",
+      "conclusion": "Sama kvaliteet, murdosa kulust"
+    },
+    "moe": {
+      "inputQuery": "Sisendpäring",
+      "router": "Marsruuter",
+      "expert": "Ekspert",
+      "combinedOutput": "Kombineeritud väljund",
+      "activeExperts": "Aktiivsed: 2/8 eksperti",
+      "fasterCheaper": "Kiirem + Odavam"
+    },
+    "reasoningModels": {
+      "title": "Tavaline LLM vs Arutlev mudel",
+      "regularLlm": "Tavaline LLM",
+      "answer": "Vastus: 425",
+      "sometimesWrong": "(vahel vale)",
+      "fast": "⚡ Kiire (kohene)",
+      "cheap": "💰 Odav",
+      "noVerification": "⚠️ Kontrolli pole",
+      "reasoningModel": "Arutlev mudel",
+      "verifiedAnswer": "Vastus: 425 ✓",
+      "slower": "🐢 Aeglasem (mitmeetapiline)",
+      "verified": "✅ Kontrollitud ja täpne",
+      "bestFor": "Parim: Matemaatika, Kood, Loogika ja Keerukas arutlus"
     }
   }
 }

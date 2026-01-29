@@ -1,12 +1,13 @@
 'use client';
 
-import React from 'react';
+import { useTranslations } from 'next-intl';
 
 interface GreenAiSVGProps {
   className?: string;
 }
 
 export function GreenAiSVG({ className = '' }: GreenAiSVGProps) {
+  const t = useTranslations('visuals.greenAi');
   return (
     <div className={`w-full text-gray-900 dark:text-gray-100 ${className}`}>
       <svg
@@ -23,7 +24,7 @@ export function GreenAiSVG({ className = '' }: GreenAiSVGProps) {
           fontWeight="700"
           textAnchor="middle"
         >
-          Green AI: Energy Efficiency
+          {t('title')}
         </text>
 
         {/* Section 1: Training Cost */}
@@ -34,7 +35,7 @@ export function GreenAiSVG({ className = '' }: GreenAiSVGProps) {
           fontSize="15"
           fontWeight="600"
         >
-          Training Cost
+          {t('trainingCost')}
         </text>
 
         {/* GPT-3 bar */}
@@ -84,7 +85,7 @@ export function GreenAiSVG({ className = '' }: GreenAiSVGProps) {
           fontSize="15"
           fontWeight="600"
         >
-          CO₂ Emissions
+          {t('co2Emissions')}
         </text>
 
         {/* 502 tons bar */}
@@ -124,7 +125,7 @@ export function GreenAiSVG({ className = '' }: GreenAiSVGProps) {
           fontSize="15"
           fontWeight="600"
         >
-          Inference Cost (per query)
+          {t('inferenceCost')}
         </text>
 
         {/* $0.03 bar */}
@@ -182,7 +183,7 @@ export function GreenAiSVG({ className = '' }: GreenAiSVGProps) {
           fontSize="14"
           fontWeight="700"
         >
-          90% reduction
+          {t('reduction')}
         </text>
 
         {/* Bottom message */}
@@ -202,7 +203,7 @@ export function GreenAiSVG({ className = '' }: GreenAiSVGProps) {
           fontWeight="700"
           textAnchor="middle"
         >
-          Same quality, fraction of the cost
+          {t('conclusion')}
         </text>
       </svg>
     </div>

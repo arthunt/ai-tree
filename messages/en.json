@@ -182,7 +182,10 @@
     "closeNavPanel": "Close navigation panel",
     "goToLevel": "Go to {level} level",
     "currentLevel": "Current",
-    "conceptsCompleted": "concepts understood"
+    "conceptsCompleted": "concepts understood",
+    "backToTop": "Back to top",
+    "switchToEstonian": "Switch to Estonian",
+    "switchToEnglish": "Switch to English"
   },
   "journey": {
     "title": "Your Learning Path",
@@ -270,6 +273,23 @@
     "infoText": "AI represents words as vectors (lists of numbers) called <em>embeddings</em>. Similar words have similar vectors. This demo uses simplified 10-dimensional vectors, but real models like GPT use 1,536+ dimensions! The 2D plot shows these high-dimensional relationships projected into a space we can see.",
     "tryExamples": "Try examples:",
     "disclaimer": "This demo uses pre-computed simplified embeddings. Real AI models create embeddings dynamically based on context and use thousands of dimensions for more nuanced understanding."
+  },
+  "codeBlock": {
+    "copied": "Copied!",
+    "copiedAriaLabel": "Copied!",
+    "copy": "Copy",
+    "copyAriaLabel": "Copy code",
+    "explanation": "💡 Explanation: "
+  },
+  "quickJump": {
+    "ariaLabel": "Scroll down and start learning",
+    "startLearning": "Start learning"
+  },
+  "skeleton": {
+    "loadingTree": "Loading tree..."
+  },
+  "toast": {
+    "closeAriaLabel": "Close notification"
   },
   "visuals": {
     "attention": {
@@ -530,6 +550,60 @@
       "outputDefense": "Output filtering & guardrails",
       "summaryTitle": "Defense in Depth: Protect at every layer",
       "summaryDesc": "No single defense is enough — combine input, model, and output protections"
+    },
+    "agiAsi": {
+      "title": "AI Capability Spectrum",
+      "narrowAi": "Narrow AI",
+      "today": "(Today)",
+      "agi": "AGI",
+      "future": "(Future?)",
+      "agiDesc1": "Good at ALL",
+      "agiDesc2": "human tasks",
+      "asi": "ASI",
+      "hypothetical": "(Hypothetical)",
+      "asiDesc1": "Surpasses ALL",
+      "asiDesc2": "human capability",
+      "weAreHere": "We are here"
+    },
+    "functionCalling": {
+      "title": "Function Calling: Giving AI Hands",
+      "user": "USER",
+      "aiModel": "AI MODEL",
+      "function": "FUNCTION",
+      "questionExample": "\"What's the weather?\"",
+      "answerExample": "\"It's 5°C and rainy\"",
+      "aiGenerates": "AI generates the call",
+      "appExecutes": "Your app executes it"
+    },
+    "greenAi": {
+      "title": "Green AI: Energy Efficiency",
+      "trainingCost": "Training Cost",
+      "co2Emissions": "CO₂ Emissions",
+      "inferenceCost": "Inference Cost (per query)",
+      "reduction": "90% reduction",
+      "conclusion": "Same quality, fraction of the cost"
+    },
+    "moe": {
+      "inputQuery": "Input Query",
+      "router": "Router",
+      "expert": "Expert",
+      "combinedOutput": "Combined Output",
+      "activeExperts": "Active: 2/8 experts",
+      "fasterCheaper": "Faster + Cheaper"
+    },
+    "reasoningModels": {
+      "title": "Regular LLM vs Reasoning Model",
+      "regularLlm": "Regular LLM",
+      "answer": "Answer: 425",
+      "sometimesWrong": "(sometimes wrong)",
+      "fast": "⚡ Fast (instant)",
+      "cheap": "💰 Cheap",
+      "noVerification": "⚠️ No verification",
+      "reasoningModel": "Reasoning Model",
+      "verifiedAnswer": "Answer: 425 ✓",
+      "slower": "🐢 Slower (multi-step)",
+      "verified": "✅ Verified & accurate",
+      "bestFor": "Best for: Math, Code, Logic & Complex Reasoning"
     }
   }
 }

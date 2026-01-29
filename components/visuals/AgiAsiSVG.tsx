@@ -1,12 +1,13 @@
 'use client';
 
-import React from 'react';
+import { useTranslations } from 'next-intl';
 
 interface AgiAsiSVGProps {
   className?: string;
 }
 
 export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
+  const t = useTranslations('visuals.agiAsi');
   return (
     <div className={`w-full text-gray-900 dark:text-gray-100 ${className}`}>
       <svg
@@ -23,7 +24,7 @@ export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
           fontWeight="700"
           textAnchor="middle"
         >
-          AI Capability Spectrum
+          {t('title')}
         </text>
 
         {/* Main timeline */}
@@ -54,7 +55,7 @@ export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
           fontWeight="700"
           textAnchor="middle"
         >
-          Narrow AI
+          {t('narrowAi')}
         </text>
         <text
           x="150"
@@ -63,7 +64,7 @@ export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
           fontSize="13"
           textAnchor="middle"
         >
-          (Today)
+          {t('today')}
         </text>
         <text
           x="150"
@@ -103,7 +104,7 @@ export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
           fontWeight="700"
           textAnchor="middle"
         >
-          AGI
+          {t('agi')}
         </text>
         <text
           x="400"
@@ -112,7 +113,7 @@ export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
           fontSize="13"
           textAnchor="middle"
         >
-          (Future?)
+          {t('future')}
         </text>
         <text
           x="400"
@@ -121,7 +122,7 @@ export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
           fontSize="12"
           textAnchor="middle"
         >
-          Good at ALL
+          {t('agiDesc1')}
         </text>
         <text
           x="400"
@@ -130,7 +131,7 @@ export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
           fontSize="12"
           textAnchor="middle"
         >
-          human tasks
+          {t('agiDesc2')}
         </text>
 
         {/* ASI - Dotted line with glow */}
@@ -159,7 +160,7 @@ export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
           fontWeight="700"
           textAnchor="middle"
         >
-          ASI
+          {t('asi')}
         </text>
         <text
           x="650"
@@ -168,7 +169,7 @@ export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
           fontSize="13"
           textAnchor="middle"
         >
-          (Hypothetical)
+          {t('hypothetical')}
         </text>
         <text
           x="650"
@@ -177,7 +178,7 @@ export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
           fontSize="12"
           textAnchor="middle"
         >
-          Surpasses ALL
+          {t('asiDesc1')}
         </text>
         <text
           x="650"
@@ -186,7 +187,7 @@ export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
           fontSize="12"
           textAnchor="middle"
         >
-          human capability
+          {t('asiDesc2')}
         </text>
 
         {/* "We are here" marker */}
@@ -202,7 +203,7 @@ export function AgiAsiSVG({ className = '' }: AgiAsiSVGProps) {
           fontWeight="700"
           textAnchor="middle"
         >
-          We are here
+          {t('weAreHere')}
         </text>
       </svg>
     </div>

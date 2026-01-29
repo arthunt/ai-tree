@@ -1,8 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 export function TreeDiagramSkeleton() {
+  const t = useTranslations('skeleton');
+
   return (
     <div className="relative w-full mx-auto animate-pulse" style={{ maxWidth: '1400px', aspectRatio: '1400 / 900' }}>
       {/* Background */}
@@ -74,7 +77,7 @@ export function TreeDiagramSkeleton() {
             className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg"
           >
             <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
-              Loading tree...
+              {t('loadingTree')}
             </p>
           </motion.div>
         </div>

@@ -1,6 +1,6 @@
 # AI Tree (Dendrix.ai) - Product Backlog
 
-> **Last Updated:** 2026-01-28
+> **Last Updated:** 2026-01-29
 > **Status:** Active Development (Post-Audit)
 > **Vision:** Public AI learning platform using tree metaphor - no sign-ins, free for all
 > **Principles:** KISS (Keep It Simple), Less is More, Testing-First (gradual)
@@ -582,6 +582,82 @@ Every story must meet ALL criteria before closing:
 **Files:** `components/ConceptLightbox.tsx`, `components/SearchModal.tsx`
 
 ---
+
+---
+
+## Sprint 8: i18n Completion (Jan 2026) - IN PROGRESS
+
+> **Started:** 2026-01-29
+> **Goal:** Complete i18n coverage for all visual and UI components
+> **Commits:** `91b6143` (16 SVG visuals translated)
+
+---
+
+### Completed (2026-01-29)
+
+- [x] US-076: Translate 16 SVG visual components (16 files, +261 keys per locale)
+  - AttentionSVG, PrefillDecodeSVG, ContextWindowSVG, HallucinationsSVG
+  - TrainingInferenceSVG, TransformersSVG, TemperatureSVG, PromptingBasicsSVG
+  - ContextEngineeringSVG, RagPipelineSVG, MemoryTypesSVG, LoraSVG
+  - SecuritySVG, AgentLoopSVG, McpArchitectureSVG, ComplexityLevelsSVG
+
+---
+
+### US-077: Translate Remaining 5 SVG Components
+**Priority:** P1-High | **Effort:** 3h | **Type:** i18n
+
+**Problem:** 5 SVG visual components still have hardcoded English text.
+
+**Components:**
+| File | Key Strings |
+|------|-------------|
+| AgiAsiSVG.tsx | "AI Capability Spectrum", "Narrow AI", "AGI", "ASI", "We are here" |
+| FunctionCallingSVG.tsx | "Function Calling: Giving AI Hands", "USER", "AI MODEL", "FUNCTION" |
+| GreenAiSVG.tsx | "Green AI: Energy Efficiency", "Training Cost", "CO₂ Emissions" |
+| MoeSVG.tsx | "Input Query", "Router", "Expert", "Combined Output" |
+| ReasoningModelsSVG.tsx | "Regular LLM vs Reasoning Model", step labels, characteristics |
+
+**Acceptance Criteria:**
+- [ ] All 5 SVGs use `useTranslations('visuals.*')`
+- [ ] All strings added to `messages/en.json` and `messages/et.json`
+- [ ] Build passes
+- [ ] Both languages render correctly
+
+---
+
+### US-078: Translate Remaining UI Components
+**Priority:** P1-High | **Effort:** 3h | **Type:** i18n
+
+**Problem:** Several non-SVG components have hardcoded Estonian or English text.
+
+**Components:**
+| File | Strings | Language |
+|------|---------|----------|
+| HeroSection.tsx | 8 strings (section labels, toggle text) | Estonian |
+| CodeBlock.tsx | 4 strings ("Kopeeritud!", "Kopeeri kood", "Selgitus:") | Estonian |
+| QuickJumpNav.tsx | 2 strings ("Alusta õppimist", aria-label) | Estonian |
+| TreeDiagramSkeleton.tsx | "Loading tree..." | English |
+| Toast.tsx | "Close notification" aria-label | English |
+| page.tsx | "Back to top" aria-label | English |
+| LanguageSwitcher.tsx | Language names in aria-label | English |
+
+**Acceptance Criteria:**
+- [ ] All hardcoded strings moved to `messages/en.json` and `messages/et.json`
+- [ ] Components use `useTranslations()` hook
+- [ ] Build passes
+- [ ] Both locales display correctly
+
+---
+
+### Sprint 8 Summary
+
+| Story | Points | Priority | Status |
+|-------|--------|----------|--------|
+| US-076 Translate 16 SVG visuals | 6h | P1-High | ✅ Done |
+| US-077 Translate 5 remaining SVGs | 3h | P1-High | 🔲 Pending |
+| US-078 Translate UI components | 3h | P1-High | 🔲 Pending |
+
+**Total:** 12h | **Sprint Goal:** 100% i18n coverage across all components
 
 ---
 
@@ -1256,15 +1332,15 @@ npm test             # Run tests (when configured)
 
 | Story | Points | Priority | Status |
 |-------|--------|----------|--------|
-| US-060 Hero Simplification | 4h | P0-Critical | 🔲 Pending |
-| US-061 Value Proposition | 2h | P0-Critical | 🔲 Pending |
-| US-062 Time Estimates | 2h | P0-Critical | 🔲 Pending |
-| US-063 Move Demos | 3h | P1-High | 🔲 Pending |
-| US-064 Header Simplify | 2h | P1-High | 🔲 Pending |
-| US-065 Rename Views | 1h | P1-High | 🔲 Pending |
-| US-066 Vector Touch | 2h | P1-High | 🔲 Pending |
-| US-067 Collapsible Hero | 3h | P2-Medium | 🔲 Pending |
-| US-068 Skill Selector | 4h | P2-Medium | 🔲 Pending |
+| US-060 Hero Simplification | 4h | P0-Critical | ✅ Done |
+| US-061 Value Proposition | 2h | P0-Critical | ✅ Done |
+| US-062 Time Estimates | 2h | P0-Critical | ✅ Done |
+| US-063 Move Demos | 3h | P1-High | ✅ Done |
+| US-064 Header Simplify | 2h | P1-High | ✅ Done |
+| US-065 Rename Views | 1h | P1-High | ✅ Done |
+| US-066 Vector Touch | 2h | P1-High | ✅ Done |
+| US-067 Collapsible Hero | 3h | P2-Medium | ✅ Done |
+| US-068 Skill Selector | 4h | P2-Medium | ✅ Done |
 
 **Total:** 23h | **Sprint Goal:** 60% clutter reduction, better learning flow
 

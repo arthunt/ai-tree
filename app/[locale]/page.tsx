@@ -127,7 +127,7 @@ export default function AITreePage() {
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 text-left group"
-              aria-label="Back to top"
+              aria-label={t('navigation.backToTop')}
               type="button"
             >
               <DendrixLogo size={isScrolled ? 28 : 36} animate={false} className="flex-shrink-0 transition-all duration-300" />
@@ -216,7 +216,7 @@ export default function AITreePage() {
                         ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700'
                     }`}
-                    aria-label={`Switch to ${loc === 'et' ? 'Estonian' : 'English'}`}
+                    aria-label={loc === 'et' ? t('navigation.switchToEstonian') : t('navigation.switchToEnglish')}
                     aria-current={loc === locale ? 'true' : undefined}
                     type="button"
                   >

@@ -1,12 +1,13 @@
 'use client';
 
-import React from 'react';
+import { useTranslations } from 'next-intl';
 
 interface MoeSVGProps {
   className?: string;
 }
 
 export function MoeSVG({ className = '' }: MoeSVGProps) {
+  const t = useTranslations('visuals.moe');
   return (
     <div className={`w-full text-gray-900 dark:text-gray-100 ${className}`}>
       <svg
@@ -31,7 +32,7 @@ export function MoeSVG({ className = '' }: MoeSVGProps) {
           fontWeight="600"
           textAnchor="middle"
         >
-          Input Query
+          {t('inputQuery')}
         </text>
 
         {/* Router Node - highlighted purple */}
@@ -44,7 +45,7 @@ export function MoeSVG({ className = '' }: MoeSVGProps) {
           fontWeight="700"
           textAnchor="middle"
         >
-          Router
+          {t('router')}
         </text>
 
         {/* Line from Input to Router */}
@@ -82,7 +83,7 @@ export function MoeSVG({ className = '' }: MoeSVGProps) {
                 fontWeight={isActive ? '700' : '400'}
                 textAnchor="middle"
               >
-                Expert
+                {t('expert')}
               </text>
               <text
                 x={x + 20}
@@ -138,7 +139,7 @@ export function MoeSVG({ className = '' }: MoeSVGProps) {
           fontWeight="600"
           textAnchor="middle"
         >
-          Combined Output
+          {t('combinedOutput')}
         </text>
 
         {/* Label at bottom */}
@@ -150,7 +151,7 @@ export function MoeSVG({ className = '' }: MoeSVGProps) {
           fontWeight="700"
           textAnchor="middle"
         >
-          Active: 2/8 experts
+          {t('activeExperts')}
         </text>
         <text
           x="200"
@@ -159,7 +160,7 @@ export function MoeSVG({ className = '' }: MoeSVGProps) {
           fontSize="13"
           textAnchor="middle"
         >
-          Faster + Cheaper
+          {t('fasterCheaper')}
         </text>
 
         {/* Checkmarks on active experts */}

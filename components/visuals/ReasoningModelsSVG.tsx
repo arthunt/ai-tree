@@ -1,12 +1,13 @@
 'use client';
 
-import React from 'react';
+import { useTranslations } from 'next-intl';
 
 interface ReasoningModelsSVGProps {
   className?: string;
 }
 
 export function ReasoningModelsSVG({ className = '' }: ReasoningModelsSVGProps) {
+  const t = useTranslations('visuals.reasoningModels');
   return (
     <div className={`w-full text-gray-900 dark:text-gray-100 ${className}`}>
       <svg
@@ -23,7 +24,7 @@ export function ReasoningModelsSVG({ className = '' }: ReasoningModelsSVGProps) 
           fontWeight="700"
           textAnchor="middle"
         >
-          Regular LLM vs Reasoning Model
+          {t('title')}
         </text>
 
         {/* Left side: Regular LLM */}
@@ -45,7 +46,7 @@ export function ReasoningModelsSVG({ className = '' }: ReasoningModelsSVGProps) 
           fontWeight="700"
           textAnchor="middle"
         >
-          Regular LLM
+          {t('regularLlm')}
         </text>
 
         {/* Question */}
@@ -88,7 +89,7 @@ export function ReasoningModelsSVG({ className = '' }: ReasoningModelsSVGProps) 
           fontWeight="700"
           textAnchor="middle"
         >
-          Answer: 425
+          {t('answer')}
         </text>
         <text
           x="175"
@@ -97,18 +98,18 @@ export function ReasoningModelsSVG({ className = '' }: ReasoningModelsSVGProps) 
           fontSize="12"
           textAnchor="middle"
         >
-          (sometimes wrong)
+          {t('sometimesWrong')}
         </text>
 
         {/* Characteristics */}
         <text x="50" y="275" className="fill-current" fontSize="13">
-          ⚡ Fast (instant)
+          {t('fast')}
         </text>
         <text x="50" y="300" className="fill-current" fontSize="13">
-          💰 Cheap
+          {t('cheap')}
         </text>
         <text x="50" y="325" className="fill-current" fontSize="13">
-          ⚠️ No verification
+          {t('noVerification')}
         </text>
 
         {/* Right side: Reasoning Model */}
@@ -130,7 +131,7 @@ export function ReasoningModelsSVG({ className = '' }: ReasoningModelsSVGProps) 
           fontWeight="700"
           textAnchor="middle"
         >
-          Reasoning Model
+          {t('reasoningModel')}
         </text>
 
         {/* Question */}
@@ -219,15 +220,15 @@ export function ReasoningModelsSVG({ className = '' }: ReasoningModelsSVGProps) 
           fontWeight="700"
           textAnchor="middle"
         >
-          Answer: 425 ✓
+          {t('verifiedAnswer')}
         </text>
 
         {/* Characteristics */}
         <text x="400" y="360" className="fill-current" fontSize="13">
-          🐢 Slower (multi-step)
+          {t('slower')}
         </text>
         <text x="400" y="385" className="fill-current" fontSize="13">
-          ✅ Verified & accurate
+          {t('verified')}
         </text>
 
         {/* Bottom comparison label */}
@@ -239,7 +240,7 @@ export function ReasoningModelsSVG({ className = '' }: ReasoningModelsSVGProps) 
           fontWeight="700"
           textAnchor="middle"
         >
-          Best for: Math, Code, Logic & Complex Reasoning
+          {t('bestFor')}
         </text>
       </svg>
     </div>

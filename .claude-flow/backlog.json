@@ -1,7 +1,7 @@
 {
   "version": "3.0.0",
   "project": "ai-tree",
-  "updated": "2026-01-28",
+  "updated": "2026-01-29",
   "status": "active",
   "vision": "Public AI learning platform - no sign-ins, free for all",
   "principles": ["KISS", "Less is More", "Mobile-First", "Testing-First (gradual)"],
@@ -12,6 +12,15 @@
     "auth": "not_needed"
   },
   "current_sprint": {
+    "id": "sprint-8",
+    "name": "i18n Completion",
+    "priority": "P1-High",
+    "total_hours": 12,
+    "goal": "Complete i18n coverage for all visual and UI components",
+    "stories": ["US-076", "US-077", "US-078"],
+    "completed": ["US-076"]
+  },
+  "next_sprint": {
     "id": "sprint-7",
     "name": "Mobile-First Concept Popup Redesign",
     "priority": "P0-Critical",
@@ -40,9 +49,10 @@
       "id": "E003",
       "name": "Multilingual (i18n)",
       "priority": "P1-High",
-      "status": "completed",
-      "hours": 24,
-      "stories": ["US-009", "US-010", "US-011"]
+      "status": "in_progress",
+      "hours": 36,
+      "stories": ["US-009", "US-010", "US-011", "US-076", "US-077", "US-078"],
+      "note": "Core i18n done. US-076 (16 SVGs) done 2026-01-29. US-077 (5 SVGs) and US-078 (UI components) remaining."
     },
     {
       "id": "E004",
@@ -220,6 +230,67 @@
         "components/ConceptLightbox.tsx"
       ]
     },
+    "US-076": {
+      "id": "US-076",
+      "title": "Translate 16 SVG Visual Components",
+      "epic": "E003",
+      "priority": "P1",
+      "hours": 6,
+      "status": "completed",
+      "type": "i18n",
+      "dependencies": [],
+      "agent_type": "coder",
+      "model": "sonnet",
+      "description": "Replace hardcoded text in 16 SVG components with useTranslations() and add visuals.* keys to en.json and et.json",
+      "completed_date": "2026-01-29",
+      "commit": "91b6143"
+    },
+    "US-077": {
+      "id": "US-077",
+      "title": "Translate Remaining 5 SVG Components",
+      "epic": "E003",
+      "priority": "P1",
+      "hours": 3,
+      "status": "not_started",
+      "type": "i18n",
+      "dependencies": [],
+      "agent_type": "coder",
+      "model": "haiku",
+      "description": "Translate AgiAsiSVG, FunctionCallingSVG, GreenAiSVG, MoeSVG, ReasoningModelsSVG to use useTranslations()",
+      "files": [
+        "components/visuals/AgiAsiSVG.tsx",
+        "components/visuals/FunctionCallingSVG.tsx",
+        "components/visuals/GreenAiSVG.tsx",
+        "components/visuals/MoeSVG.tsx",
+        "components/visuals/ReasoningModelsSVG.tsx",
+        "messages/en.json",
+        "messages/et.json"
+      ]
+    },
+    "US-078": {
+      "id": "US-078",
+      "title": "Translate Remaining UI Components",
+      "epic": "E003",
+      "priority": "P1",
+      "hours": 3,
+      "status": "not_started",
+      "type": "i18n",
+      "dependencies": [],
+      "agent_type": "coder",
+      "model": "haiku",
+      "description": "Translate hardcoded strings in HeroSection, CodeBlock, QuickJumpNav, TreeDiagramSkeleton, Toast, page.tsx, LanguageSwitcher",
+      "files": [
+        "components/HeroSection.tsx",
+        "components/CodeBlock.tsx",
+        "components/QuickJumpNav.tsx",
+        "components/TreeDiagramSkeleton.tsx",
+        "components/Toast.tsx",
+        "app/[locale]/page.tsx",
+        "components/LanguageSwitcher.tsx",
+        "messages/en.json",
+        "messages/et.json"
+      ]
+    },
     "US-075": {
       "id": "US-075",
       "title": "Content Data Structure Extension",
@@ -306,12 +377,13 @@
     }
   },
   "metrics": {
-    "total_stories": 6,
-    "total_hours": 32,
+    "total_stories": 9,
+    "total_hours": 44,
     "p0_stories": 5,
-    "p1_stories": 1,
+    "p1_stories": 4,
     "completed_sprints": 6,
-    "current_sprint": 7
+    "current_sprint": 8,
+    "next_sprint": 7
   },
   "deferred": [
     "Supabase/Database",
