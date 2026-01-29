@@ -46,3 +46,4 @@ yarn-error.log*
 # Misc
 *.log
 .cache/
+.env*.local

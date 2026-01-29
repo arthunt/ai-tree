@@ -1,45 +1,49 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 export function ContextWindowSVG() {
+  const t = useTranslations('visuals.contextWindow');
+
   return (
     <div className="w-full text-gray-900 dark:text-gray-100">
       <svg viewBox="0 0 800 400" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
         {/* Title */}
         <text x="400" y="30" fontSize="24" fontWeight="bold" textAnchor="middle" fill="currentColor">
-          Context Window — Working Memory
+          {t('title')}
         </text>
 
         {/* Main context window visualization */}
         <g id="window">
           <text x="50" y="75" fontSize="14" fill="currentColor" opacity="0.7">
-            Token Flow:
+            {t('tokenFlow')}
           </text>
 
-          {/* Forgotten zone (grayed out) */}
+          {/* Forgotten zone */}
           <rect x="50" y="90" width="100" height="60" fill="#e5e7eb" className="dark:fill-gray-700" stroke="#9ca3af" strokeWidth="2" strokeDasharray="5,5" rx="4"/>
           <text x="100" y="120" fontSize="13" fontWeight="600" textAnchor="middle" fill="#6b7280">
-            Forgotten
+            {t('forgotten')}
           </text>
           <text x="100" y="138" fontSize="11" textAnchor="middle" fill="#6b7280">
-            Past limit
+            {t('pastLimit')}
           </text>
 
-          {/* Active context (colored) */}
+          {/* Active context */}
           <rect x="160" y="90" width="380" height="60" fill="#10b981" stroke="#065f46" strokeWidth="3" rx="4"/>
           <text x="350" y="115" fontSize="15" fontWeight="bold" textAnchor="middle" fill="white">
-            ACTIVE CONTEXT
+            {t('activeContext')}
           </text>
           <text x="350" y="135" fontSize="12" textAnchor="middle" fill="white" opacity="0.9">
-            {`Model can "see" and use this`}
+            {t('modelCanSee')}
           </text>
 
-          {/* Available space (empty) */}
+          {/* Available space */}
           <rect x="550" y="90" width="200" height="60" fill="#f3f4f6" className="dark:fill-gray-800" stroke="#6b7280" strokeWidth="2" strokeDasharray="3,3" rx="4"/>
           <text x="650" y="120" fontSize="13" fontWeight="600" textAnchor="middle" fill="#6b7280">
-            Available
+            {t('available')}
           </text>
           <text x="650" y="138" fontSize="11" textAnchor="middle" fill="#6b7280">
-            Space left
+            {t('spaceLeft')}
           </text>
         </g>
 
@@ -51,61 +55,45 @@ export function ContextWindowSVG() {
         </defs>
         <path d="M 160 175 L 540 175" stroke="#065f46" strokeWidth="2" markerEnd="url(#arrow-flow)"/>
         <text x="350" y="195" fontSize="12" textAnchor="middle" fill="currentColor" opacity="0.7">
-          Tokens flow through window →
+          {t('flowDirection')}
         </text>
 
         {/* Model comparisons */}
         <text x="400" y="230" fontSize="16" fontWeight="bold" textAnchor="middle" fill="currentColor">
-          Context Window Sizes by Model
+          {t('sizesByModel')}
         </text>
 
         {/* GPT-3.5 */}
         <g id="gpt35">
           <rect x="80" y="250" width="140" height="40" fill="#fee2e2" stroke="#dc2626" strokeWidth="2" rx="4"/>
-          <text x="150" y="268" fontSize="13" fontWeight="600" textAnchor="middle" fill="#991b1b">
-            GPT-3.5
-          </text>
-          <text x="150" y="285" fontSize="15" fontWeight="bold" textAnchor="middle" fill="#dc2626">
-            4K tokens
-          </text>
+          <text x="150" y="268" fontSize="13" fontWeight="600" textAnchor="middle" fill="#991b1b">GPT-3.5</text>
+          <text x="150" y="285" fontSize="15" fontWeight="bold" textAnchor="middle" fill="#dc2626">{t('gpt35Size')}</text>
         </g>
 
         {/* GPT-4 */}
         <g id="gpt4">
           <rect x="240" y="250" width="140" height="40" fill="#fed7aa" stroke="#ea580c" strokeWidth="2" rx="4"/>
-          <text x="310" y="268" fontSize="13" fontWeight="600" textAnchor="middle" fill="#9a3412">
-            GPT-4
-          </text>
-          <text x="310" y="285" fontSize="15" fontWeight="bold" textAnchor="middle" fill="#ea580c">
-            8K tokens
-          </text>
+          <text x="310" y="268" fontSize="13" fontWeight="600" textAnchor="middle" fill="#9a3412">GPT-4</text>
+          <text x="310" y="285" fontSize="15" fontWeight="bold" textAnchor="middle" fill="#ea580c">{t('gpt4Size')}</text>
         </g>
 
         {/* GPT-4 Turbo */}
         <g id="gpt4turbo">
           <rect x="400" y="250" width="140" height="40" fill="#fef08a" stroke="#ca8a04" strokeWidth="2" rx="4"/>
-          <text x="470" y="268" fontSize="13" fontWeight="600" textAnchor="middle" fill="#713f12">
-            GPT-4 Turbo
-          </text>
-          <text x="470" y="285" fontSize="15" fontWeight="bold" textAnchor="middle" fill="#ca8a04">
-            128K tokens
-          </text>
+          <text x="470" y="268" fontSize="13" fontWeight="600" textAnchor="middle" fill="#713f12">GPT-4 Turbo</text>
+          <text x="470" y="285" fontSize="15" fontWeight="bold" textAnchor="middle" fill="#ca8a04">{t('gpt4TurboSize')}</text>
         </g>
 
         {/* Claude */}
         <g id="claude">
           <rect x="560" y="250" width="140" height="40" fill="#d1fae5" stroke="#065f46" strokeWidth="2" rx="4"/>
-          <text x="630" y="268" fontSize="13" fontWeight="600" textAnchor="middle" fill="#064e3b">
-            Claude 3
-          </text>
-          <text x="630" y="285" fontSize="15" fontWeight="bold" textAnchor="middle" fill="#065f46">
-            200K tokens
-          </text>
+          <text x="630" y="268" fontSize="13" fontWeight="600" textAnchor="middle" fill="#064e3b">Claude 3</text>
+          <text x="630" y="285" fontSize="15" fontWeight="bold" textAnchor="middle" fill="#065f46">{t('claudeSize')}</text>
         </g>
 
         {/* Visual scale */}
         <text x="400" y="315" fontSize="12" fontWeight="600" textAnchor="middle" fill="currentColor" opacity="0.7">
-          Visual scale (1K = 1px width):
+          {t('visualScale')}
         </text>
 
         <rect x="80" y="325" width="4" height="15" fill="#dc2626"/>
@@ -116,7 +104,7 @@ export function ContextWindowSVG() {
         {/* Bottom explanation */}
         <rect x="50" y="360" width="700" height="30" fill="#f0fdf4" className="dark:fill-gray-800" stroke="#065f46" strokeWidth="2" rx="6"/>
         <text x="400" y="382" fontSize="13" textAnchor="middle" fill="currentColor" opacity="0.9">
-          Think of it like RAM: larger context = can remember more of your conversation, but costs more and runs slower.
+          {t('explanation')}
         </text>
       </svg>
     </div>

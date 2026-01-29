@@ -1,14 +1,17 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 export function TemperatureSVG({ className = '' }: { className?: string }) {
+  const t = useTranslations('visuals.temperature');
+
   return (
     <div className={`${className} text-gray-900 dark:text-gray-100`}>
       <svg viewBox="0 0 750 500" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
         {/* Title */}
         <text x="375" y="35" fontSize="22" fontWeight="bold" fill="currentColor" textAnchor="middle">
-          Temperature: Creativity Knob
+          {t('title')}
         </text>
 
         {/* Temperature scale */}
@@ -30,16 +33,16 @@ export function TemperatureSVG({ className = '' }: { className?: string }) {
           <rect x="50" y="130" width="200" height="320" rx="12" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" strokeWidth="2"/>
 
           <text x="150" y="160" fontSize="15" fontWeight="bold" fill="currentColor" textAnchor="middle">
-            Low (0.0 - 0.3)
+            {t('lowLabel')}
           </text>
           <text x="150" y="180" fontSize="12" fill="#3b82f6" textAnchor="middle">
-            ❄️ Predictable
+            {t('lowDesc')}
           </text>
 
           {/* Distribution - peaked */}
           <rect x="80" y="200" width="140" height="90" rx="6" fill="#e0e7ff" className="dark:fill-gray-800" stroke="#3b82f6" strokeWidth="1"/>
           <text x="150" y="220" fontSize="11" fill="currentColor" opacity="0.7" textAnchor="middle">
-            Probability Distribution
+            {t('probDistribution')}
           </text>
 
           {/* Bar chart - highly peaked */}
@@ -52,19 +55,19 @@ export function TemperatureSVG({ className = '' }: { className?: string }) {
           {/* Example output */}
           <rect x="70" y="310" width="160" height="120" rx="8" fill="#dbeafe" className="dark:fill-gray-900" stroke="#3b82f6" strokeWidth="1.5"/>
           <text x="150" y="330" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="middle">
-            Example Output
+            {t('exampleOutput')}
           </text>
           <text x="150" y="350" fontSize="11" fill="currentColor" textAnchor="middle">
-            {`"The cat sat on the`}
+            {t('lowExample1')}
           </text>
           <text x="150" y="370" fontSize="11" fill="currentColor" textAnchor="middle">
-            mat. The cat sat on
+            {t('lowExample2')}
           </text>
           <text x="150" y="390" fontSize="11" fill="currentColor" textAnchor="middle">
-            {`the mat. The cat..."`}
+            {t('lowExample3')}
           </text>
           <text x="150" y="415" fontSize="10" fontStyle="italic" fill="#3b82f6" textAnchor="middle">
-            (repetitive, safe)
+            {t('lowNote')}
           </text>
         </g>
 
@@ -73,16 +76,16 @@ export function TemperatureSVG({ className = '' }: { className?: string }) {
           <rect x="275" y="130" width="200" height="320" rx="12" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" strokeWidth="2"/>
 
           <text x="375" y="160" fontSize="15" fontWeight="bold" fill="currentColor" textAnchor="middle">
-            Medium (0.7)
+            {t('medLabel')}
           </text>
           <text x="375" y="180" fontSize="12" fill="#f59e0b" textAnchor="middle">
-            🎯 Balanced
+            {t('medDesc')}
           </text>
 
           {/* Distribution - balanced */}
           <rect x="305" y="200" width="140" height="90" rx="6" fill="#fef3c7" className="dark:fill-gray-800" stroke="#f59e0b" strokeWidth="1"/>
           <text x="375" y="220" fontSize="11" fill="currentColor" opacity="0.7" textAnchor="middle">
-            Probability Distribution
+            {t('probDistribution')}
           </text>
 
           {/* Bar chart - balanced */}
@@ -95,19 +98,19 @@ export function TemperatureSVG({ className = '' }: { className?: string }) {
           {/* Example output */}
           <rect x="295" y="310" width="160" height="120" rx="8" fill="#fef3c7" className="dark:fill-gray-900" stroke="#f59e0b" strokeWidth="1.5"/>
           <text x="375" y="330" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="middle">
-            Example Output
+            {t('exampleOutput')}
           </text>
           <text x="375" y="350" fontSize="11" fill="currentColor" textAnchor="middle">
-            {`"The cat rested on`}
+            {t('medExample1')}
           </text>
           <text x="375" y="370" fontSize="11" fill="currentColor" textAnchor="middle">
-            the warm mat,
+            {t('medExample2')}
           </text>
           <text x="375" y="390" fontSize="11" fill="currentColor" textAnchor="middle">
-            {`watching birds..."`}
+            {t('medExample3')}
           </text>
           <text x="375" y="415" fontSize="10" fontStyle="italic" fill="#f59e0b" textAnchor="middle">
-            (natural, coherent)
+            {t('medNote')}
           </text>
         </g>
 
@@ -116,16 +119,16 @@ export function TemperatureSVG({ className = '' }: { className?: string }) {
           <rect x="500" y="130" width="200" height="320" rx="12" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" strokeWidth="2"/>
 
           <text x="600" y="160" fontSize="15" fontWeight="bold" fill="currentColor" textAnchor="middle">
-            High (1.5 - 2.0)
+            {t('highLabel')}
           </text>
           <text x="600" y="180" fontSize="12" fill="#ef4444" textAnchor="middle">
-            🔥 Chaotic
+            {t('highDesc')}
           </text>
 
           {/* Distribution - flat */}
           <rect x="530" y="200" width="140" height="90" rx="6" fill="#fee2e2" className="dark:fill-gray-800" stroke="#ef4444" strokeWidth="1"/>
           <text x="600" y="220" fontSize="11" fill="currentColor" opacity="0.7" textAnchor="middle">
-            Probability Distribution
+            {t('probDistribution')}
           </text>
 
           {/* Bar chart - flat */}
@@ -138,19 +141,19 @@ export function TemperatureSVG({ className = '' }: { className?: string }) {
           {/* Example output */}
           <rect x="520" y="310" width="160" height="120" rx="8" fill="#fee2e2" className="dark:fill-gray-900" stroke="#ef4444" strokeWidth="1.5"/>
           <text x="600" y="330" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="middle">
-            Example Output
+            {t('exampleOutput')}
           </text>
           <text x="600" y="350" fontSize="11" fill="currentColor" textAnchor="middle">
-            {`"Quantum bicycle`}
+            {t('highExample1')}
           </text>
           <text x="600" y="370" fontSize="11" fill="currentColor" textAnchor="middle">
-            dreams! Purple
+            {t('highExample2')}
           </text>
           <text x="600" y="390" fontSize="11" fill="currentColor" textAnchor="middle">
-            {`elephant Tuesday..."`}
+            {t('highExample3')}
           </text>
           <text x="600" y="415" fontSize="10" fontStyle="italic" fill="#ef4444" textAnchor="middle">
-            (random, incoherent)
+            {t('highNote')}
           </text>
         </g>
       </svg>

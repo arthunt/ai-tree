@@ -1,12 +1,16 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 export function PrefillDecodeSVG() {
+  const t = useTranslations('visuals.prefillDecode');
+
   return (
     <div className="w-full text-gray-900 dark:text-gray-100">
       <svg viewBox="0 0 800 400" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
         {/* Title */}
         <text x="400" y="30" fontSize="24" fontWeight="bold" textAnchor="middle" fill="currentColor">
-          Prefill vs Decode — Reading vs Writing
+          {t('title')}
         </text>
 
         {/* Prefill Phase */}
@@ -14,21 +18,21 @@ export function PrefillDecodeSVG() {
           <rect x="50" y="70" width="320" height="180" fill="#d1fae5" className="dark:fill-emerald-900" stroke="#065f46" strokeWidth="3" rx="8"/>
 
           <text x="210" y="100" fontSize="18" fontWeight="bold" textAnchor="middle" fill="#065f46">
-            PREFILL — Reading
+            {t('prefillTitle')}
           </text>
 
           {/* Tokens processed in parallel */}
           <rect x="70" y="120" width="60" height="40" fill="#10b981" stroke="#065f46" strokeWidth="2" rx="4"/>
-          <text x="100" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">Write</text>
+          <text x="100" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">{t('token.write')}</text>
 
           <rect x="140" y="120" width="60" height="40" fill="#10b981" stroke="#065f46" strokeWidth="2" rx="4"/>
-          <text x="170" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">me</text>
+          <text x="170" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">{t('token.me')}</text>
 
           <rect x="210" y="120" width="60" height="40" fill="#10b981" stroke="#065f46" strokeWidth="2" rx="4"/>
-          <text x="240" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">a</text>
+          <text x="240" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">{t('token.a')}</text>
 
           <rect x="280" y="120" width="60" height="40" fill="#10b981" stroke="#065f46" strokeWidth="2" rx="4"/>
-          <text x="310" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">story</text>
+          <text x="310" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">{t('token.story')}</text>
 
           {/* Parallel arrows */}
           <path d="M 100 165 L 100 185" stroke="#065f46" strokeWidth="3" markerEnd="url(#arrow-green)"/>
@@ -37,14 +41,14 @@ export function PrefillDecodeSVG() {
           <path d="M 310 165 L 310 185" stroke="#065f46" strokeWidth="3" markerEnd="url(#arrow-green)"/>
 
           <text x="210" y="205" fontSize="14" fontWeight="600" textAnchor="middle" fill="#065f46">
-            All processed at once
+            {t('allAtOnce')}
           </text>
 
           <text x="210" y="230" fontSize="13" textAnchor="middle" fill="currentColor">
-            ⚡ Fast &amp; Parallel
+            {t('fastParallel')}
           </text>
           <text x="210" y="248" fontSize="12" textAnchor="middle" fill="currentColor" opacity="0.8">
-            ~50ms for 100 tokens
+            {t('prefillSpeed')}
           </text>
         </g>
 
@@ -53,39 +57,39 @@ export function PrefillDecodeSVG() {
           <rect x="430" y="70" width="320" height="180" fill="#fef3c7" className="dark:fill-yellow-900" stroke="#d97706" strokeWidth="3" rx="8"/>
 
           <text x="590" y="100" fontSize="18" fontWeight="bold" textAnchor="middle" fill="#d97706">
-            DECODE — Writing
+            {t('decodeTitle')}
           </text>
 
           {/* Sequential token generation */}
           <rect x="450" y="120" width="60" height="40" fill="#f59e0b" stroke="#d97706" strokeWidth="2" rx="4"/>
-          <text x="480" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">Once</text>
+          <text x="480" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">{t('token.once')}</text>
 
           <path d="M 515 140 L 535 140" stroke="#d97706" strokeWidth="3" markerEnd="url(#arrow-orange)"/>
 
           <rect x="540" y="120" width="60" height="40" fill="#f59e0b" stroke="#d97706" strokeWidth="2" rx="4"/>
-          <text x="570" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">upon</text>
+          <text x="570" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">{t('token.upon')}</text>
 
           <path d="M 605 140 L 625 140" stroke="#d97706" strokeWidth="3" markerEnd="url(#arrow-orange)"/>
 
           <rect x="630" y="120" width="60" height="40" fill="#f59e0b" stroke="#d97706" strokeWidth="2" rx="4"/>
-          <text x="660" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">a</text>
+          <text x="660" y="145" fontSize="14" fontWeight="600" textAnchor="middle" fill="white">{t('token.a')}</text>
 
           <path d="M 695 140 L 715 140" stroke="#d97706" strokeWidth="3" markerEnd="url(#arrow-orange)"/>
 
           <text x="730" y="145" fontSize="20" textAnchor="middle" fill="#d97706">...</text>
 
           <text x="590" y="180" fontSize="14" fontWeight="600" textAnchor="middle" fill="#d97706">
-            One token at a time
+            {t('oneAtATime')}
           </text>
 
           <text x="590" y="205" fontSize="13" textAnchor="middle" fill="currentColor">
-            🐢 Sequential
+            {t('sequential')}
           </text>
           <text x="590" y="223" fontSize="12" textAnchor="middle" fill="currentColor" opacity="0.8">
-            ~50ms per token
+            {t('decodeSpeed')}
           </text>
           <text x="590" y="239" fontSize="12" textAnchor="middle" fill="currentColor" opacity="0.8">
-            (100 tokens = 5 seconds)
+            {t('decodeExample')}
           </text>
         </g>
 
@@ -102,13 +106,13 @@ export function PrefillDecodeSVG() {
         {/* Bottom explanation */}
         <rect x="50" y="280" width="700" height="90" fill="#f0fdf4" className="dark:fill-gray-800" stroke="#065f46" strokeWidth="2" rx="8"/>
         <text x="400" y="310" fontSize="15" fontWeight="600" textAnchor="middle" fill="currentColor">
-          Why This Matters
+          {t('whyMatters')}
         </text>
         <text x="400" y="335" fontSize="13" textAnchor="middle" fill="currentColor" opacity="0.8">
-          Prefill processes your entire prompt instantly (parallel). Decode generates each new word one-by-one (sequential).
+          {t('explanationLine1')}
         </text>
         <text x="400" y="358" fontSize="13" textAnchor="middle" fill="currentColor" opacity="0.8">
-          This is why long responses take time, even though reading your question is instant.
+          {t('explanationLine2')}
         </text>
       </svg>
     </div>

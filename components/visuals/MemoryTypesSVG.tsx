@@ -1,73 +1,76 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 export function MemoryTypesSVG({ className = '' }: { className?: string }) {
+  const t = useTranslations('visuals.memoryTypes');
+
   return (
     <div className={`${className} text-gray-900 dark:text-gray-100`}>
       <svg viewBox="0 0 700 400" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
         {/* Title */}
         <text x="350" y="35" fontSize="22" fontWeight="bold" fill="currentColor" textAnchor="middle">
-          Memory Types
+          {t('title')}
         </text>
 
         {/* Left panel - Short-Term Memory */}
         <rect x="40" y="70" width="280" height="280" rx="12" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" strokeWidth="2"/>
 
         <text x="180" y="105" fontSize="16" fontWeight="bold" fill="currentColor" textAnchor="middle">
-          Short-Term Memory
+          {t('shortTerm')}
         </text>
         <text x="180" y="125" fontSize="12" fill="currentColor" opacity="0.7" textAnchor="middle">
-          (Conversation Window)
+          {t('shortTermDesc')}
         </text>
 
-        {/* Message bubbles - newest to oldest */}
+        {/* Message bubbles */}
         <rect x="60" y="150" width="240" height="40" rx="8" fill="#10b981" fillOpacity="0.3" stroke="#10b981" strokeWidth="1.5"/>
-        <text x="180" y="174" fontSize="12" fill="currentColor" textAnchor="middle">Message 5 (newest)</text>
+        <text x="180" y="174" fontSize="12" fill="currentColor" textAnchor="middle">{t('message5')}</text>
 
         <rect x="60" y="200" width="240" height="40" rx="8" fill="#3b82f6" fillOpacity="0.3" stroke="#3b82f6" strokeWidth="1.5"/>
-        <text x="180" y="224" fontSize="12" fill="currentColor" textAnchor="middle">Message 4</text>
+        <text x="180" y="224" fontSize="12" fill="currentColor" textAnchor="middle">{t('message4')}</text>
 
         <rect x="60" y="250" width="240" height="40" rx="8" fill="#9333ea" fillOpacity="0.2" stroke="#9333ea" strokeWidth="1.5" strokeDasharray="3,3"/>
-        <text x="180" y="274" fontSize="12" fill="currentColor" opacity="0.5" textAnchor="middle">Message 3 (fading...)</text>
+        <text x="180" y="274" fontSize="12" fill="currentColor" opacity="0.5" textAnchor="middle">{t('message3')}</text>
 
         {/* Properties */}
         <text x="180" y="310" fontSize="11" fontWeight="bold" fill="#f59e0b" textAnchor="middle">
-          ⚡ Limited: last N messages
+          {t('shortTermProp1')}
         </text>
         <text x="180" y="328" fontSize="11" fontWeight="bold" fill="#f59e0b" textAnchor="middle">
-          🚀 Fast access
+          {t('shortTermProp2')}
         </text>
 
         {/* Right panel - Long-Term Memory */}
         <rect x="380" y="70" width="280" height="280" rx="12" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" strokeWidth="2"/>
 
         <text x="520" y="105" fontSize="16" fontWeight="bold" fill="currentColor" textAnchor="middle">
-          Long-Term Memory
+          {t('longTerm')}
         </text>
         <text x="520" y="125" fontSize="12" fill="currentColor" opacity="0.7" textAnchor="middle">
-          (Database)
+          {t('longTermDesc')}
         </text>
 
         {/* Database items */}
         <g>
           <circle cx="420" cy="165" r="8" fill="#9333ea"/>
-          <text x="440" y="170" fontSize="12" fill="currentColor">Facts & Knowledge</text>
+          <text x="440" y="170" fontSize="12" fill="currentColor">{t('facts')}</text>
         </g>
 
         <g>
           <circle cx="420" cy="195" r="8" fill="#14b8a6"/>
-          <text x="440" y="200" fontSize="12" fill="currentColor">User Preferences</text>
+          <text x="440" y="200" fontSize="12" fill="currentColor">{t('preferences')}</text>
         </g>
 
         <g>
           <circle cx="420" cy="225" r="8" fill="#f59e0b"/>
-          <text x="440" y="230" fontSize="12" fill="currentColor">Conversation History</text>
+          <text x="440" y="230" fontSize="12" fill="currentColor">{t('history')}</text>
         </g>
 
         <g>
           <circle cx="420" cy="255" r="8" fill="#10b981"/>
-          <text x="440" y="260" fontSize="12" fill="currentColor">Learned Patterns</text>
+          <text x="440" y="260" fontSize="12" fill="currentColor">{t('patterns')}</text>
         </g>
 
         {/* Database icon */}
@@ -77,10 +80,10 @@ export function MemoryTypesSVG({ className = '' }: { className?: string }) {
 
         {/* Properties */}
         <text x="520" y="310" fontSize="11" fontWeight="bold" fill="#3b82f6" textAnchor="middle">
-          ♾️ Unlimited storage
+          {t('longTermProp1')}
         </text>
         <text x="520" y="328" fontSize="11" fontWeight="bold" fill="#3b82f6" textAnchor="middle">
-          🔍 Search needed
+          {t('longTermProp2')}
         </text>
 
         {/* Bidirectional arrow between panels */}
@@ -96,8 +99,8 @@ export function MemoryTypesSVG({ className = '' }: { className?: string }) {
           </marker>
         </defs>
 
-        <text x="350" y="193" fontSize="10" fill="currentColor" textAnchor="middle">store</text>
-        <text x="350" y="233" fontSize="10" fill="currentColor" textAnchor="middle">retrieve</text>
+        <text x="350" y="193" fontSize="10" fill="currentColor" textAnchor="middle">{t('store')}</text>
+        <text x="350" y="233" fontSize="10" fill="currentColor" textAnchor="middle">{t('retrieveAction')}</text>
       </svg>
     </div>
   );
