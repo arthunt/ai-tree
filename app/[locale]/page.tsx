@@ -11,6 +11,7 @@ import { TokenizerDemo } from '@/components/TokenizerDemo';
 import { VectorDemo } from '@/components/VectorDemo';
 import { SearchModal } from '@/components/SearchModal';
 import { SkillSelectorModal } from '@/components/SkillSelectorModal';
+import { WelcomeModal } from '@/components/WelcomeModal';
 import { DendrixLogo } from '@/components/DendrixLogo';
 import treeData from '@/data/tree-concepts.json';
 import Link from 'next/link';
@@ -28,6 +29,7 @@ export default function AITreePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSkillSelectorOpen, setIsSkillSelectorOpen] = useState(false);
+  const [isWelcomeOpen, setIsWelcomeOpen] = useState(false);
   const data = treeData as TreeData;
   const t = useTranslations();
   const params = useParams();
@@ -59,6 +61,20 @@ export default function AITreePage() {
     }, 500);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  // Show welcome modal on first visit
+  useEffect(() => {
+    try {
+      const hasSeenWelcome = localStorage.getItem('ai-tree-welcome-seen');
+      if (!hasSeenWelcome) {
+        // Small delay so the page renders first
+        const timer = setTimeout(() => setIsWelcomeOpen(true), 800);
+        return () => clearTimeout(timer);
+      }
+    } catch {
+      // localStorage unavailable
+    }
   }, []);
 
   // Restore open concept after locale switch
@@ -492,6 +508,19 @@ export default function AITreePage() {
         }}
         concepts={data.concepts}
         onConceptSelect={(concept) => setSelectedConcept(concept)}
+      />
+
+      {/* Welcome Modal (first visit) */}
+      <WelcomeModal
+        isOpen={isWelcomeOpen}
+        onClose={() => {
+          setIsWelcomeOpen(false);
+          try {
+            localStorage.setItem('ai-tree-welcome-seen', 'true');
+          } catch {
+            // localStorage unavailable
+          }
+        }}
       />
 
       {/* Concept Lightbox */}
