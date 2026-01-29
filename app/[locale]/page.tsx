@@ -96,14 +96,24 @@ export default function AITreePage() {
       <header className="sticky top-0 z-40 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200/60 dark:border-gray-800/60">
         <div className={`container mx-auto max-w-7xl transition-all duration-300 ${isScrolled ? 'px-3 py-1 sm:px-4 sm:py-1.5' : 'px-3 py-2 sm:px-4 sm:py-3'}`}>
           <div className="flex items-center justify-between">
-            <div className="min-w-0 flex-1">
-              <h1 className={`font-bold text-gray-900 dark:text-white truncate transition-all duration-300 ${isScrolled ? 'text-sm sm:text-base' : 'text-lg sm:text-2xl'}`}>
-                {t('header.title')}
-              </h1>
-              {!isScrolled && (
-                <p className="hidden sm:block text-sm text-gray-600 dark:text-gray-400">{t('header.description')}</p>
-              )}
-            </div>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 text-left group"
+              aria-label="Back to top"
+              type="button"
+            >
+              <DendrixLogo size={isScrolled ? 28 : 36} animate={false} className="flex-shrink-0 transition-all duration-300" />
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className={`font-bold text-gray-900 dark:text-white truncate transition-all duration-300 ${isScrolled ? 'text-sm sm:text-base' : 'text-base sm:text-lg'}`}>
+                    dendrix.ai
+                  </span>
+                </div>
+                {!isScrolled && (
+                  <p className="hidden sm:block text-xs text-gray-500 dark:text-gray-400 truncate">{t('header.description')}</p>
+                )}
+              </div>
+            </button>
             <div className="flex items-center gap-1.5 sm:gap-3">
               {/* Search Button */}
               <button
@@ -225,9 +235,12 @@ export default function AITreePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {/* Logo + title */}
+            {/* Logo + brand + title */}
             <div className="flex flex-col items-center mb-4 sm:mb-6">
-              <DendrixLogo size={120} className="mb-3 sm:mb-4" />
+              <DendrixLogo size={120} className="mb-2 sm:mb-3" />
+              <span className="text-lg sm:text-xl font-semibold tracking-wide text-gray-700 dark:text-gray-200 mb-3 sm:mb-4">
+                dendrix.ai
+              </span>
               <h2 id="hero-heading" className="text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white">
                 {t('hero.title')}
               </h2>
