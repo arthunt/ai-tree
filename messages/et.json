@@ -988,16 +988,140 @@
   },
   "connections": {
     "tabLabel": "Seosed",
-    "depthTitle": "Mõiste sügavus",
-    "coreIdeaExplain": "See on fookustatud, iseseisev mõiste. Üks selge idee, mida haarata enne edasiliikumist.",
-    "connectedExplain": "See mõiste seob mitu ideed. Oluline on mõista osadevahelisi seoseid.",
-    "deepDiveExplain": "See on tihe, mitmekihiline teema. See tugineb mitmele eeltingimusele ja põimib kokku palju omavahel seotud ideid.",
+    "youAreHere": "Oled siin",
+    "positionInTree": "{current}. {total}-st tasemel {level}",
     "buildsOn": "Tugineb",
-    "buildsOnEmpty": "Eeltingimused puuduvad — see on alguspunkt!",
+    "buildsOnEmpty": "Alguspunkt — eeltingimusi pole vaja.",
     "unlocks": "Avab",
-    "unlocksEmpty": "Avasta vabalt — see mõiste seisab omaette.",
-    "sameLevel": "Sama taseme mõisted",
-    "depthLabel": "Sügavus"
+    "unlocksEmpty": "Lõpp-punkt — omanda see ja avasta vabalt.",
+    "sameLevel": "Samuti tasemel {level}",
+    "whyLabel": "Miks?",
+    "learnMore": "Loe lähemalt",
+    "conceptLinks": {
+      "tokens": {
+        "why": "Kõik AI-s algab tokenidest. Ilma tokenideta pole AI-d.",
+        "whyTechnical": "Keelemudelid töötavad tokenijadadega, mitte töötlemata tekstiga. Tokeniseerimine määrab hinna, kiiruse ja kontekstiakna — mudeli sisend-väljundi põhiühik."
+      },
+      "vectors": {
+        "why": "Vektorid annavad sõnadele numbrilise tähenduse. Nii AI 'mõistab'.",
+        "whyTechnical": "Manused teisendavad diskreetsed tokenid pidevasse vektorruumi, kus semantiline sarnasus muutub geomeetriliseks läheduseks — võimaldades otsingut, klasterdamist ja analoogilist arutlust.",
+        "fromTokens": "Tokenid muutuvad vektoriteks — tekstitükid saavad numbrilise tähenduse."
+      },
+      "attention": {
+        "why": "Tähelepanu laseb AI-l keskenduda sellele, mis lauses oluline.",
+        "whyTechnical": "Enesetähelepanu arvutab paariskorrid kõigi tokenipositsioonide vahel, võimaldades mudelil haarata kaugsõltuvusi ja kontekstuaalseid seoseid O(n²) ajaga.",
+        "fromTokens": "Tähelepanu töötab tokenijadaga, et leida seoseid.",
+        "fromVectors": "Tähelepanu kasutab vektoresitlusi, et arvutada sõnadevahelisi relevantsusskoore."
+      },
+      "prefill-decode": {
+        "why": "Miks sinu küsimus on kohene, aga vastus voolab aeglaselt.",
+        "whyTechnical": "Eeltäide töötleb sisendviiba paralleelselt (GPU-tõhus), dekodeerimine genereerib tokeneid järjestikku — luues LLM-i järeldamise iseloomuliku latentsuse asümmeetria.",
+        "fromTokens": "Mõlemad faasid töötlevad tokeneid — eeltäide loeb neid paralleelselt, dekodeerimine kirjutab ükshaaval."
+      },
+      "context-windows": {
+        "why": "AI töömälu — kui palju ta korraga 'näeb'.",
+        "whyTechnical": "Kontekstiaken määrab maksimaalse jadapikkuse (tokenides) kombineeritud sisendi + väljundi jaoks. Ületamine põhjustab infokadu. Suurused ulatuvad 4K-st 200K+ tokenini.",
+        "fromTokens": "Kontekstiaknad mõõdetakse tokenites — rohkem tokeneid = suurem mälu."
+      },
+      "hallucinations": {
+        "why": "AI võib olla enesekindlalt vale. Selle teadmine hoiab sind turvalisena.",
+        "whyTechnical": "Hallutsinatsioonid tulenevad autoregressiivsest genereerimisprotsessist — mudelid ennustavad statistiliselt tõenäolisi jätkusid, mitte kontrollitud fakte.",
+        "fromTokens": "Mudelid ennustavad järgmist tokenit tõenäosuse järgi — mitte fakte kontrollides."
+      },
+      "transformers": {
+        "why": "Arhitektuur GPT, Claude ja iga kaasaegse AI mudeli taga.",
+        "whyTechnical": "Transformerid virnastanud mitmepealise enesetähelepanu edasisuunamiskihtidega, võimaldades paralleeltöötlust ja skaleeruvust miljarditesse parameetritesse.",
+        "fromAttention": "Mitmepealine tähelepanu on iga transformeri kihi tuummehhanism.",
+        "fromVectors": "Transformerid töötlevad tokeni manuseid (vektoreid) läbi tähelepanukihtide."
+      },
+      "training-vs-inference": {
+        "why": "Treenimine maksab miljoneid. Mudeli kasutamine maksab murdosa sendist.",
+        "whyTechnical": "Treenimine kohandab mudeli kaalusid tagasilevimise kaudu massiivsetel andmestikel (nädalad, tuhanded GPU-d). Järeldamine on edasisuunaline läbimine külmutatud kaaludega (millisekundid).",
+        "fromTokens": "Treenimine töötleb triljoneid tokeneid. Järeldamine töötleb sinu tokeneid."
+      },
+      "temperature-sampling": {
+        "why": "Nupp 'turvalise ja etteaimatava' ning 'loomingulise kaose' vahel.",
+        "whyTechnical": "Temperatuur skaleerib logiti jaotust enne softmaxi — madalad väärtused teravdavad tõenäosusi argmaxi suunas, kõrged väärtused ühtlustavad ühtlase suunas.",
+        "fromTokens": "Temperatuur kontrollib, milline token tõenäosusjaotusest valitakse."
+      },
+      "prompting-basics": {
+        "why": "Kõige praktilisem AI oskus: paremate küsimuste esitamine.",
+        "whyTechnical": "Tõhus viibamine kasutab kontekstisisest õppimist, struktureerides sisendit asjakohaste mudelivõimekuste aktiveerimiseks — täpsus, vormingupiirangud ja näited parandavad väljundi kvaliteeti.",
+        "fromTokens": "Iga sõna sinu viibas on tokenid — täpsus säästab kulusid ja parandab väljundit."
+      },
+      "context-engineering": {
+        "why": "Mitte ainult küsimus — kogu keskkond, mille AI jaoks ehitad.",
+        "whyTechnical": "Kontekstitehnika konstrueerib süstemaatiliselt kogu sisendi: süsteemiroll, piirangud, väljundvorming, näited ja kasutaja päring — maksimeerides infotihedust kontekstiaknas.",
+        "fromTokens": "Iga osa sinu loodud kontekstist tarbib tokeneid kontekstiakna eelarvest."
+      },
+      "rag": {
+        "why": "AI, mis otsib sinu dokumentidest enne vastamist. Põhjendatud, mitte arvav.",
+        "whyTechnical": "RAG liini: (1) manusta päring, (2) otsi top-K dokumente vektorsarnasuse järgi, (3) rikasta viipa otsitud kontekstiga, (4) genereeri põhjendatud vastus allikaviitega.",
+        "fromVectors": "RAG kasutab vektorotsingut asjakohaste dokumentide leidmiseks tähenduse, mitte märksõnade järgi.",
+        "fromMemory": "RAG laiendab lühiajalist konteksti pikaajalise dokumentide otsimisega."
+      },
+      "memory": {
+        "why": "Lühiajaline (vestlus) vs pikaajaline (andmebaas). AI vajab mõlemat.",
+        "whyTechnical": "Lühiajaline: piiratud kontekstiakna tokenitega. Pikaajaline: välised vektorihoidlad semantilise otsimisega, võimaldades seanssidevahelist püsivust.",
+        "fromVectors": "Pikaajaline mälu salvestab ja otsib infot vektoritena semantiliseks otsinguks."
+      },
+      "lora": {
+        "why": "Kohanda mudelit oma valdkonnale 1% kuluga.",
+        "whyTechnical": "LoRA süstib treenitavad madala astme lagunemismaatriksid (A×B) külmutatud kaalude kõrvale. Treenides vaid ~0.1% parameetritest, saavutab see peaaegu täieliku peenhäälestuse tulemuse.",
+        "fromVectors": "LoRA adapterid muudavad, kuidas mudel teisendab sisendvektoreid läbi oma kihtide.",
+        "fromAttention": "LoRA sihtmärgistab tavaliselt tähelepanukaalude maatrikseid (Q, K, V projektsioonid) maksimaalse mõju saavutamiseks."
+      },
+      "security": {
+        "why": "Sisendründed, mudeli mürgitamine, väljundriskid. Kolm kaitsetaset.",
+        "whyTechnical": "Sügavkaitse: sisendi valideerimine (süstimise vältimine), mudeli tugevdamine (joondamine, RLHF), väljundi filtreerimine (kaitsepiirangud). Ükski kaitse ei piisa üksinda.",
+        "fromTokens": "Viiba süstimisründed kasutavad ära viisi, kuidas mudelid sisendtokeneid töötlevad."
+      },
+      "ai-agents": {
+        "why": "AI, mis ei vasta ainult — ta tegutseb. Vaatab, mõtleb, täidab.",
+        "whyTechnical": "Agendid rakendavad vaatlemis-arutlemis-tegutsemis tsüklit: parsivad keskkonna oleku, planeerivad mõtteahela kaudu, täidavad tegevusi tööriistakutsete kaudu, hindavad tulemusi ja itereerivad.",
+        "fromContextEngineering": "Agendid vajavad hoolikalt kavandatud süsteemiviipa, mis määratleb nende rolli, tööriistad ja piirid.",
+        "fromRag": "Agendid kasutavad RAG-i teadmisbaaside külastamiseks, kui nad vajavad infot ülesannete täitmiseks."
+      },
+      "mcp": {
+        "why": "Üks protokoll ühendamaks mis tahes AI-d mis tahes tööriistaga. Nagu USB-C AI jaoks.",
+        "whyTechnical": "MCP standardiseerib AI-tööriista liidese: tööriistade avastamine, parameetriskeemid, autentimine ja täitmine — kõrvaldades iga integratsiooniga seotud kohandatud koodi.",
+        "fromAiAgents": "MCP pakub standardliidest, mida agendid kasutavad väliste tööriistadega ühendamiseks."
+      },
+      "complexity-levels": {
+        "why": "LLM → Arutlusmudel → Agent. Kolm AI võimekuse taset.",
+        "whyTechnical": "Taseme progressioon: (1) ühekordne järgmise tokeni ennustamine, (2) mitmeetapiline mõtteahel kontrollimisega, (3) autonoomsed tööriistakasutavad agendid mälu ja otsustustsüklitega.",
+        "fromTokens": "Kõik kolm taset töötlevad tokeneid — erinevus on selles, mitu arutlusetappi toimub sisendi ja väljundi vahel."
+      },
+      "function-calling": {
+        "why": "AI-le käte andmine — ta saab kutsuda API-sid, pärida andmebaase, saata e-kirju.",
+        "whyTechnical": "Mudel genereerib struktureeritud funktsioonikutse JSON-i (nimi + parameetrid). Sinu rakendus täidab kutse, tagastab tulemused ja mudel lõimib need oma vastusesse.",
+        "fromAiAgents": "Funktsioonide kutsumine on mehhanism, mida agendid kasutavad reaalsete maailmaga suhtlemiseks."
+      },
+      "moe": {
+        "why": "8 ekspertmudelit, aga ainult 2 aktiveeruvad küsimuse kohta. Kiire ja odav.",
+        "whyTechnical": "Hõre MoE suunab iga tokeni õpitud värativõrgu kaudu K-st-N eksperdivõrgustikku. Ainult aktiveeritud eksperdid tarbivad arvutusvõimsust — võimaldades massiivset mudelivõimekust alamlineaarse järelduskuluga.",
+        "fromAttention": "Iga ekspert rakendab oma tähelepanu- ja edasisuunamiskihte suunatud tokenitele.",
+        "fromVectors": "Suunamisvõrk kasutab sisendvektori esitlusi parimate ekspertide valimiseks."
+      },
+      "reasoning-models": {
+        "why": "AI, mis mõtleb samm-sammult enne vastamist. Aeglasem, kuid usaldusväärsem.",
+        "whyTechnical": "Arutlusmudelid kasutavad sisemist mõtteahelat: genereerides vahepealset arutlust, enesekontrolli ja tagasipöördumist enne lõpliku vastuse andmist — vahetades latentsust täpsuse vastu.",
+        "fromAttention": "Laiendatud arutlemine nõuab sisemiselt palju rohkemate tähelepanuetappide töötlemist.",
+        "fromContextEngineering": "Arutlusmudelid saavad kasu hästi struktureeritud viibadest, mis määratlevad probleemiruumi selgelt."
+      },
+      "green-ai": {
+        "why": "Sama kvaliteediga AI, 90% vähem energiat. Tõhusus on järgmine piir.",
+        "whyTechnical": "Tehnikad: mudeli destilleerimine (õpetaja→õpilane), kvantiseerimine (FP16→INT4), tõhusad arhitektuurid (MoE), optimeeritud järeldamine — vähendades arvutuskulu ja süsiniku jalajälge.",
+        "fromTokens": "Vähemate tokenite töötlemine ja väiksemate mudelite kasutamine vähendab oluliselt energiatarbimist.",
+        "fromAttention": "Tõhusad tähelepanuvariandid (flash attention, sparse attention) on Rohelise AI võtmetähtsusega."
+      },
+      "agi-asi": {
+        "why": "Kitsast AI-st (täna) üldise intelligentsuseni (tulevik?) ja sellest kaugemale.",
+        "whyTechnical": "AGI: inimtasemel sooritus kõigis kognitiivsetes valdkondades. ASI: inimvõimekuse ületamine igas mõõtmes. Praegused süsteemid jäävad kitsaks — silmapaistvad konkreetsetes ülesannetes, kuid puudu on üldisest arutlusvõimest.",
+        "fromAiAgents": "Agendid esindavad lähimat sammu üldise võimekuse suunas — autonoomne, mitme tööriistaga arutlemine.",
+        "fromAttention": "Tähelepanumehhanismide skaleerimine on üks tee, mida teadlased uurivad üldisema intelligentsuse suunas."
+      }
+    }
   },
   "upNext": {
     "title": "Järgmisena",

@@ -988,16 +988,140 @@
   },
   "connections": {
     "tabLabel": "Links",
-    "depthTitle": "Concept Depth",
-    "coreIdeaExplain": "This is a focused, standalone concept. One clear idea to grasp before moving on.",
-    "connectedExplain": "This concept connects multiple ideas. Understanding the relationships between parts is key.",
-    "deepDiveExplain": "This is a dense, multi-layered topic. It builds on several prerequisites and weaves together many interconnected ideas.",
+    "youAreHere": "You are here",
+    "positionInTree": "{current} of {total} in {level}",
     "buildsOn": "Builds on",
-    "buildsOnEmpty": "No prerequisites — this is a starting point!",
+    "buildsOnEmpty": "Starting point — no prerequisites needed.",
     "unlocks": "Unlocks",
-    "unlocksEmpty": "Explore freely — this concept stands on its own.",
-    "sameLevel": "Also at this level",
-    "depthLabel": "Depth"
+    "unlocksEmpty": "Endpoint — master this and explore freely.",
+    "sameLevel": "Also in {level}",
+    "whyLabel": "Why?",
+    "learnMore": "Learn more",
+    "conceptLinks": {
+      "tokens": {
+        "why": "Everything in AI starts with tokens. No tokens, no AI.",
+        "whyTechnical": "LLMs operate on token sequences, not raw text. Tokenization determines cost, speed, and context capacity — the fundamental unit of all model I/O."
+      },
+      "vectors": {
+        "why": "Vectors give words meaning as numbers. This is how AI 'understands'.",
+        "whyTechnical": "Embeddings map discrete tokens into continuous vector spaces where semantic similarity becomes geometric proximity — enabling search, clustering, and analogical reasoning.",
+        "fromTokens": "Tokens become vectors — raw text pieces get numerical meaning."
+      },
+      "attention": {
+        "why": "Attention lets AI focus on what matters in a sentence.",
+        "whyTechnical": "Self-attention computes pairwise relevance scores across all token positions, enabling the model to capture long-range dependencies and contextual relationships in O(n²) time.",
+        "fromTokens": "Attention operates on token sequences to find relationships.",
+        "fromVectors": "Attention uses vector representations to compute relevance scores between words."
+      },
+      "prefill-decode": {
+        "why": "Why your question is instant but the answer streams slowly.",
+        "whyTechnical": "Prefill processes the input prompt in parallel (GPU-efficient), while autoregressive decoding generates tokens sequentially — creating the characteristic latency asymmetry in LLM inference.",
+        "fromTokens": "Both phases process tokens — prefill reads them in parallel, decode writes them one by one."
+      },
+      "context-windows": {
+        "why": "The AI's working memory — how much it can 'see' at once.",
+        "whyTechnical": "Context window defines the maximum sequence length (in tokens) for combined input + output. Exceeding it causes information loss. Sizes range from 4K to 200K+ tokens across models.",
+        "fromTokens": "Context windows are measured in tokens — more tokens = bigger memory."
+      },
+      "hallucinations": {
+        "why": "AI can be confidently wrong. Knowing this keeps you safe.",
+        "whyTechnical": "Hallucinations arise from the autoregressive generation process — models predict statistically likely continuations, not verified facts. Confidence scores don't correlate with factual accuracy.",
+        "fromTokens": "Models predict the next token by probability — not by checking facts."
+      },
+      "transformers": {
+        "why": "The architecture behind GPT, Claude, and every modern AI model.",
+        "whyTechnical": "Transformers stack multi-head self-attention with feed-forward layers, enabling parallel processing and scalability to billions of parameters — replacing sequential RNN/LSTM architectures.",
+        "fromAttention": "Multi-head attention is the core mechanism inside every transformer layer.",
+        "fromVectors": "Transformers process token embeddings (vectors) through attention layers."
+      },
+      "training-vs-inference": {
+        "why": "Training costs millions. Using the model costs fractions of a cent.",
+        "whyTechnical": "Training adjusts model weights via backpropagation over massive datasets (weeks, thousands of GPUs). Inference is a forward pass with frozen weights (milliseconds, minimal compute).",
+        "fromTokens": "Training processes trillions of tokens. Inference processes your tokens."
+      },
+      "temperature-sampling": {
+        "why": "The dial between 'safe and predictable' and 'creative chaos'.",
+        "whyTechnical": "Temperature scales the logit distribution before softmax — low values sharpen probabilities toward the argmax, high values flatten toward uniform. Top-k/top-p further constrain the sampling space.",
+        "fromTokens": "Temperature controls which token gets picked from the probability distribution."
+      },
+      "prompting-basics": {
+        "why": "The single most practical AI skill: asking better questions.",
+        "whyTechnical": "Effective prompting exploits in-context learning by structuring input to activate relevant model capabilities — specificity, format constraints, and few-shot examples dramatically improve output quality.",
+        "fromTokens": "Every word in your prompt is tokens that the model processes — precision saves cost and improves output."
+      },
+      "context-engineering": {
+        "why": "Not just the question — the entire environment you build for the AI.",
+        "whyTechnical": "Context engineering systematically constructs the full input: system role, constraints, output format, examples, and user query — maximizing the information density within the context window.",
+        "fromTokens": "Every part of your engineered context consumes tokens from the window budget."
+      },
+      "rag": {
+        "why": "AI that can search your documents before answering. Grounded, not guessing.",
+        "whyTechnical": "RAG pipelines: (1) embed the query, (2) retrieve top-K documents via vector similarity search, (3) augment the prompt with retrieved context, (4) generate a grounded response with source attribution.",
+        "fromVectors": "RAG uses vector search to find relevant documents by meaning, not keywords.",
+        "fromMemory": "RAG extends short-term context with long-term document retrieval."
+      },
+      "memory": {
+        "why": "Short-term (conversation) vs long-term (database). AI needs both.",
+        "whyTechnical": "Short-term: bounded by context window tokens. Long-term: external vector stores with semantic retrieval, enabling cross-session persistence, fact storage, and preference tracking.",
+        "fromVectors": "Long-term memory stores and retrieves information as vectors for semantic search."
+      },
+      "lora": {
+        "why": "Customize a model for your domain at 1% of the cost.",
+        "whyTechnical": "LoRA injects trainable low-rank decomposition matrices (A×B) alongside frozen weights. By training only ~0.1% of parameters, it achieves near-full-fine-tuning performance at a fraction of compute.",
+        "fromVectors": "LoRA adapters modify how the model transforms input vectors through its layers.",
+        "fromAttention": "LoRA typically targets attention weight matrices (Q, K, V projections) for maximum impact."
+      },
+      "security": {
+        "why": "Input attacks, model poisoning, output risks. Three layers to protect.",
+        "whyTechnical": "Defense-in-depth: input validation (injection prevention), model hardening (alignment, RLHF), output filtering (guardrails, content classification). No single defense suffices.",
+        "fromTokens": "Prompt injection attacks exploit how models process input tokens."
+      },
+      "ai-agents": {
+        "why": "AI that doesn't just answer — it acts. Observe, think, execute.",
+        "whyTechnical": "Agents implement the observe-reason-act loop: parse environment state, plan via chain-of-thought reasoning, execute actions through tool calls, evaluate results, and iterate until task completion.",
+        "fromContextEngineering": "Agents need carefully engineered system prompts to define their role, tools, and boundaries.",
+        "fromRag": "Agents use RAG to access knowledge bases when they need information to complete tasks."
+      },
+      "mcp": {
+        "why": "One protocol to connect any AI to any tool. Like USB-C for AI.",
+        "whyTechnical": "MCP standardizes the AI-tool interface: tool discovery, parameter schemas, authentication, and execution — eliminating per-integration custom code across model providers.",
+        "fromAiAgents": "MCP provides the standard interface that agents use to connect to external tools."
+      },
+      "complexity-levels": {
+        "why": "LLM → Reasoning Model → Agent. Three tiers of AI capability.",
+        "whyTechnical": "Tier progression: (1) single-pass next-token prediction, (2) multi-step chain-of-thought with verification, (3) autonomous tool-using agents with memory and decision loops.",
+        "fromTokens": "All three levels process tokens — the difference is how many reasoning steps happen between input and output."
+      },
+      "function-calling": {
+        "why": "Giving the AI hands — it can call APIs, query databases, send emails.",
+        "whyTechnical": "The model generates structured function call JSON (name + parameters). Your application executes the call, returns results, and the model incorporates them into its response — bridging LLM reasoning with real-world actions.",
+        "fromAiAgents": "Function calling is the mechanism agents use to interact with the real world."
+      },
+      "moe": {
+        "why": "8 expert models, but only 2 activate per question. Fast and cheap.",
+        "whyTechnical": "Sparse MoE routes each token through a learned gating network to K-of-N expert sub-networks. Only activated experts consume compute — enabling massive model capacity with sub-linear inference cost.",
+        "fromAttention": "Each expert applies its own attention and feed-forward layers to the routed tokens.",
+        "fromVectors": "The routing network uses input vector representations to select the best experts."
+      },
+      "reasoning-models": {
+        "why": "AI that thinks step-by-step before answering. Slower but more reliable.",
+        "whyTechnical": "Reasoning models use internal chain-of-thought: generating intermediate reasoning tokens, self-verification, and backtracking before producing the final answer — trading latency for accuracy on complex tasks.",
+        "fromAttention": "Extended reasoning requires processing many more attention steps internally.",
+        "fromContextEngineering": "Reasoning models benefit from well-structured prompts that define the problem space clearly."
+      },
+      "green-ai": {
+        "why": "Same quality AI, 90% less energy. Efficiency is the next frontier.",
+        "whyTechnical": "Techniques: model distillation (teacher→student), quantization (FP16→INT4), efficient architectures (MoE), and optimized inference (batching, KV-cache) — reducing compute cost and carbon footprint.",
+        "fromTokens": "Processing fewer tokens and using smaller models dramatically cuts energy consumption.",
+        "fromAttention": "Efficient attention variants (flash attention, sparse attention) are key to Green AI."
+      },
+      "agi-asi": {
+        "why": "From narrow AI (today) to general intelligence (future?) to beyond.",
+        "whyTechnical": "AGI: human-level performance across all cognitive domains. ASI: surpassing human capability in every dimension. Current systems remain narrow — excelling at specific tasks while lacking general reasoning and common sense.",
+        "fromAiAgents": "Agents represent the closest step toward general capability — autonomous, multi-tool reasoning.",
+        "fromAttention": "Scaling attention mechanisms is one path researchers explore toward more general intelligence."
+      }
+    }
   },
   "upNext": {
     "title": "Up Next",
