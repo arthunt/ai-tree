@@ -165,9 +165,12 @@ export function ConceptLightbox({ concept, onClose, allConcepts = [], levels = [
 
   const canNativeShare = typeof navigator !== 'undefined' && !!navigator.share;
 
-  // Language switcher
+  // Language switcher — preserve open concept across locale change
   const switchLanguage = (newLocale: string) => {
     if (newLocale === locale) return;
+    if (concept) {
+      sessionStorage.setItem('openConceptId', concept.id);
+    }
     const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
     router.replace(newPathname, { scroll: false });
   };

@@ -61,6 +61,18 @@ export default function AITreePage() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Restore open concept after locale switch
+  useEffect(() => {
+    const pendingId = sessionStorage.getItem('openConceptId');
+    if (pendingId) {
+      sessionStorage.removeItem('openConceptId');
+      const concept = data.concepts.find(c => c.id === pendingId);
+      if (concept) {
+        setSelectedConcept(concept);
+      }
+    }
+  }, [data.concepts]);
+
   // Derive active level data for context bar
   const activeLevelData = data.levels.find(l => l.id === activeLevel);
 
