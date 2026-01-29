@@ -593,6 +593,46 @@
       "summaryTitle": "Defense in Depth: Protect at every layer",
       "summaryDesc": "No single defense is enough — combine input, model, and output protections"
     },
+    "agentLoop": {
+      "title": "AI Agent Loop",
+      "observe": "OBSERVE",
+      "think": "THINK",
+      "act": "ACT",
+      "toolSearch": "Search",
+      "toolCode": "Code",
+      "toolDatabase": "Database",
+      "consultant": "Consultant",
+      "consultantDesc": "Gives advice",
+      "agent": "Agent",
+      "agentDesc": "Takes action"
+    },
+    "mcpArchitecture": {
+      "title": "MCP Architecture",
+      "beforeMcp": "Before MCP",
+      "customIntegration": "Custom integration",
+      "forEachTool": "for each tool",
+      "afterMcp": "After MCP",
+      "mcpServer": "MCP Server",
+      "analogy": "Like a universal adapter for AI tools"
+    },
+    "complexityLevels": {
+      "title": "AI Complexity Levels",
+      "llmChat": "LLM / Chat",
+      "llmDesc": "Answers questions",
+      "reasoningModel": "Reasoning Model",
+      "reasoningDesc": "Thinks step by step",
+      "agentDoer": "Agent",
+      "agentDesc": "Takes action",
+      "kitchenAnalogy": "Kitchen Analogy",
+      "recipeBook": "Recipe Book",
+      "providesInfo": "Provides info",
+      "headChef": "Head Chef",
+      "reasoning": "Reasoning",
+      "plansMenu": "Plans the menu",
+      "cook": "Cook",
+      "agentLabel": "Agent",
+      "makesFood": "Makes the food"
+    },
     "agiAsi": {
       "title": "AI Capability Spectrum",
       "narrowAi": "Narrow AI",

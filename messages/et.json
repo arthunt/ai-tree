@@ -593,6 +593,46 @@
       "summaryTitle": "Sügavkaitse: Kaitse igal kihil",
       "summaryDesc": "Üksik kaitse ei piisa — kombineeri sisendi, mudeli ja väljundi kaitseid"
     },
+    "agentLoop": {
+      "title": "AI agendi tsükkel",
+      "observe": "JÄLGI",
+      "think": "MÕTLE",
+      "act": "TEGUTSE",
+      "toolSearch": "Otsing",
+      "toolCode": "Kood",
+      "toolDatabase": "Andmebaas",
+      "consultant": "Konsultant",
+      "consultantDesc": "Annab nõu",
+      "agent": "Agent",
+      "agentDesc": "Tegutseb"
+    },
+    "mcpArchitecture": {
+      "title": "MCP arhitektuur",
+      "beforeMcp": "Enne MCP-d",
+      "customIntegration": "Kohandatud integratsioon",
+      "forEachTool": "iga tööriista jaoks",
+      "afterMcp": "Pärast MCP-d",
+      "mcpServer": "MCP server",
+      "analogy": "Nagu universaalne adapter AI tööriistadele"
+    },
+    "complexityLevels": {
+      "title": "AI keerukustasemed",
+      "llmChat": "LLM / Vestlus",
+      "llmDesc": "Vastab küsimustele",
+      "reasoningModel": "Arutlev mudel",
+      "reasoningDesc": "Mõtleb samm-sammult",
+      "agentDoer": "Agent",
+      "agentDesc": "Tegutseb",
+      "kitchenAnalogy": "Köögi analoogia",
+      "recipeBook": "Retseptiraamat",
+      "providesInfo": "Annab infot",
+      "headChef": "Peakokk",
+      "reasoning": "Arutlus",
+      "plansMenu": "Planeerib menüü",
+      "cook": "Kokk",
+      "agentLabel": "Agent",
+      "makesFood": "Teeb toidu"
+    },
     "agiAsi": {
       "title": "AI võimekuse spekter",
       "narrowAi": "Kitsas AI",
