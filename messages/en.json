@@ -1159,6 +1159,48 @@
     "seed": {
       "growing": "Growing into the Tree...",
       "exploring": "Exploring deeper..."
+    },
+    "microLesson": {
+      "metaphorLabel": "Metaphor",
+      "resumeFlow": "Resume Flow",
+      "exploreMore": "Explore More",
+      "tokenization": {
+        "title": "Tokenization",
+        "body": "Words broken into pieces. Language models don't read words like we do — they break text into 'tokens', small chunks that become the basic units of meaning.",
+        "metaphor": "Like chopping a sentence into LEGO bricks."
+      },
+      "vectorizing": {
+        "title": "Embeddings (Vectors)",
+        "body": "Meaning as numbers. Each token is converted into a list of numbers representing its meaning in a multi-dimensional space.",
+        "metaphor": "Like giving each word a GPS coordinate in a universe of meaning."
+      },
+      "attention": {
+        "title": "Attention",
+        "body": "Connecting the dots. The model looks at all tokens at once and decides which ones are related, paying attention to relevant context regardless of distance.",
+        "metaphor": "Like connecting dots with threads of varying thickness."
+      },
+      "prediction": {
+        "title": "Prediction",
+        "body": "Guessing the next word. Based on all previous context, the model calculates the probability of the next token and picks one.",
+        "metaphor": "Like guessing the end of a sentence before it's spoken."
+      }
+    },
+    "controlHint": "Move cursor to slow down · Click cards to explore",
+    "seedPath": {
+      "title": "Plant Your Seed",
+      "subtitle": "Choose your path to understanding AI",
+      "builder": {
+        "label": "Builder",
+        "description": "I want to build AI apps"
+      },
+      "thinker": {
+        "label": "Thinker",
+        "description": "I want to understand AI"
+      },
+      "explorer": {
+        "label": "Explorer",
+        "description": "I'm just browsing"
+      }
     }
   },
   "programs": {

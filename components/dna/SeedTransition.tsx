@@ -19,7 +19,7 @@ export function SeedTransition({ color, conceptId, locale, onComplete }: SeedTra
     useEffect(() => {
         // Navigate after animation completes
         const timer = setTimeout(() => {
-            router.push(`/${locale}/tree-view?node=${conceptId}`);
+            router.push(`/${locale}/seed?origin=${conceptId}`);
             onComplete?.();
         }, 1500);
 

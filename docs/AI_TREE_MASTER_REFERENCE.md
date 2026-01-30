@@ -127,9 +127,9 @@ create table concept_translations (
 
 | ID | Deliverable | Status |
 |----|-------------|--------|
-| REF-001 | Design System "Living Forest" (Figma/Code) | 🔲 Todo |
-| TEC-001 | ParaglideJS Init & Config | 🔲 Todo |
-| TEC-002 | Supabase Schema Setup (Concepts/Trans) | 🔲 Todo |
+| REF-001 | Design System "Living Forest" (Figma/Code) | ✅ Done |
+| TEC-001 | ParaglideJS Init & Config | ✅ Done |
+| TEC-002 | Supabase Schema Setup (Concepts/Trans) | ⏳ In Progress |
 | DNA-001 | DNA Architecture Doc | ✅ Done |
 
 ---

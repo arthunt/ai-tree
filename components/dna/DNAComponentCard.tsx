@@ -15,9 +15,10 @@ interface DNAComponentCardProps {
     metaphor?: string;
     color: string;
     index: number;
+    onCardClick?: () => void;
 }
 
-export function DNAComponentCard({ title, description, metaphor, color, index }: DNAComponentCardProps) {
+export function DNAComponentCard({ title, description, metaphor, color, index, onCardClick }: DNAComponentCardProps) {
     const { currentStep, tokens, vectors, predictions, attentionWeights } = useDNA();
     const params = useParams();
     const locale = params.locale as string;
@@ -44,7 +45,14 @@ export function DNAComponentCard({ title, description, metaphor, color, index }:
     const deepDiveLabel = t('deepDive');
 
     return (
-        <div className="flex flex-col h-full relative group">
+        <div
+            className={`flex flex-col h-full relative group ${onCardClick ? 'cursor-pointer' : ''}`}
+            onClick={(e) => {
+                // Prevent click if clicking the button
+                if ((e.target as HTMLElement).closest('button')) return;
+                onCardClick?.();
+            }}
+        >
             {/* Node Visualization */}
             <div className="h-48 relative flex items-center justify-center mb-[-1rem] z-10">
                 <GlowingNode
