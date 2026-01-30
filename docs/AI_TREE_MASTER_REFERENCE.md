@@ -110,18 +110,18 @@ create table concept_translations (
 ## 5. Growth Stages Overview
 
 ```
-   Stage 1        Stage 2       Stage 3        Stage 4        Stage 5
-   ════════       ════════      ════════       ════════       ════════
-      🧬            🌱             🌿            🌳              🌲
-     DNA          SEEME          VÕRS        NOOR PUU      VANEM PUU
-   
-   Architecture   Basic UI      First        First          Full
-   & Setup        Components    Growth       Fruits         Maturity
+   Stage 1      Stage 1.5      Stage 2       Stage 3        Stage 4
+   ════════     ══════════     ════════      ════════       ════════
+      🧬           🔬             🌱            🌿             🌳
+     DNA        RICH DNA        SEEME         SPROUT        NOOR PUU
+
+   Structure    Deep Dive       Intent       Progressive     Full Map
+   & Data       Visuals         Capture      Disclosure      & Content
 ```
 
 ---
 
-## 6. Stage 1: DNA - Fundamental Components (Week 1-2)
+## 6. Stage 1: DNA - Fundamental Components (Completed)
 
 > **Goal:** Secure the foundation (Paraglide + Supabase + Design System).
 
@@ -129,35 +129,51 @@ create table concept_translations (
 |----|-------------|--------|
 | REF-001 | Design System "Living Forest" (Figma/Code) | ✅ Done |
 | TEC-001 | ParaglideJS Init & Config | ✅ Done |
-| TEC-002 | Supabase Schema Setup (Concepts/Trans) | ⏳ In Progress |
+| TEC-002 | Supabase Schema Setup | ✅ Done |
 | DNA-001 | DNA Architecture Doc | ✅ Done |
 
 ---
 
-## 7. Stage 2: Seeme - Seed (Week 3-4)
+## 7. Stage 1.5: DNA Rich Visualizations (Active)
 
-> **Goal:** Build the DNA View using the NEW architecture.
+> **Goal:** "Show, Don't Just Tell." Make the abstract concrete.
+> **Detailed Plan:** `tasks/evolutionary_ux_backlog.md`
+> **Active Tasks:** `tasks/evolutionary_ux_tasks.md`
 
 | ID | Story |
 |----|-------|
-| SEEME-001 | DNA View Selector (Landing Page) |
-| SEEME-002 | DNA Linear Flow Component (Paraglide powered) |
-| SEEME-003 | Connect DNA View to Supabase Content |
+| VIS-001 | **Tokenization Slicer:** Animation of text splitting. |
+| VIS-002 | **Vector Map:** Interactive 2D similarity plot. |
+| VIS-003 | **Attention Spotlight:** Visualizing connection weights. |
+| VIS-004 | **Prediction Bars:** Probability distribution charts. |
 
 ---
 
-## 8. Stage 3: Võrs - Sprout (Refocused: UX Repair)
+## 8. Stage 2: Seeme - Seed (Completed)
 
-> **Goal:** Fix the "Rushing River" problem and create a Guided Journey.
+> **Goal:** Capture User Intent before the complexity.
 
 | ID | Story | Status |
 |----|-------|--------|
-| UX-001 | **The Lens** (DNA Control): Slow motion hover, pause on click, micro-lessons. | ✅ Done |
+| SEEME-001 | DNA View Selector (Landing Page) | ✅ Done |
+| SEEME-002 | DNA Linear Flow Component | ✅ Done |
+| SEEME-003 | Connect DNA View to Supabase Content | ✅ Done |
 | UX-002 | **The Seed** (Intent Capture): Build/Think/Explore router. | ✅ Done |
-| UX-003 | **Guided Paths**: Tree highlighting based on intent. | ✅ Done |
-| VÕRS-001 | Interactive DNA Input (Live Tokenization) | ✅ Done |
-| VÕRS-002 | DNA Content Population | ✅ Done |
-| VÕRS-003 | Tree of Thoughts Population | ✅ Done |
+
+---
+
+## 9. Stage 3: Sprout - Progressive Disclosure (Next)
+
+> **Goal:** Fix the "Rushing River" problem via Evolutionary Logic.
+> **Philosophy:** DNA -> Seed -> Sprout -> Tree.
+
+| ID | Story | Status |
+|----|-------|--------|
+| SPROUT-001 | **Collapsed Tree State:** Start with Roots only. | ⏳ Planned |
+| SPROUT-002 | **Zoom-to-Fit:** Auto-focus on expanded branches. | ⏳ Planned |
+| SPROUT-003 | **Curriculum Mode:** Guided narrative overlay. | ⏳ Planned |
+| UX-001 | **The Lens** (DNA Control): Slow motion/pause. | ✅ Done |
+| UX-003 | **Guided Paths**: Tree highlighting. | ✅ Done |
 
 ---
 
@@ -231,3 +247,23 @@ The application follows a strict **"Understand -> Choose -> Explore"** flow:
 1.  **Architecture First:** Swarm waits for @ANTIGRAVITY to define the pattern (e.g., "Here is the `GlowingNode` component"). Swarm then implements it across 50 variations.
 2.  **Test Gaps:** While @ANTIGRAVITY builds features, Swarm proactively fills test gaps (`testgaps` worker).
 3.  **Content Decoupling:** Content population (Supabase) is fully delegated to Swarm once the Schema is set.
+
+---
+
+## 13. The Metaphorical Abstraction Engine (Visual Logic)
+
+To solve the "Huge Tree" problem, we implement a **Semantic Zoom** system. Concepts are not just hidden; they are **encapsulated**.
+
+### 13.1 Levels of Detail (LOD)
+| LOD | Metaphor | Content | Visual Representation |
+|---|---|---|---|
+| **0** | **DNA** | T-V-A-P Mechanics | Linear Flow / Slicer / Spotlight. |
+| **1** | **Seed** | User Intent | Pulsing Orb (Builder/Thinker/Explorer). |
+| **2** | **Sprout** | Roots + Trunk | Only the "Big Ideas" (Math, History). Minimal branches. |
+| **3** | **Tree** | Architectures | Major branches (Transformers, Diffusion). |
+| **4** | **Bloom** | Models/Apps | Specific instances (GPT-4, Midjourney). |
+
+### 13.2 Encapsulation Physics
+*   **Zoom Out:** Child nodes don't vanish; they **animate into** the parent node. The parent node grows slightly (e.g., +10% radius) and glows, indicating it "contains" hidden depth.
+*   **Zoom In:** Parent node "blooms", ejecting its children into their orbital positions.
+*   **The "Proto" Vibe:** We achieve the look of the value-driven "Proto" page by default-setting the view to **LOD 2 (Sprout)**, where only the most critical trunk concepts are serving as anchors.

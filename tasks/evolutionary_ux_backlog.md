@@ -29,7 +29,18 @@ The user should unlock complexity gradually.
     *   *Animation:* "Jingle, Jingle..." -> List candidates: [Bells (90%), Rocks (5%), Cars (1%)].
     *   *Action:* Visually strike through low probability options, highlight "Bells", and slot it in.
 
-*   **Stage 2: Sprout (The History)**
+### Stage 2: Sprout (The History)
+
+### Stage 2.5: The Abstraction Engine (LOD System)
+*   **Concept:** Solve the "Huge Tree" problem with Semantic Zoom.
+*   **LOD 0 (DNA):** T-V-A-P mechanics visible.
+*   **LOD 1 (Seed):** Intent visible.
+*   **LOD 2 (Sprout):** Roots + Trunk visible. Branches encapsulated inside parent nodes.
+*   **LOD 3 (Tree):** Major branches (Transformers) bloom out.
+*   **LOD 4 (Garden):** Specific models (GPT-4) bloom out.
+*   **Interaction:** Scrolling/Zooming triggers the "Blooming" animation.
+
+*   **Stage 3: Sapling (The Architectures)**
     *   *Current Scale:* ~3 Eras (Symbolic, Neural, Transformers).
     *   *Goal:* Understand the *lineage*.
     *   *Visual:* Only the Root and the main 3 branches are visible. Everything else is hidden/collapsed.

@@ -239,6 +239,7 @@
 ### PHASE G: Evolutionary UX (The Living Tree)
 > **Status:** Planned (Next)
 > **Detailed Plan:** `tasks/evolutionary_ux_backlog.md`
+> **Active Task List:** `tasks/evolutionary_ux_tasks.md`
 > **Goal:** Transform the static tree into a "Level of Detail" exploration journey.
 
 #### US-160: DNA Rich Visualizations
@@ -250,7 +251,11 @@
 #### US-161: Progressive Tree Disclosure ("Sprout")
 - [ ] Collapsed default state (Roots only)
 - [ ] "Zoom to Fit" on expansion
-- [ ] Curriculum Mode narrative overlay
+
+#### US-162: Metaphorical Abstraction Engine (LOD System)
+- [ ] Define LODs (0=DNA, 1=Seed, 2=Sprout, 3=Tree, 4=Garden)
+- [ ] Implement "Encapsulation Physics" (Children suck into parents)
+- [ ] "Bloom" animation on zoom-in.
 
 ---
 
