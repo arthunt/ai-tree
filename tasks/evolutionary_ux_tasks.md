@@ -52,7 +52,7 @@ Work on these strictly in order. Do not start the next until the previous is pol
     *   **Visual:** When expanding, children should *spring out* from the parent's center coordinates, not just appear.
     *   **Physics:** Add a small "pop" effect.
 
-*   [ ] **Task 1.3: The Semantic Zoom**
+*   [x] **Task 1.3: The Semantic Zoom**
     *   **Context:** `d3.zoom` event listener.
     *   **Action:** Bind zoom levels to LOD states.
         *   Zoom < 0.5: Show **LOD 2 (Sprout)** (Roots/Trunk only).
