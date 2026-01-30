@@ -10,6 +10,12 @@ import { Metadata } from 'next';
 import enMessages from '@/messages/en.json';
 import etMessages from '@/messages/et.json';
 
+
+export function generateStaticParams() {
+    const slugs = ['aiki', 'aivo', 'aime'];
+    return slugs.map((slug) => ({ slug }));
+}
+
 type Props = {
     params: Promise<{
         slug: string;

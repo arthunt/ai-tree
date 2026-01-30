@@ -11,11 +11,11 @@
 
 ### 1. **Dead Code Elimination**
 *   **Context:** We removed `next-intl` and refactored the Tree. There might be leftover files (e.g., `messages/*.json` keys that are no longer used).
-*   **Task:** Scan for unused components, hooks, or translation keys. Cleanup `lib/utils` if needed.
+*   **Task:** [x] Scan for unused components, hooks, or translation keys. Cleanup `lib/utils` if needed.
 
 ### 2. **Security & RLS Verification**
 *   **Context:** We added `leads` and `programs` tables.
-*   **Task:** Verify RLS policies are strictly `ENABLE ROW LEVEL SECURITY`.
+*   **Task:** [x] Verify RLS policies are strictly `ENABLE ROW LEVEL SECURITY`.
     *   `leads`: INSERT (public anon), SELECT (service_role only).
     *   `programs`: SELECT (public anon).
     *   `nodes`: SELECT (public anon).
@@ -23,8 +23,8 @@
 ### 3. **Performance Check**
 *   **Context:** Tree View is heavy. Reference `us-west-1` latency.
 *   **Task:**
-    *   Review `generateStaticParams` for Tree/Programs.
-    *   Check `next.config.js` image optimization domains.
+    *   [x] Review `generateStaticParams` for Tree/Programs.
+    *   [x] Check `next.config.js` image optimization domains.
 
 ---
 
