@@ -14,7 +14,7 @@ interface DNAComponentCardProps {
 }
 
 export function DNAComponentCard({ title, description, metaphor, color, index }: DNAComponentCardProps) {
-    const { currentStep, tokens, vectors, predictions } = useDNA();
+    const { currentStep, tokens, vectors, predictions, attentionWeights } = useDNA();
 
     // Map index to step for activation logic
     const stepMap: Record<number, DNAStep> = {
@@ -82,53 +82,91 @@ export function DNAComponentCard({ title, description, metaphor, color, index }:
                                     <div key={i}>[{v.map(n => n.toFixed(2)).join(', ')}]</div>
                                 ))}
                             </motion.div>
-                        ) : isActive && index === 3 ? (
-                            <motion.div
-                                key="predictions"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                className="space-y-2 w-full"
-                            >
-                                {predictions.map((p, i) => (
-                                    <div key={i} className="flex items-center gap-2 text-xs">
-                                        <span className="w-12 text-right font-mono text-brand-cyan shrink-0 truncate">
-                                            {p.token}
-                                        </span>
-                                        <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
-                                            <motion.div
-                                                initial={{ width: 0 }}
-                                                animate={{ width: `${p.probability * 100}%` }}
-                                                transition={{ duration: 0.5, delay: i * 0.1 }}
-                                                className="h-full bg-brand-cyan"
-                                            />
-                                        </div>
-                                        <span className="w-8 text-right text-gray-400 font-mono">
-                                            {(p.probability * 100).toFixed(0)}%
-                                        </span>
-                                    </div>
-                                ))}
-                            </motion.div>
-                        ) : (
-                            <motion.div>
-                                <motion.p
-                                    key="static"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    className="text-gray-300 leading-relaxed text-sm"
-                                >
-                                    {description}
-                                </motion.p>
-                                <button
-                                    className="mt-6 text-sm font-semibold text-brand-teal hover:text-brand-cyan transition-colors"
-                                    type="button"
-                                >
-                                    EXPLORE DEEPER &rarr;
-                                </button>
-                            </motion.div>
+                    </motion.div>
+                    ) : isActive && index === 2 ? (
+                    <motion.div
+                        key="attention"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="relative w-full h-32"
+                    >
+                        {/* Attention "Arc" Visualization */}
+                        <div className="absolute inset-0 flex flex-wrap items-end content-end gap-2 pb-2">
+                            {tokens.map((t, i) => (
+                                <span key={i} className="relative z-10 px-1 text-xs bg-black/20 text-white/50 rounded">{t}</span>
+                            ))}
+                        </div>
+                        <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
+                            {attentionWeights.map((w, i) => {
+                                // Simple logic: draw arc from approx token positions
+                                // Since we don't have refs to exact positions, we mock it with percentages
+                                const step = 100 / (tokens.length || 1);
+                                const x1 = (w.fromIndex * step) + (step / 2);
+                                const x2 = (w.toIndex * step) + (step / 2);
+                                const h = 20 + (Math.abs(x1 - x2)); // Arc height
+
+                                return (
+                                    <motion.path
+                                        key={i}
+                                        d={`M ${x1}% 80% Q ${(x1 + x2) / 2}% ${80 - h}% ${x2}% 80%`}
+                                        stroke="var(--dna-a)"
+                                        strokeWidth={w.strength * 2}
+                                        fill="none"
+                                        initial={{ pathLength: 0, opacity: 0 }}
+                                        animate={{ pathLength: 1, opacity: w.strength }}
+                                        transition={{ duration: 1, delay: i * 0.2 }}
+                                    />
+                                );
+                            })}
+                        </svg>
+                    </motion.div>
+                    ) : isActive && index === 3 ? (
+                    <motion.div
+                        key="predictions"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="space-y-2 w-full"
+                    >
+                        {predictions.map((p, i) => (
+                            <div key={i} className="flex items-center gap-2 text-xs">
+                                <span className="w-12 text-right font-mono text-brand-cyan shrink-0 truncate">
+                                    {p.token}
+                                </span>
+                                <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
+                                    <motion.div
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${p.probability * 100}%` }}
+                                        transition={{ duration: 0.5, delay: i * 0.1 }}
+                                        className="h-full bg-brand-cyan"
+                                    />
+                                </div>
+                                <span className="w-8 text-right text-gray-400 font-mono">
+                                    {(p.probability * 100).toFixed(0)}%
+                                </span>
+                            </div>
+                        ))}
+                    </motion.div>
+                    ) : (
+                    <motion.div>
+                        <motion.p
+                            key="static"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="text-gray-300 leading-relaxed text-sm"
+                        >
+                            {description}
+                        </motion.p>
+                        <button
+                            className="mt-6 text-sm font-semibold text-brand-teal hover:text-brand-cyan transition-colors"
+                            type="button"
+                        >
+                            EXPLORE DEEPER &rarr;
+                        </button>
+                    </motion.div>
                         )}
-                    </AnimatePresence>
-                </div>
-            </GlassCard>
+                </AnimatePresence>
         </div>
+            </GlassCard >
+        </div >
     );
 }

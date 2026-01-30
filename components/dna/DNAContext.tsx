@@ -18,6 +18,7 @@ interface DNAContextType {
     // Data State (Mock or Real)
     tokens: string[];
     vectors: number[][]; // Simplified 2D representation for visualization
+    attentionWeights: { fromIndex: number; toIndex: number; strength: number }[];
     predictions: { token: string; probability: number }[];
 
     // Actions
@@ -34,6 +35,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const [tokens, setTokens] = useState<string[]>([]);
     const [vectors, setVectors] = useState<number[][]>([]);
     const [predictions, setPredictions] = useState<{ token: string; probability: number }[]>([]);
+    const [attentionWeights, setAttentionWeights] = useState<{ fromIndex: number; toIndex: number; strength: number }[]>([]);
 
     // Simple "Toy" Tokenizer
     const tokenize = useCallback((text: string) => {
@@ -45,6 +47,25 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const vectorize = useCallback((tokens: string[]) => {
         // Create a 3x3 matrix for each token just for visuals
         return tokens.map(() => [Math.random(), Math.random(), Math.random()]);
+    }, []);
+
+    // Simple "Toy" Attention (Random connections)
+    const calculateAttention = useCallback((tokens: string[]) => {
+        const weights = [];
+        // Connect each token to 1-2 previous tokens
+        for (let i = 1; i < tokens.length; i++) {
+            // Look back
+            for (let j = Math.max(0, i - 3); j < i; j++) {
+                if (Math.random() > 0.3) {
+                    weights.push({
+                        fromIndex: i,
+                        toIndex: j,
+                        strength: Math.random() // 0-1 opacity
+                    });
+                }
+            }
+        }
+        return weights;
     }, []);
 
     // Simple "Toy" Predictor
@@ -78,6 +99,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         const t = tokenize(inputText);
         setTokens(t);
         setVectors(vectorize(t));
+        setAttentionWeights(calculateAttention(t));
         setPredictions(predict());
 
         // Timeline
@@ -102,13 +124,14 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             // Stick on prediction or go back to idle? Stick for now.
         }, 11000);
 
-    }, [inputText, tokenize, vectorize, predict]);
+    }, [inputText, tokenize, vectorize, calculateAttention, predict]);
 
     const resetSimulation = () => {
         setCurrentStep('idle');
         setIsPlaying(false);
         setTokens([]);
         setVectors([]);
+        setAttentionWeights([]);
         setPredictions([]);
     };
 
@@ -120,6 +143,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             isPlaying,
             tokens,
             vectors,
+            attentionWeights,
             predictions,
             runSimulation,
             resetSimulation
