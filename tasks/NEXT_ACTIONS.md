@@ -1,40 +1,45 @@
-# 🚀 Next Actions Strategy: Stage 4 (Scale & Content)
+# 🚀 Next Actions: V2.0 "The Living Forest"
 
 **Date:** 2026-01-30
-**Goal:** Transition from UX Repair to Growth (Content & Marketing)
+**Status:** Phase G (Evolutionary UX) COMPLETE.
+**Current Version:** 2.0.0 (Preview)
 
 ---
 
-## 👨‍💻 @ANTIGRAVITY
-**Focus:** System Health Audit (Security, Perf, Dead Code).
-
-### 1. **Phase G: Cleanup & Stabilization** (COMPLETED)
-*   ✅ **Analytics:** Implemented Funnel Tracking.
-*   ✅ **SEO:** Server Components + Metadata.
-*   ✅ **Refactor:** `next-intl` removed, strict types added.
-
----
-
-## 🤖 @SWARM
-**Focus:** User Experience Audit (Content, Links, Mobile).
-**Active Assignment:** `tasks/stage_6_audit.md`
-
-### 2. **Stage 5: Content & Polished (COMPLETED)**
-*   ✅ **Content:** Tree populated (28 nodes, EN+ET).
-*   ✅ **Marketing:** Bridges to Programs built.
-*   ✅ **Tech Polish:** Types secured.
-
-### 3. **Stage 6: The Grand Audit (Active)**
-*   ✅ **Antigravity:** RLS Security Check, Dead Code Sweep, Performance.
-*   **Swarm:** "Fresh Eyes" User Flow, Link Verification, Visual Regression.
+## 🟢 Recently Completed (Phase G)
+We have successfully transformed the static tree into a "Biodynamic" system.
+*   ✅ **DNA:** Rich Visualizations (Slicer, Vectors, Attention, Prediction).
+*   ✅ **Seed:** New Intent Capture Flow.
+*   ✅ **Tree:** Sprout Mode (LOD 2) & Semantic Zoom.
+*   ✅ **Mobile:** Optimized for touch interaction ("Explorer Mode").
 
 ---
 
-## 🚦 Execution Order
+## 🎯 Immediate Priority: Launch Polish & Verification
+Before declaring V2.0 live, we must ensure the content matches the quality of the new UX.
 
-1.  **Swarm** executes `tasks/stage_6_audit.md` (Tasks 4-6) to complete the Launch Audit.
-4.  **Launch:** Declare V1.0 Ready.
+### 1. **Content & bridges (@SWARM)**
+*   **Audit Content:** Ensure the 28 nodes have "Deep Dive" content worthy of the new "Micro-Lesson" UI.
+*   **Program Links:** Verify that `node_metadata.related_program_id` is correctly driving traffic to AIKI/AIVO.
+*   **Translation:** Sanity check Estonian translations for the new DNA/Tree terms.
 
-### 4. **Evolutionary UX (Future Iterations)**
-*   New vision documented in `tasks/evolutionary_ux_backlog.md`.
-*   Focus: DNA -> Seed -> Sprout -> Tree (Progressive Disclosure).
+### 2. **Technical Debt & Cleanup (@ANTIGRAVITY)**
+*   **ParaglideJS:** Finish the partially completed migration (remove `next-intl` remnants).
+*   **E2E Tests:** Update Playwright specs to account for the new `/seed` flow and D3 interactions.
+*   **Performance:** Profile the D3 Tree with the new "Zoom Listeners" on mobile devices.
+
+---
+
+## 📅 Roadmap (Next)
+
+| Phase | Goal | Status |
+| :--- | :--- | :--- |
+| **Phase H** | **Mobile First Polish** | Planned |
+| **Phase I** | **Paraglide Validation** | Planned |
+| **Phase J** | **Scale to 100 Nodes** | Future |
+
+---
+
+## 🧠 Strategic Note
+The "Skeleton" (Code) is now world-class. The "Flesh" (Content) must now catch up.
+We are moving from **Engineering Mode** -> **Gardening Mode**.

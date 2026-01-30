@@ -237,25 +237,24 @@
 ---
 
 ### PHASE G: Evolutionary UX (The Living Tree)
-> **Status:** Planned (Next)
-> **Detailed Plan:** `tasks/evolutionary_ux_backlog.md`
-> **Active Task List:** `tasks/evolutionary_ux_tasks.md`
+> **Status:** Complete (2026-01-30)
 > **Goal:** Transform the static tree into a "Level of Detail" exploration journey.
 
 #### US-160: DNA Rich Visualizations
-- [ ] Tokenization Slicer Animation
-- [ ] Vector Distance Map (King/Queen)
-- [ ] Attention Spotlight Lines
-- [ ] Probability Distribution Chart
+- [x] Tokenization Slicer Animation
+- [x] Vector Distance Map (King/Queen)
+- [x] Attention Spotlight Lines
+- [x] Probability Distribution Chart
 
 #### US-161: Progressive Tree Disclosure ("Sprout")
-- [ ] Collapsed default state (Roots only)
-- [ ] "Zoom to Fit" on expansion
+- [x] Collapsed default state (Roots only)
+- [x] "Zoom to Fit" on expansion
 
 #### US-162: Metaphorical Abstraction Engine (LOD System)
-- [ ] Define LODs (0=DNA, 1=Seed, 2=Sprout, 3=Tree, 4=Garden)
-- [ ] Implement "Encapsulation Physics" (Children suck into parents)
-- [ ] "Bloom" animation on zoom-in.
+- [x] Define LODs (0=DNA, 1=Seed, 2=Sprout, 3=Tree, 4=Garden)
+- [x] Implement "Encapsulation Physics" (Children suck into parents)
+- [x] "Bloom" animation on zoom-in.
+- [x] Mobile Polish (touch-action: none)
 
 ---
 
