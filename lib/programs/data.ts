@@ -2,6 +2,11 @@
  * Program Data
  * 
  * Static data for all training programs
+ * 
+ * PRICING (Updated 2026-01-30):
+ * - AIKI: €1590 (6 weeks, 60h)
+ * - AIVO: €1290 full / €900 for AIKI grads (30% off)
+ * - AIME: €2490 (bundle = AIKI + AIVO grad price)
  */
 
 import { Program } from './types';
@@ -12,8 +17,8 @@ export const PROGRAMS: Record<string, Program> = {
     slug: 'aiki',
     name: { et: 'AIKI', en: 'AIKI' },
     fullName: { 
-      et: 'AI Instruktori Baasprogramm', 
-      en: 'AI Instructor Foundation Program' 
+      et: 'Rakenduslik AI: Kasutajast Instruktoriks', 
+      en: 'Applied AI: From User to Instructor' 
     },
     tagline: { 
       et: 'Saa AI koolitajaks 6 nädalaga', 
@@ -29,14 +34,20 @@ export const PROGRAMS: Record<string, Program> = {
     
     duration: {
       weeks: 6,
-      academicHours: 90,
-      weeklyHours: 15,
+      academicHours: 60,
+      weeklyHours: 10,
       format: 'hybrid'
     },
     
     pricing: {
       price: 1590,
-      earlyBirdDiscount: 200
+      installments: {
+        count: 3,
+        amount: 563,
+        total: 1689,
+        fee: 99,
+        feePercent: 6
+      }
     },
     
     features: [
@@ -83,7 +94,7 @@ export const PROGRAMS: Record<string, Program> = {
           { et: 'Esimesed AI vestlused', en: 'First AI conversations' },
           { et: '4C meetodi tutvustus', en: '4C method introduction' }
         ],
-        hours: 10,
+        hours: 8,
         type: 'self-study'
       },
       {
@@ -94,7 +105,7 @@ export const PROGRAMS: Record<string, Program> = {
           { et: 'Efektiivsed promptid', en: 'Effective prompts' },
           { et: 'Esimene õpetamise kogemus', en: 'First teaching experience' }
         ],
-        hours: 15,
+        hours: 10,
         type: 'group'
       },
       {
@@ -105,7 +116,7 @@ export const PROGRAMS: Record<string, Program> = {
           { et: 'Custom Instructions', en: 'Custom Instructions' },
           { et: 'Isikupärastatud assistendid', en: 'Personalized assistants' }
         ],
-        hours: 15,
+        hours: 10,
         type: 'group'
       },
       {
@@ -116,7 +127,7 @@ export const PROGRAMS: Record<string, Program> = {
           { et: 'Teadmusbaasid', en: 'Knowledge bases' },
           { et: 'AI igapäevatöös', en: 'AI in daily work' }
         ],
-        hours: 15,
+        hours: 10,
         type: 'group'
       },
       {
@@ -127,7 +138,7 @@ export const PROGRAMS: Record<string, Program> = {
           { et: '4C meetodi süvendamine', en: '4C method deepening' },
           { et: 'Tagasiside andmine ja saamine', en: 'Giving and receiving feedback' }
         ],
-        hours: 15,
+        hours: 10,
         type: 'practice'
       },
       {
@@ -139,7 +150,7 @@ export const PROGRAMS: Record<string, Program> = {
           { et: 'CV ja LinkedIn', en: 'CV and LinkedIn' },
           { et: 'Tööotsingud', en: 'Job search' }
         ],
-        hours: 20,
+        hours: 12,
         type: 'assessment'
       }
     ],
@@ -188,8 +199,8 @@ export const PROGRAMS: Record<string, Program> = {
       en: 'Automate workflows with AI' 
     },
     description: {
-      et: 'Praktiline moodul töövoogude automatiseerimiseks Zapier, Make ja OpenAI API abil. Ideaalne AIKI lõpetajatele ja automatiseerimishuvilistele.',
-      en: 'Practical module for workflow automation using Zapier, Make, and OpenAI API. Ideal for AIKI graduates and automation enthusiasts.'
+      et: 'Praktiline moodul töövoogude automatiseerimiseks Zapier, Make ja OpenAI API abil. AIKI lõpetajad saavad 30% soodustust.',
+      en: 'Practical module for workflow automation using Zapier, Make, and OpenAI API. AIKI graduates get 30% discount.'
     },
     
     color: '#10b981',  // Emerald
@@ -197,16 +208,25 @@ export const PROGRAMS: Record<string, Program> = {
     
     duration: {
       weeks: 4,
-      academicHours: 60,
-      weeklyHours: 15,
+      academicHours: 40,
+      weeklyHours: 10,
       format: 'online'
     },
     
     pricing: {
-      price: 990,
+      price: 1290,
       graduateDiscount: {
-        percent: 40,
+        percent: 30,
+        amount: 390,
+        finalPrice: 900,
         forGraduatesOf: 'aiki'
+      },
+      installments: {
+        count: 3,
+        amount: 460,
+        total: 1380,
+        fee: 90,
+        feePercent: 7
       }
     },
     
@@ -253,7 +273,7 @@ export const PROGRAMS: Record<string, Program> = {
           { et: 'Automatiseerimise põhimõtted', en: 'Automation principles' },
           { et: 'Tööriistade ülevaade', en: 'Tools overview' }
         ],
-        hours: 8,
+        hours: 6,
         type: 'self-study'
       },
       {
@@ -264,7 +284,7 @@ export const PROGRAMS: Record<string, Program> = {
           { et: 'Triggerid ja tegevused', en: 'Triggers and actions' },
           { et: 'Mitmesammuline loogika', en: 'Multi-step logic' }
         ],
-        hours: 15,
+        hours: 10,
         type: 'group'
       },
       {
@@ -275,7 +295,7 @@ export const PROGRAMS: Record<string, Program> = {
           { et: 'Andmete töötlemine', en: 'Data processing' },
           { et: 'Keerulised töövood', en: 'Complex workflows' }
         ],
-        hours: 15,
+        hours: 10,
         type: 'group'
       },
       {
@@ -286,7 +306,7 @@ export const PROGRAMS: Record<string, Program> = {
           { et: 'AI töövoogudes', en: 'AI in workflows' },
           { et: 'Praktilised projektid', en: 'Practical projects' }
         ],
-        hours: 15,
+        hours: 10,
         type: 'practice'
       },
       {
@@ -297,7 +317,7 @@ export const PROGRAMS: Record<string, Program> = {
           { et: 'Portfoolio täiendamine', en: 'Portfolio update' },
           { et: 'Teenuse pakkumine', en: 'Service offering' }
         ],
-        hours: 7,
+        hours: 4,
         type: 'assessment'
       }
     ],
@@ -309,7 +329,7 @@ export const PROGRAMS: Record<string, Program> = {
     ],
     
     prerequisites: [
-      { et: 'Soovituslik: AIKI lõpetamine', en: 'Recommended: AIKI completion' },
+      { et: 'Soovituslik: AIKI lõpetamine (30% soodustus)', en: 'Recommended: AIKI completion (30% discount)' },
       { et: 'Arvuti ja internet', en: 'Computer and internet' },
       { et: 'Huvi automatiseerimise vastu', en: 'Interest in automation' }
     ],
@@ -345,8 +365,8 @@ export const PROGRAMS: Record<string, Program> = {
       en: 'Complete AI competency in one package' 
     },
     description: {
-      et: 'AIKI ja AIVO ühendatud 10-nädalane intensiivprogramm. Säästad €290 võrreldes eraldi ostmisega ja saad täieliku AI instruktori ja automatiseerija ettevalmistuse.',
-      en: 'AIKI and AIVO combined 10-week intensive program. Save €290 compared to buying separately and get complete AI instructor and automation preparation.'
+      et: 'AIKI ja AIVO ühendatud 10-nädalane intensiivprogramm. Sama hind kui AIKI + AIVO lõpetaja soodustusega (€2490), aga kindel koht mõlemas programmis ja ühtne teekond.',
+      en: 'AIKI and AIVO combined 10-week intensive program. Same price as AIKI + AIVO with graduate discount (€2490), but guaranteed spot in both programs and unified journey.'
     },
     
     color: '#8b5cf6',  // Violet
@@ -354,15 +374,22 @@ export const PROGRAMS: Record<string, Program> = {
     
     duration: {
       weeks: 10,
-      academicHours: 150,
-      weeklyHours: 15,
+      academicHours: 100,
+      weeklyHours: 10,
       format: 'hybrid'
     },
     
     pricing: {
-      price: 2290,
-      bundleSavings: 290,
-      earlyBirdDiscount: 200
+      price: 2490,
+      comparedToSeparate: 2880,  // AIKI €1590 + AIVO €1290
+      bundleSavings: 390,        // Same as graduate discount path
+      installments: {
+        count: 4,
+        amount: 673,
+        total: 2692,
+        fee: 202,
+        feePercent: 8
+      }
     },
     
     features: [
@@ -376,26 +403,26 @@ export const PROGRAMS: Record<string, Program> = {
       },
       {
         icon: 'PiggyBank',
-        title: { et: 'Säästad €290', en: 'Save €290' },
+        title: { et: 'Säästad €390', en: 'Save €390' },
         description: { 
-          et: 'Parimad tingimused pühendunutele', 
-          en: 'Best terms for the committed' 
+          et: 'Sama hind kui AIKI + AIVO lõpetaja soodustusega', 
+          en: 'Same price as AIKI + AIVO with graduate discount' 
         }
       },
       {
-        icon: 'Target',
-        title: { et: 'Täielik kompetents', en: 'Complete competency' },
+        icon: 'CalendarCheck',
+        title: { et: 'Kindel koht', en: 'Guaranteed spot' },
         description: { 
-          et: 'AI õpetamine + automatiseerimine', 
-          en: 'AI teaching + automation' 
+          et: 'Üks registreerimine, kindel koht mõlemas programmis', 
+          en: 'One registration, guaranteed spot in both programs' 
         }
       },
       {
         icon: 'TrendingUp',
-        title: { et: 'Maksimaalne karjäärivõimalus', en: 'Maximum career opportunity' },
+        title: { et: '10 nädalat järjest', en: '10 weeks continuous' },
         description: { 
-          et: 'Laiem teenuste valik tööturul', 
-          en: 'Wider service range in the job market' 
+          et: 'Ilma pausita, ühtne õppeteekond', 
+          en: 'No breaks, unified learning journey' 
         }
       }
     ],
@@ -429,104 +456,6 @@ export const PROGRAMS: Record<string, Program> = {
     
     includedPrograms: ['aiki', 'aivo'],
     maxParticipants: 15
-  },
-  
-  automation: {
-    id: 'automation',
-    slug: 'automation',
-    name: { et: 'Automatiseerimine', en: 'Automation' },
-    fullName: { 
-      et: 'AI Automatiseerimise Lühimoodul', 
-      en: 'AI Automation Short Module' 
-    },
-    tagline: { 
-      et: 'Kiire sissejuhatus automatiseerimisse', 
-      en: 'Quick introduction to automation' 
-    },
-    description: {
-      et: 'Kompaktne 2-nädalane moodul neile, kes soovivad kiiresti omandada automatiseerimise põhitõed. Sobib ka ilma AIKI-ta.',
-      en: 'Compact 2-week module for those who want to quickly master automation basics. Suitable even without AIKI.'
-    },
-    
-    color: '#f59e0b',  // Amber
-    icon: 'Cog',
-    
-    duration: {
-      weeks: 2,
-      academicHours: 30,
-      weeklyHours: 15,
-      format: 'online'
-    },
-    
-    pricing: {
-      price: 590
-    },
-    
-    features: [
-      {
-        icon: 'Clock',
-        title: { et: 'Kiire ja kompaktne', en: 'Quick and compact' },
-        description: { 
-          et: 'Ainult 2 nädalat intensiivset õpet', 
-          en: 'Only 2 weeks of intensive learning' 
-        }
-      },
-      {
-        icon: 'Rocket',
-        title: { et: 'Kohene rakendatavus', en: 'Immediate applicability' },
-        description: { 
-          et: 'Alusta automatiseerimist kohe pärast moodulit', 
-          en: 'Start automating immediately after the module' 
-        }
-      }
-    ],
-    
-    curriculum: [
-      {
-        week: 1,
-        title: { et: 'Zapier ja Make', en: 'Zapier and Make' },
-        topics: [
-          { et: 'Põhitöövood', en: 'Basic workflows' },
-          { et: 'Populaarsed integratsioonid', en: 'Popular integrations' }
-        ],
-        hours: 15,
-        type: 'group'
-      },
-      {
-        week: 2,
-        title: { et: 'AI töövoogudes', en: 'AI in Workflows' },
-        topics: [
-          { et: 'OpenAI integratsioon', en: 'OpenAI integration' },
-          { et: 'Praktilised projektid', en: 'Practical projects' }
-        ],
-        hours: 15,
-        type: 'practice'
-      }
-    ],
-    
-    outcomes: [
-      { et: 'Automatiseerimise põhioskused', en: 'Basic automation skills' },
-      { et: 'Valmis projektid portfooliosse', en: 'Ready projects for portfolio' }
-    ],
-    
-    prerequisites: [
-      { et: 'Eelnev kogemus pole vajalik', en: 'No prior experience required' }
-    ],
-    
-    targetAudience: [
-      { et: 'Kiire tulemuse otsijad', en: 'Those seeking quick results' },
-      { et: 'Automatiseerimishuvilised', en: 'Automation enthusiasts' }
-    ],
-    
-    certificate: {
-      type: 'tõend',
-      title: { 
-        et: 'AI Automatiseerimise Tõend', 
-        en: 'AI Automation Certificate' 
-      }
-    },
-    
-    maxParticipants: 20
   }
 };
 
@@ -553,20 +482,74 @@ export function formatPrice(price: number, locale: string = 'et'): string {
   }).format(price);
 }
 
-export function calculateDiscount(
+export function calculateFinalPrice(
   program: Program, 
   hasAIKICertificate: boolean = false
-): { finalPrice: number; discount: number; discountType?: string } {
+): { 
+  finalPrice: number; 
+  discount: number; 
+  discountPercent: number;
+  discountType?: 'graduate' | 'bundle';
+  installments?: {
+    count: number;
+    amount: number;
+    total: number;
+    fee: number;
+  }
+} {
   let finalPrice = program.pricing.price;
   let discount = 0;
-  let discountType: string | undefined;
+  let discountPercent = 0;
+  let discountType: 'graduate' | 'bundle' | undefined;
   
   // Check for graduate discount (AIVO for AIKI grads)
   if (hasAIKICertificate && program.pricing.graduateDiscount) {
-    discount = Math.round(program.pricing.price * program.pricing.graduateDiscount.percent / 100);
-    finalPrice = program.pricing.price - discount;
+    discount = program.pricing.graduateDiscount.amount;
+    discountPercent = program.pricing.graduateDiscount.percent;
+    finalPrice = program.pricing.graduateDiscount.finalPrice;
     discountType = 'graduate';
   }
   
-  return { finalPrice, discount, discountType };
+  // Check for bundle savings (AIME)
+  if (program.pricing.bundleSavings) {
+    discount = program.pricing.bundleSavings;
+    discountType = 'bundle';
+  }
+  
+  return { 
+    finalPrice, 
+    discount, 
+    discountPercent,
+    discountType,
+    installments: program.pricing.installments
+  };
 }
+
+/**
+ * PRICING SUMMARY
+ * ================
+ * 
+ * SINGLE PROGRAMS:
+ * - AIKI: €1590 (6 weeks, 60h)
+ * - AIVO: €1290 (4 weeks, 40h)
+ * - Separate total: €2880
+ * 
+ * GRADUATE DISCOUNT:
+ * - AIVO with AIKI certificate: €900 (30% off, saves €390)
+ * 
+ * PURCHASE PATHS COMPARISON:
+ * - AIKI + AIVO separately (full price): €2880
+ * - AIKI → AIVO with grad discount: €1590 + €900 = €2490 (saves €390)
+ * - AIME bundle: €2490 (saves €390)
+ * 
+ * INSTALLMENT PLANS:
+ * - AIKI: 3 × €563 = €1689 (+€99, 6%)
+ * - AIVO: 3 × €460 = €1380 (+€90, 7%)
+ * - AIME: 4 × €673 = €2692 (+€202, 8%)
+ * 
+ * AIME BUNDLE BENEFITS:
+ * ✓ Same price as graduate discount path
+ * ✓ Guaranteed spot in both programs
+ * ✓ One registration, one payment
+ * ✓ 10 weeks continuous, no break
+ */

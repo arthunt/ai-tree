@@ -4,9 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { Concept } from '@/lib/types';
 import { TreeDiagramSkeleton } from '@/components/TreeDiagramSkeleton';
-import { ConceptLightbox } from '@/components/ConceptLightbox';
 import { NameToggle } from '@/components/NameToggle';
 import { DarkModeToggle } from '@/components/DarkModeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
@@ -14,9 +12,10 @@ import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { getTreeContent, TreeContentSimple } from '@/actions/getTreeContent';
 import { TreeView } from '@/components/tree/TreeView';
+import { TreeDetailPanel } from '@/components/tree/TreeDetailPanel';
 
 export default function TreeViewPage() {
-  const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
+  const [selectedNode, setSelectedNode] = useState<TreeContentSimple | null>(null);
   const [showSimpleNames, setShowSimpleNames] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [treeDataState, setTreeDataState] = useState<TreeContentSimple[]>([]);
@@ -37,14 +36,14 @@ export default function TreeViewPage() {
   // Handle ESC key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && selectedConcept) {
-        setSelectedConcept(null);
+      if (e.key === 'Escape' && selectedNode) {
+        setSelectedNode(null);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedConcept]);
+  }, [selectedNode]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
@@ -80,34 +79,27 @@ export default function TreeViewPage() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-12 max-w-7xl" aria-label={t('treeView.ariaLabel')}>
-        {/* Instructions */}
-        <section aria-labelledby="instructions-heading">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
-          >
-            <h2 id="instructions-heading" className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              {t('treeView.instructionsTitle')}
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              {t('treeView.instructionsText')}
-            </p>
-          </motion.div>
+        {/* Helper Text */}
+        <section className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            {t('treeView.instructionsTitle')}
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400">
+            {t('treeView.instructionsText')}
+          </p>
         </section>
 
         {/* Tree Diagram */}
         <section aria-labelledby="tree-diagram-heading">
           <h2 id="tree-diagram-heading" className="sr-only">{t('treeView.diagramAriaLabel')}</h2>
-          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 border-2 border-gray-100 dark:border-gray-700 overflow-hidden">
+          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 border-2 border-gray-100 dark:border-gray-700 overflow-hidden min-h-[600px]">
             {isLoading ? (
               <TreeDiagramSkeleton />
             ) : (
-              // Use the new D3 TreeView
-              // Need to import it and pass data
-              // For now, I'll assume we fetched it in useEffect
-              // Wait, I need to update the import and state too.
-              <TreeView data={treeDataState} />
+              <TreeView
+                data={treeDataState}
+                onNodeClick={setSelectedNode}
+              />
             )}
           </div>
         </section>
@@ -136,20 +128,12 @@ export default function TreeViewPage() {
         </section>
       </main>
 
-      {/* Concept Lightbox */}
-      {selectedConcept && (
-        <ConceptLightbox
-          concept={selectedConcept}
-          onClose={() => setSelectedConcept(null)}
-          allConcepts={data.concepts}
-          onNavigate={(conceptId) => {
-            const concept = data.concepts.find(c => c.id === conceptId);
-            if (concept) {
-              setSelectedConcept(concept);
-            }
-          }}
-        />
-      )}
+      {/* Detail Panel */}
+      <TreeDetailPanel
+        node={selectedNode}
+        onClose={() => setSelectedNode(null)}
+      />
+
     </div>
   );
 }

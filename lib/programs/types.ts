@@ -1,15 +1,49 @@
 /**
  * Program Types
  * 
- * Type definitions for AIKI, AIVO, AIME, and Automation programs
+ * Type definitions for AIKI, AIVO, and AIME programs
+ * 
+ * PRICING (Updated 2026-01-30):
+ * - AIKI: €1590 (6 weeks, 60h)
+ * - AIVO: €1290 full / €900 for AIKI grads (30% off)
+ * - AIME: €2490 (bundle = AIKI + AIVO grad price)
  */
 
-export type ProgramId = 'aiki' | 'aivo' | 'aime' | 'automation';
+export type ProgramId = 'aiki' | 'aivo' | 'aime';
 export type Locale = 'et' | 'en';
 
 export interface LocalizedString {
   et: string;
   en: string;
+}
+
+export interface InstallmentPlan {
+  count: number;           // Number of payments
+  amount: number;          // Amount per payment
+  total: number;           // Total with fee
+  fee: number;             // Additional fee
+  feePercent: number;      // Fee as percentage
+}
+
+export interface GraduateDiscount {
+  percent: number;         // Discount percentage (30)
+  amount: number;          // Discount amount in EUR (390)
+  finalPrice: number;      // Final price after discount (900)
+  forGraduatesOf: ProgramId;
+}
+
+export interface ProgramPricing {
+  price: number;           // Base price in EUR
+  
+  // Optional discounts
+  graduateDiscount?: GraduateDiscount;
+  
+  // Bundle specific
+  comparedToSeparate?: number;  // What it would cost separately
+  bundleSavings?: number;       // Amount saved with bundle
+  
+  // Payment options
+  installments?: InstallmentPlan;
 }
 
 export interface Program {
@@ -33,15 +67,7 @@ export interface Program {
   };
   
   // Pricing
-  pricing: {
-    price: number;           // Base price in EUR
-    earlyBirdDiscount?: number;
-    bundleSavings?: number;  // For AIME
-    graduateDiscount?: {     // For AIVO
-      percent: number;
-      forGraduatesOf: ProgramId;
-    };
-  };
+  pricing: ProgramPricing;
   
   // Content
   features: ProgramFeature[];
@@ -187,7 +213,7 @@ export interface ApplicationForm {
   aiki_certificate_date: string;
   
   // Step 6: Payment
-  payment_method: string;
+  payment_method: 'full' | 'installments' | 'company';
   discount_code: string;
 }
 
@@ -198,4 +224,13 @@ export interface ProgramCTA {
   message: LocalizedString;
   cta: LocalizedString;
   style: 'banner' | 'popup' | 'inline';
+}
+
+// Price calculation result
+export interface PriceCalculation {
+  finalPrice: number;
+  discount: number;
+  discountPercent: number;
+  discountType?: 'graduate' | 'bundle';
+  installments?: InstallmentPlan;
 }

@@ -163,8 +163,8 @@
 ### US-110: Interactive Phylogenetic Tree
 **Priority:** P1 | **Type:** Visualization | **Agent:** @ANTIGRAVITY
 
-- [ ] `components/tree/TreeView.tsx`: D3/SVG visualization of the hierarchy
-- [ ] Render all 26 nodes (Algorithm -> Transformers)
+- [x] `components/tree/TreeView.tsx`: D3/SVG visualization (Basic V1)
+- [ ] Refine "Organic" look (Curved lines, glowing nodes)
 - [ ] Zoom/Pan controls ("Living Map")
 
 ---
@@ -177,12 +177,25 @@
 
 ---
 
-### US-112: Node Detail View
-**Priority:** P2 | **Type:** Feature
+### US-112: Node Detail View (Rich Content)
+**Priority:** P2 | **Type:** Feature | **Agent:** @ANTIGRAVITY
+- [ ] Implement `TreeDetailPanel.tsx` (Slide-over or Modal)
+- [ ] Show Metadata (Year, Paper, Visual Motif)
+- [ ] **Marketing Hook:** "Learn more in AIKI..." (See US-114)
 
-- [ ] Clicking a Tree Node opens a detail pane/modal
-- [ ] Shows "Evolutionary History" (Parent/Children)
-- [ ] Shows "DNA Pattern" (Architecture Type)
+---
+
+### US-113: Marketing Integration (Foundation)
+**Priority:** P2 | **Type:** Infrastructure | **Agent:** @ANTIGRAVITY
+- [ ] Implement `lib/programs` (Types, Static Data) ✅ (Exists)
+- [ ] Database Schema: `program_leads`, `program_views`
+- [ ] Basic "Programs" page (`/programs`)
+
+### US-114: Contextual CTAs (Swarm Intelligence)
+**Priority:** P2 | **Type:** Logic | **Agent:** @SWARM
+- [ ] Map Tree Nodes to Programs (e.g., Agents -> AIVO)
+- [ ] Populate `node_metadata.related_program_id`
+- [ ] Generate "Hook Text" for each mapped node
 
 ---
 

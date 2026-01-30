@@ -42,14 +42,50 @@
 
 ---
 
-## 2. Program Overview
+## 2. Program Overview & Pricing
 
-| Program | Target | Duration | Price | Path |
-|---------|--------|----------|-------|------|
-| **AIKI** | Career reskilling → AI Instructor | 6 weeks, 90h | €1,590 | `/programs/aiki` |
-| **AIVO** | Automation specialists | 4 weeks, 60h | €990 | `/programs/aivo` |
-| **AIME** | Bundle (AIKI + AIVO) | 10 weeks, 150h | €2,290 | `/programs/aime` |
-| **Automation Module** | Standalone automation | 2 weeks, 30h | €590 | `/programs/automation` |
+### Single Programs
+
+| Program | Code | Duration | Full Price | Path |
+|---------|------|----------|------------|------|
+| Rakenduslik AI: Kasutajast Instruktoriks | **AIKI** | 6 weeks (60h) | €1,590 | `/programs/aiki` |
+| AI Automatiseerimise Moodul | **AIVO** | 4 weeks (40h) | €1,290 | `/programs/aivo` |
+
+**Separate purchase total: €2,880**
+
+### Graduate Discount
+
+| Variant | Price | Savings |
+|---------|-------|---------|  
+| AIVO with AIKI certificate | €900 | €390 (30%) |
+
+### Purchase Path Comparison
+
+| Path | Calculation | Total | Savings |
+|------|-------------|-------|---------|  
+| AIKI + AIVO separately (full) | €1,590 + €1,290 | €2,880 | — |
+| AIKI → AIVO with grad discount | €1,590 + €900 | **€2,490** | €390 |
+| AIME bundle (upfront) | — | **€2,490** | €390 |
+
+### Installment Plans
+
+| Program | Single | Installments | Fee |
+|---------|--------|--------------|-----|
+| AIKI | €1,590 | 3 × €563 = €1,689 | +€99 (6%) |
+| AIVO | €1,290 | 3 × €460 = €1,380 | +€90 (7%) |
+| AIME | €2,490 | 4 × €673 = €2,692 | +€202 (8%) |
+
+### AIME Bundle Benefits
+
+```
+AIKI graduate gets AIVO at same price as AIME bundle:
+   €1,590 + €900 = €2,490 = AIME
+
+AIME bundle advantage:
+   ✓ Guaranteed spot in both programs
+   ✓ One registration, one payment
+   ✓ 10 weeks continuous, no break
+```
 
 ### Naming Rationale
 
@@ -73,15 +109,13 @@ app/[locale]/
 ├── dna/                          # Existing: DNA View
 ├── tree-view/                    # Existing: Concept Map
 ├── programs/                     # NEW: Marketing hub
-│   ├── page.tsx                  # Programs overview
+│   ├── page.tsx                  # Programs overview & comparison
 │   ├── aiki/
 │   │   └── page.tsx              # AIKI landing page
 │   ├── aivo/
 │   │   └── page.tsx              # AIVO landing page
 │   ├── aime/
 │   │   └── page.tsx              # AIME bundle landing page
-│   ├── automation/
-│   │   └── page.tsx              # Standalone automation module
 │   └── apply/
 │       └── page.tsx              # Application/registration form
 └── concept/                      # Existing: Concept details
@@ -90,12 +124,11 @@ app/[locale]/
 ### 3.2 URL Structure
 
 | URL | Purpose |
-|-----|---------|
+|-----|---------|  
 | `/et/programs` | Programs overview (compare all) |
 | `/et/programs/aiki` | AIKI full landing page |
 | `/et/programs/aivo` | AIVO full landing page |
 | `/et/programs/aime` | AIME bundle landing page |
-| `/et/programs/automation` | Automation module page |
 | `/et/programs/apply?program=aiki` | Application form |
 | `/en/programs/...` | English versions |
 

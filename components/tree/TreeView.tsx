@@ -7,9 +7,10 @@ import { TreeContentSimple } from '@/actions/getTreeContent';
 
 interface TreeViewProps {
     data: TreeContentSimple[];
+    onNodeClick?: (node: TreeContentSimple) => void;
 }
 
-export function TreeView({ data }: TreeViewProps) {
+export function TreeView({ data, onNodeClick }: TreeViewProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
@@ -68,8 +69,8 @@ export function TreeView({ data }: TreeViewProps) {
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{ opacity: 1, scale: 1, x: node.x, y: node.y }}
                             transition={{ duration: 0.5, delay: i * 0.05 }}
-                            className="cursor-pointer pointer-events-auto"
-                            onClick={() => console.log('Clicked', node.data)}
+                            className="cursor-pointer pointer-events-auto hover:scale-110 transition-transform"
+                            onClick={() => onNodeClick?.(node.data)}
                         >
                             <circle r={node.data.type === 'root' ? 10 : 5} fill="var(--brand-teal)" />
                             <text

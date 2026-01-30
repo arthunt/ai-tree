@@ -11,7 +11,8 @@
 -- ENUMS
 -- ============================================
 
-CREATE TYPE program_id AS ENUM ('aiki', 'aivo', 'aime', 'automation');
+-- Only AIKI, AIVO, and AIME bundle (automation removed as separate product)
+CREATE TYPE program_id AS ENUM ('aiki', 'aivo', 'aime');
 CREATE TYPE lead_status AS ENUM ('new', 'contacted', 'qualified', 'enrolled', 'declined', 'lost');
 CREATE TYPE application_status AS ENUM ('draft', 'submitted', 'reviewing', 'accepted', 'enrolled', 'declined', 'withdrawn');
 CREATE TYPE payment_method AS ENUM ('full', 'installments', 'company', 'scholarship');
@@ -407,18 +408,21 @@ CREATE TRIGGER trigger_applications_updated
 
 -- Uncomment to insert sample cohorts:
 /*
+-- PRICING (Updated 2026-01-30):
+-- AIKI: €1590 (159000 cents)
+-- AIVO: €1290 full (129000 cents) / €900 for AIKI grads (90000 cents) - 30% off
+-- AIME: €2490 (249000 cents) - same as AIKI + AIVO grad price
+
 INSERT INTO program_cohorts (program, name, start_date, end_date, price_cents, early_bird_price_cents, early_bird_deadline) VALUES
-('aiki', 'AIKI-2026-MAR', '2026-03-03', '2026-04-14', 159000, 139000, '2026-02-17'),
-('aiki', 'AIKI-2026-MAY', '2026-05-05', '2026-06-16', 159000, 139000, '2026-04-21'),
-('aivo', 'AIVO-2026-APR', '2026-04-14', '2026-05-12', 99000, NULL, NULL),
-('aime', 'AIME-2026-MAR', '2026-03-03', '2026-05-12', 229000, 209000, '2026-02-17'),
-('automation', 'AUTO-2026-APR', '2026-04-07', '2026-04-21', 59000, NULL, NULL);
+('aiki', 'AIKI-2026-MAR', '2026-03-03', '2026-04-14', 159000, NULL, NULL),
+('aiki', 'AIKI-2026-MAY', '2026-05-05', '2026-06-16', 159000, NULL, NULL),
+('aivo', 'AIVO-2026-APR', '2026-04-14', '2026-05-12', 129000, NULL, NULL),
+('aime', 'AIME-2026-MAR', '2026-03-03', '2026-05-12', 249000, NULL, NULL);
 
 -- Sample discount codes
 INSERT INTO discount_codes (code, description, discount_percent, valid_programs, valid_until) VALUES
-('EARLYBIRD20', 'Varajase broneeringu soodustus', 20, '{aiki,aime}', '2026-03-01'),
-('AIKIGRAD40', 'AIKI lõpetajate soodustus AIVO-le', 40, '{aivo}', '2026-12-31'),
-('LAUNCH10', 'Lansserimise soodustus', 10, '{aiki,aivo,aime,automation}', '2026-02-28');
+('AIKIGRAD30', 'AIKI lõpetajate 30% soodustus AIVO-le', 30, '{aivo}', '2026-12-31'),
+('LAUNCH10', 'Lansserimise soodustus', 10, '{aiki,aivo,aime}', '2026-02-28');
 */
 
 -- ============================================
