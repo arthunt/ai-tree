@@ -1,11 +1,37 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-// Initialize the Supabase client
-// These environment variables must be set in .env.local
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
+// Lazy-initialized Supabase client — avoids build-time crash when env vars
+// are not yet available (e.g. during `next build` static page collection).
+let _supabase: SupabaseClient | null = null;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export function getSupabase(): SupabaseClient | null {
+  if (_supabase) return _supabase;
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!url || !key) return null;
+
+  _supabase = createClient(url, key);
+  return _supabase;
+}
+
+// Keep backward-compat export (returns null-safe client)
+export const supabase = new Proxy({} as SupabaseClient, {
+  get(_target, prop) {
+    const client = getSupabase();
+    if (!client) {
+      // Return a stub that makes .from().select() etc. return empty results
+      if (prop === 'from') {
+        return () => ({
+          select: () => ({ in: () => ({ eq: () => Promise.resolve({ data: null, error: new Error('Supabase not configured') }) }) }),
+        });
+      }
+      return undefined;
+    }
+    return (client as unknown as Record<string, unknown>)[prop as string];
+  },
+});
 
 // Type definitions for the DNA Architecture
 
