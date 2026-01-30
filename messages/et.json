@@ -1211,6 +1211,27 @@
     },
     "faq": {
       "heading": "Korduma Kippuvad Küsimused"
+    },
+    "lead": {
+      "title": "Kindlusta Oma Koht",
+      "subtitle": "Jäta oma andmed ja me võtame sinuga ühendust.",
+      "name": "Täisnimi",
+      "namePlaceholder": "Mari Mets",
+      "email": "E-posti aadress",
+      "emailPlaceholder": "mari@näide.ee",
+      "phone": "Telefon (valikuline)",
+      "phonePlaceholder": "+372 ...",
+      "notes": "Eesmärgid või küsimused (valikuline)",
+      "notesPlaceholder": "Mida sa sellest programmist saada loodad?",
+      "submit": "Broneeri Koht",
+      "submitting": "Saatmine...",
+      "successTitle": "Tere tulemast!",
+      "successMessage": "Oleme su avalduse kätte saanud. Kontrolli oma e-posti — võtame 24 tunni jooksul ühendust.",
+      "successClose": "Selge",
+      "errorGeneric": "Midagi läks valesti. Palun proovi uuesti.",
+      "errorEmail": "Palun sisesta kehtiv e-posti aadress.",
+      "errorName": "Palun sisesta oma nimi.",
+      "close": "Sulge"
     }
   },
   "nav": {

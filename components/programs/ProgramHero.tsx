@@ -1,5 +1,7 @@
 import { Program } from '@/lib/types';
 import * as LucideIcons from 'lucide-react';
+import { ApplyButton } from './ApplyButton';
+import type { LeadLabels } from './LeadCaptureDialog';
 
 interface ProgramHeroProps {
     program: Program;
@@ -8,6 +10,7 @@ interface ProgramHeroProps {
         weeks: string;
         hours: string;
     };
+    leadLabels: LeadLabels;
 }
 
 function getIcon(name: string): React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }> {
@@ -16,7 +19,7 @@ function getIcon(name: string): React.ComponentType<{ size?: number; className?:
     return Icon || LucideIcons.Sparkles;
 }
 
-export function ProgramHero({ program, labels }: ProgramHeroProps) {
+export function ProgramHero({ program, labels, leadLabels }: ProgramHeroProps) {
     const Icon = getIcon(program.icon || 'sparkles');
     const price = new Intl.NumberFormat('et-EE', {
         style: 'currency',
@@ -90,9 +93,12 @@ export function ProgramHero({ program, labels }: ProgramHeroProps) {
                 </div>
 
                 {/* CTA */}
-                <a
-                    href="#pricing"
-                    className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-lg font-semibold text-white transition-all hover:scale-105 hover:shadow-2xl"
+                <ApplyButton
+                    programId={program.id}
+                    programName={program.code}
+                    color={program.color}
+                    labels={leadLabels}
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-lg font-semibold text-white transition-all hover:scale-105 hover:shadow-2xl cursor-pointer"
                     style={{
                         background: `linear-gradient(135deg, ${program.color}, ${program.color}cc)`,
                         boxShadow: `0 8px 32px ${program.color}40`,
@@ -100,7 +106,7 @@ export function ProgramHero({ program, labels }: ProgramHeroProps) {
                 >
                     {labels.apply}
                     <LucideIcons.ArrowRight className="w-5 h-5" />
-                </a>
+                </ApplyButton>
             </div>
         </section>
     );

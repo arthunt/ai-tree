@@ -40,6 +40,7 @@ export default async function ProgramPage({ params }: Props) {
 
     const t = messages[locale] ?? messages.en;
     const p = t.programs;
+    const leadLabels = p.lead;
 
     return (
         <main className="min-h-screen bg-black text-white selection:bg-brand-purple/30 selection:text-white">
@@ -52,6 +53,7 @@ export default async function ProgramPage({ params }: Props) {
                     weeks: p.hero.weeks,
                     hours: p.hero.hours,
                 }}
+                leadLabels={leadLabels}
             />
 
             {program.features && program.features.length > 0 && (
@@ -89,6 +91,7 @@ export default async function ProgramPage({ params }: Props) {
                     paymentNote: p.pricing.paymentNote,
                     graduateDiscount: p.pricing.graduateDiscount,
                 }}
+                leadLabels={leadLabels}
             />
 
             {program.faq && program.faq.length > 0 && (
