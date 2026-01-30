@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Calendar, FileText, Sparkles, GraduationCap } from 'lucide-react';
 import { TreeContentSimple } from '@/actions/getTreeContent';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
@@ -28,6 +29,8 @@ interface TreeDetailPanelProps {
 
 export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
     const t = useTranslations('treeView');
+    const params = useParams();
+    const locale = params.locale as string;
     if (!node) return null;
 
     return (
@@ -130,7 +133,7 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                                     {node.marketingHook || "Learn more about this in our expert programs."}
                                 </p>
                                 <Link
-                                    href={`/programs/${node.relatedProgramId}`}
+                                    href={`/${locale}/programs/${node.relatedProgramId}`}
                                     className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-700 dark:text-indigo-300 hover:text-indigo-800 dark:hover:text-white transition-colors"
                                 >
                                     {t('viewProgramLabel')} <ExternalLink className="w-4 h-4" />

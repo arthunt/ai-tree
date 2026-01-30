@@ -51,7 +51,7 @@ function DNAInterface({ content }: DNAInterfaceProps) {
             <MicroLesson />
 
             <div
-                className="relative min-h-screen w-full bg-void overflow-hidden text-white selection:bg-brand-teal selection:text-bg-void"
+                className="relative min-h-screen min-h-screen-dynamic w-full bg-void overflow-hidden text-white selection:bg-brand-teal selection:text-bg-void"
                 // THE LENS EFFECT: Slow down time when user is exploring
                 onMouseEnter={() => setPlaybackSpeed(0.1)}
                 onMouseLeave={() => setPlaybackSpeed(0.5)}
@@ -75,7 +75,7 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                     </div>
                 </motion.div>
 
-                <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-4 sm:p-8">
+                <div className="relative z-10 flex flex-col items-center justify-center min-h-screen min-h-screen-dynamic p-4 sm:p-8">
 
                     {/* Header Section */}
                     <motion.header

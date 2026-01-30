@@ -47,7 +47,7 @@ export function SeedPageContent() {
     };
 
     return (
-        <div className="relative min-h-screen w-full bg-void overflow-hidden text-white flex flex-col items-center justify-center">
+        <div className="relative min-h-screen min-h-screen-dynamic w-full bg-void overflow-hidden text-white flex flex-col items-center justify-center">
             <GlobalNav transparent />
 
             {/* Ambient background */}

@@ -151,10 +151,10 @@ export function ConceptBottomSheet({
   // Memoize sheet height
   const sheetHeight = useMemo(() => {
     switch (state) {
-      case 'preview': return '30vh';
-      case 'half': return '60vh';
-      case 'full': return '92vh';
-      default: return '0vh';
+      case 'preview': return '30dvh';
+      case 'half': return '60dvh';
+      case 'full': return '92dvh';
+      default: return '0dvh';
     }
   }, [state]);
 

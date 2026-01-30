@@ -109,6 +109,10 @@ a:focus-visible,
     height: 100dvh;
   }
 
+  .min-h-screen-dynamic {
+    min-height: 100dvh;
+  }
+
   .max-h-screen-dynamic {
     max-height: 100dvh;
   }
