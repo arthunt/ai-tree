@@ -5,6 +5,7 @@ import { GlowingNode } from '@/components/ui/GlowingNode';
 import { useDNA, DNAStep } from './DNAContext';
 import { TokenizationSlicer } from './TokenizationSlicer';
 import { VectorMap } from './VectorMap';
+import { AttentionSpotlight } from './AttentionSpotlight';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
@@ -110,40 +111,15 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
                             </motion.div>
                         ) : isActive && index === 2 ? (
                             <motion.div
-                                key="attention"
+                                key="attention-spotlight"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="relative w-full h-32"
                             >
-                                {/* Attention "Arc" Visualization */}
-                                <div className="absolute inset-0 flex flex-wrap items-end content-end gap-2 pb-2">
-                                    {tokens.map((t, i) => (
-                                        <span key={i} className="relative z-10 px-1 text-xs bg-black/20 text-white/50 rounded">{t}</span>
-                                    ))}
-                                </div>
-                                <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
-                                    {attentionWeights.map((w, i) => {
-                                        // Simple logic: draw arc from approx token positions
-                                        // Since we don't have refs to exact positions, we mock it with percentages
-                                        const step = 100 / (tokens.length || 1);
-                                        const x1 = (w.fromIndex * step) + (step / 2);
-                                        const x2 = (w.toIndex * step) + (step / 2);
-                                        const h = 20 + (Math.abs(x1 - x2)); // Arc height
-
-                                        return (
-                                            <motion.path
-                                                key={i}
-                                                d={`M ${x1}% 80% Q ${(x1 + x2) / 2}% ${80 - h}% ${x2}% 80%`}
-                                                stroke="var(--dna-a)"
-                                                strokeWidth={w.strength * 2}
-                                                fill="none"
-                                                initial={{ pathLength: 0, opacity: 0 }}
-                                                animate={{ pathLength: 1, opacity: w.strength }}
-                                                transition={{ duration: 1, delay: i * 0.2 }}
-                                            />
-                                        );
-                                    })}
-                                </svg>
+                                <AttentionSpotlight
+                                    tokens={tokens}
+                                    weights={attentionWeights}
+                                    isActive={isActive}
+                                />
                             </motion.div>
                         ) : isActive && index === 3 ? (
                             <motion.div
