@@ -121,6 +121,15 @@
 - [x] TokenizerDemo improvements: BPE-like digit splitting (`c300e62`)
 </details>
 
+<details>
+<summary>Sprint 10: DNA View Foundation (Architecture Pivot) (DONE)</summary>
+
+- [x] US-090: Tech Stack Foundation (Paraglide + Supabase)
+- [x] US-091: DNA Visual Components (Living Forest Design)
+- [x] US-093: DNA Flow Diagram
+- [x] US-095: View Selector & Routing
+</details>
+
 ---
 
 ## Definition of Done
@@ -136,12 +145,37 @@
 
 ---
 
-## Active Sprint: Sprint 10 — DNA View Foundation (Architecture Pivot)
+## Active Sprint: Sprint 11 — DNA Interactivity (Stage 3: Võrs)
 
-> **Priority:** P0-Critical
-> **Goal:** Launch DNA View using the **new "Living Forest" architecture** (ParaglideJS + Supabase).
-> **Tech Stack:** Next.js 15, ParaglideJS (i18n), Supabase (Content/DB).
-> **Protocol:** Core architecture by @ANTIGRAVITY. Content, tests, and polish by @SWARM.
+> **Priority:** P1-High
+> **Goal:** Make the DNA View interactive (User Input -> Live Visualization) and populate real content.
+> **Protocol:** @ANTIGRAVITY builds the interactive "Toy" logic. @SWARM handles scale/content.
+
+### US-100: Interactive DNA Input
+**Priority:** P1 | **Type:** Feature | **Agent:** @ANTIGRAVITY
+
+- [ ] Input field in DNA View header ("Type something...")
+- [ ] Live Tokenization visualization (Color-coded chunks)
+- [ ] "Vectorize" button triggers animation
+
+---
+
+### US-101: Dynamic Attention & Prediction
+**Priority:** P1 | **Type:** Feature | **Agent:** @ANTIGRAVITY
+
+- [ ] SVG lines connecting "related" tokens (Mock logic acceptable for now)
+- [ ] Probability bars showing "Next Token" candidates
+
+---
+
+### US-102: Content Population (Real Data)
+**Priority:** P0 | **Type:** Content | **Agent:** @SWARM
+
+- [ ] Insert core concept data into Supabase (T-V-A-P)
+- [ ] Verify `actions/getDNAContent.ts` works with real DB
+- [ ] Remove "MOCK DATA" fallback
+
+---
 
 ### US-090: Tech Stack Foundation (Paraglide + Supabase)
 **Priority:** P0 | **Type:** Infrastructure | **Agent:** @ANTIGRAVITY
