@@ -76,14 +76,14 @@ CREATE TABLE IF NOT EXISTS program_translations (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS program_features (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id TEXT PRIMARY KEY,                    -- 'f-aiki-1'
   program_id TEXT REFERENCES programs(id) ON DELETE CASCADE,
   icon TEXT NOT NULL,                     -- Lucide icon name
   sort_order INT DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS feature_translations (
-  feature_id UUID REFERENCES program_features(id) ON DELETE CASCADE,
+  feature_id TEXT REFERENCES program_features(id) ON DELETE CASCADE,
   locale TEXT NOT NULL CHECK (locale IN ('en', 'et')),
   title TEXT NOT NULL,
   description TEXT,
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS feature_translations (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS program_curriculum (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id TEXT PRIMARY KEY,                    -- 'c-aiki-1'
   program_id TEXT REFERENCES programs(id) ON DELETE CASCADE,
   week_number INT NOT NULL,               -- 0 = pre-work, 1-6 = weeks
   hours INT NOT NULL,                     -- Hours for this week
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS program_curriculum (
 );
 
 CREATE TABLE IF NOT EXISTS curriculum_translations (
-  curriculum_id UUID REFERENCES program_curriculum(id) ON DELETE CASCADE,
+  curriculum_id TEXT REFERENCES program_curriculum(id) ON DELETE CASCADE,
   locale TEXT NOT NULL CHECK (locale IN ('en', 'et')),
   title TEXT NOT NULL,                    -- 'Nädal 1: AI DNA'
   subtitle TEXT,                          -- Short description
@@ -118,13 +118,13 @@ CREATE TABLE IF NOT EXISTS curriculum_translations (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS program_faq (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id TEXT PRIMARY KEY,                    -- 'faq-aiki-1'
   program_id TEXT REFERENCES programs(id) ON DELETE CASCADE,
   sort_order INT DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS faq_translations (
-  faq_id UUID REFERENCES program_faq(id) ON DELETE CASCADE,
+  faq_id TEXT REFERENCES program_faq(id) ON DELETE CASCADE,
   locale TEXT NOT NULL CHECK (locale IN ('en', 'et')),
   question TEXT NOT NULL,
   answer TEXT NOT NULL,

@@ -58,3 +58,58 @@ export interface TreeData {
 }
 
 export type ViewMode = 'metaphor' | 'technical' | 'both';
+
+// --- Programs (Supabase) ---
+
+export interface ProgramFeature {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface ProgramCurriculum {
+  week_number: number;
+  hours: number;
+  type: 'self-study' | 'group' | 'practice' | 'assessment' | 'pre-work';
+  title: string;
+  subtitle?: string;
+  topics: string[];
+}
+
+export interface ProgramFAQ {
+  question: string;
+  answer: string;
+}
+
+export interface Program {
+  id: string;
+  slug: string;
+  code: string;
+  color: string;
+  icon?: string;
+  duration_weeks: number;
+  academic_hours: number;
+  price_cents: number;
+  name: string;
+  full_name: string;
+  tagline: string;
+  description: string; // HTML/Markdown
+  target_audience: string;
+  outcomes: string[];
+
+  // Computed/joined fields
+  features?: ProgramFeature[];
+  curriculum?: ProgramCurriculum[];
+  faq?: ProgramFAQ[];
+
+  // Pricing variants
+  graduate_discount_percent?: number;
+  graduate_discount_for?: string;
+  installment_count?: number;
+  installment_amount_cents?: number;
+  is_bundle?: boolean;
+  included_programs?: string[];
+  bundle_savings_cents?: number;
+}
+
