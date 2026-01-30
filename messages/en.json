@@ -1189,6 +1189,13 @@
         "metaphor": "Like guessing the end of a sentence before it's spoken."
       }
     },
+    "completion": {
+      "title": "Simulation Complete",
+      "subtitle": "You've explored the 4-step journey from text to prediction.",
+      "predicted": "Winner Prediction",
+      "replay": "Replay Steps",
+      "explore": "Plant a Seed"
+    },
     "controlHint": "Move cursor to slow down · Click cards to explore",
     "seedPath": {
       "title": "Plant Your Seed",

@@ -56,28 +56,32 @@ function strengthColor(s: number): string {
 
 export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotlightProps) {
     const [hoveredToken, setHoveredToken] = useState<number | null>(null);
+    const [selectedToken, setSelectedToken] = useState<number | null>(null);
 
-    // Pre-compute which arcs connect to the hovered token
+    // Active token: selected (tap) takes priority over hovered (mouse)
+    const activeToken = selectedToken ?? hoveredToken;
+
+    // Pre-compute which arcs connect to the active token
     const connectedArcs = useMemo(() => {
-        if (hoveredToken === null) return null;
+        if (activeToken === null) return null;
         return new Set(
             weights
-                .filter(w => w.fromIndex === hoveredToken || w.toIndex === hoveredToken)
+                .filter(w => w.fromIndex === activeToken || w.toIndex === activeToken)
                 .map((_, i) => weights.indexOf(_))
         );
-    }, [hoveredToken, weights]);
+    }, [activeToken, weights]);
 
-    // Token indices that are connected to the hovered one
+    // Token indices that are connected to the active one
     const connectedTokens = useMemo(() => {
-        if (hoveredToken === null) return null;
+        if (activeToken === null) return null;
         const set = new Set<number>();
-        set.add(hoveredToken);
+        set.add(activeToken);
         for (const w of weights) {
-            if (w.fromIndex === hoveredToken) set.add(w.toIndex);
-            if (w.toIndex === hoveredToken) set.add(w.fromIndex);
+            if (w.fromIndex === activeToken) set.add(w.toIndex);
+            if (w.toIndex === activeToken) set.add(w.fromIndex);
         }
         return set;
-    }, [hoveredToken, weights]);
+    }, [activeToken, weights]);
 
     if (!isActive || tokens.length === 0) return null;
 
@@ -147,19 +151,20 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                                 className="cursor-pointer"
                                 onMouseEnter={() => setHoveredToken(i)}
                                 onMouseLeave={() => setHoveredToken(null)}
+                                onClick={() => setSelectedToken(selectedToken === i ? null : i)}
                             />
 
                             {/* Token dot */}
                             <motion.circle
                                 cx={x}
                                 cy={TOKEN_Y}
-                                r={hoveredToken === i ? 5 : 3}
+                                r={activeToken === i ? 5 : 3}
                                 fill={isDimmed ? "rgba(255,255,255,0.15)" : "rgb(45, 212, 191)"}
                                 initial={{ r: 0 }}
-                                animate={{ r: hoveredToken === i ? 5 : 3 }}
+                                animate={{ r: activeToken === i ? 5 : 3 }}
                                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                 style={{
-                                    filter: hoveredToken === i
+                                    filter: activeToken === i
                                         ? "drop-shadow(0 0 6px rgb(45, 212, 191))"
                                         : "none"
                                 }}
@@ -173,7 +178,7 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                                 fill={isDimmed ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.7)"}
                                 fontSize={9}
                                 fontFamily="monospace"
-                                fontWeight={hoveredToken === i ? "bold" : "normal"}
+                                fontWeight={activeToken === i ? "bold" : "normal"}
                                 initial={{ opacity: 0, y: TOKEN_Y + 20 }}
                                 animate={{
                                     opacity: isDimmed ? 0.2 : 1,
@@ -183,13 +188,14 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                                 className="cursor-pointer select-none"
                                 onMouseEnter={() => setHoveredToken(i)}
                                 onMouseLeave={() => setHoveredToken(null)}
+                                onClick={() => setSelectedToken(selectedToken === i ? null : i)}
                             >
                                 {token}
                             </motion.text>
 
                             {/* Strength badge on hover */}
                             <AnimatePresence>
-                                {hoveredToken === i && weights.some(w => w.fromIndex === i || w.toIndex === i) && (
+                                {activeToken === i && weights.some(w => w.fromIndex === i || w.toIndex === i) && (
                                     <motion.text
                                         x={x}
                                         y={TOKEN_Y - 16}

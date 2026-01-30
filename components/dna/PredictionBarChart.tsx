@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useDNA } from "./DNAContext";
 
 /**
  * PredictionBarChart — US-160 Task 1.4
@@ -30,10 +31,14 @@ type Stage = "growing" | "eliminating" | "winner";
 
 export function PredictionBarChart({ predictions, isActive }: PredictionBarChartProps) {
     const [stage, setStage] = useState<Stage>("growing");
+    const { playbackSpeed } = useDNA();
 
     // Take top entries (already sorted by probability desc from context)
     const top = predictions.slice(0, 4);
     const winnerIdx = 0; // First is highest probability
+
+    // Scale factor: higher speed = shorter delays. Clamp to avoid division by zero.
+    const scale = useMemo(() => 1 / Math.max(playbackSpeed, 0.05), [playbackSpeed]);
 
     useEffect(() => {
         if (!isActive) {
@@ -44,16 +49,16 @@ export function PredictionBarChart({ predictions, isActive }: PredictionBarChart
         setStage("growing");
 
         // Stage 2: strikethrough losers after bars finish growing
-        const t1 = setTimeout(() => setStage("eliminating"), 1200);
+        const t1 = setTimeout(() => setStage("eliminating"), 1200 * scale);
 
         // Stage 3: highlight winner
-        const t2 = setTimeout(() => setStage("winner"), 2200);
+        const t2 = setTimeout(() => setStage("winner"), 2200 * scale);
 
         return () => {
             clearTimeout(t1);
             clearTimeout(t2);
         };
-    }, [isActive]);
+    }, [isActive, scale]);
 
     if (!isActive || top.length === 0) return null;
 

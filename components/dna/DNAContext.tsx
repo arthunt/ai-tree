@@ -26,10 +26,16 @@ interface DNAContextType {
     attentionWeights: { fromIndex: number; toIndex: number; strength: number }[];
     predictions: { token: string; probability: number }[];
 
+    // Derived State
+    isComplete: boolean;       // True when simulation finished (ran through all steps)
+    hasData: boolean;          // True when tokens/vectors/etc. are populated
+
     // Actions
     runSimulation: () => void;
     resetSimulation: () => void;
     nextStep: () => void;
+    prevStep: () => void;
+    jumpToStep: (step: DNAStep) => void;
     setPlaybackSpeed: (speed: number) => void;
     togglePause: () => void;
     openLesson: (step: DNAStep) => void;
@@ -41,6 +47,9 @@ const DNAContext = createContext<DNAContextType | undefined>(undefined);
 const STEP_ORDER: DNAStep[] = ['tokenization', 'vectorizing', 'attention', 'prediction', 'idle'];
 const BASE_STEP_DURATION = 4000; // 4 seconds per step at 1.0 speed
 
+// Active simulation steps (without terminal 'idle')
+const ACTIVE_STEPS: DNAStep[] = ['tokenization', 'vectorizing', 'attention', 'prediction'];
+
 export function DNAProvider({ children }: { children: React.ReactNode }) {
     const [inputText, setInputText] = useState("");
     const [currentStep, setCurrentStep] = useState<DNAStep>('idle');
@@ -48,6 +57,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const [isPaused, setIsPaused] = useState(false);
     const [playbackSpeed, setPlaybackSpeed] = useState(0.5); // Default to slower 0.5x as per US-152
     const [activeLesson, setActiveLesson] = useState<DNAStep | null>(null);
+    const [isComplete, setIsComplete] = useState(false);
 
     const [tokens, setTokens] = useState<string[]>([]);
     const [subTokens, setSubTokens] = useState<string[]>([]);
@@ -151,6 +161,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         setIsPlaying(true);
         setCurrentStep('tokenization');
         setIsPaused(false);
+        setIsComplete(false);
 
         // Process Data
         const t = tokenize(inputText);
@@ -161,17 +172,53 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         setPredictions(predict());
     }, [inputText, tokenize, vectorize, calculateAttention, predict]);
 
+    // Derived state
+    const hasData = tokens.length > 0;
+
     // Manual Step Advance
     const nextStep = useCallback(() => {
         const nextIndex = STEP_ORDER.indexOf(currentStep) + 1;
         if (nextIndex < STEP_ORDER.length) {
-            setCurrentStep(STEP_ORDER[nextIndex]);
-            // Reset timer loop
+            const next = STEP_ORDER[nextIndex];
+            setCurrentStep(next);
             if (stepTimerRef.current) clearTimeout(stepTimerRef.current);
+            if (next === 'idle') {
+                setIsPlaying(false);
+                setIsComplete(true);
+            }
         } else {
             setIsPlaying(false);
+            setIsComplete(true);
         }
     }, [currentStep]);
+
+    // Step Back
+    const prevStep = useCallback(() => {
+        const idx = ACTIVE_STEPS.indexOf(currentStep);
+        if (idx > 0) {
+            setCurrentStep(ACTIVE_STEPS[idx - 1]);
+            if (stepTimerRef.current) clearTimeout(stepTimerRef.current);
+        }
+    }, [currentStep]);
+
+    // Jump to any step directly (ensures data is populated)
+    const jumpToStep = useCallback((step: DNAStep) => {
+        if (step === 'idle') return;
+        // If no data yet, run the simulation first then jump
+        if (!hasData && inputText) {
+            const t = tokenize(inputText);
+            setTokens(t);
+            setSubTokens(visualTokenize(inputText));
+            setVectors(vectorize(t));
+            setAttentionWeights(calculateAttention(t));
+            setPredictions(predict());
+        }
+        setCurrentStep(step);
+        setIsPlaying(true);
+        setIsPaused(true); // Pause on the jumped-to step so user can explore
+        setIsComplete(false);
+        if (stepTimerRef.current) clearTimeout(stepTimerRef.current);
+    }, [hasData, inputText, tokenize, vectorize, calculateAttention, predict]);
 
     // The Game Loop
     useEffect(() => {
@@ -199,6 +246,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             setCurrentStep(nextStepName);
             if (nextStepName === 'idle') {
                 setIsPlaying(false);
+                setIsComplete(true);
             }
         }, duration);
 
@@ -212,6 +260,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         setCurrentStep('idle');
         setIsPlaying(false);
         setIsPaused(false);
+        setIsComplete(false);
         setTokens([]);
         setSubTokens([]);
         setVectors([]);
@@ -242,9 +291,13 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             vectors,
             attentionWeights,
             predictions,
+            isComplete,
+            hasData,
             runSimulation,
             resetSimulation,
             nextStep,
+            prevStep,
+            jumpToStep,
             setPlaybackSpeed,
             togglePause,
             openLesson,

@@ -23,7 +23,7 @@ interface DNAComponentCardProps {
 }
 
 export function DNAComponentCard({ title, description, metaphor, color, index, onCardClick }: DNAComponentCardProps) {
-    const { currentStep, inputText, tokens, subTokens, vectors, predictions, attentionWeights } = useDNA();
+    const { currentStep, inputText, tokens, subTokens, vectors, predictions, attentionWeights, hasData } = useDNA();
     const params = useParams();
     const locale = params.locale as string;
     const t = useTranslations('dna.card');

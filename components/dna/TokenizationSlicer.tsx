@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useDNA } from "./DNAContext";
 
 /**
  * TokenizationSlicer — US-160 Task 1.1
@@ -81,10 +82,14 @@ type SliceStage = 'text' | 'cutting' | 'separating' | 'done';
 
 export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlicerProps) {
     const [stage, setStage] = useState<SliceStage>('text');
+    const { playbackSpeed } = useDNA();
     const subTokens = visualTokenize(text);
     const slices = buildSliceMap(text, subTokens);
 
-    // Stage progression when active
+    // Scale factor: higher speed = shorter delays. Clamp to avoid division by zero.
+    const scale = useMemo(() => 1 / Math.max(playbackSpeed, 0.05), [playbackSpeed]);
+
+    // Stage progression when active (timings scale with playbackSpeed)
     useEffect(() => {
         if (!isActive) {
             setStage('text');
@@ -94,21 +99,21 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
         // Stage 1: Show full text
         setStage('text');
 
-        // Stage 2: Show cuts after 600ms
-        const t1 = setTimeout(() => setStage('cutting'), 600);
+        // Stage 2: Show cuts
+        const t1 = setTimeout(() => setStage('cutting'), 600 * scale);
 
-        // Stage 3: Separate chunks after 1500ms
-        const t2 = setTimeout(() => setStage('separating'), 1500);
+        // Stage 3: Separate chunks
+        const t2 = setTimeout(() => setStage('separating'), 1500 * scale);
 
-        // Stage 4: Done (pills settled) after 2500ms
-        const t3 = setTimeout(() => setStage('done'), 2500);
+        // Stage 4: Done (pills settled)
+        const t3 = setTimeout(() => setStage('done'), 2500 * scale);
 
         return () => {
             clearTimeout(t1);
             clearTimeout(t2);
             clearTimeout(t3);
         };
-    }, [isActive]);
+    }, [isActive, scale]);
 
     if (!isActive) return null;
 

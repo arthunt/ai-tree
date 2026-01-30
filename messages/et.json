@@ -1189,6 +1189,13 @@
         "metaphor": "Nagu lause lõpu ära arvamine enne selle ütlemist."
       }
     },
+    "completion": {
+      "title": "Simulatsioon Lõppenud",
+      "subtitle": "Sa uurisid 4-sammulist teekonda tekstist ennustuseni.",
+      "predicted": "Võitja Ennustus",
+      "replay": "Mängi Uuesti",
+      "explore": "Istuta Seeme"
+    },
     "controlHint": "Liiguta kursorit aeglustamiseks · Kliki kaartidele avastamiseks",
     "seedPath": {
       "title": "Istuta Oma Seeme",

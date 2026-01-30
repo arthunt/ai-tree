@@ -46,6 +46,10 @@ function pointColor(x: number, y: number): string {
 
 export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+    // Active index: selected (tap) takes priority over hovered (mouse)
+    const activeIndex = selectedIndex ?? hoveredIndex;
 
     if (!isActive || vectors.length === 0) return null;
 
@@ -67,6 +71,7 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                     stroke="rgba(255,255,255,0.08)"
                     strokeWidth={0.5}
                     rx={4}
+                    onClick={() => setSelectedIndex(null)}
                 />
 
                 {/* Grid lines */}
@@ -118,13 +123,13 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                     dimension 2
                 </text>
 
-                {/* Distance line between hovered point and nearest neighbor */}
-                {hoveredIndex !== null && vectors.length > 1 && (() => {
-                    const hv = vectors[hoveredIndex];
+                {/* Distance line between active point and nearest neighbor */}
+                {activeIndex !== null && vectors.length > 1 && (() => {
+                    const hv = vectors[activeIndex];
                     let nearestIdx = -1;
                     let nearestDist = Infinity;
                     vectors.forEach((v, i) => {
-                        if (i === hoveredIndex) return;
+                        if (i === activeIndex) return;
                         const d = Math.sqrt((v[0] - hv[0]) ** 2 + (v[1] - hv[1]) ** 2);
                         if (d < nearestDist) {
                             nearestDist = d;
@@ -155,12 +160,12 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                     // Flip Y so high values are at top
                     const ty = toSvg(1 - v[1]);
                     const color = pointColor(v[0], v[1]);
-                    const isHovered = hoveredIndex === i;
+                    const isHighlighted = activeIndex === i;
 
                     return (
                         <g key={i}>
-                            {/* Glow ring on hover */}
-                            {isHovered && (
+                            {/* Glow ring on hover/select */}
+                            {isHighlighted && (
                                 <motion.circle
                                     cx={tx}
                                     cy={ty}
@@ -178,15 +183,15 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                             <motion.circle
                                 cx={tx}
                                 cy={ty}
-                                r={isHovered ? 6 : 4.5}
+                                r={isHighlighted ? 6 : 4.5}
                                 fill={color}
-                                opacity={isHovered ? 1 : 0.85}
+                                opacity={isHighlighted ? 1 : 0.85}
                                 initial={{ cx: CENTER_X, cy: CENTER_Y, r: 0, opacity: 0 }}
                                 animate={{
                                     cx: tx,
                                     cy: ty,
-                                    r: isHovered ? 6 : 4.5,
-                                    opacity: isHovered ? 1 : 0.85
+                                    r: isHighlighted ? 6 : 4.5,
+                                    opacity: isHighlighted ? 1 : 0.85
                                 }}
                                 transition={{
                                     type: "spring",
@@ -195,18 +200,19 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                                     delay: i * 0.1
                                 }}
                                 style={{
-                                    filter: isHovered
+                                    filter: isHighlighted
                                         ? `drop-shadow(0 0 6px ${color})`
                                         : `drop-shadow(0 0 3px ${color})`,
                                     cursor: "pointer"
                                 }}
                                 onMouseEnter={() => setHoveredIndex(i)}
                                 onMouseLeave={() => setHoveredIndex(null)}
+                                onClick={() => setSelectedIndex(selectedIndex === i ? null : i)}
                             />
 
-                            {/* Token label on hover */}
+                            {/* Token label on hover/select */}
                             <AnimatePresence>
-                                {isHovered && tokens[i] && (
+                                {isHighlighted && tokens[i] && (
                                     <motion.g
                                         initial={{ opacity: 0, y: 4 }}
                                         animate={{ opacity: 1, y: 0 }}

@@ -2,17 +2,24 @@
 
 import { useDNA, DNAStep } from "./DNAContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Play, RefreshCw, SkipForward, Pause } from "lucide-react";
+import { Sparkles, Play, RefreshCw, SkipForward, SkipBack, Pause } from "lucide-react";
 
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { trackDNASimulation } from '@/lib/analytics';
 import { useEffect, useState } from "react";
 
-const STEP_ORDER: DNAStep[] = ['tokenization', 'vectorizing', 'attention', 'prediction', 'idle'];
+const ACTIVE_STEPS: DNAStep[] = ['tokenization', 'vectorizing', 'attention', 'prediction'];
 const BASE_STEP_DURATION = 4000;
 
+const STEP_LABELS: Record<string, string> = {
+    tokenization: 'T',
+    vectorizing: 'V',
+    attention: 'A',
+    prediction: 'P',
+};
+
 export function DNAInput() {
-    const { inputText, setInputText, runSimulation, isPlaying, isPaused, togglePause, nextStep, currentStep, resetSimulation, playbackSpeed } = useDNA();
+    const { inputText, setInputText, runSimulation, isPlaying, isPaused, togglePause, nextStep, prevStep, jumpToStep, currentStep, resetSimulation, playbackSpeed, hasData } = useDNA();
     const t = useTranslations('dna.input');
     const tCard = useTranslations('dna.microLesson');
 
@@ -155,6 +162,56 @@ export function DNAInput() {
                                 animate={{ width: `${progress}%` }}
                                 transition={{ type: "tween", ease: "linear", duration: 0.05 }}
                             />
+                        </div>
+                    )}
+
+                    {/* Step Selector (visible when playing or has data) */}
+                    {(isPlaying || hasData) && (
+                        <div className="flex items-center justify-center gap-1 px-3 py-2 border-t border-white/5">
+                            {/* Prev */}
+                            <button
+                                onClick={prevStep}
+                                disabled={currentStep === 'tokenization' || currentStep === 'idle'}
+                                className="p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+                                title="Previous step"
+                            >
+                                <SkipBack size={14} />
+                            </button>
+
+                            {/* Step Buttons [T] [V] [A] [P] */}
+                            {ACTIVE_STEPS.map((step, i) => {
+                                const isCurrentStep = currentStep === step;
+                                const stepIndex = ACTIVE_STEPS.indexOf(currentStep);
+                                const isPast = stepIndex > i || (currentStep === 'idle' && hasData);
+                                return (
+                                    <button
+                                        key={step}
+                                        onClick={() => jumpToStep(step)}
+                                        className={`
+                                            w-8 h-8 rounded-lg text-xs font-bold font-mono transition-all
+                                            ${isCurrentStep
+                                                ? 'bg-brand-teal text-black shadow-[0_0_12px_rgba(45,212,191,0.4)]'
+                                                : isPast
+                                                    ? 'bg-white/10 text-brand-teal/80 hover:bg-white/20'
+                                                    : 'bg-white/5 text-white/30 hover:bg-white/10 hover:text-white/60'
+                                            }
+                                        `}
+                                        title={step}
+                                    >
+                                        {STEP_LABELS[step]}
+                                    </button>
+                                );
+                            })}
+
+                            {/* Next */}
+                            <button
+                                onClick={nextStep}
+                                disabled={currentStep === 'idle' && !isPlaying}
+                                className="p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+                                title="Next step"
+                            >
+                                <SkipForward size={14} />
+                            </button>
                         </div>
                     )}
                 </div>
