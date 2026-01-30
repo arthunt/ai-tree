@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales } from '@/i18n';
+import { setLanguageTag, availableLanguageTags, type AvailableLanguageTag } from '@/paraglide/runtime';
+import { LanguageProvider } from '@/context/LanguageContext';
 import '../globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { ToastProvider } from '@/lib/useToast';
@@ -11,11 +10,28 @@ import { ToastContainer } from '@/components/Toast';
 
 const inter = Inter({ subsets: ['latin'] });
 
+// Available locales for static generation
+const locales = availableLanguageTags;
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://dendrix.ai';
+
+// Metadata translations (loaded statically since ParaglideJS compiles to functions)
+const metadataTranslations = {
+  et: {
+    title: 'AI Teadmiste Puu | Dendrix.ai',
+    description: 'Terviklik interaktiivne raamistik AI kontseptide õpetamiseks ja mõistmiseks.',
+    keywords: ['AI', 'tehisintellekt', 'masinõpe', 'õppimine', 'AI koolitus', 'Dendrix'],
+  },
+  en: {
+    title: 'AI Knowledge Tree | Dendrix.ai',
+    description: 'Comprehensive interactive framework for teaching and understanding AI concepts.',
+    keywords: ['AI', 'artificial intelligence', 'machine learning', 'education', 'AI training', 'Dendrix'],
+  },
+};
 
 export async function generateMetadata({
   params,
@@ -23,15 +39,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const messages = await getMessages({ locale });
-  const metadata = messages.metadata as { title: string; description: string };
+  const meta = metadataTranslations[locale as keyof typeof metadataTranslations] || metadataTranslations.en;
 
   return {
-    title: metadata.title,
-    description: metadata.description,
-    keywords: locale === 'et'
-      ? ['AI', 'tehisintellekt', 'masinõpe', 'õppimine', 'AI koolitus', 'Dendrix']
-      : ['AI', 'artificial intelligence', 'machine learning', 'education', 'AI training', 'Dendrix'],
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords,
     alternates: {
       canonical: `${BASE_URL}/${locale}`,
       languages: {
@@ -44,22 +57,22 @@ export async function generateMetadata({
       type: 'website',
       locale: locale === 'et' ? 'et_EE' : 'en_US',
       url: `${BASE_URL}/${locale}`,
-      title: metadata.title,
-      description: metadata.description,
+      title: meta.title,
+      description: meta.description,
       siteName: 'Dendrix.ai',
       images: [
         {
           url: `${BASE_URL}/${locale}/opengraph-image`,
           width: 1200,
           height: 630,
-          alt: metadata.title,
+          alt: meta.title,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: metadata.title,
-      description: metadata.description,
+      title: meta.title,
+      description: meta.description,
     },
     metadataBase: new URL(BASE_URL),
   };
@@ -75,23 +88,24 @@ export default async function RootLayout({
   const { locale } = await params;
 
   // Validate locale
-  if (!locales.includes(locale as any)) {
+  if (!availableLanguageTags.includes(locale as AvailableLanguageTag)) {
     notFound();
   }
 
-  const messages = await getMessages({ locale });
+  // Set the language tag for ParaglideJS (server-side)
+  setLanguageTag(locale as AvailableLanguageTag);
 
   return (
     <html lang={locale}>
       <body className={inter.className}>
-        <NextIntlClientProvider messages={messages}>
+        <LanguageProvider initialLocale={locale as AvailableLanguageTag}>
           <ThemeProvider>
             <ToastProvider>
               {children}
               <ToastContainer />
             </ToastProvider>
           </ThemeProvider>
-        </NextIntlClientProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

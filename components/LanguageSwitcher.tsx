@@ -1,23 +1,17 @@
 'use client';
 
-import { useParams, usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { locales } from '@/i18n';
-import { useTranslations } from 'next-intl';
+import { useLanguage, type AvailableLanguageTag } from '@/context/LanguageContext';
+import * as m from '@/paraglide/messages';
+
+const locales: AvailableLanguageTag[] = ['et', 'en'];
 
 export function LanguageSwitcher() {
-  const params = useParams();
-  const pathname = usePathname();
-  const router = useRouter();
-  const currentLocale = params.locale as string;
-  const t = useTranslations('navigation');
+  const { locale: currentLocale, setLocale } = useLanguage();
 
-  const switchLanguage = (newLocale: string) => {
+  const switchLanguage = (newLocale: AvailableLanguageTag) => {
     if (newLocale === currentLocale) return;
-
-    // Replace the locale in the current pathname, preserve scroll position
-    const newPathname = pathname.replace(`/${currentLocale}`, `/${newLocale}`);
-    router.replace(newPathname, { scroll: false });
+    setLocale(newLocale);
   };
 
   return (
@@ -33,7 +27,7 @@ export function LanguageSwitcher() {
                 ? 'text-white'
                 : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
             }`}
-            aria-label={locale === 'et' ? t('switchToEstonian') : t('switchToEnglish')}
+            aria-label={locale === 'et' ? m.navigation_switchToEstonian() : m.navigation_switchToEnglish()}
             aria-current={isActive ? 'true' : undefined}
             type="button"
           >

@@ -27,6 +27,32 @@
       "createdAt": "2026-01-28T08:03:53.458Z",
       "model": "opus",
       "modelRoutedBy": "router"
+    },
+    "agent-1769764370220-vp5xc1": {
+      "agentId": "agent-1769764370220-vp5xc1",
+      "agentType": "coder",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "provider": "anthropic"
+      },
+      "createdAt": "2026-01-30T09:12:50.220Z",
+      "model": "sonnet",
+      "modelRoutedBy": "default"
+    },
+    "agent-1769764371817-j68wol": {
+      "agentId": "agent-1769764371817-j68wol",
+      "agentType": "coder",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "provider": "anthropic"
+      },
+      "createdAt": "2026-01-30T09:12:51.817Z",
+      "model": "sonnet",
+      "modelRoutedBy": "default"
     }
   },
   "version": "3.0.0"

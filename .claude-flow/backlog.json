@@ -1,204 +1,318 @@
 {
-  "version": "3.2.0",
+  "version": "3.3.0",
   "project": "ai-tree",
   "updated": "2026-01-30",
   "status": "active",
-  "vision": "Public AI learning platform with integrated marketing for AIKI/AIVO programs",
-  "principles": ["KISS", "Less is More", "Mobile-First", "Testing-First (gradual)"],
+  "vision": "Public AI learning platform with ParaglideJS i18n and Supabase headless CMS",
+  "principles": ["KISS", "Less is More", "Mobile-First", "Type-Safe"],
   "infrastructure": {
     "github": "required",
     "vercel": "required",
     "supabase": "required",
+    "i18n": "paraglide-js",
     "auth": "not_needed"
   },
   "health": {
-    "tests_unit": 70,
-    "tests_e2e": 6,
+    "tests": 70,
+    "e2e_tests": 6,
     "routes": 7,
     "db_nodes": 28,
     "db_dna_concepts": 4,
-    "db_translations": 64,
-    "db_metadata": 28,
-    "db_migrations": 5,
     "locales": ["et", "en"],
     "completed_sprints": 12,
-    "completed_stories": 85
+    "completed_stories": 95
   },
   "pricing": {
     "updated": "2026-01-30",
     "programs": {
       "aiki": {
-        "name": "Rakenduslik AI: Kasutajast Instruktoriks",
+        "name_et": "Rakenduslik AI: Kasutajast Instruktoriks",
+        "name_en": "Applied AI: From User to Instructor",
         "code": "AIKI",
         "duration_weeks": 6,
         "academic_hours": 60,
         "price": 1590,
-        "installments": { "count": 3, "amount": 563, "total": 1689, "fee": 99, "fee_percent": 6 }
+        "color": "#6366f1",
+        "installments": { "count": 3, "amount": 563, "total": 1689, "fee_percent": 6 }
       },
       "aivo": {
-        "name": "AI Automatiseerimise Moodul",
+        "name_et": "AI Automatiseerimise Moodul",
+        "name_en": "AI Automation Module",
         "code": "AIVO",
         "duration_weeks": 4,
         "academic_hours": 40,
         "price": 1290,
         "graduate_price": 900,
         "graduate_discount_percent": 30,
-        "installments": { "count": 3, "amount": 460, "total": 1380, "fee": 90, "fee_percent": 7 }
+        "color": "#10b981",
+        "installments": { "count": 3, "amount": 460, "total": 1380, "fee_percent": 7 }
       },
       "aime": {
-        "name": "AI Meistri Pakett",
+        "name_et": "AI Meistri Pakett",
+        "name_en": "AI Master Bundle",
         "code": "AIME",
         "duration_weeks": 10,
         "academic_hours": 100,
         "price": 2490,
         "savings_vs_separate": 390,
-        "installments": { "count": 4, "amount": 673, "total": 2692, "fee": 202, "fee_percent": 8 }
+        "color": "#8b5cf6",
+        "installments": { "count": 4, "amount": 673, "total": 2692, "fee_percent": 8 }
       }
-    },
-    "purchase_paths": {
-      "separate_full": { "total": 2880, "description": "AIKI + AIVO täishind" },
-      "graduate_path": { "total": 2490, "description": "AIKI → AIVO lõpetaja hinnaga", "savings": 390 },
-      "bundle": { "total": 2490, "description": "AIME pakett korraga", "savings": 390 }
     }
   },
   "current_sprint": {
     "id": "sprint-13",
-    "name": "Marketing Integration (Programs Landing Pages)",
-    "priority": "P1-High",
-    "total_hours": 55,
-    "goal": "Landing pages for AIKI, AIVO, AIME with lead capture and application forms",
-    "stories": ["US-120", "US-121", "US-122", "US-123", "US-124", "US-125", "US-126", "US-127", "US-128", "US-129"],
-    "completed": [],
-    "execution_plan": {
-      "phase1": {
-        "name": "Foundation",
-        "stories": ["US-120", "US-121", "US-122"],
-        "parallel": false,
-        "hours": 9,
-        "description": "Database schema, routes, i18n translations"
-      },
-      "phase2": {
-        "name": "Components",
-        "stories": ["US-123"],
-        "parallel": false,
-        "hours": 12,
-        "description": "Reusable landing page components"
-      },
-      "phase3": {
-        "name": "Landing Pages",
-        "stories": ["US-124", "US-125", "US-126"],
-        "parallel": true,
-        "hours": 18,
-        "description": "Individual program landing pages"
-      },
-      "phase4": {
-        "name": "Forms & Integration",
-        "stories": ["US-127", "US-128", "US-129"],
-        "parallel": true,
-        "hours": 16,
-        "description": "Lead capture, application form, CTAs"
-      }
-    }
+    "name": "ParaglideJS + Supabase CMS + Marketing Pages",
+    "priority": "P0-Critical",
+    "total_hours": 69,
+    "goal": "1) Migrate next-intl → ParaglideJS, 2) Programs in Supabase CMS, 3) Marketing landing pages",
+    "phases": {
+      "A": { "name": "ParaglideJS Migration", "hours": 25, "days": "1-2" },
+      "B": { "name": "Supabase CMS Programs", "hours": 7, "days": "2-3" },
+      "C": { "name": "Marketing Landing Pages", "hours": 35, "days": "3-5" },
+      "D": { "name": "Integration & Polish", "hours": 6, "day": 5 }
+    },
+    "stories": [
+      "US-130", "US-131", "US-132", "US-133", "US-134", "US-135", "US-136", "US-137",
+      "US-138", "US-139", "US-140",
+      "US-141", "US-142", "US-143", "US-144", "US-145", "US-146",
+      "US-111", "US-147", "US-121"
+    ],
+    "completed": []
   },
-  "previous_sprints": [
-    {"id": "sprint-12", "name": "The Phylogenetic Tree", "status": "completed", "stories": ["US-110", "US-111", "US-112", "US-113", "US-114", "US-104"]},
-    {"id": "sprint-11", "name": "DNA Interactivity", "status": "completed", "stories": ["US-100", "US-101", "US-102", "US-103"]},
-    {"id": "sprint-10", "name": "DNA View Foundation", "status": "completed", "stories": ["US-090", "US-091", "US-093", "US-095"]},
-    {"id": "sprint-9", "name": "English Content Translation", "status": "completed", "stories": ["US-080", "US-081", "US-082", "US-083", "US-084", "US-085"]},
-    {"id": "sprint-8", "name": "i18n Completion", "status": "completed", "stories": ["US-076", "US-077", "US-078"]},
-    {"id": "sprint-7", "name": "Mobile-First Popup Redesign", "status": "completed", "stories": ["US-070", "US-071", "US-072", "US-073", "US-074", "US-075"]},
-    {"id": "sprint-6", "name": "Minimalism & Learning Flow", "status": "completed", "stories": ["US-060", "US-061", "US-062", "US-063", "US-064", "US-065", "US-066", "US-067", "US-068"]},
-    {"id": "sprint-5", "name": "UX/UI Audit Fixes", "status": "completed", "stories": ["US-040", "US-041", "US-042", "US-043", "US-044", "US-045", "US-046", "US-047", "US-049", "US-054"]},
-    {"id": "sprint-3-4", "name": "Polish & Demos", "status": "completed", "stories": ["US-030", "US-031", "US-032"]},
-    {"id": "sprint-2", "name": "Discovery & Content", "status": "completed", "stories": ["US-025", "US-026", "US-027", "US-028", "US-029"]},
-    {"id": "sprint-1", "name": "Growth Enablers", "status": "completed", "stories": ["US-020", "US-021", "US-022", "US-023", "US-024"]},
-    {"id": "phase-1-2", "name": "Accessibility + Features", "status": "completed", "stories": ["US-001", "US-002", "US-003", "US-004", "US-005", "US-009", "US-010", "US-011", "US-012", "US-014", "US-015"]}
-  ],
   "stories": {
-    "US-120": {
-      "id": "US-120",
-      "title": "Apply Marketing Database Schema",
-      "sprint": "sprint-13",
+    "US-130": {
+      "id": "US-130",
+      "title": "ParaglideJS Setup",
+      "phase": "A",
       "priority": "P0",
-      "hours": 1,
+      "hours": 4,
       "status": "not_started",
       "type": "infrastructure",
-      "dependencies": [],
-      "agent_type": "system-architect",
-      "model": "haiku",
-      "description": "Run marketing-schema.sql in Supabase. Verify tables (program_cohorts, program_leads, program_applications) and functions (capture_program_lead, get_active_cohorts, validate_discount). Insert sample data.",
-      "files": ["lib/supabase/marketing-schema.sql"],
-      "acceptance_criteria": [
-        "Tables created: program_cohorts, program_leads, program_applications, marketing_page_views, cta_interactions, discount_codes",
-        "Functions working: capture_program_lead(), get_active_cohorts(), validate_discount()",
-        "Sample cohorts inserted for AIKI, AIVO, AIME",
-        "Discount codes working: AIKIGRAD30, LAUNCH10"
+      "description": "Configure ParaglideJS to compile typed functions from existing messages/*.json",
+      "tasks": [
+        "Update project.inlang/settings.json with correct plugins",
+        "Run npm run paraglide:compile → generates typed functions",
+        "Create lib/paraglide.ts with language utilities",
+        "Verify messages compile correctly"
+      ],
+      "files": ["project.inlang/settings.json", "lib/paraglide.ts", "paraglide/"]
+    },
+    "US-131": {
+      "id": "US-131",
+      "title": "Middleware & Routing Migration",
+      "phase": "A",
+      "priority": "P0",
+      "hours": 2,
+      "status": "not_started",
+      "type": "infrastructure",
+      "dependencies": ["US-130"],
+      "description": "Replace next-intl middleware with @inlang/paraglide-next",
+      "tasks": [
+        "Replace next-intl/middleware → @inlang/paraglide-next",
+        "Update middleware.ts for ParaglideJS routing",
+        "Test /et/ and /en/ routes work"
+      ],
+      "files": ["middleware.ts"]
+    },
+    "US-132": {
+      "id": "US-132",
+      "title": "Layout Migration",
+      "phase": "A",
+      "priority": "P0",
+      "hours": 2,
+      "status": "not_started",
+      "type": "infrastructure",
+      "dependencies": ["US-131"],
+      "description": "Remove NextIntlClientProvider and add ParaglideJS LanguageProvider",
+      "tasks": [
+        "Remove NextIntlClientProvider from layout",
+        "Add ParaglideJS LanguageProvider",
+        "Update generateMetadata() to use ParaglideJS"
+      ],
+      "files": ["app/[locale]/layout.tsx"]
+    },
+    "US-133": {
+      "id": "US-133",
+      "title": "Component Migration (Core - 10 files)",
+      "phase": "A",
+      "priority": "P0",
+      "hours": 6,
+      "status": "not_started",
+      "type": "refactor",
+      "dependencies": ["US-132"],
+      "description": "Migrate core components from useTranslations to ParaglideJS imports",
+      "migration_pattern": {
+        "from": "const t = useTranslations('namespace'); t('key')",
+        "to": "import * as m from '@/paraglide/messages'; m.namespace_key()"
+      },
+      "files": [
+        "app/[locale]/page.tsx",
+        "components/WelcomeModal.tsx",
+        "components/SearchModal.tsx",
+        "components/ConceptLightbox.tsx",
+        "components/ConceptCard.tsx",
+        "components/LevelSection.tsx"
       ]
     },
-    "US-121": {
-      "id": "US-121",
+    "US-134": {
+      "id": "US-134",
+      "title": "Component Migration (UI - 15 files)",
+      "phase": "A",
+      "priority": "P1",
+      "hours": 4,
+      "status": "not_started",
+      "type": "refactor",
+      "dependencies": ["US-133"],
+      "description": "Migrate UI components including critical LanguageSwitcher",
+      "files": [
+        "components/TreeNavigation.tsx",
+        "components/LanguageSwitcher.tsx",
+        "components/SettingsDropdown.tsx",
+        "components/ViewModeToggle.tsx",
+        "components/CelebrationModal.tsx",
+        "components/TokenizerDemo.tsx",
+        "components/VectorDemo.tsx"
+      ]
+    },
+    "US-135": {
+      "id": "US-135",
+      "title": "Component Migration (Pages + SVGs - 30 files)",
+      "phase": "A",
+      "priority": "P1",
+      "hours": 4,
+      "status": "not_started",
+      "type": "refactor",
+      "dependencies": ["US-134"],
+      "description": "Migrate remaining pages, mobile components, and SVG visual components",
+      "files": [
+        "app/[locale]/tree-view/page.tsx",
+        "app/[locale]/dna/page.tsx",
+        "app/[locale]/learn/*.tsx",
+        "app/[locale]/concept/[conceptId]/*.tsx",
+        "components/mobile/*.tsx",
+        "components/visuals/*.tsx"
+      ]
+    },
+    "US-136": {
+      "id": "US-136",
+      "title": "Cleanup next-intl",
+      "phase": "A",
+      "priority": "P1",
+      "hours": 1,
+      "status": "not_started",
+      "type": "cleanup",
+      "dependencies": ["US-135"],
+      "description": "Remove next-intl package and all related imports",
+      "tasks": [
+        "npm uninstall next-intl",
+        "Delete i18n.ts",
+        "Remove all getMessages, getTranslations imports",
+        "npm run build → 0 errors",
+        "npm test → all pass"
+      ]
+    },
+    "US-137": {
+      "id": "US-137",
+      "title": "ParaglideJS Verification",
+      "phase": "A",
+      "priority": "P1",
+      "hours": 2,
+      "status": "not_started",
+      "type": "testing",
+      "dependencies": ["US-136"],
+      "description": "Verify ParaglideJS works correctly across all scenarios",
+      "tasks": [
+        "Test locale switching",
+        "Test SSR/SSG both locales",
+        "TypeScript catches missing translations",
+        "Update existing i18n tests"
+      ]
+    },
+    "US-138": {
+      "id": "US-138",
+      "title": "Programs Database Schema",
+      "phase": "B",
+      "priority": "P0",
+      "hours": 2,
+      "status": "not_started",
+      "type": "infrastructure",
+      "description": "Create Supabase tables for programs following existing patterns",
+      "tables": [
+        "programs (id, slug, color, duration, price, discounts)",
+        "program_translations (name, tagline, description)",
+        "program_features + feature_translations",
+        "program_curriculum + curriculum_translations"
+      ],
+      "files": ["supabase/migrations/20260135_programs_schema.sql"]
+    },
+    "US-139": {
+      "id": "US-139",
+      "title": "Seed Program Data",
+      "phase": "B",
+      "priority": "P0",
+      "hours": 2,
+      "status": "not_started",
+      "type": "data",
+      "dependencies": ["US-138"],
+      "description": "Insert AIKI, AIVO, AIME programs with full content",
+      "data": {
+        "aiki": { "price": 1590, "weeks": 6, "hours": 60, "color": "#6366f1" },
+        "aivo": { "price": 1290, "grad_price": 900, "weeks": 4, "hours": 40, "color": "#10b981" },
+        "aime": { "price": 2490, "weeks": 10, "hours": 100, "color": "#8b5cf6" }
+      },
+      "files": ["supabase/migrations/20260136_seed_programs.sql"]
+    },
+    "US-140": {
+      "id": "US-140",
+      "title": "Programs Server Actions",
+      "phase": "B",
+      "priority": "P1",
+      "hours": 3,
+      "status": "not_started",
+      "type": "feature",
+      "dependencies": ["US-139"],
+      "description": "Create server actions to fetch programs from Supabase",
+      "files": [
+        "actions/getPrograms.ts",
+        "actions/getProgram.ts",
+        "actions/getProgramCurriculum.ts"
+      ]
+    },
+    "US-141": {
+      "id": "US-141",
       "title": "Programs Route Structure",
-      "sprint": "sprint-13",
+      "phase": "C",
       "priority": "P0",
       "hours": 4,
       "status": "not_started",
       "type": "foundation",
-      "dependencies": [],
-      "agent_type": "coder",
-      "model": "sonnet",
-      "description": "Create all program routes following Next.js App Router patterns with locale support",
+      "dependencies": ["US-140"],
+      "description": "Create all program routes and add header nav",
       "files": [
         "app/[locale]/programs/page.tsx",
         "app/[locale]/programs/aiki/page.tsx",
         "app/[locale]/programs/aivo/page.tsx",
         "app/[locale]/programs/aime/page.tsx",
-        "app/[locale]/programs/apply/page.tsx",
-        "app/[locale]/programs/layout.tsx"
-      ],
-      "acceptance_criteria": [
-        "/et/programs and /en/programs accessible",
-        "/et/programs/aiki, /aivo, /aime accessible",
-        "/et/programs/apply?program=aiki working",
-        "Header navigation includes Programs dropdown",
-        "Proper metadata and OG tags"
+        "app/[locale]/programs/apply/page.tsx"
       ]
     },
-    "US-122": {
-      "id": "US-122",
-      "title": "Programs i18n Translations",
-      "sprint": "sprint-13",
-      "priority": "P0",
-      "hours": 4,
-      "status": "not_started",
-      "type": "i18n",
-      "dependencies": [],
-      "agent_type": "coder",
-      "model": "sonnet",
-      "description": "Add full programs namespace to both ET and EN message files with all landing page content",
-      "files": ["messages/et.json", "messages/en.json"],
-      "acceptance_criteria": [
-        "programs.nav section (dropdown items)",
-        "programs.common section (shared terms)",
-        "programs.overview section (comparison page)",
-        "programs.aiki section (full landing content)",
-        "programs.aivo section (full landing content)",
-        "programs.aime section (full landing content)",
-        "programs.apply section (form labels, validation)",
-        "programs.cta section (contextual call-to-actions)"
-      ]
-    },
-    "US-123": {
-      "id": "US-123",
-      "title": "Program Landing Page Components",
-      "sprint": "sprint-13",
+    "US-142": {
+      "id": "US-142",
+      "title": "Landing Page Components",
+      "phase": "C",
       "priority": "P1",
       "hours": 12,
       "status": "not_started",
       "type": "components",
-      "dependencies": ["US-121", "US-122"],
-      "agent_type": "coder",
-      "model": "sonnet",
-      "description": "Create reusable components for program landing pages following DNA View design system (dark theme, glass cards, glowing accents)",
+      "dependencies": ["US-141"],
+      "description": "Create reusable components following DNA View design system",
+      "design": {
+        "theme": "dark (bg-void)",
+        "cards": "glass morphism",
+        "accents": "brand-teal, brand-cyan glows",
+        "animations": "framer-motion"
+      },
       "files": [
         "components/programs/ProgramHero.tsx",
         "components/programs/ProgramFeatures.tsx",
@@ -206,285 +320,138 @@
         "components/programs/ProgramPricing.tsx",
         "components/programs/ProgramFAQ.tsx",
         "components/programs/ProgramCTA.tsx",
-        "components/programs/ProgramComparison.tsx",
-        "components/programs/index.ts"
-      ],
-      "design_system": {
-        "theme": "dark (bg-void)",
-        "cards": "glass morphism with subtle blur",
-        "accents": "brand-teal, brand-cyan glows",
-        "typography": "same as DNA View",
-        "spacing": "consistent with existing components",
-        "animations": "framer-motion, subtle reveals"
-      },
-      "acceptance_criteria": [
-        "ProgramHero: full viewport, gradient text, animated CTA",
-        "ProgramFeatures: 4-column grid, icons, hover effects",
-        "ProgramCurriculum: expandable weeks, progress indicators",
-        "ProgramPricing: price display, discounts, installments toggle",
-        "ProgramFAQ: accordion with smooth animations",
-        "ProgramCTA: contextual with program-specific colors",
-        "All components mobile-first and fully i18n"
+        "components/programs/ProgramComparison.tsx"
       ]
     },
-    "US-124": {
-      "id": "US-124",
+    "US-143": {
+      "id": "US-143",
       "title": "AIKI Landing Page",
-      "sprint": "sprint-13",
+      "phase": "C",
       "priority": "P1",
       "hours": 6,
       "status": "not_started",
       "type": "page",
-      "dependencies": ["US-123"],
-      "agent_type": "coder",
-      "model": "sonnet",
-      "description": "Complete AIKI program landing page with all sections",
-      "files": ["app/[locale]/programs/aiki/page.tsx", "app/[locale]/programs/aiki/AikiLandingClient.tsx"],
+      "dependencies": ["US-142"],
       "content": {
         "hero_et": "Saa AI koolitajaks 6 nädalaga",
         "hero_en": "Become an AI instructor in 6 weeks",
-        "tagline_et": "Karjääripööre tehisintellekti valdkonda",
-        "tagline_en": "Career pivot into artificial intelligence",
-        "price": 1590,
-        "duration": "6 weeks (60h)",
-        "color": "#6366f1"
-      },
-      "sections": ["hero", "social_proof", "problem_solution", "features", "curriculum", "pricing", "faq", "final_cta"],
-      "acceptance_criteria": [
-        "Hero with compelling value proposition",
-        "4 features: T-V-A-P mastery, 4C teaching, portfolio, certificate",
-        "Week 0-5 curriculum breakdown",
-        "Pricing: €1590 or 3×€563",
-        "5-7 FAQ items",
-        "Clear apply CTA throughout"
-      ]
+        "features": ["T-V-A-P mastery", "4C teaching", "Portfolio", "Certificate"],
+        "curriculum": "Week 0-5",
+        "pricing": "€1590 or 3×€563"
+      }
     },
-    "US-125": {
-      "id": "US-125",
+    "US-144": {
+      "id": "US-144",
       "title": "AIVO Landing Page",
-      "sprint": "sprint-13",
+      "phase": "C",
       "priority": "P1",
-      "hours": 6,
+      "hours": 5,
       "status": "not_started",
       "type": "page",
-      "dependencies": ["US-123"],
-      "agent_type": "coder",
-      "model": "sonnet",
-      "description": "Complete AIVO program landing page with graduate discount prominently featured",
-      "files": ["app/[locale]/programs/aivo/page.tsx", "app/[locale]/programs/aivo/AivoLandingClient.tsx"],
+      "dependencies": ["US-142"],
       "content": {
         "hero_et": "Automatiseeri töövood AI-ga",
         "hero_en": "Automate workflows with AI",
-        "tagline_et": "No-code automatiseerimine ja API integratsioonid",
-        "tagline_en": "No-code automation and API integrations",
-        "price": 1290,
-        "graduate_price": 900,
-        "graduate_discount": 30,
-        "duration": "4 weeks (40h)",
-        "color": "#10b981"
-      },
-      "sections": ["hero", "graduate_discount_banner", "features", "curriculum", "pricing", "faq", "final_cta"],
-      "acceptance_criteria": [
-        "Prominent AIKI graduate discount (30% = €900)",
-        "4 features: Zapier, Make, OpenAI API, consulting",
-        "Week 0-4 curriculum",
-        "Dual pricing display (full vs graduate)",
-        "Clear prerequisite communication"
-      ]
+        "graduate_discount": "30% = €900",
+        "features": ["Zapier", "Make", "OpenAI API"],
+        "curriculum": "Week 0-4"
+      }
     },
-    "US-126": {
-      "id": "US-126",
-      "title": "AIME Bundle Landing Page",
-      "sprint": "sprint-13",
+    "US-145": {
+      "id": "US-145",
+      "title": "AIME Landing Page",
+      "phase": "C",
       "priority": "P1",
-      "hours": 6,
+      "hours": 5,
       "status": "not_started",
       "type": "page",
-      "dependencies": ["US-123"],
-      "agent_type": "coder",
-      "model": "sonnet",
-      "description": "AIME bundle landing page emphasizing value and convenience over separate purchase",
-      "files": ["app/[locale]/programs/aime/page.tsx", "app/[locale]/programs/aime/AimeLandingClient.tsx"],
+      "dependencies": ["US-142"],
       "content": {
         "hero_et": "Täielik AI kompetents ühes paketis",
         "hero_en": "Complete AI competency in one package",
-        "tagline_et": "AIKI + AIVO ühendatud 10-nädalane intensiivprogramm",
-        "tagline_en": "AIKI + AIVO combined 10-week intensive program",
-        "price": 2490,
-        "compared_to_separate": 2880,
-        "savings": 390,
-        "duration": "10 weeks (100h)",
-        "color": "#8b5cf6"
-      },
-      "key_message": "Same price as graduate discount path (€2490), but guaranteed spot + unified journey",
-      "sections": ["hero", "value_comparison", "features", "combined_curriculum", "pricing_comparison", "faq", "final_cta"],
-      "acceptance_criteria": [
-        "Clear value comparison vs separate purchase",
-        "Same price as grad path messaging",
-        "Benefits: guaranteed spot, one registration, no break",
-        "Combined 10-week curriculum overview",
-        "Comparison table showing all paths"
-      ]
+        "value": "Same price as grad path (€2490)",
+        "curriculum": "Combined 10 weeks"
+      }
     },
-    "US-127": {
-      "id": "US-127",
+    "US-146": {
+      "id": "US-146",
       "title": "Lead Capture Form",
-      "sprint": "sprint-13",
+      "phase": "C",
       "priority": "P1",
-      "hours": 4,
+      "hours": 3,
       "status": "not_started",
       "type": "feature",
-      "dependencies": ["US-120", "US-122"],
-      "agent_type": "coder",
-      "model": "sonnet",
-      "description": "Email capture form with Supabase integration for program interest",
-      "files": ["components/programs/LeadCaptureForm.tsx", "lib/programs/actions.ts"],
-      "fields": [
-        {"name": "email", "type": "email", "required": true},
-        {"name": "name", "type": "text", "required": false},
-        {"name": "phone", "type": "tel", "required": false},
-        {"name": "programs", "type": "checkbox[]", "options": ["aiki", "aivo", "aime"]}
-      ],
-      "acceptance_criteria": [
-        "Form validation (email required, format check)",
-        "Supabase capture_program_lead() integration",
-        "UTM parameter capture from URL",
-        "Success state with next steps message",
-        "Error handling with user feedback",
-        "Accessible form with proper labels"
-      ]
+      "dependencies": ["US-141"],
+      "description": "Email capture with Supabase integration",
+      "files": ["components/programs/LeadCaptureForm.tsx"],
+      "fields": ["email (required)", "name", "phone", "programs[]"]
     },
-    "US-128": {
-      "id": "US-128",
-      "title": "Application Form (Multi-step)",
-      "sprint": "sprint-13",
-      "priority": "P2",
-      "hours": 8,
+    "US-111": {
+      "id": "US-111",
+      "title": "DNA to Tree Bridge (UI)",
+      "phase": "D",
+      "priority": "P1",
+      "hours": 2,
       "status": "not_started",
-      "type": "feature",
-      "dependencies": ["US-120", "US-122", "US-127"],
-      "agent_type": "coder",
-      "model": "sonnet",
-      "description": "Multi-step application form for program enrollment",
-      "files": ["components/programs/ApplicationForm.tsx", "app/[locale]/programs/apply/ApplyClient.tsx"],
-      "steps": [
-        {"step": 1, "title": "Personal Info", "fields": ["full_name", "email", "phone", "city", "country"]},
-        {"step": 2, "title": "Background", "fields": ["current_role", "company", "linkedin_url", "experience_level"]},
-        {"step": 3, "title": "Motivation", "fields": ["motivation", "goals", "how_heard"]},
-        {"step": 4, "title": "AIKI Certificate", "fields": ["has_aiki_certificate", "aiki_certificate_date"], "condition": "program === 'aivo'"},
-        {"step": 5, "title": "Payment", "fields": ["payment_method", "discount_code"]}
-      ],
-      "acceptance_criteria": [
-        "Multi-step wizard with progress indicator",
-        "Step validation before proceeding",
-        "AIKI certificate check for AIVO (30% discount)",
-        "Discount code validation via validate_discount()",
-        "Payment method selection (full/installments/company)",
-        "Final price calculation with discounts",
-        "Submission to program_applications table",
-        "Confirmation page with next steps"
+      "type": "navigation",
+      "description": "Connect DNA cards to Tree nodes using existing database bridge",
+      "tasks": [
+        "Deep Dive buttons on DNA cards → Tree nodes",
+        "Use node_metadata.dna_concept_id"
       ]
     },
-    "US-129": {
-      "id": "US-129",
-      "title": "CTA Integration in AI-Tree",
-      "sprint": "sprint-13",
-      "priority": "P2",
-      "hours": 4,
+    "US-147": {
+      "id": "US-147",
+      "title": "Tree → Programs CTAs",
+      "phase": "D",
+      "priority": "P1",
+      "hours": 2,
       "status": "not_started",
       "type": "integration",
-      "dependencies": ["US-120", "US-123"],
-      "agent_type": "coder",
-      "model": "sonnet",
-      "description": "Add contextual program CTAs throughout the AI-Tree learning experience",
-      "files": [
-        "components/programs/ContextualCTA.tsx",
-        "components/dna/DNAView.tsx",
-        "components/tree/TreeDetailPanel.tsx"
-      ],
-      "cta_placements": [
-        {"location": "dna_completion", "program": "aiki", "message_et": "Tahad õpetada teistele?", "message_en": "Want to teach others?"},
-        {"location": "agent_concepts", "program": "aivo", "message_et": "Automatiseeri töövood!", "message_en": "Automate workflows!"},
-        {"location": "tree_detail_panel", "program": "dynamic", "message": "Based on node_metadata.related_program_id"},
-        {"location": "footer", "program": "all", "message": "Programs overview link"}
-      ],
-      "acceptance_criteria": [
-        "CTAs appear at appropriate moments",
-        "Track interactions in cta_interactions table",
-        "Non-intrusive design (can be dismissed)",
-        "Programs link in footer navigation",
-        "Respects user preferences (don't show if dismissed recently)"
+      "description": "Wire TreeDetailPanel Master This Skill CTA to programs",
+      "tasks": [
+        "TreeDetailPanel CTA → /programs/{id}",
+        "Track clicks in cta_interactions"
+      ]
+    },
+    "US-121": {
+      "id": "US-121",
+      "title": "Bug Fixes",
+      "phase": "D",
+      "priority": "P2",
+      "hours": 2,
+      "status": "not_started",
+      "type": "maintenance",
+      "tasks": [
+        "Fix tree-view/page.tsx imports",
+        "DNAComponentCard render logic audit",
+        "TreeView organic curved lines"
       ]
     }
   },
-  "backlog": {
-    "shipped_from_backlog": [
-      {"id": "US-055", "title": "Search result count display", "status": "shipped", "sprint": "sprint-12"},
-      {"id": "US-058", "title": "TreeNav completion indicators", "status": "shipped", "sprint": "sprint-12"},
-      {"id": "US-008", "title": "E2E smoke tests (Playwright)", "status": "shipped", "sprint": "sprint-12"},
-      {"id": "US-050", "title": "Search/copy feedback improvement", "status": "shipped", "sprint": "sprint-12"}
-    ],
-    "p2": [
-      {"id": "US-056", "title": "Keyboard shortcuts help modal", "type": "accessibility"},
-      {"id": "US-048", "title": "Beginner path visibility", "type": "learning-ux"},
-      {"id": "US-037", "title": "Related concepts suggestions", "type": "content"}
-    ],
-    "p3": [
-      {"id": "US-057", "title": "Progressive level disclosure", "type": "learning-ux"},
-      {"id": "US-036", "title": "Glossary/index page", "type": "content"},
-      {"id": "US-035", "title": "Print-friendly version", "type": "content"},
-      {"id": "US-052", "title": "Prerequisite validation", "type": "learning-ux"},
-      {"id": "US-033", "title": "Concept quizzes", "type": "content"},
-      {"id": "US-034", "title": "Code playgrounds", "type": "content"},
-      {"id": "US-038", "title": "Video/animation for Attention", "type": "content"}
-    ]
-  },
-  "design_system": {
-    "colors": {
-      "aiki": "#6366f1",
-      "aivo": "#10b981",
-      "aime": "#8b5cf6",
-      "void": "#0a0a0f",
-      "brand_teal": "var(--brand-teal)",
-      "brand_cyan": "var(--brand-cyan)"
+  "i18n_migration": {
+    "from": "next-intl",
+    "to": "paraglide-js",
+    "pattern": {
+      "old": "const t = useTranslations('namespace'); t('key')",
+      "new": "import * as m from '@/paraglide/messages'; m.namespace_key()"
     },
-    "components": {
-      "cards": "glass morphism (backdrop-blur-xl bg-white/5)",
-      "buttons": "gradient with glow on hover",
-      "typography": "Inter font family",
-      "animations": "framer-motion for reveals"
+    "files_to_migrate": {
+      "core": 10,
+      "ui": 15,
+      "pages_svgs": 30,
+      "total": 55
     }
+  },
+  "supabase_cms": {
+    "principle": "Headless CMS - dynamic content in Supabase, static UI text in files",
+    "existing_tables": ["concepts", "concept_translations", "nodes", "node_translations", "node_metadata"],
+    "new_tables": ["programs", "program_translations", "program_features", "feature_translations", "program_curriculum", "curriculum_translations"]
   },
   "swarm_config": {
     "topology": "hierarchical",
     "max_agents": 8,
     "strategy": "specialized",
     "consensus": "raft"
-  },
-  "files_reference": {
-    "existing": [
-      "lib/programs/data.ts",
-      "lib/programs/types.ts",
-      "lib/programs/index.ts",
-      "lib/supabase/marketing-schema.sql",
-      "supabase/migrations/20260133_content_commerce_mapping.sql",
-      "docs/MARKETING_INTEGRATION_ARCHITECTURE.md"
-    ],
-    "to_create": [
-      "app/[locale]/programs/page.tsx",
-      "app/[locale]/programs/layout.tsx",
-      "app/[locale]/programs/aiki/page.tsx",
-      "app/[locale]/programs/aivo/page.tsx",
-      "app/[locale]/programs/aime/page.tsx",
-      "app/[locale]/programs/apply/page.tsx",
-      "components/programs/*.tsx"
-    ]
-  },
-  "deferred": [
-    "User authentication (Supabase Auth)",
-    "Payment gateway integration",
-    "Server-side progress sync",
-    "Certificates generation",
-    "Instructor dashboard"
-  ]
+  }
 }

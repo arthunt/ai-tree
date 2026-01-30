@@ -64,6 +64,32 @@
       "createdAt": "2026-01-28T08:02:56.740Z",
       "startedAt": null,
       "completedAt": null
+    },
+    "task-1769764325726-c47kdx": {
+      "taskId": "task-1769764325726-c47kdx",
+      "type": "implementation",
+      "description": "Migrate core components from next-intl to ParaglideJS. 1. Create lib/paraglide.ts for utils. 2. Update app/[locale]/layout.tsx to use LanguageProvider. 3. Migrate app/[locale]/page.tsx, components/ConceptCard.tsx, components/SearchModal.tsx, components/WelcomeModal.tsx to use import * as m from '@/paraglide/messages'.",
+      "priority": "normal",
+      "status": "pending",
+      "progress": 0,
+      "assignedTo": [],
+      "tags": [],
+      "createdAt": "2026-01-30T09:12:05.726Z",
+      "startedAt": null,
+      "completedAt": null
+    },
+    "task-1769764325862-x6sho2": {
+      "taskId": "task-1769764325862-x6sho2",
+      "type": "implementation",
+      "description": "Migrate infrastructure to ParaglideJS. 1. Update next.config.js to replace next-intl with @inlang/paraglide-next/plugin. 2. Update middleware.ts to use paraglide middleware.",
+      "priority": "normal",
+      "status": "pending",
+      "progress": 0,
+      "assignedTo": [],
+      "tags": [],
+      "createdAt": "2026-01-30T09:12:05.862Z",
+      "startedAt": null,
+      "completedAt": null
     }
   },
   "version": "3.0.0"

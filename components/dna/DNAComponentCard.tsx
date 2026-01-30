@@ -21,10 +21,10 @@ export function DNAComponentCard({ title, description, metaphor, color, index }:
     const locale = params.locale as string;
 
     const nodeMapping: Record<number, string> = {
-        0: 'tokenization-process',
-        1: 'word2vec',
-        2: 'attention-paper',
-        3: 'gpt-1'
+        0: 'tokens',
+        1: 'vectors',
+        2: 'attention',
+        3: 'temperature-sampling'
     };
 
     // Map index to step for activation logic
@@ -37,6 +37,7 @@ export function DNAComponentCard({ title, description, metaphor, color, index }:
 
     const myStep = stepMap[index];
     const isActive = currentStep === myStep;
+    const deepDiveLabel = locale === 'et' ? 'SÜVENE &rarr;' : 'DEEP DIVE &rarr;';
 
     return (
         <div className="flex flex-col h-full relative group">
@@ -67,7 +68,7 @@ export function DNAComponentCard({ title, description, metaphor, color, index }:
                     )}
                 </div>
 
-                <div className="relative min-h-[100px]">
+                <div className="relative min-h-[100px] flex flex-col justify-between">
                     <AnimatePresence mode="wait">
                         {isActive && index === 0 ? (
                             <motion.div
@@ -158,24 +159,26 @@ export function DNAComponentCard({ title, description, metaphor, color, index }:
                                 ))}
                             </motion.div>
                         ) : (
-                            <motion.div>
-                                <motion.p
-                                    key="static"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    className="text-gray-300 leading-relaxed text-sm"
-                                >
-                                    {description}
-                                </motion.p>
-                                <Link
-                                    href={`/${locale}/tree-view?node=${nodeMapping[index]}`}
-                                    className="mt-6 inline-block text-sm font-semibold text-brand-teal hover:text-brand-cyan transition-colors"
-                                >
-                                    EXPLORE DEEPER &rarr;
-                                </Link>
-                            </motion.div>
+                            <motion.p
+                                key="static"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="text-gray-300 leading-relaxed text-sm"
+                            >
+                                {description}
+                            </motion.p>
                         )}
                     </AnimatePresence>
+
+                    {/* Deep Dive Link (Always Visible or at least present) */}
+                    <Link
+                        href={`/${locale}/tree-view?node=${nodeMapping[index]}`}
+                        className={`mt-6 inline-block text-xs font-bold tracking-wider transition-all border-b border-transparent hover:border-current ${isActive ? 'text-white' : 'text-brand-teal hover:text-brand-cyan'
+                            }`}
+                        style={{ alignSelf: 'flex-start' }}
+                    >
+                        {deepDiveLabel}
+                    </Link>
                 </div>
             </GlassCard>
         </div>

@@ -183,49 +183,187 @@
 
 ---
 
-## Active Sprint: Sprint 13 — Programs & Polish
+## Active Sprint: Sprint 13 — ParaglideJS + Supabase CMS + Marketing Pages
 
-> **Priority:** P1-High
-> **Goal:** Create the `/programs` page (AIKI/AIVO/AIME) and connect Tree CTAs to it. Fix known bugs.
-
-### US-120: Programs Page
-**Priority:** P1 | **Type:** Page | **Agent:** @ANTIGRAVITY
-
-- [ ] Create `app/[locale]/programs/page.tsx` — list all 3 programs
-- [ ] Create `app/[locale]/programs/[programId]/page.tsx` — program detail
-- [ ] Wire TreeDetailPanel "Master This Skill" CTA to `/programs/{id}`
-- [ ] i18n: program names, descriptions, pricing in ET + EN
-
-**Note:** `lib/programs/` (types, data, pricing) already exists.
+> **Priority:** P0-Critical
+> **Goal:** 1) Migrate next-intl → ParaglideJS, 2) Programs in Supabase CMS, 3) Marketing landing pages
+> **Rationale:** Type-safe i18n, compile-time optimization, "headless CMS" architecture
+> **Pricing:** AIKI €1590 | AIVO €1290 (€900 grads) | AIME €2490
 
 ---
 
-### US-111: DNA to Tree Bridge (UI)
-**Priority:** P1 | **Type:** Navigation | **Agent:** @ANTIGRAVITY
+### PHASE A: ParaglideJS Migration (Days 1-2) — 25h
 
-- [ ] "Deep Dive" buttons on DNA cards link to specific Tree Nodes
-- [ ] Use `node_metadata.dna_concept_id` to resolve target node
-- [ ] Shared progress: visiting DNA marks Tree node as "Inspected"
+#### US-130: ParaglideJS Setup
+**Priority:** P0 | **Type:** Infrastructure | **Hours:** 4
+- [ ] Update `project.inlang/settings.json` with correct plugins
+- [ ] Run `npm run paraglide:compile` → typed functions in `paraglide/`
+- [ ] Create `lib/paraglide.ts` with language utilities
+- [ ] Verify messages compile from existing `messages/*.json`
 
-**Note:** Database bridge is ready. UI wiring remains.
+#### US-131: Middleware & Routing
+**Priority:** P0 | **Type:** Infrastructure | **Hours:** 2
+- [ ] Replace `next-intl/middleware` → `@inlang/paraglide-next`
+- [ ] Update `middleware.ts` for ParaglideJS routing
+- [ ] Test `/et/` and `/en/` routes work
+
+#### US-132: Layout Migration
+**Priority:** P0 | **Type:** Infrastructure | **Hours:** 2
+- [ ] Remove `NextIntlClientProvider` from layout
+- [ ] Add ParaglideJS `LanguageProvider`
+- [ ] Update `generateMetadata()` to use ParaglideJS
+
+#### US-133: Component Migration (Core - 10 files)
+**Priority:** P0 | **Type:** Refactor | **Hours:** 6
+- [ ] `app/[locale]/page.tsx`
+- [ ] `components/WelcomeModal.tsx`
+- [ ] `components/SearchModal.tsx`
+- [ ] `components/ConceptLightbox.tsx`
+- [ ] `components/ConceptCard.tsx`
+- [ ] `components/LevelSection.tsx`
+- [ ] Pattern: `useTranslations('ns')` → `import * as m from '@/paraglide/messages'`
+- [ ] Pattern: `t('key')` → `m.ns_key()`
+
+#### US-134: Component Migration (UI - 15 files)
+**Priority:** P1 | **Type:** Refactor | **Hours:** 4
+- [ ] `components/TreeNavigation.tsx`
+- [ ] `components/LanguageSwitcher.tsx` (critical!)
+- [ ] `components/SettingsDropdown.tsx`
+- [ ] `components/ViewModeToggle.tsx`
+- [ ] `components/CelebrationModal.tsx`
+- [ ] `components/TokenizerDemo.tsx`
+- [ ] `components/VectorDemo.tsx`
+
+#### US-135: Component Migration (Pages + SVGs - 30 files)
+**Priority:** P1 | **Type:** Refactor | **Hours:** 4
+- [ ] `app/[locale]/tree-view/page.tsx`
+- [ ] `app/[locale]/dna/page.tsx`
+- [ ] `app/[locale]/learn/*.tsx` (3 files)
+- [ ] `app/[locale]/concept/[conceptId]/*.tsx` (3 files)
+- [ ] `components/mobile/*.tsx` (6 files)
+- [ ] `components/visuals/*.tsx` (21 SVG files)
+
+#### US-136: Cleanup next-intl
+**Priority:** P1 | **Type:** Cleanup | **Hours:** 1
+- [ ] `npm uninstall next-intl`
+- [ ] Delete `i18n.ts`
+- [ ] Remove all `getMessages`, `getTranslations` imports
+- [ ] `npm run build` → 0 errors
+- [ ] `npm test` → all pass
+
+#### US-137: ParaglideJS Verification
+**Priority:** P1 | **Type:** Testing | **Hours:** 2
+- [ ] Test locale switching
+- [ ] Test SSR/SSG both locales
+- [ ] TypeScript catches missing translations
+- [ ] Update existing i18n tests
 
 ---
 
-### US-121: Bug Fixes & Cleanup
-**Priority:** P1 | **Type:** Maintenance | **Agent:** @ANTIGRAVITY
+### PHASE B: Supabase CMS for Programs (Days 2-3) — 7h
 
-- [ ] Fix `tree-view/page.tsx` missing `useSearchParams` import
-- [ ] Audit DNAComponentCard.tsx for render logic issues (lines 159-189)
-- [ ] US-110 refinement: organic curved lines, glowing nodes in TreeView
+#### US-138: Programs Database Schema
+**Priority:** P0 | **Type:** Infrastructure | **Hours:** 2
+```sql
+programs                  -- id, slug, color, duration, price, discounts
+program_translations      -- name, tagline, description (ET + EN)
+program_features          -- icon, sort_order
+feature_translations      -- title, description (ET + EN)
+program_curriculum        -- week_number, hours, type
+curriculum_translations   -- title, topics[] (ET + EN)
+```
+- [ ] Create `supabase/migrations/20260135_programs_schema.sql`
+- [ ] Follow existing RLS pattern (public read)
+
+#### US-139: Seed Program Data
+**Priority:** P0 | **Type:** Data | **Hours:** 2
+- [ ] AIKI: €1590, 6 weeks, 60h, #6366f1
+- [ ] AIVO: €1290/€900, 4 weeks, 40h, #10b981
+- [ ] AIME: €2490, 10 weeks, 100h, #8b5cf6
+- [ ] 4 features per program (ET + EN)
+- [ ] Curriculum weeks with topics (ET + EN)
+- [ ] Create `supabase/migrations/20260136_seed_programs.sql`
+
+#### US-140: Programs Server Actions
+**Priority:** P1 | **Type:** Feature | **Hours:** 3
+- [ ] `actions/getPrograms.ts`
+- [ ] `actions/getProgram.ts`
+- [ ] `actions/getProgramCurriculum.ts`
+- [ ] Type-safe with Supabase types
 
 ---
 
-### US-113: Marketing Integration
-**Priority:** P2 | **Type:** Infrastructure | **Agent:** @ANTIGRAVITY
+### PHASE C: Marketing Landing Pages (Days 3-5) — 35h
 
-- [ ] Database Schema: `program_leads` table (track interest clicks)
-- [ ] Database Schema: `program_views` table (track page views)
-- [ ] Analytics: Track CTA clicks from TreeDetailPanel
+#### US-141: Programs Route Structure
+**Priority:** P0 | **Type:** Foundation | **Hours:** 4
+- [ ] `app/[locale]/programs/page.tsx` (overview)
+- [ ] `app/[locale]/programs/aiki/page.tsx`
+- [ ] `app/[locale]/programs/aivo/page.tsx`
+- [ ] `app/[locale]/programs/aime/page.tsx`
+- [ ] `app/[locale]/programs/apply/page.tsx`
+- [ ] Programs link in header nav
+
+#### US-142: Landing Page Components
+**Priority:** P1 | **Type:** Components | **Hours:** 12
+- [ ] `components/programs/ProgramHero.tsx`
+- [ ] `components/programs/ProgramFeatures.tsx`
+- [ ] `components/programs/ProgramCurriculum.tsx`
+- [ ] `components/programs/ProgramPricing.tsx`
+- [ ] `components/programs/ProgramFAQ.tsx`
+- [ ] `components/programs/ProgramCTA.tsx`
+- [ ] `components/programs/ProgramComparison.tsx`
+- [ ] DNA View design: dark, glass cards, glowing accents
+
+#### US-143: AIKI Landing Page
+**Priority:** P1 | **Type:** Page | **Hours:** 6
+- [ ] Hero: "Saa AI koolitajaks 6 nädalaga"
+- [ ] Features: T-V-A-P, 4C teaching, portfolio, certificate
+- [ ] Curriculum: Week 0-5
+- [ ] Pricing: €1590 / 3×€563
+- [ ] FAQ: 5-7 questions
+
+#### US-144: AIVO Landing Page
+**Priority:** P1 | **Type:** Page | **Hours:** 5
+- [ ] Hero: "Automatiseeri töövood AI-ga"
+- [ ] Graduate discount banner: 30% = €900
+- [ ] Features: Zapier, Make, OpenAI API
+- [ ] Curriculum: Week 0-4
+- [ ] Dual pricing: full vs graduate
+
+#### US-145: AIME Landing Page
+**Priority:** P1 | **Type:** Page | **Hours:** 5
+- [ ] Hero: "Täielik AI kompetents"
+- [ ] Value comparison: same as grad path
+- [ ] Combined 10-week curriculum
+- [ ] Pricing comparison table
+
+#### US-146: Lead Capture Form
+**Priority:** P1 | **Type:** Feature | **Hours:** 3
+- [ ] `components/programs/LeadCaptureForm.tsx`
+- [ ] Fields: email, name, phone, programs[]
+- [ ] Supabase `program_leads` insert
+- [ ] UTM tracking
+
+---
+
+### PHASE D: Integration & Polish (Day 5)
+
+#### US-111: DNA to Tree Bridge (UI)
+**Priority:** P1 | **Type:** Navigation | **Hours:** 2
+- [ ] "Deep Dive" buttons on DNA cards → Tree nodes
+- [ ] Use `node_metadata.dna_concept_id`
+
+#### US-147: Tree → Programs CTAs
+**Priority:** P1 | **Type:** Integration | **Hours:** 2
+- [ ] TreeDetailPanel "Master This Skill" → `/programs/{id}`
+- [ ] Track CTA clicks in `cta_interactions`
+
+#### US-121: Bug Fixes
+**Priority:** P2 | **Type:** Maintenance | **Hours:** 2
+- [ ] Fix `tree-view/page.tsx` imports
+- [ ] DNAComponentCard render logic audit
+- [ ] TreeView organic curved lines
 
 ---
 
