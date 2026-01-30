@@ -15,10 +15,7 @@ const createMockTranslations = () => {
   };
 };
 
-// Mock next-intl (still used by layout.tsx and i18n.ts)
-vi.mock('next-intl', () => ({
-  useTranslations: () => createMockTranslations(),
-}));
+
 
 // Mock ParaglideJS translations hook (used by all migrated components)
 vi.mock('@/hooks/useParaglideTranslations', () => ({
@@ -97,9 +94,9 @@ Object.defineProperty(window, 'sessionStorage', { value: localStorageMock });
 
 // Mock IntersectionObserver
 class MockIntersectionObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
+  observe() { }
+  unobserve() { }
+  disconnect() { }
 }
 Object.defineProperty(window, 'IntersectionObserver', {
   value: MockIntersectionObserver,
