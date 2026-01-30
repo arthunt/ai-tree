@@ -1,3 +1,6 @@
+import { Check, ShieldCheck } from 'lucide-react';
+import { Program } from '@/lib/types';
+import { ApplyButton } from './ApplyButton';
 import type { LeadLabels } from './LeadCaptureDialog';
 
 interface ProgramPricingProps {

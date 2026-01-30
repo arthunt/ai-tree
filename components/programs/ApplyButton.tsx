@@ -8,15 +8,20 @@ interface ApplyButtonProps {
     programName: string;
     color: string;
     labels: LeadLabels;
-    /** Button text (e.g. "Apply Now" or "Enroll Now") */
-    children: React.ReactNode;
-    /** Additional Tailwind classes */
     className?: string;
-    /** Inline styles for the button */
     style?: React.CSSProperties;
+    children: React.ReactNode;
 }
 
-export function ApplyButton({ programId, programName, color, labels, children, className, style }: ApplyButtonProps) {
+export function ApplyButton({
+    programId,
+    programName,
+    color,
+    labels,
+    className,
+    style,
+    children
+}: ApplyButtonProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
