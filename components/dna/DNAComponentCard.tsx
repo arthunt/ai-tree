@@ -185,9 +185,8 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
                     {/* Deep Dive Button (Triggers Seed Transition) */}
                     <button
                         onClick={() => setIsTransitioning(true)}
-                        className={`mt-6 inline-block text-xs font-bold tracking-wider transition-all border-b border-transparent hover:border-current ${isActive ? 'text-white' : 'text-brand-teal hover:text-brand-cyan'
-                            } cursor-pointer bg-transparent`}
-                        style={{ alignSelf: 'flex-start' }}
+                        className={`mt-6 inline-flex items-center min-h-[44px] px-3 py-2 text-xs font-bold tracking-wider transition-all border-b border-transparent hover:border-current ${isActive ? 'text-white' : 'text-brand-teal hover:text-brand-cyan'
+                            } cursor-pointer bg-transparent -ml-3`}
                     >
                         {deepDiveLabel}
                     </button>

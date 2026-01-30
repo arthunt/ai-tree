@@ -26,8 +26,3 @@ export function useParaglideTranslations(namespace?: string) {
         return fullKey;
     };
 }
-
-// Mock NextIntlClientProvider to do nothing, for compatibility if needed
-export function NextIntlClientProvider({ children }: { children: React.ReactNode;[key: string]: any }) {
-    return <>{ children } </>;
-}

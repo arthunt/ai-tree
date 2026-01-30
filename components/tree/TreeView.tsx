@@ -128,7 +128,7 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
 
 
     return (
-        <div ref={containerRef} className="w-full h-[600px] bg-black/50 border border-white/10 rounded-xl overflow-hidden relative cursor-move">
+        <div ref={containerRef} className="w-full h-[400px] sm:h-[600px] bg-black/50 border border-white/10 rounded-xl overflow-hidden relative cursor-move touch-manipulation">
             <svg ref={svgRef} width={dimensions.width} height={dimensions.height}>
                 <defs>
                     <linearGradient id="link-gradient" x1="0%" y1="0%" x2="0%" y2="100%">

@@ -216,23 +216,23 @@
 
 #### US-152: DNA Animation Control ("The Lens")
 **Priority:** P0 | **Type:** UX | **Hours:** 6
-- [ ] Slow down default animation speed (0.5x).
-- [ ] "Hover to Pause/Investigate" interaction.
-- [ ] Click opens a "Micro-Lesson" modal for T/V/A/P steps.
-- [ ] Explicit "Play/Pause" controls if needed.
+- [x] Slow down default animation speed (0.5x).
+- [x] "Hover to Pause/Investigate" interaction.
+- [x] Click opens a "Micro-Lesson" modal for T/V/A/P steps.
+- [x] Explicit "Play/Pause" controls if needed.
 
 #### US-153: "The Seed" Intent Capture
 **Priority:** P0 | **Type:** New Feature | **Hours:** 8
-- [ ] Create a new intermediate view between DNA and Tree.
-- [ ] Visual: Single pulsing seed.
-- [ ] Interaction: three choices ("Build", "Teach", "Explore").
-- [ ] Outcome: Highlights specific path in the Tree based on choice.
+- [x] Create a new intermediate view between DNA and Tree.
+- [x] Visual: Single pulsing seed.
+- [x] Interaction: three choices ("Build", "Teach", "Explore").
+- [x] Outcome: Highlights specific path in the Tree based on choice.
 
 #### US-154: Tree "Guided Paths"
 **Priority:** P1 | **Type:** UX | **Hours:** 6
-- [ ] "Dim" unrelated nodes based on Seed choice.
-- [ ] "Next Step" pulsing indicator on the Tree.
-- [ ] Simplify initial zoom level (don't show everything at once).
+- [x] "Dim" unrelated nodes based on Seed choice.
+- [x] "Next Step" pulsing indicator on the Tree.
+- [x] Simplify initial zoom level (don't show everything at once).
 
 ---
 
@@ -309,8 +309,8 @@
 - [x] Use `node_metadata.dna_concept_id`
 
 #### US-147: Tree → Programs CTAs
-- [ ] TreeDetailPanel "Master This Skill" → `/programs/{id}`
-- [ ] Track CTA clicks in `cta_interactions`
+- [x] TreeDetailPanel "Master This Skill" → `/programs/{id}`
+- [x] Track CTA clicks in `cta_interactions`
 
 #### US-121: Bug Fixes
 - [ ] Fix `tree-view/page.tsx` imports

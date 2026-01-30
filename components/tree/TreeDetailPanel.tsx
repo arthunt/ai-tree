@@ -37,7 +37,7 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                 animate={{ x: 0 }}
                 exit={{ x: '100%' }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="fixed top-0 right-0 h-full w-full md:w-[480px] bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-l border-gray-200 dark:border-gray-700 shadow-2xl z-50 p-6 overflow-y-auto"
+                className="fixed top-0 right-0 h-full w-full md:w-[480px] bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-l border-gray-200 dark:border-gray-700 shadow-2xl z-50 p-6 pb-safe overflow-y-auto overscroll-contain"
             >
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">

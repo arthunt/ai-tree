@@ -121,7 +121,7 @@ export function SeedPageContent() {
                         whileHover={{ scale: 1.05, y: -4 }}
                         whileTap={{ scale: 0.97 }}
                         onClick={() => handleSelect(path)}
-                        className={`flex-1 group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 text-center hover:border-white/20 transition-all cursor-pointer
+                        className={`flex-1 group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 min-h-[120px] text-center hover:border-white/20 transition-all cursor-pointer
                             ${selectedPath && selectedPath !== path.key ? 'opacity-40 scale-95 blur-[1px]' : ''}
                             ${selectedPath === path.key ? 'ring-2 ring-white/50 scale-105' : ''}
                         `}

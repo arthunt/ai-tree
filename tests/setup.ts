@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 import { vi } from 'vitest';
 
-// Mock translation function factory (shared by next-intl and paraglide mocks)
+// Mock translation function factory
 const createMockTranslations = () => {
   return (key: string, params?: Record<string, string | number>) => {
     if (params) {
@@ -20,7 +20,6 @@ const createMockTranslations = () => {
 // Mock ParaglideJS translations hook (used by all migrated components)
 vi.mock('@/hooks/useParaglideTranslations', () => ({
   useParaglideTranslations: () => createMockTranslations(),
-  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 // Mock next/navigation

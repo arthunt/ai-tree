@@ -25,7 +25,7 @@ export function ConceptCodeTab({ concept, className = '' }: ConceptCodeTabProps)
       const path = `${concept.id}.${key}`;
       try {
         const value = tSnippets(path);
-        // next-intl returns the key path if not found
+        // Paraglide returns the key path if not found
         return value === path ? key : value;
       } catch {
         return key;

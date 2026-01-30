@@ -85,7 +85,7 @@ export function ConceptConnectionsTab({
   const safeTranslation = (key: string): string | null => {
     try {
       const val = tConn(key);
-      // next-intl returns the key itself if not found
+      // Paraglide returns the key itself if not found
       return val === key ? null : val;
     } catch {
       return null;
