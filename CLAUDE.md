@@ -11,6 +11,11 @@
 - **`/I18N_ARCHITECTURE.md`** - Multilingual strategy documentation
 - **`/I18N_QUICK_START.md`** - 30-minute i18n setup guide
 
+### 🧬 DNA View Documentation (NEW - Sprint 10)
+- **`/docs/AI_DNA_ARCHITECTURE.md`** - DNA model specification (T-V-A-P)
+- **`/docs/AI_TREE_MASTER_REFERENCE.md`** - Master reference for all agents/swarms
+- **Sprint 10** - DNA View Foundation (36h, 6 user stories US-090 to US-095)
+
 ### 🎯 Current Priorities (P0-Critical)
 1. **E001** - Foundation (Database, Auth, API) - 34h
 2. **E002** - Accessibility fixes (WCAG compliance) - 34h

@@ -1,7 +1,7 @@
 {
-  "version": "3.0.0",
+  "version": "3.1.0",
   "project": "ai-tree",
-  "updated": "2026-01-29",
+  "updated": "2026-01-30",
   "status": "active",
   "vision": "Public AI learning platform - no sign-ins, free for all",
   "principles": ["KISS", "Less is More", "Mobile-First", "Testing-First (gradual)"],
@@ -11,358 +11,161 @@
     "supabase": "deferred",
     "auth": "not_needed"
   },
-  "current_sprint": {
-    "id": "sprint-9",
-    "name": "English Content Translation",
-    "priority": "P0-Critical",
-    "total_hours": 20,
-    "goal": "100% English content - every user-facing string through i18n, including concept data",
-    "stories": ["US-080", "US-081", "US-082", "US-083", "US-084", "US-085"],
-    "completed": []
+  "health": {
+    "tests": 70,
+    "pages": 68,
+    "concepts": 23,
+    "locales": ["et", "en"],
+    "completed_sprints": 9,
+    "completed_stories": 68
   },
-  "previous_sprints": [
-    {
-      "id": "sprint-8",
-      "name": "i18n Completion",
-      "status": "completed",
-      "stories": ["US-076", "US-077", "US-078"]
-    },
-    {
-      "id": "sprint-7",
-      "name": "Mobile-First Concept Popup Redesign",
-      "status": "completed",
-      "stories": ["US-070", "US-071", "US-072", "US-073", "US-074", "US-075"]
-    }
-  ],
-  "epics": [
-    {
-      "id": "E001",
-      "name": "Accessibility & UX Fixes",
-      "priority": "P0-Critical",
-      "status": "completed",
-      "hours": 26,
-      "stories": ["US-001", "US-002", "US-003", "US-004", "US-005"]
-    },
-    {
-      "id": "E002",
-      "name": "Testing Foundation",
-      "priority": "P0-Critical",
-      "status": "in_progress",
-      "hours": 12,
-      "stories": ["US-006", "US-007", "US-008"],
-      "note": "US-006/007 done (46 tests). US-008 (E2E) pending."
-    },
-    {
-      "id": "E003",
-      "name": "Multilingual (i18n)",
-      "priority": "P1-High",
-      "status": "in_progress",
-      "hours": 56,
-      "stories": ["US-009", "US-010", "US-011", "US-076", "US-077", "US-078", "US-080", "US-081", "US-082", "US-083"],
-      "note": "UI chrome i18n complete. Concept DATA content still Estonian-only. Sprint 9 addresses this."
-    },
-    {
-      "id": "E004",
-      "name": "Interactive Demonstrations",
-      "priority": "P2-Medium",
-      "status": "completed",
-      "hours": 32,
-      "stories": ["US-012", "US-013", "US-014"]
-    },
-    {
-      "id": "E005",
-      "name": "Content Expansion",
-      "priority": "P2-Medium",
-      "status": "completed",
-      "hours": 20,
-      "stories": ["US-015", "US-016", "US-017"]
-    },
-    {
-      "id": "E006",
-      "name": "Client-Side Progress",
-      "priority": "P3-Nice-to-have",
-      "status": "completed",
-      "hours": 16,
-      "stories": ["US-018", "US-019"]
-    },
-    {
-      "id": "E007",
-      "name": "Mobile-First Concept Popup Redesign",
-      "priority": "P0-Critical",
-      "status": "completed",
-      "hours": 32,
-      "stories": ["US-070", "US-071", "US-072", "US-073", "US-074", "US-075"]
-    },
-    {
-      "id": "E010",
-      "name": "English Content Translation Finalization",
-      "priority": "P0-Critical",
-      "status": "not_started",
-      "hours": 20,
-      "stories": ["US-080", "US-081", "US-082", "US-083", "US-084", "US-085"],
-      "problem": "tree-concepts.json has ALL content in Estonian only. English users see Estonian titles, explanations, metaphors in concept cards, popups, search, and navigation.",
-      "scope": {
-        "concepts": 23,
-        "concept_fields": 4,
-        "levels": 4,
-        "level_fields": 3,
-        "code_explanations": 6,
-        "misc_strings": 4,
-        "total_strings": 112
+  "current_sprint": {
+    "id": "sprint-10",
+    "name": "DNA View Foundation",
+    "priority": "P1-High",
+    "total_hours": 36,
+    "goal": "Working DNA View with 4 components (T→V→A→P), view selector, i18n",
+    "stories": ["US-090", "US-091", "US-092", "US-093", "US-094", "US-095"],
+    "completed": [],
+    "execution_plan": {
+      "phase1": {
+        "name": "Foundation",
+        "stories": ["US-090"],
+        "parallel": false
+      },
+      "phase2": {
+        "name": "Core Components",
+        "stories": ["US-091", "US-095"],
+        "parallel": true
+      },
+      "phase3": {
+        "name": "Integration",
+        "stories": ["US-092", "US-093", "US-094"],
+        "parallel": true
       }
     }
+  },
+  "previous_sprints": [
+    {"id": "sprint-9", "name": "English Content Translation", "status": "completed", "stories": ["US-080", "US-081", "US-082", "US-083", "US-084", "US-085"]},
+    {"id": "sprint-8", "name": "i18n Completion", "status": "completed", "stories": ["US-076", "US-077", "US-078"]},
+    {"id": "sprint-7", "name": "Mobile-First Popup Redesign", "status": "completed", "stories": ["US-070", "US-071", "US-072", "US-073", "US-074", "US-075"]},
+    {"id": "sprint-6", "name": "Minimalism & Learning Flow", "status": "completed", "stories": ["US-060", "US-061", "US-062", "US-063", "US-064", "US-065", "US-066", "US-067", "US-068"]},
+    {"id": "sprint-5", "name": "UX/UI Audit Fixes", "status": "completed", "stories": ["US-040", "US-041", "US-042", "US-043", "US-044", "US-045", "US-046", "US-047", "US-049", "US-054"]},
+    {"id": "sprint-3-4", "name": "Polish & Demos", "status": "completed", "stories": ["US-030", "US-031", "US-032"]},
+    {"id": "sprint-2", "name": "Discovery & Content", "status": "completed", "stories": ["US-025", "US-026", "US-027", "US-028", "US-029"]},
+    {"id": "sprint-1", "name": "Growth Enablers", "status": "completed", "stories": ["US-020", "US-021", "US-022", "US-023", "US-024"]},
+    {"id": "phase-1-2", "name": "Accessibility + Features", "status": "completed", "stories": ["US-001", "US-002", "US-003", "US-004", "US-005", "US-009", "US-010", "US-011", "US-012", "US-014", "US-015"]}
   ],
   "stories": {
-    "US-080": {
-      "id": "US-080",
-      "title": "Create English Concept Data in i18n Message Files",
-      "epic": "E010",
+    "US-090": {
+      "id": "US-090",
+      "title": "DNA View Route & Component Structure",
+      "sprint": "sprint-10",
       "priority": "P0",
-      "hours": 8,
+      "hours": 6,
       "status": "not_started",
-      "type": "i18n-content",
+      "type": "foundation",
       "dependencies": [],
+      "agent_type": "system-architect",
+      "model": "sonnet",
+      "description": "Create /app/[locale]/dna/page.tsx route and DNAView.tsx main component with 4-step T→V→A→P vertical flow, mobile-first, dark mode",
+      "files": ["app/[locale]/dna/page.tsx", "components/dna/DNAView.tsx"]
+    },
+    "US-091": {
+      "id": "US-091",
+      "title": "DNA Component Cards (T-V-A-P)",
+      "sprint": "sprint-10",
+      "priority": "P0",
+      "hours": 12,
+      "status": "not_started",
+      "type": "components",
+      "dependencies": ["US-090"],
       "agent_type": "coder",
       "model": "sonnet",
-      "description": "Add concepts namespace to en.json with English translations for all 23 concepts (title, simpleName, explanation, metaphor). Move existing Estonian text to et.json concepts namespace.",
-      "acceptance_criteria": [
-        "concepts namespace in en.json with 23 concepts × 4 fields",
-        "concepts namespace in et.json with matching Estonian keys",
-        "Natural English translations (not machine-translated)",
-        "All 23 concept IDs covered"
-      ],
-      "concept_ids": [
-        "tokens", "vectors", "attention", "transformers",
-        "prefill-decode", "context-windows", "hallucinations", "temperature-sampling", "prompting-basics", "context-engineering", "training-vs-inference",
-        "rag", "memory", "lora", "security", "function-calling", "complexity-levels",
-        "moe", "agi-asi", "green-ai", "reasoning-models", "ai-agents", "mcp"
-      ],
-      "files": ["messages/en.json", "messages/et.json"]
+      "description": "Reusable DNAComponentCard with Question, Metaphor, Function. Expandable details, 'Dive deeper' links to tree concepts, full i18n",
+      "files": ["components/dna/DNAComponentCard.tsx", "lib/dna-types.ts"]
     },
-    "US-081": {
-      "id": "US-081",
-      "title": "Wire Components to Use i18n Concept Data",
-      "epic": "E010",
+    "US-092": {
+      "id": "US-092",
+      "title": "View Selector on Landing",
+      "sprint": "sprint-10",
       "priority": "P0",
+      "hours": 4,
+      "status": "not_started",
+      "type": "ux",
+      "dependencies": ["US-090"],
+      "agent_type": "coder",
+      "model": "haiku",
+      "description": "ViewSelector component for first visit: DNA View (~5 min) vs Concept Map (15+ min), localStorage preference",
+      "files": ["components/landing/ViewSelector.tsx", "app/[locale]/page.tsx"]
+    },
+    "US-093": {
+      "id": "US-093",
+      "title": "DNA Flow Diagram",
+      "sprint": "sprint-10",
+      "priority": "P1",
       "hours": 6,
       "status": "not_started",
-      "type": "i18n-wiring",
-      "dependencies": ["US-080", "US-082"],
+      "type": "visual",
+      "dependencies": ["US-091"],
       "agent_type": "coder",
       "model": "sonnet",
-      "description": "Update 10+ components to read concept text from useTranslations('concepts') instead of concept.title etc.",
-      "acceptance_criteria": [
-        "Components use t(`${concept.id}.title`) pattern",
-        "tree-concepts.json retains structural data only",
-        "Fallback to JSON data if key missing",
-        "All affected components updated"
-      ],
-      "components_to_update": [
-        "ConceptCard.tsx",
-        "ConceptLightbox.tsx",
-        "ConceptBottomSheet.tsx",
-        "ConceptTabContent.tsx",
-        "ConceptCodeTab.tsx",
-        "ConceptNavBar.tsx",
-        "SearchModal.tsx",
-        "LevelSection.tsx",
-        "OrganicTreeDiagram.tsx",
-        "ConceptPageClient.tsx",
-        "app/[locale]/page.tsx"
-      ]
+      "description": "SVG visualization: Input Text → T → V → A → P → Output Text with active step highlighting, responsive + dark mode",
+      "files": ["components/dna/DNAFlowDiagram.tsx"]
     },
-    "US-082": {
-      "id": "US-082",
-      "title": "Translate Level Data to English",
-      "epic": "E010",
-      "priority": "P0",
-      "hours": 2,
-      "status": "not_started",
-      "type": "i18n-content",
-      "dependencies": [],
-      "agent_type": "coder",
-      "model": "haiku",
-      "description": "Add conceptLevels namespace with English translations for 4 levels (name, subtitle, description)",
-      "level_mapping": {
-        "roots": {"name": "ROOTS", "subtitle": "Fundamental Mechanics"},
-        "trunk": {"name": "TRUNK", "subtitle": "Engineering & Architecture"},
-        "branches": {"name": "BRANCHES", "subtitle": "Applications & Agents"},
-        "leaves": {"name": "LEAVES & FRUITS", "subtitle": "Research & Trends"}
-      },
-      "files": ["messages/en.json", "messages/et.json", "LevelSection.tsx", "app/[locale]/page.tsx"]
-    },
-    "US-083": {
-      "id": "US-083",
-      "title": "Fix Remaining Hardcoded Strings in Active Components",
-      "epic": "E010",
-      "priority": "P1",
-      "hours": 1,
-      "status": "not_started",
-      "type": "i18n-cleanup",
-      "dependencies": [],
-      "agent_type": "coder",
-      "model": "haiku",
-      "description": "Fix 2 hardcoded aria-labels in ConceptLightbox.tsx and 2 fallback strings in ConceptPageClient.tsx",
-      "files": ["components/ConceptLightbox.tsx", "app/[locale]/concept/[conceptId]/ConceptPageClient.tsx"]
-    },
-    "US-084": {
-      "id": "US-084",
-      "title": "Clean Up Legacy Unused Components",
-      "epic": "E010",
-      "priority": "P2",
-      "hours": 1,
-      "status": "not_started",
-      "type": "cleanup",
-      "dependencies": [],
-      "agent_type": "coder",
-      "model": "haiku",
-      "description": "Delete unused HeroSection.tsx and ImprovedTreeDiagram.tsx (hardcoded Estonian, not imported anywhere)",
-      "files": ["components/HeroSection.tsx", "components/ImprovedTreeDiagram.tsx"]
-    },
-    "US-085": {
-      "id": "US-085",
-      "title": "Update Tests for i18n Concept Data",
-      "epic": "E010",
-      "priority": "P1",
-      "hours": 2,
-      "status": "not_started",
-      "type": "testing",
-      "dependencies": ["US-081"],
-      "agent_type": "tester",
-      "model": "sonnet",
-      "description": "Tests verifying every concept ID has matching keys in both en.json and et.json with all required fields",
-      "files": ["tests/data/tree-concepts.test.ts", "tests/i18n/concept-translations.test.ts"]
-    },
-    "US-070": {
-      "id": "US-070",
-      "title": "Explanation Tab with Persona Toggle",
-      "epic": "E007",
-      "priority": "P0",
-      "hours": 6,
-      "status": "completed",
-      "type": "mobile-ux"
-    },
-    "US-071": {
-      "id": "US-071",
-      "title": "Visual Representation Tab",
-      "epic": "E007",
-      "priority": "P0",
-      "hours": 8,
-      "status": "completed",
-      "type": "mobile-ux"
-    },
-    "US-072": {
-      "id": "US-072",
-      "title": "Code Tab with Contextual Guidance",
-      "epic": "E007",
-      "priority": "P0",
-      "hours": 6,
-      "status": "completed",
-      "type": "mobile-ux"
-    },
-    "US-073": {
-      "id": "US-073",
-      "title": "Concept Navigation Bar",
-      "epic": "E007",
-      "priority": "P0",
-      "hours": 4,
-      "status": "completed",
-      "type": "mobile-ux"
-    },
-    "US-074": {
-      "id": "US-074",
-      "title": "Desktop Popup Alignment with Mobile Tabs",
-      "epic": "E007",
+    "US-094": {
+      "id": "US-094",
+      "title": "DNA Progress Tracking",
+      "sprint": "sprint-10",
       "priority": "P1",
       "hours": 4,
-      "status": "completed",
-      "type": "responsive"
+      "status": "not_started",
+      "type": "feature",
+      "dependencies": ["US-091"],
+      "agent_type": "coder",
+      "model": "haiku",
+      "description": "Track DNA component views, progress indicator, localStorage persistence, complementary to concept map progress",
+      "files": ["lib/useDNAProgress.ts"]
     },
-    "US-075": {
-      "id": "US-075",
-      "title": "Content Data Structure Extension",
-      "epic": "E007",
+    "US-095": {
+      "id": "US-095",
+      "title": "DNA i18n Translations",
+      "sprint": "sprint-10",
       "priority": "P0",
       "hours": 4,
-      "status": "completed",
-      "type": "data"
-    },
-    "US-076": {
-      "id": "US-076",
-      "title": "Translate 16 SVG Visual Components",
-      "epic": "E003",
-      "priority": "P1",
-      "hours": 6,
-      "status": "completed",
-      "type": "i18n"
-    },
-    "US-077": {
-      "id": "US-077",
-      "title": "Translate Remaining 5 SVG Components",
-      "epic": "E003",
-      "priority": "P1",
-      "hours": 3,
-      "status": "completed",
-      "type": "i18n"
-    },
-    "US-078": {
-      "id": "US-078",
-      "title": "Translate Remaining UI Components",
-      "epic": "E003",
-      "priority": "P1",
-      "hours": 3,
-      "status": "completed",
-      "type": "i18n"
+      "status": "not_started",
+      "type": "i18n",
+      "dependencies": ["US-091"],
+      "agent_type": "coder",
+      "model": "haiku",
+      "description": "dna namespace in both et.json and en.json: component questions, metaphors, explanations, view selector text, flow labels",
+      "files": ["messages/et.json", "messages/en.json"]
     }
   },
-  "execution_plan": {
-    "phase1": {
-      "name": "Content Translation",
-      "stories": ["US-080", "US-082"],
-      "parallel": true,
-      "description": "English concept data + level data can be done in parallel"
-    },
-    "phase2": {
-      "name": "Cleanup",
-      "stories": ["US-083", "US-084"],
-      "parallel": true,
-      "description": "Fix hardcoded strings + remove unused components"
-    },
-    "phase3": {
-      "name": "Component Wiring",
-      "stories": ["US-081"],
-      "parallel": false,
-      "description": "Wire all components to read from i18n. Requires phase 1 complete."
-    },
-    "phase4": {
-      "name": "Verification",
-      "stories": ["US-085"],
-      "parallel": false,
-      "description": "Tests to verify translation completeness"
-    }
+  "backlog": {
+    "p1": [
+      {"id": "US-055", "title": "Search result count display", "type": "ux-polish", "hours": 1},
+      {"id": "US-058", "title": "TreeNav completion indicators", "type": "learning-ux", "hours": 3},
+      {"id": "US-008", "title": "E2E smoke tests (Playwright)", "type": "testing", "hours": 4}
+    ],
+    "p2": [
+      {"id": "US-056", "title": "Keyboard shortcuts help modal", "type": "accessibility", "hours": 2},
+      {"id": "US-048", "title": "Beginner path visibility", "type": "learning-ux", "hours": 3},
+      {"id": "US-050", "title": "Search/copy feedback improvement", "type": "ux-polish", "hours": 1},
+      {"id": "US-037", "title": "Related concepts suggestions", "type": "content", "hours": 8}
+    ],
+    "p3": [
+      {"id": "US-057", "title": "Progressive level disclosure", "type": "learning-ux", "hours": 8},
+      {"id": "US-036", "title": "Glossary/index page", "type": "content", "hours": 6},
+      {"id": "US-035", "title": "Print-friendly version", "type": "content", "hours": 4},
+      {"id": "US-052", "title": "Prerequisite validation", "type": "learning-ux", "hours": 4}
+    ]
   },
   "swarm_config": {
     "topology": "hierarchical",
     "max_agents": 6,
     "strategy": "specialized",
-    "consensus": "raft",
-    "recommended_agents": {
-      "US-080": {"type": "coder", "model": "sonnet"},
-      "US-081": {"type": "coder", "model": "sonnet"},
-      "US-082": {"type": "coder", "model": "haiku"},
-      "US-083": {"type": "coder", "model": "haiku"},
-      "US-084": {"type": "coder", "model": "haiku"},
-      "US-085": {"type": "tester", "model": "sonnet"}
-    }
-  },
-  "metrics": {
-    "total_stories": 15,
-    "total_hours": 64,
-    "p0_stories": 8,
-    "p1_stories": 5,
-    "p2_stories": 2,
-    "completed_sprints": 8,
-    "current_sprint": 9
+    "consensus": "raft"
   },
   "deferred": [
     "Supabase/Database",
