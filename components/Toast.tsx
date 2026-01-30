@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, Info, AlertCircle } from 'lucide-react';
 import { Toast as ToastType, useToast } from '@/lib/useToast';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 const iconMap = {
   success: CheckCircle,

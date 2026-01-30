@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { TreeLevel, Concept } from '../lib/types';
 import { getLevelIcon } from '../lib/utils';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import {
   Users, Brain, Leaf, Bot, Plug, Layers, BookOpen,
   Notebook, GraduationCap, Shield, MapPin, Flashlight,

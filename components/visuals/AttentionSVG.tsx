@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 export function AttentionSVG() {
   const t = useTranslations('visuals.attention');

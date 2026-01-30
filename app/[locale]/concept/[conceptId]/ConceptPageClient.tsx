@@ -6,7 +6,7 @@ import { ConceptLightbox } from '@/components/ConceptLightbox';
 import { Concept, TreeLevel } from '@/lib/types';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface ConceptPageClientProps {
   conceptId: string;

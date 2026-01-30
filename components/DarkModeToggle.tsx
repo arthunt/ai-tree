@@ -2,7 +2,7 @@
 
 import { useTheme } from '@/context/ThemeContext';
 import { Moon, Sun } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 export function DarkModeToggle() {
   const { theme, toggleTheme, mounted } = useTheme();

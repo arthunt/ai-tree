@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { useProgress } from '@/lib/useProgress';
 import { Brain, MessageSquare, Database, Bot, SlidersHorizontal, ArrowLeft, Clock, BookOpen, ChevronRight, Check } from 'lucide-react';
 import pathsData from '@/data/learning-paths.json';

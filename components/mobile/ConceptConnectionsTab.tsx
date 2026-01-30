@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ArrowRight, Check, ChevronDown, MapPin } from 'lucide-react';
 import { Concept } from '@/lib/types';
 import { getComplexityColor } from '@/lib/utils';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { useProgress } from '@/lib/useProgress';
 
 interface ConceptConnectionsTabProps {
@@ -107,13 +107,12 @@ export function ConceptConnectionsTab({
             return (
               <span key={lvl} className="flex items-center gap-1 flex-shrink-0">
                 {i > 0 && <span className="text-gray-300 dark:text-gray-600">›</span>}
-                <span className={`px-2 py-0.5 rounded-full transition-colors ${
-                  isActive
+                <span className={`px-2 py-0.5 rounded-full transition-colors ${isActive
                     ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-semibold'
                     : isPast
-                    ? 'text-gray-500 dark:text-gray-400'
-                    : 'text-gray-400 dark:text-gray-500'
-                }`}>
+                      ? 'text-gray-500 dark:text-gray-400'
+                      : 'text-gray-400 dark:text-gray-500'
+                  }`}>
                   {tNav(`levels.${lvl}`)}
                 </span>
               </span>
@@ -174,11 +173,10 @@ export function ConceptConnectionsTab({
                   <div className="flex items-center">
                     <button
                       onClick={() => onNavigate?.(prereq.id)}
-                      className={`flex-1 flex items-center gap-2 px-3 py-2.5 text-sm text-left transition-colors min-h-[40px] ${
-                        completed
+                      className={`flex-1 flex items-center gap-2 px-3 py-2.5 text-sm text-left transition-colors min-h-[40px] ${completed
                           ? 'text-green-700 dark:text-green-300'
                           : 'text-gray-800 dark:text-gray-200'
-                      } hover:bg-gray-50 dark:hover:bg-gray-800/50`}
+                        } hover:bg-gray-50 dark:hover:bg-gray-800/50`}
                       type="button"
                     >
                       {completed && <Check className="h-3.5 w-3.5 flex-shrink-0 text-green-500" />}
@@ -228,11 +226,10 @@ export function ConceptConnectionsTab({
                   <div className="flex items-center">
                     <button
                       onClick={() => onNavigate?.(unlock.id)}
-                      className={`flex-1 flex items-center gap-2 px-3 py-2.5 text-sm text-left transition-colors min-h-[40px] ${
-                        completed
+                      className={`flex-1 flex items-center gap-2 px-3 py-2.5 text-sm text-left transition-colors min-h-[40px] ${completed
                           ? 'text-green-700 dark:text-green-300'
                           : 'text-gray-800 dark:text-gray-200'
-                      } hover:bg-gray-50 dark:hover:bg-gray-800/50`}
+                        } hover:bg-gray-50 dark:hover:bg-gray-800/50`}
                       type="button"
                     >
                       {completed && <Check className="h-3.5 w-3.5 flex-shrink-0 text-green-500" />}
@@ -279,11 +276,10 @@ export function ConceptConnectionsTab({
                 <button
                   key={sib.id}
                   onClick={() => onNavigate?.(sib.id)}
-                  className={`flex items-center gap-1 px-2.5 py-1.5 text-xs rounded-lg transition-colors ${
-                    completed
+                  className={`flex items-center gap-1 px-2.5 py-1.5 text-xs rounded-lg transition-colors ${completed
                       ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300'
                       : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                  }`}
+                    }`}
                   type="button"
                 >
                   {completed && <Check className="h-2.5 w-2.5 flex-shrink-0" />}

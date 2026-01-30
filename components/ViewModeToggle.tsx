@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Lightbulb, Code2, LayoutGrid } from 'lucide-react';
 import { ViewMode } from '../lib/types';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface ViewModeToggleProps {
   viewMode: ViewMode;

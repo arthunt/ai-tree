@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, Menu, X } from 'lucide-react';
 import { TreeLevel, Concept } from '../lib/types';
 import { LevelIcon } from './LevelIcon';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface TreeNavigationProps {
   levels: TreeLevel[];

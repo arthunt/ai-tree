@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 export function LoraSVG({ className = '' }: { className?: string }) {
   const t = useTranslations('visuals.lora');

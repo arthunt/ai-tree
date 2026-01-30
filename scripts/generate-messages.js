@@ -2,53 +2,55 @@ const fs = require('fs');
 
 try {
     const en = JSON.parse(fs.readFileSync('messages/en.json', 'utf8'));
+    const et = JSON.parse(fs.readFileSync('messages/et.json', 'utf8'));
 
-    // Flatten keys: metadata.title -> metadata_title
+    // Flatten keys and sanitize: metadata.title -> metadata_title, gpt-1 -> gpt_1
     function flatten(obj, prefix = '') {
         let acc = {};
         for (const k in obj) {
             if (typeof obj[k] === 'object' && obj[k] !== null) {
                 Object.assign(acc, flatten(obj[k], prefix + k + '_'));
             } else {
-                acc[prefix + k] = obj[k]; // simplified, values are strings
+                const cleanKey = (prefix + k).replace(/[^a-zA-Z0-9_]/g, '_');
+                acc[cleanKey] = obj[k];
             }
         }
         return acc;
     }
 
-    const flat = flatten(en);
-
-    // Paraglide v2/standard generates functions for messages
-    const code = `/* eslint-disable */
-${Object.keys(flat).map(k => `export const ${k} = () => "${String(flat[k]).replace(/\n/g, '\\n').replace(/"/g, '\\"')}"`).join('\n')}
+    function generateLocaleCode(flat) {
+        return `/* eslint-disable */
+${Object.keys(flat).map(k => `export const ${k} = () => "${String(flat[k]).replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/"/g, '\\"')}"`).join('\n')}
 `;
+    }
+
+    const flatEn = flatten(en);
+    const flatEt = flatten(et);
 
     if (!fs.existsSync('paraglide/messages')) {
         fs.mkdirSync('paraglide/messages', { recursive: true });
     }
 
-    fs.writeFileSync('paraglide/messages/en.js', code);
+    fs.writeFileSync('paraglide/messages/en.js', generateLocaleCode(flatEn));
+    fs.writeFileSync('paraglide/messages/et.js', generateLocaleCode(flatEt));
 
-    // Also create et.js (mocked with en content for now to prevent crash)
-    fs.writeFileSync('paraglide/messages/et.js', code);
+    // Use en keys as the canonical set (et may have same or subset)
+    const allKeys = Object.keys(flatEn);
 
-    // Update messages.js to export from en (source)
-    const entryCode = `
+    const entryCode = `/* eslint-disable */
 import { languageTag } from "./runtime.js";
 import * as en from "./messages/en.js";
 import * as et from "./messages/et.js";
 
-const messages = {
-    en,
-    et
-};
+const messages = { en, et };
 
-${Object.keys(flat).map(k => `export const ${k} = (params) => messages[languageTag()]?.${k}(params) ?? messages['en'].${k}(params)`).join('\n')}
+${allKeys.map(k => `export const ${k} = (params) => messages[languageTag()]?.${k}?.(params) ?? messages['en'].${k}(params)`).join('\n')}
 `;
 
     fs.writeFileSync('paraglide/messages.js', entryCode);
 
-    console.log("Successfully generated dummy message files.");
+    console.log(`Generated ${allKeys.length} message functions for en + et.`);
 } catch (e) {
     console.error("Failed to generate messages:", e);
+    process.exit(1);
 }

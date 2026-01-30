@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, TreePine, Map, Sparkles, ChevronRight, ChevronLeft } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface WelcomeModalProps {
   isOpen: boolean;

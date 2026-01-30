@@ -7,10 +7,10 @@ import { getComplexityColor } from '../lib/utils';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { LightboxSkeleton } from './LightboxSkeleton';
-import { useTranslations, NextIntlClientProvider } from 'next-intl';
+import { useParaglideTranslations as useTranslations, NextIntlClientProvider } from '@/hooks/useParaglideTranslations';
 import { useToast } from '@/lib/useToast';
 import { useTheme } from '@/context/ThemeContext';
-import { locales } from '@/i18n';
+import { availableLanguageTags as locales } from '@/paraglide/runtime';
 import { ConceptTabContent } from './mobile/ConceptTabContent';
 import {
   Users,
@@ -158,13 +158,13 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
   const availableLevels = levels.length > 0
     ? levels
     : [...new Set(allConcepts.map(c => c.level))].map(id => ({
-        id: id as TreeLevel['id'],
-        name: id,
-        subtitle: '',
-        description: '',
-        color: LEVEL_COLORS[id] || '#666',
-        order: id === 'roots' ? 1 : id === 'trunk' ? 2 : id === 'branches' ? 3 : 4,
-      }));
+      id: id as TreeLevel['id'],
+      name: id,
+      subtitle: '',
+      description: '',
+      color: LEVEL_COLORS[id] || '#666',
+      order: id === 'roots' ? 1 : id === 'trunk' ? 2 : id === 'branches' ? 3 : 4,
+    }));
 
   // Reset tab when concept changes
   useEffect(() => {
@@ -421,9 +421,8 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
                             });
                           }
                         }}
-                        className={`p-2 min-w-[36px] min-h-[36px] rounded-full transition-colors flex items-center justify-center ${
-                          isCompleted ? 'bg-green-400/30 text-green-200' : 'hover:bg-white/20 text-white/70'
-                        }`}
+                        className={`p-2 min-w-[36px] min-h-[36px] rounded-full transition-colors flex items-center justify-center ${isCompleted ? 'bg-green-400/30 text-green-200' : 'hover:bg-white/20 text-white/70'
+                          }`}
                         aria-label={isCompleted ? t('completed') : t('markAsComplete')}
                         type="button"
                       >
@@ -459,11 +458,10 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
                         <button
                           key={loc}
                           onClick={() => switchLanguage(loc)}
-                          className={`px-2 py-1.5 text-[11px] sm:text-xs font-semibold transition-colors ${
-                            loc === effectiveLocale
-                              ? 'bg-white/25 text-white'
-                              : 'text-white/60 hover:text-white hover:bg-white/10'
-                          }`}
+                          className={`px-2 py-1.5 text-[11px] sm:text-xs font-semibold transition-colors ${loc === effectiveLocale
+                            ? 'bg-white/25 text-white'
+                            : 'text-white/60 hover:text-white hover:bg-white/10'
+                            }`}
                           aria-label={loc === 'et' ? tNav('switchToEstonian') : tNav('switchToEnglish')}
                           aria-current={loc === effectiveLocale ? 'true' : undefined}
                           type="button"
@@ -505,11 +503,10 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
                     role="tab"
                     aria-selected={activeTab === 'explanation'}
                     onClick={() => handleTabSwitch('explanation')}
-                    className={`flex-1 py-1.5 sm:py-2 px-2 sm:px-3 min-h-[36px] sm:min-h-[40px] text-xs sm:text-sm font-semibold rounded-lg transition-all ${
-                      activeTab === 'explanation'
-                        ? 'bg-white dark:bg-gray-700 text-purple-700 dark:text-purple-300 shadow-sm'
-                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                    }`}
+                    className={`flex-1 py-1.5 sm:py-2 px-2 sm:px-3 min-h-[36px] sm:min-h-[40px] text-xs sm:text-sm font-semibold rounded-lg transition-all ${activeTab === 'explanation'
+                      ? 'bg-white dark:bg-gray-700 text-purple-700 dark:text-purple-300 shadow-sm'
+                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                      }`}
                   >
                     {t('explanation')}
                   </button>
@@ -517,11 +514,10 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
                     role="tab"
                     aria-selected={activeTab === 'visual'}
                     onClick={() => handleTabSwitch('visual')}
-                    className={`flex-1 py-1.5 sm:py-2 px-2 sm:px-3 min-h-[36px] sm:min-h-[40px] text-xs sm:text-sm font-semibold rounded-lg transition-all ${
-                      activeTab === 'visual'
-                        ? 'bg-white dark:bg-gray-700 text-indigo-700 dark:text-indigo-300 shadow-sm'
-                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                    }`}
+                    className={`flex-1 py-1.5 sm:py-2 px-2 sm:px-3 min-h-[36px] sm:min-h-[40px] text-xs sm:text-sm font-semibold rounded-lg transition-all ${activeTab === 'visual'
+                      ? 'bg-white dark:bg-gray-700 text-indigo-700 dark:text-indigo-300 shadow-sm'
+                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                      }`}
                   >
                     {t('visual')}
                   </button>
@@ -529,11 +525,10 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
                     role="tab"
                     aria-selected={activeTab === 'code'}
                     onClick={() => handleTabSwitch('code')}
-                    className={`flex-1 py-1.5 sm:py-2 px-2 sm:px-3 min-h-[36px] sm:min-h-[40px] text-xs sm:text-sm font-semibold rounded-lg transition-all ${
-                      activeTab === 'code'
-                        ? 'bg-white dark:bg-gray-700 text-slate-700 dark:text-slate-300 shadow-sm'
-                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                    }`}
+                    className={`flex-1 py-1.5 sm:py-2 px-2 sm:px-3 min-h-[36px] sm:min-h-[40px] text-xs sm:text-sm font-semibold rounded-lg transition-all ${activeTab === 'code'
+                      ? 'bg-white dark:bg-gray-700 text-slate-700 dark:text-slate-300 shadow-sm'
+                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                      }`}
                   >
                     {t('code')}
                   </button>
@@ -541,11 +536,10 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
                     role="tab"
                     aria-selected={activeTab === 'connections'}
                     onClick={() => handleTabSwitch('connections')}
-                    className={`flex-1 py-1.5 sm:py-2 px-2 sm:px-3 min-h-[36px] sm:min-h-[40px] text-xs sm:text-sm font-semibold rounded-lg transition-all ${
-                      activeTab === 'connections'
-                        ? 'bg-white dark:bg-gray-700 text-teal-700 dark:text-teal-300 shadow-sm'
-                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                    }`}
+                    className={`flex-1 py-1.5 sm:py-2 px-2 sm:px-3 min-h-[36px] sm:min-h-[40px] text-xs sm:text-sm font-semibold rounded-lg transition-all ${activeTab === 'connections'
+                      ? 'bg-white dark:bg-gray-700 text-teal-700 dark:text-teal-300 shadow-sm'
+                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                      }`}
                   >
                     {tConn('tabLabel')}
                   </button>
@@ -602,11 +596,10 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
                       <button
                         key={c.id}
                         onClick={() => onNavigate?.(c.id)}
-                        className={`rounded-full transition-all ${
-                          isActive
-                            ? 'w-6 h-2.5 bg-blue-500 dark:bg-blue-400'
-                            : 'w-2.5 h-2.5 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'
-                        }`}
+                        className={`rounded-full transition-all ${isActive
+                          ? 'w-6 h-2.5 bg-blue-500 dark:bg-blue-400'
+                          : 'w-2.5 h-2.5 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'
+                          }`}
                         aria-label={`${tData(`${c.id}.simpleName`)} (${i + 1}/${sameLevelConcepts.length})`}
                         aria-current={isActive ? 'true' : undefined}
                         type="button"
@@ -632,9 +625,8 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
                           const levelName = tNav(`levels.${level.id}`, { default: level.name });
                           return (
                             <div key={level.id}>
-                              <div className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs font-semibold ${
-                                isCurrentLevel ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : 'text-gray-600 dark:text-gray-400'
-                              }`}>
+                              <div className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs font-semibold ${isCurrentLevel ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : 'text-gray-600 dark:text-gray-400'
+                                }`}>
                                 <span className={`w-2.5 h-2.5 rounded-full ${LEVEL_COLORS[level.id] || 'bg-gray-400'}`} />
                                 {levelName}
                               </div>
@@ -648,11 +640,10 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
                                         onNavigate?.(c.id);
                                         setShowLevelPicker(false);
                                       }}
-                                      className={`px-2 py-1 text-[11px] rounded-md transition-colors ${
-                                        isCurrent
-                                          ? 'bg-blue-500 text-white font-medium'
-                                          : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-                                      }`}
+                                      className={`px-2 py-1 text-[11px] rounded-md transition-colors ${isCurrent
+                                        ? 'bg-blue-500 text-white font-medium'
+                                        : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                        }`}
                                       type="button"
                                     >
                                       {tData(`${c.id}.simpleName`)}
@@ -701,11 +692,10 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
                   <button
                     onClick={() => prevConcept && onNavigate?.(prevConcept.id)}
                     disabled={!prevConcept}
-                    className={`flex items-center gap-1 px-2.5 py-2 min-w-[40px] min-h-[40px] rounded-lg text-sm font-medium transition-colors ${
-                      prevConcept
-                        ? 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
-                        : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-50'
-                    }`}
+                    className={`flex items-center gap-1 px-2.5 py-2 min-w-[40px] min-h-[40px] rounded-lg text-sm font-medium transition-colors ${prevConcept
+                      ? 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-50'
+                      }`}
                     aria-label={prevConcept ? `Previous: ${tData(`${prevConcept.id}.simpleName`)}` : 'No previous concept'}
                     type="button"
                   >
@@ -725,11 +715,10 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
                   <button
                     onClick={() => nextConcept && onNavigate?.(nextConcept.id)}
                     disabled={!nextConcept}
-                    className={`flex items-center gap-1 px-2.5 py-2 min-w-[40px] min-h-[40px] rounded-lg text-sm font-medium transition-colors ${
-                      nextConcept
-                        ? 'bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700'
-                        : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-50'
-                    }`}
+                    className={`flex items-center gap-1 px-2.5 py-2 min-w-[40px] min-h-[40px] rounded-lg text-sm font-medium transition-colors ${nextConcept
+                      ? 'bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700'
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-50'
+                      }`}
                     aria-label={nextConcept ? `Next: ${tData(`${nextConcept.id}.simpleName`)}` : 'No next concept'}
                     type="button"
                   >

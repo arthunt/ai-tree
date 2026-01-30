@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, Clock, TrendingUp, Command } from 'lucide-react';
 import { Concept } from '@/lib/types';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { getLevelColor } from '@/lib/utils';
 import {
   Users,

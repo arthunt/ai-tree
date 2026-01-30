@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Terminal, BookOpen, Lightbulb, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { Concept } from '@/lib/types';
 import { CodeBlock } from '@/components/CodeBlock';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ConceptCodeTabProps {

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { GraduationCap, Heart } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface NameToggleProps {
   showSimpleNames: boolean;

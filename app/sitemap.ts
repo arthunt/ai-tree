@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { locales } from '@/i18n';
+import { availableLanguageTags as locales } from '@/paraglide/runtime';
 import treeData from '@/data/tree-concepts.json';
 import pathsData from '@/data/learning-paths.json';
 

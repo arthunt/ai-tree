@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { useProgress } from '@/lib/useProgress';
 import { ConceptLightbox } from '@/components/ConceptLightbox';
 import { Concept, TreeLevel } from '@/lib/types';
@@ -163,13 +163,12 @@ export function LearningPathClient({ pathId, path, concepts, allConcepts, levels
               >
                 <button
                   onClick={() => setSelectedConcept(concept)}
-                  className={`w-full text-left p-4 sm:p-5 rounded-xl border transition-all group ${
-                    done
+                  className={`w-full text-left p-4 sm:p-5 rounded-xl border transition-all group ${done
                       ? 'border-emerald-200 dark:border-emerald-800/50 bg-emerald-50/50 dark:bg-emerald-950/20'
                       : isNext
-                      ? 'border-blue-300 dark:border-blue-700 bg-blue-50/50 dark:bg-blue-950/20 shadow-sm'
-                      : 'border-gray-200/60 dark:border-gray-700/50 bg-white/70 dark:bg-gray-800/40 hover:shadow-md'
-                  }`}
+                        ? 'border-blue-300 dark:border-blue-700 bg-blue-50/50 dark:bg-blue-950/20 shadow-sm'
+                        : 'border-gray-200/60 dark:border-gray-700/50 bg-white/70 dark:bg-gray-800/40 hover:shadow-md'
+                    }`}
                 >
                   <div className="flex items-center gap-4">
                     {/* Step number / status */}
@@ -179,11 +178,10 @@ export function LearningPathClient({ pathId, path, concepts, allConcepts, levels
                           <Check className="h-4 w-4 text-white" />
                         </div>
                       ) : (
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                          isNext
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${isNext
                             ? 'bg-blue-500 text-white'
                             : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
-                        }`}>
+                          }`}>
                           {idx + 1}
                         </div>
                       )}
@@ -192,11 +190,10 @@ export function LearningPathClient({ pathId, path, concepts, allConcepts, levels
                     {/* Content */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <h3 className={`font-semibold text-sm sm:text-base ${
-                          done
+                        <h3 className={`font-semibold text-sm sm:text-base ${done
                             ? 'text-emerald-700 dark:text-emerald-400'
                             : 'text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400'
-                        } transition-colors`}>
+                          } transition-colors`}>
                           {tData(`${concept.id}.title`)}
                         </h3>
                         {isNext && (

@@ -3,19 +3,44 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
+// Mock paraglide runtime
+vi.mock('@/paraglide/runtime', () => ({
+  languageTag: () => 'en',
+  setLanguageTag: vi.fn(),
+}));
+
+// Mock paraglide messages
+vi.mock('@/paraglide/messages', () => ({
+  navigation_switchToEstonian: () => 'Switch to Estonian',
+  navigation_switchToEnglish: () => 'Switch to English',
+}));
+
 // Mock useRouter
-const mockReplace = vi.fn();
+const mockPush = vi.fn();
 vi.mock('next/navigation', () => ({
   useParams: () => ({ locale: 'en' }),
   usePathname: () => '/en',
   useRouter: () => ({
-    replace: mockReplace,
+    push: mockPush,
+    replace: vi.fn(),
   }),
+}));
+
+// Mock LanguageContext
+const mockSetLocale = vi.fn();
+vi.mock('@/context/LanguageContext', () => ({
+  useLanguage: () => ({
+    locale: 'en',
+    setLocale: mockSetLocale,
+    availableLocales: ['en', 'et'],
+  }),
+  LanguageProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 describe('LanguageSwitcher', () => {
   beforeEach(() => {
-    mockReplace.mockClear();
+    mockSetLocale.mockClear();
+    mockPush.mockClear();
   });
 
   it('renders language buttons', () => {
@@ -35,7 +60,7 @@ describe('LanguageSwitcher', () => {
     render(<LanguageSwitcher />);
 
     await user.click(screen.getByText('ET'));
-    expect(mockReplace).toHaveBeenCalledWith('/et', { scroll: false });
+    expect(mockSetLocale).toHaveBeenCalledWith('et');
   });
 
   it('does not switch to same locale', async () => {
@@ -43,6 +68,6 @@ describe('LanguageSwitcher', () => {
     render(<LanguageSwitcher />);
 
     await user.click(screen.getByText('EN'));
-    expect(mockReplace).not.toHaveBeenCalled();
+    expect(mockSetLocale).not.toHaveBeenCalled();
   });
 });

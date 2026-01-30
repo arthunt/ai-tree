@@ -6,7 +6,7 @@ import { ConceptCard } from './ConceptCard';
 import { SkeletonCard } from './SkeletonCard';
 import { getLevelGradient } from '../lib/utils';
 import { LevelIcon } from './LevelIcon';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface LevelSectionProps {
   level: TreeLevel;

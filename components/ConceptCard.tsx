@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import { Concept } from '../lib/types';
 import { getComplexityColor, getReadingTime } from '../lib/utils';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 const iconMap: Record<string, LucideIcon> = {
   users: Users,

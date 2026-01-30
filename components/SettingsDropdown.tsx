@@ -6,7 +6,7 @@ import { ViewModeToggle } from './ViewModeToggle';
 import { DarkModeToggle } from './DarkModeToggle';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { ViewMode } from '../lib/types';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface SettingsDropdownProps {
   viewMode: ViewMode;

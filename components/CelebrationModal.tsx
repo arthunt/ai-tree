@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { X, Share2, ChevronRight } from 'lucide-react';
 import { LevelIcon } from './LevelIcon';
 import { useParams } from 'next/navigation';

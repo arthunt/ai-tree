@@ -2,7 +2,7 @@
 
 import { ImageIcon } from 'lucide-react';
 import { Concept } from '@/lib/types';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import dynamic from 'next/dynamic';
 
 const svgLoading = () => <div className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-xl h-64" />;

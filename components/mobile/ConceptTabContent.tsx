@@ -7,7 +7,7 @@ import { useExplanationMode } from '@/lib/hooks/useExplanationMode';
 import { ConceptVisualTab } from './ConceptVisualTab';
 import { ConceptCodeTab } from './ConceptCodeTab';
 import { ConceptConnectionsTab } from './ConceptConnectionsTab';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { useProgress } from '@/lib/useProgress';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -34,8 +34,8 @@ export function ConceptTabContent({
   // Get prerequisite concepts
   const prerequisites = concept.prerequisites
     ? concept.prerequisites
-        .map(id => allConcepts.find(c => c.id === id))
-        .filter((c): c is Concept => c !== undefined)
+      .map(id => allConcepts.find(c => c.id === id))
+      .filter((c): c is Concept => c !== undefined)
     : [];
 
   // Preview state - show condensed content
@@ -67,22 +67,20 @@ export function ConceptTabContent({
               <button
                 onClick={() => setMode('simple')}
                 aria-pressed={mode === 'simple'}
-                className={`px-6 py-2.5 min-h-[44px] rounded-full font-medium transition-all ${
-                  mode === 'simple'
+                className={`px-6 py-2.5 min-h-[44px] rounded-full font-medium transition-all ${mode === 'simple'
                     ? 'bg-purple-500 dark:bg-purple-600 text-white shadow-md'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
+                  }`}
               >
                 {t('simpleMode')}
               </button>
               <button
                 onClick={() => setMode('technical')}
                 aria-pressed={mode === 'technical'}
-                className={`px-6 py-2.5 min-h-[44px] rounded-full font-medium transition-all ${
-                  mode === 'technical'
+                className={`px-6 py-2.5 min-h-[44px] rounded-full font-medium transition-all ${mode === 'technical'
                     ? 'bg-blue-500 dark:bg-blue-600 text-white shadow-md'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
+                  }`}
               >
                 {t('technicalMode')}
               </button>
@@ -151,11 +149,10 @@ export function ConceptTabContent({
                       <button
                         key={prereq.id}
                         onClick={() => onNavigate?.(prereq.id)}
-                        className={`flex items-center gap-1.5 px-4 py-2.5 text-sm rounded-full transition-colors min-h-[44px] ${
-                          isPrereqCompleted
+                        className={`flex items-center gap-1.5 px-4 py-2.5 text-sm rounded-full transition-colors min-h-[44px] ${isPrereqCompleted
                             ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
                             : 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300'
-                        }`}
+                          }`}
                       >
                         {isPrereqCompleted && <Check className="h-3 w-3" />}
                         <span>{tData(`${prereq.id}.simpleName`)}</span>

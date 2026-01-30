@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { useParams, usePathname, useRouter } from 'next/navigation';
-import { locales } from '@/i18n';
+import { availableLanguageTags as locales } from '@/paraglide/runtime';
 
 type Messages = Record<string, unknown>;
 

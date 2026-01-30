@@ -9,7 +9,7 @@ import { useSwipeNavigation } from '@/lib/hooks/useSwipeNavigation';
 import { usePrefersReducedMotion } from '@/lib/hooks/useMediaQuery';
 import { ConceptTabContent } from './ConceptTabContent';
 import { ConceptNavBar } from './ConceptNavBar';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { useProgress } from '@/lib/useProgress';
 
 interface ConceptBottomSheetProps {

@@ -1,21 +1,29 @@
 import '@testing-library/jest-dom/vitest';
 import { vi } from 'vitest';
 
-// Mock next-intl
-vi.mock('next-intl', () => ({
-  useTranslations: () => {
-    const t = (key: string, params?: Record<string, string | number>) => {
-      if (params) {
-        let result = key;
-        for (const [k, v] of Object.entries(params)) {
-          result = result.replace(`{${k}}`, String(v));
-        }
-        return result;
+// Mock translation function factory (shared by next-intl and paraglide mocks)
+const createMockTranslations = () => {
+  return (key: string, params?: Record<string, string | number>) => {
+    if (params) {
+      let result = key;
+      for (const [k, v] of Object.entries(params)) {
+        result = result.replace(`{${k}}`, String(v));
       }
-      return key;
-    };
-    return t;
-  },
+      return result;
+    }
+    return key;
+  };
+};
+
+// Mock next-intl (still used by layout.tsx and i18n.ts)
+vi.mock('next-intl', () => ({
+  useTranslations: () => createMockTranslations(),
+}));
+
+// Mock ParaglideJS translations hook (used by all migrated components)
+vi.mock('@/hooks/useParaglideTranslations', () => ({
+  useParaglideTranslations: () => createMockTranslations(),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 // Mock next/navigation

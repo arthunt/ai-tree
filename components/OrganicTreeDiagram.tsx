@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TreeLevel, Concept } from '../lib/types';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface OrganicTreeDiagramProps {
   levels: TreeLevel[];

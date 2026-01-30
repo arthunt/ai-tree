@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import pathsData from '@/data/learning-paths.json';
 import treeData from '@/data/tree-concepts.json';
 import { TreeData } from '@/lib/types';
-import { locales } from '@/i18n';
+import { availableLanguageTags as locales } from '@/paraglide/runtime';
 import { LearningPathClient } from './LearningPathClient';
 
 const data = treeData as TreeData;
