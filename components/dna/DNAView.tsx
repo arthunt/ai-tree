@@ -71,7 +71,7 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                 >
                     <div className="bg-black/40 backdrop-blur-md px-6 py-2 rounded-full border border-white/10 text-white/50 text-xs uppercase tracking-widest flex items-center gap-3">
                         <span className="w-2 h-2 rounded-full bg-brand-teal animate-pulse" />
-                        Move cursor to slow down • Click cards to explore
+                        {t('controlHint')}
                     </div>
                 </motion.div>
 

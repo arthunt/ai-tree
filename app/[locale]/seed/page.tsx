@@ -1,132 +1,152 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState, Suspense } from 'react';
-import { GlassCard } from '@/components/ui/GlassCard';
-import { Hammer, BookOpen, Compass } from 'lucide-react';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { GlobalNav } from '@/components/GlobalNav';
 
-function SeedPageContent({ params }: { params: { locale: string } }) {
+const PATHS = [
+    {
+        key: 'builder' as const,
+        icon: '🔨',
+        gradient: 'from-brand-teal to-emerald-400',
+        glow: 'brand-teal',
+        href: '/tree-view?focus=branches',
+    },
+    {
+        key: 'thinker' as const,
+        icon: '🧠',
+        gradient: 'from-purple-400 to-indigo-400',
+        glow: 'purple-400',
+        href: '/dna',
+    },
+    {
+        key: 'explorer' as const,
+        icon: '🌍',
+        gradient: 'from-brand-cyan to-blue-400',
+        glow: 'brand-cyan',
+        href: '/tree-view',
+    },
+];
+
+function SeedPageContent() {
+    const params = useParams();
+    const locale = params.locale as string;
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const origin = searchParams.get('origin') || 'unknown';
+    const t = useTranslations('dna.seedPath');
     const [selectedPath, setSelectedPath] = useState<string | null>(null);
 
-    const paths = [
-        {
-            id: 'build',
-            icon: Hammer,
-            title: "I want to Build",
-            desc: "Skip the theory. Show me the code.",
-            color: "text-brand-cyan",
-            bg: "bg-brand-cyan/10",
-            border: "border-brand-cyan/20"
-        },
-        {
-            id: 'teach',
-            icon: BookOpen,
-            title: "I want to Understand",
-            desc: "Explain the concepts clearly.",
-            color: "text-brand-teal",
-            bg: "bg-brand-teal/10",
-            border: "border-brand-teal/20"
-        },
-        {
-            id: 'explore',
-            icon: Compass,
-            title: "I'm Exploring",
-            desc: "Let me wander through the forest.",
-            color: "text-purple-400",
-            bg: "bg-purple-500/10",
-            border: "border-purple-500/20"
-        }
-    ];
-
-    const handleSelect = (pathId: string) => {
-        setSelectedPath(pathId);
-
-        // Short delay for animation
+    const handleSelect = (path: typeof PATHS[number]) => {
+        setSelectedPath(path.key);
         setTimeout(() => {
-            router.push(`/${params.locale}/tree-view?intent=${pathId}&origin=${origin}`);
-        }, 800);
+            router.push(`/${locale}${path.href}`);
+        }, 600);
     };
 
     return (
-        <div className="relative min-h-screen bg-void text-white overflow-hidden flex flex-col items-center justify-center p-6">
+        <div className="relative min-h-screen w-full bg-void overflow-hidden text-white flex flex-col items-center justify-center">
             <GlobalNav transparent />
 
-            {/* Background Seed Pulse */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <motion.div
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.3, 0.5, 0.3]
-                    }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="w-96 h-96 bg-brand-teal/5 blur-[100px] rounded-full"
-                />
+            {/* Ambient background */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-teal/5 blur-[180px] rounded-full" />
             </div>
 
+            {/* Pulsing Seed */}
+            <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: 'spring', duration: 1.2 }}
+                className="relative z-10 mb-16"
+            >
+                <div className="relative">
+                    {/* Outer glow ring */}
+                    <motion.div
+                        animate={{
+                            scale: [1, 1.3, 1],
+                            opacity: [0.2, 0.5, 0.2],
+                        }}
+                        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                        className="absolute inset-[-30px] rounded-full bg-brand-teal/20 blur-xl"
+                    />
+                    {/* Inner glow */}
+                    <motion.div
+                        animate={{
+                            scale: [1, 1.1, 1],
+                            opacity: [0.4, 0.8, 0.4],
+                        }}
+                        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                        className="absolute inset-[-10px] rounded-full bg-brand-teal/30 blur-md"
+                    />
+                    {/* The seed */}
+                    <motion.div
+                        animate={{ scale: [1, 1.05, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                        className="relative w-24 h-24 rounded-full bg-gradient-to-br from-brand-teal via-emerald-300 to-brand-cyan flex items-center justify-center shadow-[0_0_40px_rgba(56,189,248,0.3)]"
+                    >
+                        <span className="text-4xl select-none">🌱</span>
+                    </motion.div>
+                </div>
+            </motion.div>
+
+            {/* Title */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="relative z-10 max-w-4xl w-full"
+                transition={{ delay: 0.5 }}
+                className="relative z-10 text-center mb-12"
             >
-                <div className="text-center mb-16">
-                    <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 100, delay: 0.2 }}
-                        className="w-24 h-24 mx-auto mb-8 relative"
+                <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-white to-brand-cyan">
+                    {t('title')}
+                </h1>
+                <p className="text-lg text-gray-400">{t('subtitle')}</p>
+            </motion.div>
+
+            {/* Path Choices */}
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="relative z-10 flex flex-col sm:flex-row gap-6 px-4 w-full max-w-3xl"
+            >
+                {PATHS.map((path, i) => (
+                    <motion.button
+                        key={path.key}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1 + i * 0.15 }}
+                        whileHover={{ scale: 1.05, y: -4 }}
+                        whileTap={{ scale: 0.97 }}
+                        onClick={() => handleSelect(path)}
+                        className={`flex-1 group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 text-center hover:border-white/20 transition-all cursor-pointer
+                            ${selectedPath && selectedPath !== path.key ? 'opacity-40 scale-95 blur-[1px]' : ''}
+                            ${selectedPath === path.key ? 'ring-2 ring-white/50 scale-105' : ''}
+                        `}
                     >
-                        {/* The Actual Seed SVG */}
-                        <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_15px_rgba(45,212,191,0.5)]">
-                            <path d="M 50 10 Q 20 40 20 70 Q 20 95 50 95 Q 80 95 80 70 Q 80 40 50 10 Z" fill="var(--dna-t)" />
-                        </svg>
-                    </motion.div>
+                        {/* Hover glow */}
+                        <div className={`absolute inset-0 bg-${path.glow}/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl blur-xl`} />
 
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">Plant your Intent</h1>
-                    <p className="text-xl text-gray-400">How would you like to grow?</p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {paths.map((path, i) => (
-                        <motion.div
-                            key={path.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4 + (i * 0.1) }}
-                        >
-                            <button
-                                onClick={() => handleSelect(path.id)}
-                                className={`w-full text-left transition-all duration-500 transform
-                                    ${selectedPath && selectedPath !== path.id ? 'opacity-50 scale-95 blur-[1px]' : ''}
-                                    ${selectedPath === path.id ? 'scale-105 ring-2 ring-white/50' : 'hover:scale-105'}
-                                `}
-                            >
-                                <GlassCard className={`p-8 h-full flex flex-col items-center text-center gap-4 ${path.bg} ${path.border} border`}>
-                                    <div className={`p-4 rounded-full bg-black/20 ${path.color}`}>
-                                        <path.icon size={32} />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-xl font-bold mb-2 text-white">{path.title}</h3>
-                                        <p className="text-sm text-gray-400">{path.desc}</p>
-                                    </div>
-                                </GlassCard>
-                            </button>
-                        </motion.div>
-                    ))}
-                </div>
+                        <div className="relative z-10">
+                            <span className="text-4xl mb-4 block">{path.icon}</span>
+                            <h3 className={`text-xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r ${path.gradient}`}>
+                                {t(`${path.key}.label`)}
+                            </h3>
+                            <p className="text-sm text-gray-400">
+                                {t(`${path.key}.description`)}
+                            </p>
+                        </div>
+                    </motion.button>
+                ))}
             </motion.div>
         </div>
     );
 }
 
-export default function SeedPage({ params }: { params: { locale: string } }) {
+export default function SeedPage() {
     return (
-        <Suspense fallback={<div className="min-h-screen bg-void flex items-center justify-center text-brand-teal">Initializing Seed...</div>}>
-            <SeedPageContent params={params} />
+        <Suspense fallback={<div className="min-h-screen bg-void flex items-center justify-center text-brand-teal">...</div>}>
+            <SeedPageContent />
         </Suspense>
     );
 }
