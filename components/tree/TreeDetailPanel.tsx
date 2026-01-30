@@ -83,30 +83,30 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                     )}
                 </div>
 
-                {/* Swarm Marketing Integration (Placeholder) */}
-                {/* Once Swarm maps nodes to programs, we'll conditionally render this block */}
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 border border-indigo-100 dark:border-indigo-500/30">
-                    <div className="flex items-start gap-4">
-                        <div className="p-3 rounded-full bg-white dark:bg-indigo-500/20 shadow-sm">
-                            <GraduationCap className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-bold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 mb-1">
-                                Master This Skill
-                            </h3>
-                            <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
-                                Want to learn how to prompt and fine-tune {node.title}?
-                                Our **AIKI Program** covers this in Week 2.
-                            </p>
-                            <Link
-                                href="/programs/aiki"
-                                className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-700 dark:text-indigo-300 hover:text-indigo-800 dark:hover:text-white transition-colors"
-                            >
-                                View Program <ExternalLink className="w-4 h-4" />
-                            </Link>
+                {/* Swarm Marketing Integration */}
+                {node.relatedProgramId && (
+                    <div className="p-6 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 border border-indigo-100 dark:border-indigo-500/30">
+                        <div className="flex items-start gap-4">
+                            <div className="p-3 rounded-full bg-white dark:bg-indigo-500/20 shadow-sm">
+                                <GraduationCap className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-bold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 mb-1">
+                                    Master This Skill
+                                </h3>
+                                <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
+                                    {node.marketingHook || "Learn more about this in our expert programs."}
+                                </p>
+                                <Link
+                                    href={`/programs/${node.relatedProgramId}`}
+                                    className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-700 dark:text-indigo-300 hover:text-indigo-800 dark:hover:text-white transition-colors"
+                                >
+                                    View Program <ExternalLink className="w-4 h-4" />
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
 
             </motion.div>
 
