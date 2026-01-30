@@ -5,12 +5,15 @@ import { X, ExternalLink, Calendar, FileText, Sparkles, GraduationCap } from 'lu
 import { TreeContentSimple } from '@/actions/getTreeContent';
 import Link from 'next/link';
 
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+
 interface TreeDetailPanelProps {
     node: TreeContentSimple | null;
     onClose: () => void;
 }
 
 export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
+    const t = useTranslations('treeView');
     if (!node) return null;
 
     return (
@@ -62,7 +65,7 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                         <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700">
                             <div className="flex items-center gap-2 mb-1 text-sm text-gray-500 dark:text-gray-400">
                                 <Calendar className="w-4 h-4" />
-                                <span>Introduced</span>
+                                <span>{t('introducedLabel')}</span>
                             </div>
                             <div className="text-lg font-semibold text-gray-900 dark:text-white">
                                 {node.year}
@@ -74,7 +77,7 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                         <div className="col-span-2 p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700">
                             <div className="flex items-center gap-2 mb-1 text-sm text-gray-500 dark:text-gray-400">
                                 <FileText className="w-4 h-4" />
-                                <span>Key Paper</span>
+                                <span>{t('keyPaperLabel')}</span>
                             </div>
                             <div className="text-base font-medium text-gray-900 dark:text-white truncate">
                                 "{node.paper}"
@@ -92,7 +95,7 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                             </div>
                             <div>
                                 <h3 className="text-sm font-bold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 mb-1">
-                                    Master This Skill
+                                    {t('masterSkillLabel')}
                                 </h3>
                                 <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
                                     {node.marketingHook || "Learn more about this in our expert programs."}
@@ -101,7 +104,7 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                                     href={`/programs/${node.relatedProgramId}`}
                                     className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-700 dark:text-indigo-300 hover:text-indigo-800 dark:hover:text-white transition-colors"
                                 >
-                                    View Program <ExternalLink className="w-4 h-4" />
+                                    {t('viewProgramLabel')} <ExternalLink className="w-4 h-4" />
                                 </Link>
                             </div>
                         </div>

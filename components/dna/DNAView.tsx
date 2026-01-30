@@ -121,6 +121,19 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                                 />
                             ))}
                         </div>
+
+                        {/* Progression Hint: Sprouts into Seed */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 0.7 }}
+                            className="mt-24 flex flex-col items-center justify-center gap-4 text-brand-teal/50"
+                        >
+                            <div className="w-px h-16 bg-gradient-to-b from-transparent to-brand-teal/50" />
+                            <div className="flex flex-col items-center gap-2 animate-pulse">
+                                <span className="text-4xl">🌱</span>
+                                <span className="text-xs font-mono uppercase tracking-widest">{t('seed.growing')}</span>
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>

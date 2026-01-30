@@ -9,6 +9,16 @@ import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglid
 export function DNAInput() {
     const { inputText, setInputText, runSimulation, isPlaying, currentStep, resetSimulation } = useDNA();
     const t = useTranslations('dna.input');
+    const tCard = useTranslations('dna.microLesson');
+
+    // Simple mapping for display
+    const stepNameMap: Record<string, string> = {
+        tokenization: 'tokenization',
+        vectorizing: 'vectorizing',
+        attention: 'attention',
+        prediction: 'prediction',
+        idle: 'tokenization' // Fallback
+    };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && !isPlaying && inputText) {
@@ -75,7 +85,7 @@ export function DNAInput() {
                             animate={{ opacity: 1, y: 0 }}
                             key={currentStep}
                         >
-                            {t('status', { step: currentStep.toUpperCase() })}
+                            {t('status', { step: tCard(`${stepNameMap[currentStep] || 'tokenization'}.title`) })}
                         </motion.span>
                     )}
                 </AnimatePresence>

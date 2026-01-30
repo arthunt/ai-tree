@@ -159,13 +159,18 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
                     {/* Links */}
                     {root.links().map((link, i) => {
                         const isDimmed = !highlightedIds.has(link.target.data.id);
+
+                        // FLIP Y: Height - y (roughly, or just invert direction)
+                        // Actually, easiest way is to modify the path generator
+                        const linkGen = d3.linkVertical()
+                            .x((d: any) => d.x)
+                            .y((d: any) => dimensions.height - d.y - 100) // Padding from bottom
+                            (link as any) || "";
+
                         return (
                             <motion.path
                                 key={`link-${i}`}
-                                d={d3.linkVertical()
-                                    .x((d: any) => d.x)
-                                    .y((d: any) => d.y)
-                                    (link as any) || ""}
+                                d={linkGen}
                                 stroke={isDimmed ? "url(#link-gradient-dim)" : "url(#link-gradient)"}
                                 strokeWidth={isDimmed ? "1" : "2"}
                                 fill="none"
@@ -186,6 +191,9 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
                         const baseRadius = node.data.type === 'root' ? 12 : node.data.type === 'trunk' ? 8 : 5;
                         const baseFill = node.data.type === 'root' ? '#F472B6' : '#2DD4BF';
 
+                        // FLIP Y
+                        const flippedY = dimensions.height - (node.y || 0) - 100;
+
                         return (
                             <motion.g
                                 key={`node-${node.data.id}`}
@@ -194,7 +202,7 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
                                     opacity: isDimmed ? 0.2 : 1,
                                     scale: 1,
                                     x: node.x,
-                                    y: node.y,
+                                    y: flippedY,
                                 }}
                                 transition={{ duration: 0.5, delay: i * 0.02, type: 'spring' }}
                                 className={`cursor-pointer pointer-events-auto ${isDimmed ? '' : 'hover:brightness-125'}`}
@@ -231,9 +239,9 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
                                     strokeWidth={isDimmed ? "1" : "2"}
                                 />
 
-                                {/* Label */}
+                                {/* Label - Flip offsets (Parents below, children above) */}
                                 <text
-                                    y={node.children ? -20 : 20}
+                                    y={node.children ? 25 : -20}
                                     x={0}
                                     textAnchor="middle"
                                     fill={isDimmed ? "rgba(255,255,255,0.25)" : "white"}
