@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import { DNAComponentType } from '@/lib/supabase';
+import { visualTokenize } from './TokenizationSlicer';
 
 // The steps of the simulation
 export type DNAStep = 'idle' | 'tokenization' | 'vectorizing' | 'attention' | 'prediction';
@@ -19,7 +20,8 @@ interface DNAContextType {
     activeLesson: DNAStep | null; // If set, overlay is shown
 
     // Data State (Mock or Real)
-    tokens: string[];
+    tokens: string[];        // Whitespace-split words (used by attention/vectors)
+    subTokens: string[];     // BPE-like visual sub-tokens (used by tokenization slicer)
     vectors: number[][]; // Simplified 2D representation for visualization
     attentionWeights: { fromIndex: number; toIndex: number; strength: number }[];
     predictions: { token: string; probability: number }[];
@@ -48,6 +50,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const [activeLesson, setActiveLesson] = useState<DNAStep | null>(null);
 
     const [tokens, setTokens] = useState<string[]>([]);
+    const [subTokens, setSubTokens] = useState<string[]>([]);
     const [vectors, setVectors] = useState<number[][]>([]);
     const [predictions, setPredictions] = useState<{ token: string; probability: number }[]>([]);
     const [attentionWeights, setAttentionWeights] = useState<{ fromIndex: number; toIndex: number; strength: number }[]>([]);
@@ -109,6 +112,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         // Process Data
         const t = tokenize(inputText);
         setTokens(t);
+        setSubTokens(visualTokenize(inputText));
         setVectors(vectorize(t));
         setAttentionWeights(calculateAttention(t));
         setPredictions(predict());
@@ -166,6 +170,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         setIsPlaying(false);
         setIsPaused(false);
         setTokens([]);
+        setSubTokens([]);
         setVectors([]);
         setAttentionWeights([]);
         setPredictions([]);
@@ -190,6 +195,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             playbackSpeed,
             activeLesson,
             tokens,
+            subTokens,
             vectors,
             attentionWeights,
             predictions,

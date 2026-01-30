@@ -3,6 +3,7 @@
 import { GlassCard } from '@/components/ui/GlassCard';
 import { GlowingNode } from '@/components/ui/GlowingNode';
 import { useDNA, DNAStep } from './DNAContext';
+import { TokenizationSlicer } from './TokenizationSlicer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
@@ -19,7 +20,7 @@ interface DNAComponentCardProps {
 }
 
 export function DNAComponentCard({ title, description, metaphor, color, index, onCardClick }: DNAComponentCardProps) {
-    const { currentStep, tokens, vectors, predictions, attentionWeights } = useDNA();
+    const { currentStep, inputText, tokens, subTokens, vectors, predictions, attentionWeights } = useDNA();
     const params = useParams();
     const locale = params.locale as string;
     const t = useTranslations('dna.card');
@@ -84,16 +85,15 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
                     <AnimatePresence mode="wait">
                         {isActive && index === 0 ? (
                             <motion.div
-                                key="tokens"
+                                key="tokens-slicer"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="flex flex-wrap gap-2"
                             >
-                                {tokens.map((t, i) => (
-                                    <span key={i} className="px-2 py-1 bg-brand-teal/20 border border-brand-teal/50 rounded text-brand-teal font-mono text-sm">
-                                        {t}
-                                    </span>
-                                ))}
+                                <TokenizationSlicer
+                                    text={inputText}
+                                    tokens={subTokens}
+                                    isActive={isActive}
+                                />
                             </motion.div>
                         ) : isActive && index === 1 ? (
                             <motion.div
