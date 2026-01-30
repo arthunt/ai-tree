@@ -9,7 +9,7 @@ import { NameToggle } from '@/components/NameToggle';
 import { DarkModeToggle } from '@/components/DarkModeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { getTreeContent, TreeContentSimple } from '@/actions/getTreeContent';
 import { TreeView } from '@/components/tree/TreeView';
 import { TreeDetailPanel } from '@/components/tree/TreeDetailPanel';

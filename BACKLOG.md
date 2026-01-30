@@ -1,10 +1,10 @@
 # AI Tree (Dendrix.ai) - Product Backlog
 
 > **Last Updated:** 2026-01-30
-> **Status:** Active Development — Sprint 12 (Tree Visualization)
+> **Status:** Active Development — Sprint 13 (Programs & Polish)
 > **Vision:** Public AI learning platform using tree metaphor — no sign-ins, free for all
 > **Principles:** KISS, Less is More, Mobile-First, Testing-First (gradual)
-> **Tests:** 70 passing (Vitest) | **Build:** 68 pages | **Concepts:** 23 (ET + EN)
+> **Tests:** 70 passing (Vitest) + 6 E2E (Playwright) | **Routes:** 7 | **DB:** 28 nodes, 4 DNA concepts (ET + EN)
 
 ---
 
@@ -98,7 +98,7 @@
 <details>
 <summary>Sprint 9: English Content Translation (DONE)</summary>
 
-- [x] US-080: English concept data in i18n message files (23 concepts × 4 fields)
+- [x] US-080: English concept data in i18n message files (23 concepts x 4 fields)
 - [x] US-081: Wire 10+ components to useTranslations('conceptData')
 - [x] US-082: Translate level data to English
 - [x] US-083: Fix remaining hardcoded strings
@@ -109,35 +109,64 @@
 <details>
 <summary>Untracked Work (shipped, not in original backlog)</summary>
 
-- [x] SEO infrastructure: OG images, structured data, sitemap (`78be026`)
-- [x] Brand narrative: hero rewrite, journey section, scroll reveals (`b82fef7`, `36b15ac`)
-- [x] Dendrix logo: animated SVG in hero, header branding (`5035b33`, `1b548c8`)
-- [x] Learning paths: /learn route, Up Next recommendations (`9ea62dc`)
-- [x] Level celebrations: CelebrationModal on level completion (`9ea62dc`)
-- [x] Connections tab: 4th tab with progressive disclosure, 23 concepts × EN+ET relationship descriptions (`994f07c`, `29636e5`)
-- [x] Complexity badges: redefined as concept depth (Core Idea/Connected/Deep Dive), dark mode fix (`002a95b`)
-- [x] In-place language switch: popup stays mounted, content swaps via NextIntlClientProvider (`60f288a`)
-- [x] Inline header controls: language, theme, view mode as direct buttons (`3111ad1`)
-- [x] TokenizerDemo improvements: BPE-like digit splitting (`c300e62`)
+- [x] SEO infrastructure: OG images, structured data, sitemap
+- [x] Brand narrative: hero rewrite, journey section, scroll reveals
+- [x] Dendrix logo: animated SVG in hero, header branding
+- [x] Learning paths: /learn route, Up Next recommendations
+- [x] Level celebrations: CelebrationModal on level completion
+- [x] Connections tab: 4th tab with progressive disclosure, 23 concepts x EN+ET
+- [x] Complexity badges: redefined as concept depth (Core Idea/Connected/Deep Dive)
+- [x] In-place language switch: popup stays mounted, content swaps
+- [x] Inline header controls: language, theme, view mode as direct buttons
+- [x] TokenizerDemo improvements: BPE-like digit splitting
 </details>
 
 <details>
-<summary>Sprint 10: DNA View Foundation (Architecture Pivot) (DONE)</summary>
+<summary>Sprint 10: DNA View Foundation (DONE)</summary>
 
-- [x] US-090: Tech Stack Foundation (Paraglide + Supabase)
+- [x] US-090: Tech Stack Foundation (Supabase live, lazy client)
 - [x] US-091: DNA Visual Components (Living Forest Design)
 - [x] US-093: DNA Flow Diagram
 - [x] US-095: View Selector & Routing
 </details>
 
 <details>
-<summary>Sprint 11: DNA Interactivity (DONE)</summary>
+<summary>Sprint 11: DNA Interactivity & Content (DONE)</summary>
 
 - [x] US-100: Interactive DNA Input (Live Tokenization)
 - [x] US-101: Dynamic Attention & Prediction (Visualizations)
-- [x] US-102: Content Population (Real Data via Swarm)
-- [x] US-103: Tree of Thoughts Population (Swarm)
+- [x] US-102: DNA Content Population (4 concepts x EN+ET in Supabase)
+- [x] US-103: Tree of Thoughts Population (28 nodes x EN+ET in Supabase)
 </details>
+
+<details>
+<summary>Sprint 12: Phylogenetic Tree & Data Layer (DONE)</summary>
+
+- [x] US-104: Tree Content — 28 nodes in `nodes` table with hierarchy
+- [x] US-110: Interactive Phylogenetic Tree — D3 TreeView with zoom/pan
+- [x] US-112: Node Detail View — TreeDetailPanel with metadata, year, paper, motif
+- [x] US-114: Content-to-Commerce Mapping — 16 nodes linked to AIKI/AIVO programs
+- [x] US-115: Tree Enrichment — `node_metadata` with papers, use cases, visual motifs
+- [x] US-116: DNA-to-Tree Bridge — `dna_concept_id` links 4 DNA steps to tree nodes
+- [x] US-055: Search result count display (already in SearchModal)
+- [x] US-050: Search/copy feedback (toast + result count)
+- [x] US-058: TreeNav completion indicators (progress %)
+- [x] US-008: E2E smoke tests — 6 Playwright specs (homepage, nav, locale, search, dark mode, mobile)
+</details>
+
+---
+
+## Supabase Schema (Live)
+
+**5 migrations applied:**
+
+| Table | Rows | Description |
+|-------|------|-------------|
+| `concepts` | 4 | DNA concepts (tokenization, embeddings, attention, prediction) |
+| `concept_translations` | 8 | 4 EN + 4 ET |
+| `nodes` | 28 | Phylogenetic tree (root → eras → architectures → models) |
+| `node_translations` | 56 | 28 EN + 28 ET |
+| `node_metadata` | 28 | Year, paper, use case, motif, program link, marketing hooks, DNA bridge |
 
 ---
 
@@ -147,205 +176,60 @@
 - [ ] Keyboard navigable + screen reader compatible
 - [ ] Works on mobile (320px) to desktop (1920px)
 - [ ] All text in both ET and EN (next-intl)
-- [ ] `npm run build` passes (68 pages)
+- [ ] `npm run build` passes
 - [ ] `npm test` passes (70+ tests)
 - [ ] Deployed to preview and tested
 - [ ] No regressions
 
 ---
 
-## Active Sprint: Sprint 13 — Marketing Integration (Programs Landing Pages)
+## Active Sprint: Sprint 13 — Programs & Polish
 
 > **Priority:** P1-High
-> **Goal:** Create landing pages for AIKI, AIVO, AIME programs with lead capture and application forms
-> **Pricing:** AIKI €1590 | AIVO €1290 (€900 for AIKI grads) | AIME €2490 (bundle)
-> **Protocol:** Build landing pages following DNA View design system, integrate with Supabase
+> **Goal:** Create the `/programs` page (AIKI/AIVO/AIME) and connect Tree CTAs to it. Fix known bugs.
 
-### PRICING SUMMARY
-```
-ÜKSIKPROGRAMMID:
-- AIKI: €1590 (6 nädalat, 60h)
-- AIVO: €1290 (4 nädalat, 40h)
-- Eraldi ostes: €2880
+### US-120: Programs Page
+**Priority:** P1 | **Type:** Page | **Agent:** @ANTIGRAVITY
 
-LÕPETAJA SOODUSTUS:
-- AIVO AIKI tunnistusega: €900 (30% soodustus, sääst €390)
+- [ ] Create `app/[locale]/programs/page.tsx` — list all 3 programs
+- [ ] Create `app/[locale]/programs/[programId]/page.tsx` — program detail
+- [ ] Wire TreeDetailPanel "Master This Skill" CTA to `/programs/{id}`
+- [ ] i18n: program names, descriptions, pricing in ET + EN
 
-OSTURAJAD:
-- AIKI + AIVO eraldi: €2880
-- AIKI → AIVO lõpetaja hinnaga: €1590 + €900 = €2490 (sääst €390)
-- AIME pakett: €2490 (sääst €390)
-
-MAKSEPLAANID:
-- AIKI: 3 × €563 = €1689 (+€99, 6%)
-- AIVO: 3 × €460 = €1380 (+€90, 7%)
-- AIME: 4 × €673 = €2692 (+€202, 8%)
-```
-
-### US-120: Apply Marketing Database Schema
-**Priority:** P0 | **Type:** Infrastructure | **Hours:** 1
-- [ ] Run `lib/supabase/marketing-schema.sql` in Supabase SQL Editor
-- [ ] Verify tables: `program_cohorts`, `program_leads`, `program_applications`
-- [ ] Verify functions: `capture_program_lead()`, `get_active_cohorts()`, `validate_discount()`
-- [ ] Insert sample cohorts and discount codes
-
-### US-121: Programs Route Structure
-**Priority:** P0 | **Type:** Foundation | **Hours:** 4
-- [ ] Create `app/[locale]/programs/page.tsx` (programs overview)
-- [ ] Create `app/[locale]/programs/aiki/page.tsx`
-- [ ] Create `app/[locale]/programs/aivo/page.tsx`
-- [ ] Create `app/[locale]/programs/aime/page.tsx`
-- [ ] Create `app/[locale]/programs/apply/page.tsx`
-- [ ] Update header navigation with Programs dropdown
-
-### US-122: Programs i18n Translations
-**Priority:** P0 | **Type:** i18n | **Hours:** 4
-- [ ] Add `programs` namespace to `messages/et.json`
-- [ ] Add `programs` namespace to `messages/en.json`
-- [ ] Include: nav, common, overview, aiki, aivo, aime, apply, cta sections
-- [ ] Full Estonian curriculum descriptions
-
-### US-123: Program Landing Page Components
-**Priority:** P1 | **Type:** Components | **Hours:** 12
-- [ ] `components/programs/ProgramHero.tsx` - Full viewport hero with CTA
-- [ ] `components/programs/ProgramFeatures.tsx` - 4-feature grid
-- [ ] `components/programs/ProgramCurriculum.tsx` - Expandable weeks
-- [ ] `components/programs/ProgramPricing.tsx` - Price display with discounts & installments
-- [ ] `components/programs/ProgramFAQ.tsx` - Accordion FAQ
-- [ ] `components/programs/ProgramCTA.tsx` - Contextual call-to-action
-- [ ] `components/programs/ProgramComparison.tsx` - Compare all programs
-- [ ] Follow DNA View design: dark theme, glass cards, glowing accents
-
-### US-124: AIKI Landing Page
-**Priority:** P1 | **Type:** Page | **Hours:** 6
-- [ ] Hero: "Saa AI koolitajaks 6 nädalaga"
-- [ ] Features: T-V-A-P mastery, 4C teaching, portfolio, certificate
-- [ ] Curriculum: Week 0-5 breakdown
-- [ ] Pricing: €1590 single, €1689 installments
-- [ ] FAQ: 5-7 common questions
-- [ ] CTA: Apply button → /programs/apply?program=aiki
-
-### US-125: AIVO Landing Page
-**Priority:** P1 | **Type:** Page | **Hours:** 6
-- [ ] Hero: "Automatiseeri töövood AI-ga"
-- [ ] Features: Zapier, Make, OpenAI API, consulting
-- [ ] Curriculum: Week 0-4 breakdown
-- [ ] Pricing: €1290 full / €900 for AIKI grads (30% off)
-- [ ] Highlight AIKI graduate discount prominently
-- [ ] CTA: Apply button → /programs/apply?program=aivo
-
-### US-126: AIME Bundle Landing Page
-**Priority:** P1 | **Type:** Page | **Hours:** 6
-- [ ] Hero: "Täielik AI kompetents ühes paketis"
-- [ ] Value proposition: Same price as grad discount path, guaranteed spots
-- [ ] Combined curriculum overview (10 weeks)
-- [ ] Pricing: €2490 (save €390 vs separate)
-- [ ] Comparison table vs separate purchase
-- [ ] CTA: Apply button → /programs/apply?program=aime
-
-### US-127: Lead Capture Form
-**Priority:** P1 | **Type:** Feature | **Hours:** 4
-- [ ] `components/programs/LeadCaptureForm.tsx`
-- [ ] Fields: email, name (optional), phone (optional), programs[]
-- [ ] Supabase integration: `capture_program_lead()` function
-- [ ] UTM tracking from URL params
-- [ ] Success state with next steps
-
-### US-128: Application Form (Multi-step)
-**Priority:** P2 | **Type:** Feature | **Hours:** 8
-- [ ] `components/programs/ApplicationForm.tsx`
-- [ ] Step 1: Personal info (name, email, phone, city)
-- [ ] Step 2: Background (role, company, LinkedIn, experience)
-- [ ] Step 3: Motivation (why join, goals, how heard)
-- [ ] Step 4: AIKI certificate check (for AIVO applicants)
-- [ ] Step 5: Payment method selection
-- [ ] Discount code validation
-- [ ] Supabase `program_applications` insert
-
-### US-129: CTA Integration in AI-Tree
-**Priority:** P2 | **Type:** Integration | **Hours:** 4
-- [ ] Add "Want to teach AI?" CTA after DNA completion → AIKI
-- [ ] Add "Automate with AI" CTA on agent/MCP concepts → AIVO
-- [ ] Add contextual CTAs to Tree node detail panel
-- [ ] Track CTA interactions in `cta_interactions` table
-- [ ] Programs link in footer
+**Note:** `lib/programs/` (types, data, pricing) already exists.
 
 ---
 
-## Previous Sprint: Sprint 12 — The Phylogenetic Tree (Stage 4: Puu)
-
-> **Priority:** P1-High
-> **Goal:** Visualize the "Tree of Thoughts" (26 nodes from Swarm) and connect it to the DNA View.
-> **Protocol:** @ANTIGRAVITY builds the D3/ReactFlow Tree. @SWARM handles data updates if needed.
-
-### US-110: Interactive Phylogenetic Tree
-**Priority:** P1 | **Type:** Visualization | **Agent:** @ANTIGRAVITY
-
-- [x] `components/tree/TreeView.tsx`: D3/SVG visualization (Basic V1)
-- [ ] Refine "Organic" look (Curved lines, glowing nodes)
-- [ ] Zoom/Pan controls ("Living Map")
-
----
-
-### US-111: DNA to Tree Bridge
+### US-111: DNA to Tree Bridge (UI)
 **Priority:** P1 | **Type:** Navigation | **Agent:** @ANTIGRAVITY
 
 - [ ] "Deep Dive" buttons on DNA cards link to specific Tree Nodes
-- [ ] Shared context/progress (Visiting DNA marks Tree node as "Inspected"?)
+- [ ] Use `node_metadata.dna_concept_id` to resolve target node
+- [ ] Shared progress: visiting DNA marks Tree node as "Inspected"
+
+**Note:** Database bridge is ready. UI wiring remains.
 
 ---
 
-### US-112: Node Detail View (Rich Content)
-**Priority:** P2 | **Type:** Feature | **Agent:** @ANTIGRAVITY
-- [ ] Implement `TreeDetailPanel.tsx` (Slide-over or Modal)
-- [ ] Show Metadata (Year, Paper, Visual Motif)
-- [ ] **Marketing Hook:** "Learn more in AIKI..." (See US-114)
+### US-121: Bug Fixes & Cleanup
+**Priority:** P1 | **Type:** Maintenance | **Agent:** @ANTIGRAVITY
+
+- [ ] Fix `tree-view/page.tsx` missing `useSearchParams` import
+- [ ] Audit DNAComponentCard.tsx for render logic issues (lines 159-189)
+- [ ] US-110 refinement: organic curved lines, glowing nodes in TreeView
 
 ---
 
-### US-113: Marketing Integration (Foundation)
+### US-113: Marketing Integration
 **Priority:** P2 | **Type:** Infrastructure | **Agent:** @ANTIGRAVITY
-- [ ] Implement `lib/programs` (Types, Static Data) ✅ (Exists)
-- [ ] Database Schema: `program_leads`, `program_views`
-- [ ] Basic "Programs" page (`/programs`)
 
-### US-114: Contextual CTAs (Swarm Intelligence)
-**Priority:** P2 | **Type:** Logic | **Agent:** @SWARM
-- [ ] Map Tree Nodes to Programs (e.g., Agents -> AIVO)
-- [ ] Populate `node_metadata.related_program_id`
-- [ ] Generate "Hook Text" for each mapped node
+- [ ] Database Schema: `program_leads` table (track interest clicks)
+- [ ] Database Schema: `program_views` table (track page views)
+- [ ] Analytics: Track CTA clicks from TreeDetailPanel
 
 ---
 
-### US-104: Tree Content (Completed by Swarm)
-**Priority:** Done | **Type:** Content | **Agent:** @SWARM
-- [x] Populate `nodes` table (26 items)
-- [x] Verify hierarchy (parent_id)
-
----
-
-### Sprint 12 Execution Plan (Visuals First)
-
-```
-[ANTIGRAVITY - The Cartographer]        [SWARM - The Historian]
---------------------------------        -----------------------
-1. Tree Visualization (US-110)          (Monitoring Data Quality)
-2. Bridge Navigation (US-111)    <----> (Refining Node Descriptions)
-3. Detail Views (US-112)
-```                                      4. Accessibility Audits
-```
-
----
-
-## Backlog (Prioritized & Agented)
-
-### P1 — High Value
-
-| ID | Story | Type | Notes |
-|----|-------|------|-------|
-| US-055 | Search result count display | UX Polish | Show "{n} results" as user types |
-| US-058 | TreeNav completion indicators | Learning UX | Show completion % per level, not scroll position |
-| US-008 | E2E smoke tests (Playwright) | Testing | Basic navigation + lightbox + locale switch |
+## Backlog (Prioritized)
 
 ### P2 — Medium Value
 
@@ -353,7 +237,6 @@ MAKSEPLAANID:
 |----|-------|------|-------|
 | US-056 | Keyboard shortcuts help modal | Accessibility | Shift+? opens shortcuts list |
 | US-048 | Beginner path visibility | Learning UX | Highlight toggle, sequential flow, progress counter |
-| US-050 | Search/copy feedback improvement | UX Polish | Longer copy toast, result count |
 | US-037 | Related concepts suggestions | Content | Concept cards suggest related topics |
 
 ### P3 — Nice to Have
@@ -364,6 +247,9 @@ MAKSEPLAANID:
 | US-036 | Glossary/index page | Content | Alphabetical concept glossary |
 | US-035 | Print-friendly version | Content | CSS print layout |
 | US-052 | Prerequisite validation | Learning UX | Warn before marking concepts with unmet prereqs |
+| US-033 | Concept quizzes | Content | Client-side interactive quizzes |
+| US-034 | Code playgrounds | Content | CodeSandbox embeds |
+| US-038 | Video/animation for Attention | Content | Animated explainer |
 
 ---
 
@@ -373,42 +259,16 @@ MAKSEPLAANID:
 > **Key Shifts:** Static -> Dynamic, 2 Langs -> 100+ Langs, Map -> Trails (Paid).
 
 ### Epic: Scale to 100 Languages
-- [ ] **Infrastructure:** ParaglideJS full migration (replace next-intl entirely)
-- [ ] **Pipeline:** AI Translation Agents + "Guardian" Review Portal
-- [ ] **UI:** RTL Support & Fluid Typography
+- [ ] AI Translation Agents + "Guardian" Review Portal
+- [ ] RTL Support & Fluid Typography
 
 ### Epic: "Trails" (Paid Learning Paths)
-- [ ] **Infrastructure:** User Auth (Supabase Auth)
-- [ ] **Content:** Define "Trail" schema (Sequence of concepts + Practical Task)
-- [ ] **Commerce:** Payment Gateway Integration
-
----
-
-## Future Sprints
-
-### Sprint 11: DNA Interactive Demos
-- [ ] US-100: Interactive text input for DNA flow
-- [ ] US-101: Attention heatmap visualization
-- [ ] US-102: Prediction probability display
-- [ ] US-103: "Dive deeper" links to concept map
-
-### Sprint 12: DNA ↔ Tree Integration
-- [ ] US-110: Seamless DNA/Concept Map navigation
-- [ ] US-111: Unified progress tracking
-- [ ] US-112: DNA Learning Path in /learn
-
-### Content & Features (Unscheduled)
-- [ ] US-033: Concept quizzes (client-side)
-- [ ] US-034: Code playgrounds (CodeSandbox embeds)
-- [ ] US-038: Video/animation for Attention
-- [ ] US-051: Learning pathways system (Beginner/Builder/Researcher)
-- [ ] US-053: Rename Classic/Tree views for clarity
+- [ ] User Auth (Supabase Auth)
+- [ ] Define "Trail" schema (Sequence of concepts + Practical Task)
+- [ ] Payment Gateway Integration
 
 ### Deferred (Only When Needed)
-- Backend infrastructure (Supabase)
-- User authentication
 - Server-side progress tracking
-- Payment/pricing systems
 - Instructor tools
 - Certificates
 
@@ -418,11 +278,12 @@ MAKSEPLAANID:
 
 ```bash
 npm run dev          # Local development
-npm run build        # Build (68 pages)
+npm run build        # Build all pages
 npm run lint         # Code style
-npm test             # 70 tests (Vitest)
+npm test             # Unit tests (Vitest)
+npm run test:e2e     # E2E tests (Playwright)
 ```
 
 ---
 
-*"Iga suur puu algas väikesest seemnest." / "Every great tree started as a small seed."*
+*"Iga suur puu algas vaikesest seemnest." / "Every great tree started as a small seed."*
