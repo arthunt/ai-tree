@@ -93,6 +93,7 @@ export function TreeViewContent() {
                         ) : (
                             <TreeView
                                 data={treeDataState}
+                                intent={searchParams.get('intent')}
                                 onNodeClick={setSelectedNode}
                             />
                         )}
