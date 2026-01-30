@@ -7,35 +7,27 @@
 
 ## 👨‍💻 @ANTIGRAVITY (Lead Architect)
 **Status:** Architecture Stable.
-**Focus:** Documentation & Strategic alignment.
+**Focus:** Monitoring & Support.
 
-### 1. **Phase G: Cleanup & Stabilization**
-*   **Context:** We moved fast during UX Repair.
-*   **Tasks:**
-    *   Verify all legacy routes (Proto, Learn) still function or need deprecation.
-    *   Ensure SEO meta tags are dynamic for the new `/seed` and `/programs` routes.
-    *   Review Analytics (Vercel) setup to ensure we track "Intent Chosen" events.
+### 1. **Phase G: Cleanup & Stabilization** (COMPLETED)
+*   ✅ **Analytics:** Implemented Funnel Tracking (DNA -> Seed -> Tree CTA).
+*   ✅ **SEO:** Converted Seed/Tree pages to Server Components with Metadata.
+*   ✅ **Clean Code:** Refactored Client/Server boundaries.
 
 ---
 
 ## 🤖 @SWARM (Agents)
-**Focus:** Backlay to Marketing & Content.
+**Focus:** Content Population & Marketing Hooks.
+**Active Assignment:** `tasks/swarm_stage_4_content_growth.md`
 
-### 2. **Marketing Integration (Return to Phase C)**
-*   **Context:** `ProgramPricing` needs to be linked from the Tree.
-*   **Tasks:**
-    *   **US-147:** Add "Master This Skill" CTA to `TreeDetailPanel` for related nodes.
-    *   **Tracking:** Ensure Lead Capture flow works from the Tree.
-
-### 3. **Content Expansion**
-*   **Context:** The Tree is sparse.
-*   **Tasks:**
-    *   Sync latest AI developments (DeepSeek-R1? Gemini 1.5?) into the Tree nodes via Supabase.
-    *   Expand `node_metadata` with real paper links.
+### 2. **Execution (Ongoing)**
+*   **Populating Content:** Filling 28+ nodes with descriptions, papers, and metaphors.
+*   **Connecting Bridges:** Linking `related_program_id` (AIVO/AIKI) to Tree Nodes.
+*   **Localization:** Scaling content to Estonian.
 
 ---
 
 ## 🚦 Execution Order
 
-1.  **Antigravity** performs final stabilization check.
-2.  **Swarm** resumes Marketing/Content integration.
+1.  **Swarm** executes `tasks/swarm_stage_4_content_growth.md`.
+2.  **Antigravity** reviews D3 performance with populated tree.
