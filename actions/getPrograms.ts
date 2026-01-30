@@ -29,7 +29,7 @@ export async function getProgram(slug: string, locale: string = 'et'): Promise<P
         return null;
     }
 
-    const programId = programData.id;
+    const programId = (programData as any).id;
 
     // 2. Fetch Features
     const { data: featuresData } = await supabase
@@ -91,5 +91,5 @@ export async function getProgram(slug: string, locale: string = 'et'): Promise<P
         features,
         curriculum,
         faq,
-    };
+    } as Program;
 }

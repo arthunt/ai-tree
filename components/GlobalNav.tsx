@@ -24,7 +24,7 @@ export function GlobalNav({ extraControls, transparent = false }: GlobalNavProps
     const links = [
         { href: `/${locale}/tree-view`, label: t('tree'), id: 'tree' },
         { href: `/${locale}/dna`, label: t('mechanism'), id: 'dna' },
-        { href: `/${locale}/learn`, label: t('learn'), id: 'learn' },
+        { href: `/${locale}/programs`, label: t('learn'), id: 'programs' },
         { href: `/${locale}/proto`, label: t('proto'), id: 'proto' },
     ];
 
