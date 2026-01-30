@@ -193,8 +193,8 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-      showToast(t('linkCopied'), 'success', 4000);
+      setTimeout(() => setCopied(false), 2500);
+      showToast(t('linkCopied'), 'success', 2500);
     } catch {
       const textArea = document.createElement('textarea');
       textArea.value = url;
@@ -203,8 +203,8 @@ function ConceptLightboxInner({ concept, onClose, allConcepts, levels, onNavigat
       document.execCommand('copy');
       document.body.removeChild(textArea);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-      showToast(t('linkCopied'), 'success', 4000);
+      setTimeout(() => setCopied(false), 2500);
+      showToast(t('linkCopied'), 'success', 2500);
     }
   };
 
