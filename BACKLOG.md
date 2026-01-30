@@ -8,29 +8,21 @@
 
 ---
 
-## 🟡 In Progress (Swarm Execution)
+## 🟡 In Progress (Sprint 13 Continued)
 
-*   **Cleanup & Polish:** Removing unused files/keys, final QA.
+*   **Tree "Guided Paths" (US-154):** Connecting the Seed intent to the Tree View.
 *   **Documentation:** Updating `AI_TREE_MASTER_REFERENCE.md`.
 
 ---
 
-## 🟢 Completed (Recent Phase C & D)
+## 🟢 Completed (Recent)
 
-*   **Lead Capture (Phase D):**
-    *   **Schema:** `leads` table with RLS.
-    *   **Action:** `submitLead` with Zod validation.
-    *   **UI:** `LeadCaptureDialog` + `ApplyButton`.
-    *   **Integration:** Full i18n support, integrated into Hero and Pricing.
-*   **Marketing Landing Pages (Phase C):** 
-    *   **Catalog:** `/programs` page with comparative grid.
-    *   **Dynamic Pages:** `/programs/[slug]` with Hero, Features, Curriculum, Pricing, FAQ.
-    *   **Components:** Refactored server components with i18n.
-    *   **Integration:** Connected to Supabase `getPrograms`.
-*   **Database Schema (Phase B):** Implemented programs, curricula, and FAQ tables in Supabase. Seeded with full content.
-*   **Paraglide Migration (Foundation):** Setup `middleware.ts`, `layout.tsx`, `paraglide` folder. Created `useParaglideTranslations`.
-*   **Localization (Phase 1):** Extracted all strings from `DNAView`, `DNAInput`, `DNAComponentCard`. Verified ET translations.
-*   **Navigation Architecture:** Created `GlobalNav` component. Unified `/dna`, `/proto`, and `/learn` under one header. Restored `/proto`.
+*   **UX Repair (Phase E.1):**
+    *   **The Lens:** DNA animation control (slow/pause).
+    *   **The Seed:** Intent capture page (`/seed`).
+    *   **Micro-Lessons:** Popovers for T-V-A-P concepts.
+*   **Lead Capture (Phase D):** `leads` table, `LeadCaptureDialog`, i18n.
+*   **Marketing Landing Pages (Phase C):** `/programs` catalog and details.
 
 ---
 
