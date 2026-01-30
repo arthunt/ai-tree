@@ -14,7 +14,7 @@ interface DNAComponentCardProps {
 }
 
 export function DNAComponentCard({ title, description, metaphor, color, index }: DNAComponentCardProps) {
-    const { currentStep, tokens, vectors } = useDNA();
+    const { currentStep, tokens, vectors, predictions } = useDNA();
 
     // Map index to step for activation logic
     const stepMap: Record<number, DNAStep> = {
@@ -80,6 +80,32 @@ export function DNAComponentCard({ title, description, metaphor, color, index }:
                             >
                                 {vectors.slice(0, 5).map((v, i) => (
                                     <div key={i}>[{v.map(n => n.toFixed(2)).join(', ')}]</div>
+                                ))}
+                            </motion.div>
+                        ) : isActive && index === 3 ? (
+                            <motion.div
+                                key="predictions"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="space-y-2 w-full"
+                            >
+                                {predictions.map((p, i) => (
+                                    <div key={i} className="flex items-center gap-2 text-xs">
+                                        <span className="w-12 text-right font-mono text-brand-cyan shrink-0 truncate">
+                                            {p.token}
+                                        </span>
+                                        <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                animate={{ width: `${p.probability * 100}%` }}
+                                                transition={{ duration: 0.5, delay: i * 0.1 }}
+                                                className="h-full bg-brand-cyan"
+                                            />
+                                        </div>
+                                        <span className="w-8 text-right text-gray-400 font-mono">
+                                            {(p.probability * 100).toFixed(0)}%
+                                        </span>
+                                    </div>
                                 ))}
                             </motion.div>
                         ) : (

@@ -18,6 +18,7 @@ interface DNAContextType {
     // Data State (Mock or Real)
     tokens: string[];
     vectors: number[][]; // Simplified 2D representation for visualization
+    predictions: { token: string; probability: number }[];
 
     // Actions
     runSimulation: () => void;
@@ -32,6 +33,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [tokens, setTokens] = useState<string[]>([]);
     const [vectors, setVectors] = useState<number[][]>([]);
+    const [predictions, setPredictions] = useState<{ token: string; probability: number }[]>([]);
 
     // Simple "Toy" Tokenizer
     const tokenize = useCallback((text: string) => {
@@ -45,6 +47,27 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         return tokens.map(() => [Math.random(), Math.random(), Math.random()]);
     }, []);
 
+    // Simple "Toy" Predictor
+    const predict = useCallback(() => {
+        // Return random "next word" candidates
+        const candidates = ['sky', 'blue', 'future', 'dream', 'code', 'human', 'ai'];
+        const probs = [];
+        let remaining = 1.0;
+
+        // Generate 4 random probabilities
+        for (let i = 0; i < 4; i++) {
+            const p = Math.random() * (remaining * 0.8);
+            remaining -= p;
+            probs.push({
+                token: candidates[Math.floor(Math.random() * candidates.length)],
+                probability: p
+            });
+        }
+        // Add remaining to a final candidate
+        probs.push({ token: "...", probability: remaining });
+        return probs.sort((a, b) => b.probability - a.probability);
+    }, []);
+
     const runSimulation = useCallback(() => {
         if (!inputText) return;
 
@@ -55,6 +78,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         const t = tokenize(inputText);
         setTokens(t);
         setVectors(vectorize(t));
+        setPredictions(predict());
 
         // Timeline
         // 1. Tokenize (Show chunks)
@@ -78,13 +102,14 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             // Stick on prediction or go back to idle? Stick for now.
         }, 11000);
 
-    }, [inputText, tokenize, vectorize]);
+    }, [inputText, tokenize, vectorize, predict]);
 
     const resetSimulation = () => {
         setCurrentStep('idle');
         setIsPlaying(false);
         setTokens([]);
         setVectors([]);
+        setPredictions([]);
     };
 
     return (
@@ -95,6 +120,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             isPlaying,
             tokens,
             vectors,
+            predictions,
             runSimulation,
             resetSimulation
         }}>

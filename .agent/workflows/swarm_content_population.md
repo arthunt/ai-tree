@@ -1,5 +1,5 @@
 ---
-description: Protocol for Swarm Agents to populate Supabase with AI DNA content
+description: Protocol for Claude-Flow Swarm Agents to populate Supabase with AI DNA content
 ---
 
 # Swarm Protocol: DNA Content Population
