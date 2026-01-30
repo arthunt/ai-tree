@@ -1,34 +1,36 @@
-# 🚀 Next Actions Strategy: The Divide & Conquer Plan
+# 🚀 Next Actions Strategy: The Pivot (UX Repair)
 
 **Date:** 2026-01-30
-**Goal:** Cleanup & Polish (Phase F)
+**Goal:** Fix the Fundamental Flow (DNA -> Seed -> Tree)
+**Motivation:** Focus group feedback indicated cognitive overload and broken metaphors.
 
 ---
 
 ## 👨‍💻 @ANTIGRAVITY (Lead Architect)
-**Status:** Operations Mode.
+**Status:** Architecture Pivot.
+**Focus:** Implementing "The Lens" and "The Seed" logic.
 
-### 1. **System Health Check**
-*   **Context:** Phase C (Landing Pages) and Phase D (Lead Capture) are LIVE.
+### 1. **UX Architecture (Phase E)**
+*   **Context:** The current "Rushing River" DNA view is unusable for novices.
 *   **Tasks:**
-    *   **QA:** Verify lead submission flow end-to-end.
-    *   **Cleanup:** Remove unused files (e.g., `ProgramPricing`-old if any).
-    *   **Docs:** Update `AI_TREE_MASTER_REFERENCE.md` with new routes.
+    *   **US-152:** Implement `DNAControlContext` (Global state for flow speed/pause).
+    *   **Refactor:** Update `DNAView` to respect this context (slow down on hover).
+    *   **US-153:** Build `SeedSelectionView` (The "Missing Link" page).
 
 ---
 
 ## 🤖 @SWARM (Agents)
-**Focus:** Finishing Touches.
+**Focus:** Visuals & Interaction.
 
-### 2. **Final Polish**
-*   **Context:** Ensure everything is Pixel Perfect.
+### 2. **Visual Components**
+*   **Context:** We need new visuals for the Seed and the Controls.
 *   **Tasks:**
-    *   **US-150:** Check mobile responsiveness of `/programs`.
-    *   **US-151:** Verify i18n switching on `/programs`.
+    *   **Seed Visual:** A pulsing, living seed component (SVG/Framer).
+    *   **Micro-Lessons:** Small popovers for DNA steps (T/V/A/P) explaining what's happening.
 
 ---
 
 ## 🚦 Execution Order
 
-1.  **Antigravity** closes the current sprint.
-2.  **Swarm** waits for new orders.
+1.  **Antigravity** sets up the `DNAControlContext` and slows down the river.
+2.  **Swarm** creates the `SeedSelectionView` components.
