@@ -1,6 +1,7 @@
 'use server';
 
 import { supabase } from '@/lib/supabase';
+import { Database } from '@/lib/supabase/types';
 
 // Flat structure for D3 Stratify & UI
 export interface TreeContentSimple {
@@ -34,10 +35,21 @@ const MOCK_TREE: TreeContentSimple[] = [
     { id: 'gpt4', parentId: 'transformer', title: 'GPT-4', type: 'leaf', year: 2023, motif: 'star' },
 ];
 
+type NodeType = Database['public']['Tables']['nodes']['Row']['type'];
+type NodeRow = Database['public']['Tables']['nodes']['Row'];
+type TranslationRow = Database['public']['Tables']['node_translations']['Row'];
+type MetadataRow = Database['public']['Tables']['node_metadata']['Row'];
+
+// Type for the joined query result
+interface JoinedNode extends Pick<NodeRow, 'id' | 'parent_id' | 'type'> {
+    node_translations: Pick<TranslationRow, 'display_name' | 'description' | 'significance'>[];
+    node_metadata: Pick<MetadataRow, 'year_introduced' | 'visual_motif' | 'key_paper_title' | 'key_paper_url' | 'related_program_id' | 'marketing_hook_en' | 'marketing_hook_et'>[];
+}
+
 export async function getTreeContent(locale: string = 'en'): Promise<TreeContentSimple[]> {
     try {
         // Fetch nodes + translations + metadata
-        const { data: nodes, error } = await supabase
+        const { data, error } = await supabase
             .from('nodes')
             .select(`
                 id,
@@ -58,9 +70,10 @@ export async function getTreeContent(locale: string = 'en'): Promise<TreeContent
                     marketing_hook_et
                 )
             `)
-            .eq('node_translations.locale', locale);
+            .eq('node_translations.locale', locale)
+            .returns<JoinedNode[]>();
 
-        if (error || !nodes || nodes.length === 0) {
+        if (error || !data || data.length === 0) {
             console.warn('⚠️ Tree fetch failed/empty. Using mock.', error);
             return MOCK_TREE;
         }
@@ -74,26 +87,30 @@ export async function getTreeContent(locale: string = 'en'): Promise<TreeContent
         };
 
         // Map to flat structure
-        return nodes.map((n: any) => {
+        return data.map((n) => {
             const trans = n.node_translations[0] || {};
             const meta = n.node_metadata?.[0] || {};
+
+            // Safe type casting with fallback
+            const uiType = typeMap[n.type] || 'branch';
+
             return {
                 id: n.id,
                 parentId: n.parent_id,
                 title: trans.display_name || n.id,
-                description: trans.description,
-                significance: trans.significance,
-                type: typeMap[n.type] || 'branch',
+                description: trans.description || undefined,
+                significance: trans.significance || undefined,
+                type: uiType,
 
                 // Metadata
-                year: meta.year_introduced,
-                motif: meta.visual_motif,
-                paper: meta.key_paper_title,
-                paperUrl: meta.key_paper_url,
+                year: meta.year_introduced || undefined,
+                motif: meta.visual_motif || undefined,
+                paper: meta.key_paper_title || undefined,
+                paperUrl: meta.key_paper_url || undefined,
 
                 // Marketing
-                relatedProgramId: meta.related_program_id,
-                marketingHook: locale === 'et' ? meta.marketing_hook_et : meta.marketing_hook_en
+                relatedProgramId: meta.related_program_id || undefined,
+                marketingHook: locale === 'et' ? (meta.marketing_hook_et || undefined) : (meta.marketing_hook_en || undefined)
             };
         });
 

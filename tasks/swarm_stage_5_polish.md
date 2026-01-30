@@ -33,12 +33,12 @@
 ### 4. The "Next-Intl" Removal (US-136)
 **Context:** We currently have two i18n libraries. This is bad for bundle size and maintenance.
 **Tasks:**
-*   [ ] **Uninstall:** Remove `next-intl`.
-*   [ ] **Refactor:** Replace `NextIntlClientProvider` with pure Paraglide logic if needed (it's mostly done).
-*   [ ] **Verify:** Ensure `useParaglideTranslations` is used everywhere.
+*   [x] **Uninstall:** Remove `next-intl`.
+*   [x] **Refactor:** Replace `NextIntlClientProvider` with pure Paraglide logic if needed (it's mostly done).
+*   [x] **Verify:** Ensure `useParaglideTranslations` is used everywhere.
 
 ### 5. Type Safety (US-121)
 **Context:** `Supabase` types vs `Frontend` types mismatch caused the bug in Stage 4.
 **Tasks:**
-*   [ ] Synchronize `Database` generated types with `TreeContentSimple` interfaces.
-*   [ ] Add strictly typed data mapping layer.
+*   [x] **Synchronize:** `Database` generated types with `TreeContentSimple` interfaces.
+*   [x] **Strict Typing:** Add strictly typed data mapping layer in `getTreeContent.ts`.

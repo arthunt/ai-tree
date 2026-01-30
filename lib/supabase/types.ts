@@ -51,7 +51,7 @@ export interface Database {
           preferences?: Json
         }
       }
-      
+
       /**
        * Concept completion tracking
        * Tracks which concepts a session has viewed/completed
@@ -85,7 +85,7 @@ export interface Database {
           time_spent_seconds?: number
         }
       }
-      
+
       /**
        * DNA component progress
        * Tracks progress through T-V-A-P DNA view
@@ -116,7 +116,7 @@ export interface Database {
           demo_completed?: boolean
         }
       }
-      
+
       /**
        * Learning path progress
        * Tracks which learning paths a session is following
@@ -150,7 +150,7 @@ export interface Database {
           total_steps?: number
         }
       }
-      
+
       /**
        * Analytics events (anonymous)
        * For understanding how users interact with the platform
@@ -187,7 +187,223 @@ export interface Database {
           user_agent?: string | null
         }
       }
-      
+
+      /**
+       * Feedback/issues reported by users
+       */
+      /**
+       * Programs (Commercial Offering)
+       */
+      programs: {
+        Row: {
+          id: string
+          slug: string
+          code: string
+          color: string
+          icon: string | null
+          duration_weeks: number
+          academic_hours: number
+          price_cents: number
+          is_active: boolean
+          sort_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          slug: string
+          code: string
+          color?: string
+          icon?: string | null
+          duration_weeks: number
+          academic_hours: number
+          price_cents: number
+          is_active?: boolean
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          code?: string
+          color?: string
+          icon?: string | null
+          duration_weeks?: number
+          academic_hours?: number
+          price_cents?: number
+          is_active?: boolean
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+      }
+
+      program_translations: {
+        Row: {
+          program_id: string
+          locale: 'et' | 'en'
+          name: string
+          full_name: string
+          tagline: string | null
+          description: string | null
+          target_audience: string | null
+          outcomes: string[] | null
+        }
+        Insert: {
+          program_id: string
+          locale: 'et' | 'en'
+          name: string
+          full_name: string
+          tagline?: string | null
+          description?: string | null
+          target_audience?: string | null
+          outcomes?: string[] | null
+        }
+        Update: {
+          program_id?: string
+          locale?: 'et' | 'en'
+          name?: string
+          full_name?: string
+          tagline?: string | null
+          description?: string | null
+          target_audience?: string | null
+          outcomes?: string[] | null
+        }
+      }
+
+      /**
+       * Leads (Potential Students)
+       */
+      leads: {
+        Row: {
+          id: string
+          name: string
+          email: string
+          phone: string | null
+          goals: string | null
+          program_id: string
+          status: 'new' | 'contacted' | 'converted'
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          email: string
+          phone?: string | null
+          goals?: string | null
+          program_id: string
+          status?: 'new' | 'contacted' | 'converted'
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          email?: string
+          phone?: string | null
+          goals?: string | null
+          program_id?: string
+          status?: 'new' | 'contacted' | 'converted'
+          created_at?: string
+        }
+      }
+
+      /**
+       * Tree Nodes (Philosophy: Roots -> Trunk -> Branches -> Leaves)
+       */
+      nodes: {
+        Row: {
+          id: string
+          parent_id: string | null
+          type: 'root' | 'era' | 'architecture' | 'model'
+          created_at: string
+          order_index: number
+        }
+        Insert: {
+          id: string
+          parent_id?: string | null
+          type: 'root' | 'era' | 'architecture' | 'model'
+          created_at?: string
+          order_index?: number
+        }
+        Update: {
+          id?: string
+          parent_id?: string | null
+          type?: 'root' | 'era' | 'architecture' | 'model'
+          created_at?: string
+          order_index?: number
+        }
+      }
+
+      /**
+       * Node Translations (i18n)
+       */
+      node_translations: {
+        Row: {
+          id: string
+          node_id: string
+          locale: 'et' | 'en'
+          display_name: string
+          description: string | null
+          significance: string | null
+          metaphor: string | null
+        }
+        Insert: {
+          id?: string
+          node_id: string
+          locale: 'et' | 'en'
+          display_name: string
+          description?: string | null
+          significance?: string | null
+          metaphor?: string | null
+        }
+        Update: {
+          id?: string
+          node_id?: string
+          locale?: 'et' | 'en'
+          display_name?: string
+          description?: string | null
+          significance?: string | null
+          metaphor?: string | null
+        }
+      }
+
+      /**
+       * Node Metadata (Enrichment + Marketing)
+       */
+      node_metadata: {
+        Row: {
+          node_id: string
+          year_introduced: number | null
+          visual_motif: string | null
+          key_paper_title: string | null
+          key_paper_url: string | null
+          related_program_id: 'aiki' | 'aivo' | 'aime' | null
+          marketing_hook_en: string | null
+          marketing_hook_et: string | null
+        }
+        Insert: {
+          node_id: string
+          year_introduced?: number | null
+          visual_motif?: string | null
+          key_paper_title?: string | null
+          key_paper_url?: string | null
+          related_program_id?: 'aiki' | 'aivo' | 'aime' | null
+          marketing_hook_en?: string | null
+          marketing_hook_et?: string | null
+        }
+        Update: {
+          node_id?: string
+          year_introduced?: number | null
+          visual_motif?: string | null
+          key_paper_title?: string | null
+          key_paper_url?: string | null
+          related_program_id?: 'aiki' | 'aivo' | 'aime' | null
+          marketing_hook_en?: string | null
+          marketing_hook_et?: string | null
+        }
+      }
+
       /**
        * Feedback/issues reported by users
        */
@@ -247,7 +463,7 @@ export interface Database {
           preferences: Json
         }
       }
-      
+
       /**
        * Get session progress summary
        */
