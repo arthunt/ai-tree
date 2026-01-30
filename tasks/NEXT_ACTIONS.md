@@ -5,29 +5,32 @@
 
 ---
 
-## 👨‍💻 @ANTIGRAVITY (Lead Architect)
-**Status:** Architecture Stable.
-**Focus:** Monitoring & Support.
+## 👨‍💻 @ANTIGRAVITY
+**Focus:** System Health Audit (Security, Perf, Dead Code).
 
 ### 1. **Phase G: Cleanup & Stabilization** (COMPLETED)
-*   ✅ **Analytics:** Implemented Funnel Tracking (DNA -> Seed -> Tree CTA).
-*   ✅ **SEO:** Converted Seed/Tree pages to Server Components with Metadata.
-*   ✅ **Clean Code:** Refactored Client/Server boundaries.
+*   ✅ **Analytics:** Implemented Funnel Tracking.
+*   ✅ **SEO:** Server Components + Metadata.
+*   ✅ **Refactor:** `next-intl` removed, strict types added.
 
 ---
 
-## 🤖 @SWARM (Agents)
-**Focus:** Content Population & Marketing Hooks.
-**Active Assignment:** `tasks/swarm_stage_4_content_growth.md`
+## 🤖 @SWARM
+**Focus:** User Experience Audit (Content, Links, Mobile).
+**Active Assignment:** `tasks/stage_6_audit.md`
 
-### 2. **Execution (Ongoing)**
-*   **Populating Content:** Filling 28+ nodes with descriptions, papers, and metaphors.
-*   **Connecting Bridges:** Linking `related_program_id` (AIVO/AIKI) to Tree Nodes.
-*   **Localization:** Scaling content to Estonian.
+### 2. **Stage 5: Content & Polished (COMPLETED)**
+*   ✅ **Content:** Tree populated (28 nodes, EN+ET).
+*   ✅ **Marketing:** Bridges to Programs built.
+*   ✅ **Tech Polish:** Types secured.
+
+### 3. **Stage 6: The Grand Audit (Active)**
+*   **Antigravity:** RLS Security Check, Dead Code Sweep.
+*   **Swarm:** "Fresh Eyes" User Flow, Link Verification, Visual Regression.
 
 ---
 
 ## 🚦 Execution Order
 
-1.  **Swarm** executes `tasks/swarm_stage_4_content_growth.md`.
-2.  **Antigravity** reviews D3 performance with populated tree.
+1.  **Split Force:** Antigravity (System) & Swarm (UX) execute `tasks/stage_6_audit.md` in parallel.
+2.  **Launch:** Declare V1.0 Ready.
