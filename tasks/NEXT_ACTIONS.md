@@ -1,40 +1,34 @@
 # 🚀 Next Actions Strategy: The Divide & Conquer Plan
 
 **Date:** 2026-01-30
-**Goal:** Lead Capture & Checkout Flow (Phase D)
+**Goal:** Cleanup & Polish (Phase F)
 
 ---
 
 ## 👨‍💻 @ANTIGRAVITY (Lead Architect)
-**Status:** Phase C (Landing Pages) review complete.
-**Next Focus:** Schema for Leads & Admin Strategy.
+**Status:** Operations Mode.
 
-### 1. **Data Architecture (Phase D)**
-*   **Context:** We are capturing interest. We need to store it safely.
+### 1. **System Health Check**
+*   **Context:** Phase C (Landing Pages) and Phase D (Lead Capture) are LIVE.
 *   **Tasks:**
-    *   **US-146:** Design `leads` table schema.
-    *   **Security:** Ensure RLS allows insert-only, read-by-admin.
+    *   **QA:** Verify lead submission flow end-to-end.
+    *   **Cleanup:** Remove unused files (e.g., `ProgramPricing`-old if any).
+    *   **Docs:** Update `AI_TREE_MASTER_REFERENCE.md` with new routes.
 
 ---
 
 ## 🤖 @SWARM (Agents)
-**Focus:** Frontend Forms & Interactions.
+**Focus:** Finishing Touches.
 
-### 2. **Lead Capture Implementation (Phase D)**
-*   **Context:** The "Apply Now" buttons are dead links.
+### 2. **Final Polish**
+*   **Context:** Ensure everything is Pixel Perfect.
 *   **Tasks:**
-    *   **US-147 (UI):** Create `LeadCaptureForm` component (Dialog/Modal preferred).
-    *   **US-148 (Action):** Implement `submitLead` server action with validation (Zod).
-    *   **Experience:** Upon success, show "Confetti" or "Welcome" state.
-    *   **Wiring:** Connect `ProgramPricing` buttons to open this form.
-
-### 3. **Interactive "Seeds" (Future)**
-*   **Context:** After applying, give them a taste of the content.
-*   **Idea:** Unlocking a specific "seed" node in the tree based on program interest.
+    *   **US-150:** Check mobile responsiveness of `/programs`.
+    *   **US-151:** Verify i18n switching on `/programs`.
 
 ---
 
 ## 🚦 Execution Order
 
-1.  **Antigravity** creates `leads` migration.
-2.  **Swarm** implements `LeadCaptureForm` + Server Action.
+1.  **Antigravity** closes the current sprint.
+2.  **Swarm** waits for new orders.
