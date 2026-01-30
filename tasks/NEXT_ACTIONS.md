@@ -25,12 +25,12 @@
 *   ✅ **Tech Polish:** Types secured.
 
 ### 3. **Stage 6: The Grand Audit (Active)**
-*   **Antigravity:** RLS Security Check, Dead Code Sweep.
+*   ✅ **Antigravity:** RLS Security Check, Dead Code Sweep, Performance.
 *   **Swarm:** "Fresh Eyes" User Flow, Link Verification, Visual Regression.
 
 ---
 
 ## 🚦 Execution Order
 
-1.  **Split Force:** Antigravity (System) & Swarm (UX) execute `tasks/stage_6_audit.md` in parallel.
+1.  **Swarm** executes `tasks/stage_6_audit.md` (Tasks 4-6) to complete the Launch Audit.
 2.  **Launch:** Declare V1.0 Ready.
