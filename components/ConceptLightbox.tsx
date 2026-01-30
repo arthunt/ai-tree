@@ -7,7 +7,8 @@ import { getComplexityColor } from '../lib/utils';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { LightboxSkeleton } from './LightboxSkeleton';
-import { useParaglideTranslations as useTranslations, NextIntlClientProvider } from '@/hooks/useParaglideTranslations';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+import { setLanguageTag, type AvailableLanguageTag, availableLanguageTags } from '@/paraglide/runtime';
 import { useToast } from '@/lib/useToast';
 import { useTheme } from '@/context/ThemeContext';
 import { availableLanguageTags as locales } from '@/paraglide/runtime';
@@ -57,15 +58,23 @@ const LEVEL_COLORS: Record<string, string> = {
   roots: 'bg-emerald-700',
 };
 
-/** Wrapper that optionally overrides the i18n context for in-place locale switching */
-function LocaleOverride({ locale, messages, children }: { locale: string; messages: Record<string, unknown> | null | undefined; children: React.ReactNode }) {
-  if (messages) {
-    return (
-      <NextIntlClientProvider locale={locale} messages={messages}>
-        {children}
-      </NextIntlClientProvider>
-    );
-  }
+/** Wrapper that switches Paraglide's languageTag for in-place locale switching */
+function LocaleOverride({ locale, children }: { locale: string; messages?: Record<string, unknown> | null | undefined; children: React.ReactNode }) {
+  const params = useParams();
+  const urlLocale = params.locale as string;
+
+  useEffect(() => {
+    if (locale && availableLanguageTags.includes(locale as AvailableLanguageTag)) {
+      setLanguageTag(locale as AvailableLanguageTag);
+    }
+    return () => {
+      // Restore URL locale when lightbox unmounts or locale changes back
+      if (urlLocale && availableLanguageTags.includes(urlLocale as AvailableLanguageTag)) {
+        setLanguageTag(urlLocale as AvailableLanguageTag);
+      }
+    };
+  }, [locale, urlLocale]);
+
   return <>{children}</>;
 }
 
