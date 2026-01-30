@@ -146,19 +146,22 @@ create table concept_translations (
 
 ---
 
-## 8. Stage 3: Võrs - Sprout (Week 5-6)
+## 8. Stage 3: Võrs - Sprout (Refocused: UX Repair)
 
-> **Goal:** Interactive Demos & "Hybrid" Tree.
+> **Goal:** Fix the "Rushing River" problem and create a Guided Journey.
 
-| ID | Story |
-|----|-------|
-| VÕRS-001 | Interactive DNA Input (Live Tokenization) |
-| VÕRS-002 | "Dive Deeper" links (DNA -> Tree bridge) |
-| VÕRS-003 | Migrate first 5 Tree concepts to Supabase |
+| ID | Story | Status |
+|----|-------|--------|
+| UX-001 | **The Lens** (DNA Control): Slow motion hover, pause on click, micro-lessons. | ✅ Done |
+| UX-002 | **The Seed** (Intent Capture): Build/Think/Explore router. | ✅ Done |
+| UX-003 | **Guided Paths**: Tree highlighting based on intent. | ✅ Done |
+| VÕRS-001 | Interactive DNA Input (Live Tokenization) | ✅ Done |
+| VÕRS-002 | DNA Content Population | ✅ Done |
+| VÕRS-003 | Tree of Thoughts Population | ✅ Done |
 
 ---
 
-## 9. Stage 4: Noor Puu - Young Tree (Week 7-10)
+## 9. Stage 4: Noor Puu - Young Tree (Next: Content & Scale)
 
 > **Goal:** 100 Languages & First "Paid" Path structure.
 
@@ -167,6 +170,27 @@ create table concept_translations (
 | NOOR-001 | AI Translation Pipeline Pilot (10 languages) |
 | NOOR-002 | "Guardian" Review Portal (Minimal) |
 | NOOR-003 | First "Trail" Definition (Schema) |
+
+---
+
+## 4.3 User Flow Patterns (The UX "Spine")
+
+The application follows a strict **"Understand -> Choose -> Explore"** flow:
+
+1.  **DNA (The Mechanism):**
+    *   **The Lens:** Users control time. Hovering slows the simulation. Clicking pauses it for learning.
+    *   **Micro-Lessons:** Bite-sized explanations of T-V-A-P.
+
+2.  **Seed (The Intent):**
+    *   Users are intercepted before the Tree.
+    *   They "Plant their Intent" (Build vs Understand vs Explore).
+
+3.  **Guided Tree (The Map):**
+    *   The Tree adapts to the seed.
+    *   **Builders:** See Engineering nodes.
+    *   **Thinkers:** See Theory nodes.
+    *   **Pulse:** A visual beacon guides the first step.
+    *   **Explorer:** The full map is always available as a fallback.
 
 ---
 
