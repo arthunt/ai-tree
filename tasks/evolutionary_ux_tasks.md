@@ -35,7 +35,7 @@ Work on these strictly in order. Do not start the next until the previous is pol
     *   **Action:** Animate a "Strikethrough" on the wrong choices and a "Highlight" on the winner.
 
 ### 2. **Mobile Polish**
-*   [ ] **Task 2.1:** Verify touch targets for all new DNA interactions (44px min).
+*   [x] **Task 2.1:** Verify touch targets for all new DNA interactions (44px min). Added `touch-action: none` to TreeView container for proper pan/zoom on touch devices.
 
 ---
 
@@ -63,7 +63,20 @@ Work on these strictly in order. Do not start the next until the previous is pol
 
 ---
 
-## 📅 Execution Order
-1.  **Swarm** starts **Task 1.1 (Tokenization)** immediately.
-2.  **Antigravity** starts **Task 1.1 (Encapsulation Logic)** immediately.
-3.  We sync after **Tokenization** and **Encapsulation** are both live.
+## ✅ Phase G — Complete (2026-01-30)
+
+All tasks delivered and pushed to `preview`.
+
+| # | Task | Owner | Commit |
+|---|------|-------|--------|
+| US-160-1 | Tokenization Slicer | Swarm | `f7980f5` |
+| US-160-2 | Vector Map | Swarm | `d66dc27` |
+| US-160-3 | Attention Spotlight | Swarm | `990cc67` |
+| US-160-4 | Prediction Bar Chart | Swarm | `20616da` |
+| US-162-1 | Encapsulation Logic | Antigravity | — |
+| US-162-2 | Bloom Animation | Antigravity | — |
+| US-162-3 | Semantic Zoom | Antigravity | — |
+| US-162-4 | Proto Vibe Default | Antigravity | — |
+| Task 2.1 | Mobile Polish (touch-action) | Antigravity | — |
+
+**Status:** Feature-complete. The system is Biodynamic. 🌲
