@@ -4,6 +4,7 @@ import { GlassCard } from '@/components/ui/GlassCard';
 import { GlowingNode } from '@/components/ui/GlowingNode';
 import { useDNA, DNAStep } from './DNAContext';
 import { TokenizationSlicer } from './TokenizationSlicer';
+import { VectorMap } from './VectorMap';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
@@ -97,16 +98,16 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
                             </motion.div>
                         ) : isActive && index === 1 ? (
                             <motion.div
-                                key="vectors"
+                                key="vector-map"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="space-y-1 font-mono text-[10px] text-green-400 overflow-hidden"
                             >
-                                {vectors.slice(0, 5).map((v, i) => (
-                                    <div key={i}>[{v.map(n => n.toFixed(2)).join(', ')}]</div>
-                                ))}
+                                <VectorMap
+                                    tokens={tokens}
+                                    vectors={vectors}
+                                    isActive={isActive}
+                                />
                             </motion.div>
-
                         ) : isActive && index === 2 ? (
                             <motion.div
                                 key="attention"
