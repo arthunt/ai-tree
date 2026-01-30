@@ -7,11 +7,13 @@ import { useProgress } from '@/lib/useProgress';
 import { LevelSection } from '@/components/LevelSection';
 import { LevelIcon } from '@/components/LevelIcon';
 import { ConceptLightbox } from '@/components/ConceptLightbox';
+import { TreeNavigation } from '@/components/TreeNavigation';
 import { TokenizerDemo } from '@/components/TokenizerDemo';
 import { VectorDemo } from '@/components/VectorDemo';
 import { SearchModal } from '@/components/SearchModal';
 import { SkillSelectorModal } from '@/components/SkillSelectorModal';
 import { WelcomeModal } from '@/components/WelcomeModal';
+import { ViewSelector } from '@/components/landing/ViewSelector';
 import { DendrixLogo } from '@/components/DendrixLogo';
 import treeData from '@/data/tree-concepts.json';
 import Link from 'next/link';
@@ -229,11 +231,10 @@ export default function AITreePage() {
               {/* Search Button */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className={`flex items-center justify-center bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 hover:shadow-md hover:border-gray-400 dark:hover:border-gray-500 transition-all font-medium group ${
-                  isScrolled
-                    ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
-                    : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
-                }`}
+                className={`flex items-center justify-center bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 hover:shadow-md hover:border-gray-400 dark:hover:border-gray-500 transition-all font-medium group ${isScrolled
+                  ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
+                  : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
+                  }`}
                 aria-label={t('search.buttonLabel')}
               >
                 <Search className={`text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 ${isScrolled ? 'h-4 w-4' : 'h-5 w-5'}`} aria-hidden="true" />
@@ -248,25 +249,38 @@ export default function AITreePage() {
               {/* Learning Paths Button */}
               <Link
                 href={`/${locale}/learn`}
-                className={`flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white hover:shadow-lg transition-all font-medium ${
-                  isScrolled
-                    ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
-                    : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
-                }`}
+                className={`flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white hover:shadow-lg transition-all font-medium ${isScrolled
+                  ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
+                  : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
+                  }`}
                 aria-label={t('learningPaths.title')}
               >
                 <GraduationCap className={isScrolled ? 'h-4 w-4' : 'h-5 w-5'} aria-hidden="true" />
                 {!isScrolled && <span className="hidden sm:inline ml-2">{t('learningPaths.title')}</span>}
               </Link>
 
+              {/* DNA View Button */}
+              <Link
+                href={`/${locale}/dna`}
+                className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-brand-teal font-bold transition-all ${isScrolled
+                  ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
+                  : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
+                  }`}
+                aria-label="DNA View"
+              >
+                <div className="w-5 h-5 flex items-center justify-center">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12h5" /><path d="M17 12h5" /><path d="M7 12a5 5 0 0 1 5-5 5 5 0 0 1 5 5" /></svg>
+                </div>
+                {!isScrolled && <span className="hidden sm:inline ml-2">DNA</span>}
+              </Link>
+
               {/* Concept Map Button */}
               <Link
                 href={`/${locale}/tree-view`}
-                className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 transition-all font-medium ${
-                  isScrolled
-                    ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
-                    : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
-                }`}
+                className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 transition-all font-medium ${isScrolled
+                  ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
+                  : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
+                  }`}
                 aria-label={t('header.treeViewAriaLabel')}
               >
                 <Network className={isScrolled ? 'h-4 w-4' : 'h-5 w-5'} aria-hidden="true" />
@@ -281,11 +295,10 @@ export default function AITreePage() {
                 return (
                   <button
                     onClick={() => setViewMode(next)}
-                    className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all ${
-                      isScrolled
-                        ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
-                        : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-3 sm:py-2.5 rounded-lg sm:rounded-xl'
-                    }`}
+                    className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all ${isScrolled
+                      ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
+                      : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-3 sm:py-2.5 rounded-lg sm:rounded-xl'
+                      }`}
                     aria-label={`${t('settings.viewMode')}: ${modeLabel}`}
                     title={`${t('settings.viewMode')}: ${modeLabel}`}
                     type="button"
@@ -297,22 +310,19 @@ export default function AITreePage() {
               })()}
 
               {/* Language Switcher (inline pill) */}
-              <div className={`flex items-center bg-gray-100 dark:bg-gray-800 overflow-hidden ${
-                isScrolled ? 'rounded-lg' : 'rounded-lg sm:rounded-xl'
-              }`}>
+              <div className={`flex items-center bg-gray-100 dark:bg-gray-800 overflow-hidden ${isScrolled ? 'rounded-lg' : 'rounded-lg sm:rounded-xl'
+                }`}>
                 {locales.map((loc) => (
                   <button
                     key={loc}
                     onClick={() => switchLanguage(loc)}
-                    className={`font-semibold transition-colors ${
-                      isScrolled
-                        ? 'px-2 py-1.5 text-[11px]'
-                        : 'px-2.5 py-2.5 text-xs sm:text-sm min-h-[40px] sm:min-h-[44px]'
-                    } ${
-                      loc === displayLocale
+                    className={`font-semibold transition-colors ${isScrolled
+                      ? 'px-2 py-1.5 text-[11px]'
+                      : 'px-2.5 py-2.5 text-xs sm:text-sm min-h-[40px] sm:min-h-[44px]'
+                      } ${loc === displayLocale
                         ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700'
-                    }`}
+                      }`}
                     aria-label={loc === 'et' ? t('navigation.switchToEstonian') : t('navigation.switchToEnglish')}
                     aria-current={loc === displayLocale ? 'true' : undefined}
                     type="button"
@@ -326,11 +336,10 @@ export default function AITreePage() {
               {themeMounted && (
                 <button
                   onClick={toggleTheme}
-                  className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all ${
-                    isScrolled
-                      ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
-                      : 'w-10 h-10 sm:min-w-[44px] sm:min-h-[44px] rounded-lg sm:rounded-xl'
-                  }`}
+                  className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all ${isScrolled
+                    ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
+                    : 'w-10 h-10 sm:min-w-[44px] sm:min-h-[44px] rounded-lg sm:rounded-xl'
+                    }`}
                   aria-label={t('darkMode.ariaLabel')}
                   type="button"
                 >
@@ -368,9 +377,8 @@ export default function AITreePage() {
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }}
                     title={tLevel(`${level.id}.name`)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      level.id === activeLevel ? 'w-4 bg-blue-500' : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400'
-                    }`}
+                    className={`w-2 h-2 rounded-full transition-all ${level.id === activeLevel ? 'w-4 bg-blue-500' : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400'
+                      }`}
                     aria-label={tLevel(`${level.id}.name`)}
                     type="button"
                   />
@@ -395,13 +403,12 @@ export default function AITreePage() {
                       if (element) element.scrollIntoView({ behavior: 'smooth' });
                     }}
                     title={tLevel(`${level.id}.name`)}
-                    className={`flex-1 flex items-center justify-center gap-1 py-1.5 rounded text-xs font-medium transition-all ${
-                      isActive
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-sm'
-                        : isPast
+                    className={`flex-1 flex items-center justify-center gap-1 py-1.5 rounded text-xs font-medium transition-all ${isActive
+                      ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-sm'
+                      : isPast
                         ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
                         : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
-                    }`}
+                      }`}
                     aria-label={`${t('navigation.goToLevel', { level: tLevel(`${level.id}.name`) })} (${level.order}/4)`}
                     aria-current={isActive ? 'location' : undefined}
                   >
@@ -414,6 +421,17 @@ export default function AITreePage() {
           </div>
         )}
       </header>
+
+      {/* Tree Navigation */}
+      <TreeNavigation
+        levels={data.levels}
+        activeLevel={activeLevel}
+        completedCount={completedCount}
+        totalConcepts={totalConcepts}
+        isLightboxOpen={selectedConcept !== null}
+        concepts={data.concepts}
+        completedConcepts={completedConcepts}
+      />
 
       {/* Hero Section */}
       <section className="relative py-12 sm:py-20 lg:py-28 overflow-hidden" aria-labelledby="hero-heading">
@@ -595,7 +613,7 @@ export default function AITreePage() {
       />
 
       {/* Welcome Modal (first visit) */}
-      <WelcomeModal
+      {/* <WelcomeModal
         isOpen={isWelcomeOpen}
         onClose={() => {
           setIsWelcomeOpen(false);
@@ -605,6 +623,18 @@ export default function AITreePage() {
             // localStorage unavailable
           }
         }}
+      /> */}
+
+      {/* View Selector (Replaces Welcome Modal for Sprint 10) */}
+      <ViewSelector
+        isOpen={isWelcomeOpen} // Reusing the welcome open state for now as it handles the "first visit" logic nicely
+        onClose={() => {
+          setIsWelcomeOpen(false);
+          try {
+            localStorage.setItem('ai-tree-welcome-seen', 'true');
+          } catch { }
+        }}
+        locale={locale}
       />
 
       {/* Celebration Modal */}

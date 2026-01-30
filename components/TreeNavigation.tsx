@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, Menu, X } from 'lucide-react';
-import { TreeLevel } from '../lib/types';
+import { TreeLevel, Concept } from '../lib/types';
 import { LevelIcon } from './LevelIcon';
 import { useTranslations } from 'next-intl';
 
@@ -13,13 +13,23 @@ interface TreeNavigationProps {
   completedCount?: number;
   totalConcepts?: number;
   isLightboxOpen?: boolean;
+  concepts?: Concept[];
+  completedConcepts?: string[];
 }
 
-export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalConcepts = 0, isLightboxOpen = false }: TreeNavigationProps) {
+export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalConcepts = 0, isLightboxOpen = false, concepts = [], completedConcepts = [] }: TreeNavigationProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = useTranslations('navigation');
   const tLevel = useTranslations('conceptLevels');
+
+  // Calculate completion per level
+  const getLevelCompletion = (levelId: string) => {
+    if (!concepts.length) return { completed: 0, total: 0 };
+    const levelConcepts = concepts.filter(c => c.level === levelId);
+    const completed = levelConcepts.filter(c => completedConcepts.includes(c.id)).length;
+    return { completed, total: levelConcepts.length };
+  };
 
   const scrollToLevel = (levelId: string) => {
     const element = document.getElementById(levelId);
@@ -129,6 +139,7 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
                 <div className="p-4 space-y-2 overflow-y-auto">
                   {levels.map((level) => {
                     const isActive = activeLevel === level.id;
+                    const { completed, total } = getLevelCompletion(level.id);
                     return (
                       <button
                         key={level.id}
@@ -148,6 +159,11 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
                         <div className="flex-1 text-left">
                           <div className={`font-semibold ${isActive ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                             {level.order}. {tLevel(`${level.id}.name`)}
+                            {total > 0 && (
+                              <span className={`ml-2 text-sm font-normal ${isActive ? 'text-white/90' : 'text-gray-500 dark:text-gray-400'}`}>
+                                ({completed}/{total})
+                              </span>
+                            )}
                           </div>
                           <div className={`text-sm ${isActive ? 'text-white/80' : 'text-gray-500 dark:text-gray-300'}`}>
                             {tLevel(`${level.id}.subtitle`)}
@@ -195,6 +211,7 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
           <div className="space-y-2">
             {levels.map((level, index) => {
               const isActive = activeLevel === level.id;
+              const { completed, total } = getLevelCompletion(level.id);
               return (
                 <motion.button
                   key={level.id}
@@ -222,6 +239,11 @@ export function TreeNavigation({ levels, activeLevel, completedCount = 0, totalC
                       >
                         <div className={`font-semibold text-sm ${isActive ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                           {level.order}. {tLevel(`${level.id}.name`)}
+                          {total > 0 && (
+                            <span className={`ml-2 text-xs font-normal ${isActive ? 'text-white/90' : 'text-gray-500 dark:text-gray-400'}`}>
+                              ({completed}/{total})
+                            </span>
+                          )}
                         </div>
                         <div className={`text-xs ${isActive ? 'text-white/80' : 'text-gray-500 dark:text-gray-300'}`}>
                           {tLevel(`${level.id}.subtitle`)}

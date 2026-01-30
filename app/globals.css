@@ -6,21 +6,45 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 250, 250, 250;
   --background-end-rgb: 255, 255, 255;
+
+  /* DNA Theme (Light Mode Defaults) */
+  --bg-void: #030712;
+  --dna-t: #F43F5E;
+  /* Rose-500 */
+  --dna-v: #34D399;
+  /* Emerald-400 */
+  --dna-a: #3B82F6;
+  /* Blue-500 */
+  --dna-p: #8B5CF6;
+  /* Violet-500 */
+
+  /* Brand Theme */
+  --brand-teal: #25EDBA;
+  --brand-cyan: #36F1C4;
 }
 
 .dark {
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 3, 7, 18;
   --background-end-rgb: 17, 24, 39;
+
+  /* DNA Theme stays consistent in Dark Mode */
+  --bg-void: #030712;
+  --dna-t: #F43F5E;
+  --dna-v: #34D399;
+  --dna-a: #3B82F6;
+  --dna-p: #8B5CF6;
+
+  /* Brand Theme */
+  --brand-teal: #25EDBA;
+  --brand-cyan: #36F1C4;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-    to bottom,
-    rgb(var(--background-start-rgb)),
-    rgb(var(--background-end-rgb))
-  );
+  background: linear-gradient(to bottom,
+      rgb(var(--background-start-rgb)),
+      rgb(var(--background-end-rgb)));
 }
 
 /* Visible Focus States */
@@ -52,6 +76,7 @@ a:focus-visible,
 
 /* Mobile scroll optimizations */
 @layer utilities {
+
   /* Safe area padding for iOS notch/home indicator */
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom, 0px);

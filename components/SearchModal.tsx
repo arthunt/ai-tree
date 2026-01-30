@@ -427,8 +427,14 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
               </div>
             ) : fuzzySearch.length > 0 ? (
               /* Search Results */
-              <div ref={resultsRef} className="p-2">
-                {fuzzySearch.map((result, index) => {
+              <div className="flex flex-col h-full">
+                <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    {t('resultsCount', { count: fuzzySearch.length })}
+                  </p>
+                </div>
+                <div ref={resultsRef} className="p-2 overflow-y-auto">
+                  {fuzzySearch.map((result, index) => {
                   const { concept } = result;
                   const IconComponent = iconMap[concept.icon] || Brain;
                   const levelColor = getLevelColor(concept.level);
@@ -478,6 +484,7 @@ export function SearchModal({ isOpen, onClose, concepts, onConceptSelect }: Sear
                     </button>
                   );
                 })}
+                </div>
               </div>
             ) : (
               /* No Results */

@@ -136,35 +136,48 @@
 
 ---
 
-## Active Sprint: Sprint 10 — DNA View Foundation
+## Active Sprint: Sprint 10 — DNA View Foundation (Architecture Pivot)
 
-> **Priority:** P1-High
-> **Goal:** Working DNA View with 4 components (T→V→A→P), view selector, i18n
-> **Dependency:** None (all prerequisites shipped)
+> **Priority:** P0-Critical
+> **Goal:** Launch DNA View using the **new "Living Forest" architecture** (ParaglideJS + Supabase).
+> **Tech Stack:** Next.js 15, ParaglideJS (i18n), Supabase (Content/DB).
+> **Protocol:** Core architecture by @ANTIGRAVITY. Content, tests, and polish by @SWARM.
 
-### US-090: DNA View Route & Component Structure
-**Priority:** P0 | **Type:** Foundation
+### US-090: Tech Stack Foundation (Paraglide + Supabase)
+**Priority:** P0 | **Type:** Infrastructure | **Agent:** @ANTIGRAVITY
 
-- [ ] Create `/app/[locale]/dna/page.tsx` route
-- [ ] Implement `components/dna/DNAView.tsx` main component
-- [ ] 4-step vertical flow: T→V→A→P with color coding
-- [ ] Mobile-first layout, dark mode support
-- [ ] Link to switch to Concept Map view
 
-**Files:** `app/[locale]/dna/page.tsx`, `components/dna/DNAView.tsx`
+- [ ] Initialize ParaglideJS (replace/augment next-intl for DNA)
+- [ ] Set up Supabase project & `concepts`/`translations` tables
+- [ ] Generate TypeScript types from Supabase schema
+- [ ] Create `app/[locale]/dna/page.tsx` using Paraglide for routing
+
+**Files:** `paraglide/*`, `lib/supabase.ts`, `app/[locale]/dna/*`
 
 ---
 
-### US-091: DNA Component Cards (T-V-A-P)
-**Priority:** P0 | **Type:** Components | **Depends on:** US-090
+### US-091: DNA Visual Components (The "Living Forest" Design)
+**Priority:** P0 | **Type:** Design Implementation | **Agent:** @ANTIGRAVITY
 
-- [ ] `DNAComponentCard.tsx` — reusable card with Question, Metaphor, Function
-- [ ] Clickable expand for details
-- [ ] "Dive deeper" links to related tree concepts
-- [ ] Icons: Scissors/MapPin/Focus/Sparkles
-- [ ] Full i18n (ET + EN)
+- [ ] Implement "Less is More" Design System (for DNA view only first)
+- [ ] `DNAView.tsx`: Horizontal/Vertical scroll container
+- [ ] `DNAFlowDiagram.tsx`: Animated SVG flow (T→V→A→P)
+- [ ] `DNAComponentCard.tsx`: Minimalist cards with bold typography
 
-**Files:** `components/dna/DNAComponentCard.tsx`, `lib/dna-types.ts`
+**Files:** `components/dna/*`, `styles/dna-theme.css`
+
+---
+
+### US-092: DNA Content Integration (Supabase)
+**Priority:** P0 | **Type:** Backend/Content | **Depends on:** US-090 | **Agent:** @SWARM
+> *Context: Once database schema is set by @ANTIGRAVITY, Swarm can populate it via SQL/Actions.*
+
+- [ ] Populate Supabase with DNA concept data (4 concepts * 2 languages)
+- [ ] Create server actions to fetch DNA content
+- [ ] Connect `DNAComponentCard` to real data
+- [ ] Ensure full type safety for content fields
+
+**Files:** `actions/getDNAContent.ts`, `lib/supabase.ts`
 
 ---
 
@@ -204,37 +217,33 @@
 
 ---
 
-### US-095: DNA i18n Translations
-**Priority:** P0 | **Type:** i18n | **Depends on:** US-091
+### US-095: View Selector & Entry (Paraglide Routing)
+**Priority:** P1 | **Type:** UX/Routing
 
-- [ ] `dna` namespace in both `messages/et.json` and `messages/en.json`
-- [ ] 4 component questions, metaphors, explanations
-- [ ] View selector text, flow labels, action buttons
+- [ ] `ViewSelector.tsx`: "Quick Overview (DNA)" vs "Full Map (Tree)"
+- [ ] Use Paraglide's `<Link>` for type-safe routing
+- [ ] Save preference to localStorage
+- [ ] Add "DNA" link to main navigation
 
-**Files:** `messages/et.json`, `messages/en.json`
-
----
-
-### Sprint 10 Execution Plan
-
-```
-Phase 1 (foundation):   US-090 (route + scaffold)
-Phase 2 (parallel):     US-091 (cards) + US-095 (i18n)
-Phase 3 (parallel):     US-092 (selector) + US-093 (diagram) + US-094 (progress)
-```
-
-| Story | Agent | Model | Phase |
-|-------|-------|-------|-------|
-| US-090 | system-architect | sonnet | 1 |
-| US-091 | coder | sonnet | 2 |
-| US-095 | coder | haiku | 2 |
-| US-092 | coder | haiku | 3 |
-| US-093 | coder | sonnet | 3 |
-| US-094 | coder | haiku | 3 |
+**Files:** `components/landing/ViewSelector.tsx`
 
 ---
 
-## Backlog (Prioritized)
+### Sprint 10 Execution Plan (Multi-Agent Co-op)
+
+```
+[ANTIGRAVITY - The Architect]           [SWARM - The Scalers]
+-----------------------------           ---------------------
+1. Foundation (US-090)                  (Waiting for Schema)
+2. Core UI Components (US-091)   -----> 1. Test Coverage (Vitest/Playwright)
+3. Visual Flow Logic (US-093)           2. Content Population (US-092)
+4. Complex Routing (US-095)             3. Performance Optimization
+                                        4. Accessibility Audits
+```
+
+---
+
+## Backlog (Prioritized & Agented)
 
 ### P1 — High Value
 
@@ -261,6 +270,23 @@ Phase 3 (parallel):     US-092 (selector) + US-093 (diagram) + US-094 (progress)
 | US-036 | Glossary/index page | Content | Alphabetical concept glossary |
 | US-035 | Print-friendly version | Content | CSS print layout |
 | US-052 | Prerequisite validation | Learning UX | Warn before marking concepts with unmet prereqs |
+
+---
+
+## Phase 3: The Living Forest (Strategic Roadmap)
+
+> **Vision:** A global, adaptive learning ecosystem.
+> **Key Shifts:** Static -> Dynamic, 2 Langs -> 100+ Langs, Map -> Trails (Paid).
+
+### Epic: Scale to 100 Languages
+- [ ] **Infrastructure:** ParaglideJS full migration (replace next-intl entirely)
+- [ ] **Pipeline:** AI Translation Agents + "Guardian" Review Portal
+- [ ] **UI:** RTL Support & Fluid Typography
+
+### Epic: "Trails" (Paid Learning Paths)
+- [ ] **Infrastructure:** User Auth (Supabase Auth)
+- [ ] **Content:** Define "Trail" schema (Sequence of concepts + Practical Task)
+- [ ] **Commerce:** Payment Gateway Integration
 
 ---
 
