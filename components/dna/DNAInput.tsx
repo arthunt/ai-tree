@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Play, RefreshCw } from "lucide-react";
 
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+import { trackDNASimulation } from '@/lib/analytics';
 
 export function DNAInput() {
     const { inputText, setInputText, runSimulation, isPlaying, currentStep, resetSimulation } = useDNA();
@@ -20,9 +21,21 @@ export function DNAInput() {
         idle: 'tokenization' // Fallback
     };
 
+    const handleRun = () => {
+        trackDNASimulation('play', inputText); // Log input text length implicitly or just event? Actually let's not log PII.
+        // trackDNASimulation('play') is safe.
+        trackDNASimulation('play');
+        runSimulation();
+    };
+
+    const handleReset = () => {
+        trackDNASimulation('reset');
+        resetSimulation();
+    };
+
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && !isPlaying && inputText) {
-            runSimulation();
+            handleRun();
         }
     };
 
@@ -53,7 +66,7 @@ export function DNAInput() {
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.9, opacity: 0 }}
-                                onClick={runSimulation}
+                                onClick={handleRun}
                                 disabled={!inputText.trim()}
                                 className="bg-white/10 hover:bg-white/20 text-brand-teal p-3 rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                             >
@@ -65,7 +78,7 @@ export function DNAInput() {
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.9, opacity: 0 }}
-                                onClick={resetSimulation}
+                                onClick={handleReset}
                                 className="bg-white/10 hover:bg-white/20 text-red-400 p-3 rounded-xl transition-all"
                             >
                                 <RefreshCw size={20} />

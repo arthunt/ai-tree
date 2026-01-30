@@ -1,8 +1,12 @@
-'use client';
-
 import { Suspense } from 'react';
 import { TreeViewContent } from './TreeViewContent';
 import { TreeDiagramSkeleton } from '@/components/TreeDiagramSkeleton';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'AI Tree | Dendrix',
+  description: 'Explore the full AI knowledge tree from roots to leaves.',
+};
 
 export default function TreeViewPage() {
   return (

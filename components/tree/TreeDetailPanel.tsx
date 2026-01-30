@@ -4,8 +4,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Calendar, FileText, Sparkles, GraduationCap } from 'lucide-react';
 import { TreeContentSimple } from '@/actions/getTreeContent';
 import Link from 'next/link';
+import { trackProgramInterest } from '@/lib/analytics';
 
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+
+const MOTIF_EMOJI: Record<string, string> = {
+    seed: '🌱', network: '🕸️', neuron: '🧠', crystal: '💎', prism: '🔺',
+    mirror: '🪞', 'filing-cabinet': '🗄️', 'tree-logic': '🌳', wave: '🌊',
+    grid: '📐', spiral: '🌀', gate: '🚪', 'mirror-dual': '🎭',
+    triangle: '📐', 'magnifying-glass': '🔍', scroll: '📜', quill: '🪶',
+    explosion: '💥', diamond: '💠', palette: '🎨', shield: '🛡️',
+    gem: '💎', llama: '🦙', cloud: '☁️', paintbrush: '🖌️', canvas: '🖼️',
+    scissors: '✂️', compass: '🧭', focus: '🎯', spark: '⚡', star: '⭐',
+};
+
+function motifToEmoji(motif: string): string {
+    return MOTIF_EMOJI[motif] || '✨';
+}
 
 interface TreeDetailPanelProps {
     node: TreeContentSimple | null;
@@ -44,9 +59,7 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                     <div className="flex items-center gap-3 mb-4">
                         {node.motif && (
                             <span className="text-2xl" role="img" aria-label="motif">
-                                {node.motif === 'seed' ? '🌱' :
-                                    node.motif === 'network' ? '🕸️' :
-                                        node.motif === 'neuron' ? '🧠' : '✨'}
+                                {motifToEmoji(node.motif)}
                             </span>
                         )}
                         <h2 className="text-3xl font-bold text-gray-900 dark:text-white leading-tight">
@@ -57,6 +70,12 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                     <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                         {node.description || "No description available yet."}
                     </p>
+
+                    {node.significance && (
+                        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 italic border-l-2 border-indigo-300 dark:border-indigo-600 pl-3">
+                            {node.significance}
+                        </p>
+                    )}
                 </div>
 
                 {/* Metadata Grid */}
@@ -79,9 +98,20 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                                 <FileText className="w-4 h-4" />
                                 <span>{t('keyPaperLabel')}</span>
                             </div>
-                            <div className="text-base font-medium text-gray-900 dark:text-white truncate">
-                                "{node.paper}"
-                            </div>
+                            {node.paperUrl ? (
+                                <a
+                                    href={node.paperUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-base font-medium text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
+                                >
+                                    &ldquo;{node.paper}&rdquo; <ExternalLink className="w-3 h-3 shrink-0" />
+                                </a>
+                            ) : (
+                                <div className="text-base font-medium text-gray-900 dark:text-white truncate">
+                                    &ldquo;{node.paper}&rdquo;
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
@@ -102,6 +132,7 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                                 </p>
                                 <Link
                                     href={`/programs/${node.relatedProgramId}`}
+                                    onClick={() => trackProgramInterest(node.relatedProgramId!, 'tree-detail')}
                                     className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-700 dark:text-indigo-300 hover:text-indigo-800 dark:hover:text-white transition-colors"
                                 >
                                     {t('viewProgramLabel')} <ExternalLink className="w-4 h-4" />

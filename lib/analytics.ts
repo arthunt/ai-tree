@@ -77,6 +77,35 @@ export function trackFeatureView(featureName: string, locale: string) {
 }
 
 /**
+ * Track interactions with the DNA Simulation
+ * @param action - 'play', 'pause', 'speed', 'input'
+ * @param value - e.g. speed value or 'typing' (do not log actual input text)
+ */
+export function trackDNASimulation(action: string, value?: string | number) {
+  if (isDoNotTrackEnabled()) return;
+  track('DNA Simulation', { action, value });
+}
+
+/**
+ * Track which User Intent was selected in the Seed
+ * @param intent - 'builder', 'thinker', 'explorer'
+ */
+export function trackSeedIntent(intent: string) {
+  if (isDoNotTrackEnabled()) return;
+  track('Seed Intent Selected', { intent });
+}
+
+/**
+ * Track clicks on "Master This Skill" (Program CTA)
+ * @param programId - The ID of the program (e.g., 'aiki', 'aivo')
+ * @param source - Where the click came from (e.g., 'tree-detail')
+ */
+export function trackProgramInterest(programId: string, source: string) {
+  if (isDoNotTrackEnabled()) return;
+  track('Program Interest', { programId, source });
+}
+
+/**
  * Check if the user has Do Not Track header enabled
  * GDPR-compliant: respects user privacy preferences
  */
