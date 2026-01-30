@@ -112,7 +112,7 @@ export function GlobalNav({ extraControls, transparent = false }: GlobalNavProps
                             ))}
                             <div className="h-px bg-gray-200 dark:bg-gray-700 my-2" />
                             <div className="flex items-center justify-between px-2">
-                                <span className="text-sm text-gray-500">Settings</span>
+                                <span className="text-sm text-gray-500">{t('settings')}</span>
                                 <div className="flex gap-2">
                                     <LanguageSwitcher />
                                     <DarkModeToggle />

@@ -1162,6 +1162,7 @@
     "mechanism": "Mechanism",
     "learn": "Programs",
     "proto": "Proto",
-    "back": "Back"
+    "back": "Back",
+    "settings": "Settings"
   }
 }
