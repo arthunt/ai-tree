@@ -4,34 +4,35 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { TreeData, Concept } from '@/lib/types';
-import { OrganicTreeDiagram } from '@/components/OrganicTreeDiagram';
+import { Concept } from '@/lib/types';
 import { TreeDiagramSkeleton } from '@/components/TreeDiagramSkeleton';
 import { ConceptLightbox } from '@/components/ConceptLightbox';
 import { NameToggle } from '@/components/NameToggle';
 import { DarkModeToggle } from '@/components/DarkModeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
-import treeData from '@/data/tree-concepts.json';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
+import { getTreeContent, TreeContentSimple } from '@/actions/getTreeContent';
+import { TreeView } from '@/components/tree/TreeView';
 
 export default function TreeViewPage() {
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
   const [showSimpleNames, setShowSimpleNames] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const data = treeData as TreeData;
+  const [treeDataState, setTreeDataState] = useState<TreeContentSimple[]>([]);
   const t = useTranslations();
   const params = useParams();
   const locale = params.locale as string;
 
-  // Simulate loading state for tree rendering
+  // Fetch real data
   useEffect(() => {
-    const timer = setTimeout(() => {
+    async function init() {
+      const data = await getTreeContent(locale);
+      setTreeDataState(data);
       setIsLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
-  }, []);
+    }
+    init();
+  }, [locale]);
 
   // Handle ESC key
   useEffect(() => {
@@ -89,25 +90,24 @@ export default function TreeViewPage() {
             <h2 id="instructions-heading" className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
               {t('treeView.instructionsTitle')}
             </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            {t('treeView.instructionsText')}
-          </p>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              {t('treeView.instructionsText')}
+            </p>
           </motion.div>
         </section>
 
         {/* Tree Diagram */}
         <section aria-labelledby="tree-diagram-heading">
           <h2 id="tree-diagram-heading" className="sr-only">{t('treeView.diagramAriaLabel')}</h2>
-          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 border-2 border-gray-100 dark:border-gray-700">
+          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 border-2 border-gray-100 dark:border-gray-700 overflow-hidden">
             {isLoading ? (
               <TreeDiagramSkeleton />
             ) : (
-              <OrganicTreeDiagram
-                levels={data.levels}
-                concepts={data.concepts}
-                onConceptClick={setSelectedConcept}
-                showSimpleNames={showSimpleNames}
-              />
+              // Use the new D3 TreeView
+              // Need to import it and pass data
+              // For now, I'll assume we fetched it in useEffect
+              // Wait, I need to update the import and state too.
+              <TreeView data={treeDataState} />
             )}
           </div>
         </section>

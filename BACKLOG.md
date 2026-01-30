@@ -1,7 +1,7 @@
 # AI Tree (Dendrix.ai) - Product Backlog
 
 > **Last Updated:** 2026-01-30
-> **Status:** Active Development — Sprint 10 (DNA View)
+> **Status:** Active Development — Sprint 12 (Tree Visualization)
 > **Vision:** Public AI learning platform using tree metaphor — no sign-ins, free for all
 > **Principles:** KISS, Less is More, Mobile-First, Testing-First (gradual)
 > **Tests:** 70 passing (Vitest) | **Build:** 68 pages | **Concepts:** 23 (ET + EN)
@@ -130,6 +130,15 @@
 - [x] US-095: View Selector & Routing
 </details>
 
+<details>
+<summary>Sprint 11: DNA Interactivity (DONE)</summary>
+
+- [x] US-100: Interactive DNA Input (Live Tokenization)
+- [x] US-101: Dynamic Attention & Prediction (Visualizations)
+- [x] US-102: Content Population (Real Data via Swarm)
+- [x] US-103: Tree of Thoughts Population (Swarm)
+</details>
+
 ---
 
 ## Definition of Done
@@ -145,134 +154,54 @@
 
 ---
 
-## Active Sprint: Sprint 11 — DNA Interactivity (Stage 3: Võrs)
+## Active Sprint: Sprint 12 — The Phylogenetic Tree (Stage 4: Puu)
 
 > **Priority:** P1-High
-> **Goal:** Make the DNA View interactive (User Input -> Live Visualization) and populate real content.
-> **Protocol:** @ANTIGRAVITY builds the interactive "Toy" logic. @SWARM handles scale/content.
+> **Goal:** Visualize the "Tree of Thoughts" (26 nodes from Swarm) and connect it to the DNA View.
+> **Protocol:** @ANTIGRAVITY builds the D3/ReactFlow Tree. @SWARM handles data updates if needed.
 
-### US-100: Interactive DNA Input
-**Priority:** P1 | **Type:** Feature | **Agent:** @ANTIGRAVITY
+### US-110: Interactive Phylogenetic Tree
+**Priority:** P1 | **Type:** Visualization | **Agent:** @ANTIGRAVITY
 
-- [ ] Input field in DNA View header ("Type something...")
-- [ ] Live Tokenization visualization (Color-coded chunks)
-- [ ] "Vectorize" button triggers animation
-
----
-
-### US-101: Dynamic Attention & Prediction
-**Priority:** P1 | **Type:** Feature | **Agent:** @ANTIGRAVITY
-
-- [ ] SVG lines connecting "related" tokens (Mock logic acceptable for now)
-- [ ] Probability bars showing "Next Token" candidates
+- [ ] `components/tree/TreeView.tsx`: D3/SVG visualization of the hierarchy
+- [ ] Render all 26 nodes (Algorithm -> Transformers)
+- [ ] Zoom/Pan controls ("Living Map")
 
 ---
 
-### US-102: Content Population (Real Data)
-**Priority:** P0 | **Type:** Content | **Agent:** @SWARM
+### US-111: DNA to Tree Bridge
+**Priority:** P1 | **Type:** Navigation | **Agent:** @ANTIGRAVITY
 
-- [ ] Insert core concept data into Supabase (T-V-A-P)
-- [ ] Verify `actions/getDNAContent.ts` works with real DB
-- [ ] Remove "MOCK DATA" fallback
-
----
-
-### US-090: Tech Stack Foundation (Paraglide + Supabase)
-**Priority:** P0 | **Type:** Infrastructure | **Agent:** @ANTIGRAVITY
-
-
-- [ ] Initialize ParaglideJS (replace/augment next-intl for DNA)
-- [ ] Set up Supabase project & `concepts`/`translations` tables
-- [ ] Generate TypeScript types from Supabase schema
-- [ ] Create `app/[locale]/dna/page.tsx` using Paraglide for routing
-
-**Files:** `paraglide/*`, `lib/supabase.ts`, `app/[locale]/dna/*`
+- [ ] "Deep Dive" buttons on DNA cards link to specific Tree Nodes
+- [ ] Shared context/progress (Visiting DNA marks Tree node as "Inspected"?)
 
 ---
 
-### US-091: DNA Visual Components (The "Living Forest" Design)
-**Priority:** P0 | **Type:** Design Implementation | **Agent:** @ANTIGRAVITY
+### US-112: Node Detail View
+**Priority:** P2 | **Type:** Feature
 
-- [ ] Implement "Less is More" Design System (for DNA view only first)
-- [ ] `DNAView.tsx`: Horizontal/Vertical scroll container
-- [ ] `DNAFlowDiagram.tsx`: Animated SVG flow (T→V→A→P)
-- [ ] `DNAComponentCard.tsx`: Minimalist cards with bold typography
-
-**Files:** `components/dna/*`, `styles/dna-theme.css`
+- [ ] Clicking a Tree Node opens a detail pane/modal
+- [ ] Shows "Evolutionary History" (Parent/Children)
+- [ ] Shows "DNA Pattern" (Architecture Type)
 
 ---
 
-### US-092: DNA Content Integration (Supabase)
-**Priority:** P0 | **Type:** Backend/Content | **Depends on:** US-090 | **Agent:** @SWARM
-> *Context: Once database schema is set by @ANTIGRAVITY, Swarm can populate it via SQL/Actions.*
-
-- [ ] Populate Supabase with DNA concept data (4 concepts * 2 languages)
-- [ ] Create server actions to fetch DNA content
-- [ ] Connect `DNAComponentCard` to real data
-- [ ] Ensure full type safety for content fields
-
-**Files:** `actions/getDNAContent.ts`, `lib/supabase.ts`
+### US-104: Tree Content (Completed by Swarm)
+**Priority:** Done | **Type:** Content | **Agent:** @SWARM
+- [x] Populate `nodes` table (26 items)
+- [x] Verify hierarchy (parent_id)
 
 ---
 
-### US-092: View Selector on Landing
-**Priority:** P0 | **Type:** UX | **Depends on:** US-090
-
-- [ ] `ViewSelector.tsx` shown on first visit
-- [ ] Options: DNA View (~5 min) vs Concept Map (15+ min)
-- [ ] Preference saved to localStorage
-- [ ] Can be changed via header toggle
-
-**Files:** `components/landing/ViewSelector.tsx`, `app/[locale]/page.tsx`
-
----
-
-### US-093: DNA Flow Diagram
-**Priority:** P1 | **Type:** Visual | **Depends on:** US-091
-
-- [ ] `DNAFlowDiagram.tsx` — SVG visualization
-- [ ] Vertical: Input Text → T → V → A → P → Output Text
-- [ ] Highlights active step during exploration
-- [ ] Responsive + dark mode
-
-**Files:** `components/dna/DNAFlowDiagram.tsx`
-
----
-
-### US-094: DNA Progress Tracking
-**Priority:** P1 | **Type:** Feature | **Depends on:** US-091
-
-- [ ] Track which DNA components user has viewed
-- [ ] Progress: "2/4 components explored"
-- [ ] localStorage key: `ai-tree-dna-progress`
-- [ ] Complementary to concept map progress
-
-**Files:** `lib/useDNAProgress.ts`
-
----
-
-### US-095: View Selector & Entry (Paraglide Routing)
-**Priority:** P1 | **Type:** UX/Routing
-
-- [ ] `ViewSelector.tsx`: "Quick Overview (DNA)" vs "Full Map (Tree)"
-- [ ] Use Paraglide's `<Link>` for type-safe routing
-- [ ] Save preference to localStorage
-- [ ] Add "DNA" link to main navigation
-
-**Files:** `components/landing/ViewSelector.tsx`
-
----
-
-### Sprint 10 Execution Plan (Multi-Agent Co-op)
+### Sprint 12 Execution Plan (Visuals First)
 
 ```
-[ANTIGRAVITY - The Architect]           [SWARM - The Scalers]
------------------------------           ---------------------
-1. Foundation (US-090)                  (Waiting for Schema)
-2. Core UI Components (US-091)   -----> 1. Test Coverage (Vitest/Playwright)
-3. Visual Flow Logic (US-093)           2. Content Population (US-092)
-4. Complex Routing (US-095)             3. Performance Optimization
-                                        4. Accessibility Audits
+[ANTIGRAVITY - The Cartographer]        [SWARM - The Historian]
+--------------------------------        -----------------------
+1. Tree Visualization (US-110)          (Monitoring Data Quality)
+2. Bridge Navigation (US-111)    <----> (Refining Node Descriptions)
+3. Detail Views (US-112)
+```                                      4. Accessibility Audits
 ```
 
 ---
