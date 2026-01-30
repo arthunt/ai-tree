@@ -1,23 +1,33 @@
 # AI Tree (Dendrix.ai) - Product Backlog
 
 > **Last Updated:** 2026-01-30
-> **Status:** Active Development — Phase 2 (Bridge Building) & Sprint 13 (Programs & Polish)
+> **Status:** Phase D (Lead Capture) Complete — Polishing & Cleanup
 > **Vision:** Public AI learning platform using tree metaphor — no sign-ins, free for all
 > **Principles:** KISS, Less is More, Mobile-First, Testing-First (gradual)
-> **Tests:** 70 passing (Vitest) + 6 E2E (Playwright) | **Routes:** 7 | **DB:** 28 nodes, 4 DNA concepts (ET + EN)
+> **Tests:** 70 passing (Vitest) + 6 E2E (Playwright) | **Routes:** 7 | **DB:** 30 nodes, 4 DNA concepts (ET + EN)
 
 ---
 
-## � In Progress (Swarm Execution)
+## 🟡 In Progress (Swarm Execution)
 
-*   **Data Unification:** Aligning DNA IDs (`tokenization`) with Tree IDs (`tokens`).
-*   **The "Seed" Bridge:** Implementing the visual transition from Mechanism -> Tree (US-111).
-*   **Paraglide Audit:** Verifying bundle size impact of the compatibility hook (US-137).
+*   **Cleanup & Polish:** Removing unused files/keys, final QA.
+*   **Documentation:** Updating `AI_TREE_MASTER_REFERENCE.md`.
 
 ---
 
-## �🟢 Completed (Recent Phase 2)
+## 🟢 Completed (Recent Phase C & D)
 
+*   **Lead Capture (Phase D):**
+    *   **Schema:** `leads` table with RLS.
+    *   **Action:** `submitLead` with Zod validation.
+    *   **UI:** `LeadCaptureDialog` + `ApplyButton`.
+    *   **Integration:** Full i18n support, integrated into Hero and Pricing.
+*   **Marketing Landing Pages (Phase C):** 
+    *   **Catalog:** `/programs` page with comparative grid.
+    *   **Dynamic Pages:** `/programs/[slug]` with Hero, Features, Curriculum, Pricing, FAQ.
+    *   **Components:** Refactored server components with i18n.
+    *   **Integration:** Connected to Supabase `getPrograms`.
+*   **Database Schema (Phase B):** Implemented programs, curricula, and FAQ tables in Supabase. Seeded with full content.
 *   **Paraglide Migration (Foundation):** Setup `middleware.ts`, `layout.tsx`, `paraglide` folder. Created `useParaglideTranslations`.
 *   **Localization (Phase 1):** Extracted all strings from `DNAView`, `DNAInput`, `DNAComponentCard`. Verified ET translations.
 *   **Navigation Architecture:** Created `GlobalNav` component. Unified `/dna`, `/proto`, and `/learn` under one header. Restored `/proto`.
@@ -25,6 +35,41 @@
 ---
 
 ## Shipped (Archived)
+
+<details>
+<summary>Phase C & D: Programs & Lead Capture (DONE)</summary>
+
+#### US-138: Programs Database Schema
+- [x] Create `supabase/migrations/20260135_programs_schema.sql`
+- [x] Follow existing RLS pattern (public read)
+
+#### US-139: Seed Program Data
+- [x] AIKI: €1590, 6 weeks, 60h, #6366f1
+- [x] AIVO: €1290/€900, 4 weeks, 40h, #10b981
+- [x] AIME: €2490, 10 weeks, 100h, #8b5cf6
+- [x] 4 features per program (ET + EN)
+- [x] Curriculum weeks with topics (ET + EN)
+- [x] Create `supabase/migrations/20260136_seed_programs.sql`
+
+#### US-140: Programs Server Actions
+- [x] `actions/getPrograms.ts`
+- [x] `actions/getProgram.ts`
+- [x] Type-safe with Supabase types
+
+#### US-141: Programs Route Structure
+- [x] `app/[locale]/programs/page.tsx` (Catalog)
+- [x] `app/[locale]/programs/[slug]/page.tsx` (Dynamic)
+
+#### US-142: Landing Page Components
+- [x] `ProgramHero`, `ProgramFeatures`, `ProgramCurriculum`, `ProgramPricing`, `ProgramFAQ`
+- [x] DNA View design: dark, glass cards, glowing accents
+
+#### US-146: Lead Capture System
+- [x] `leads` table schema
+- [x] `submitLead` server action
+- [x] `LeadCaptureDialog` + `ApplyButton`
+- [x] Full i18n support
+</details>
 
 <details>
 <summary>Phase 1-2: Accessibility + Features (DONE)</summary>
@@ -80,7 +125,6 @@
 
 <details>
 <summary>Sprint 6: Minimalism & Learning Flow (DONE)</summary>
-
 - [x] US-060: Hero simplification (25 → ~10 elements)
 - [x] US-061: Clear value proposition
 - [x] US-062: Time estimates in hero & levels
@@ -94,7 +138,6 @@
 
 <details>
 <summary>Sprint 7: Mobile-First Popup Redesign (DONE)</summary>
-
 - [x] US-070: Explanation tab with persona toggle
 - [x] US-071: Visual representation tab
 - [x] US-072: Code tab with contextual guidance
@@ -105,7 +148,6 @@
 
 <details>
 <summary>Sprint 8: i18n Completion (DONE)</summary>
-
 - [x] US-076: Translate 16 SVG visual components
 - [x] US-077: Translate remaining 5 SVG components
 - [x] US-078: Translate remaining UI components
@@ -113,7 +155,6 @@
 
 <details>
 <summary>Sprint 9: English Content Translation (DONE)</summary>
-
 - [x] US-080: English concept data in i18n message files (23 concepts x 4 fields)
 - [x] US-081: Wire 10+ components to useTranslations('conceptData')
 - [x] US-082: Translate level data to English
@@ -124,7 +165,6 @@
 
 <details>
 <summary>Untracked Work (shipped, not in original backlog)</summary>
-
 - [x] SEO infrastructure: OG images, structured data, sitemap
 - [x] Brand narrative: hero rewrite, journey section, scroll reveals
 - [x] Dendrix logo: animated SVG in hero, header branding
@@ -139,7 +179,6 @@
 
 <details>
 <summary>Sprint 10: DNA View Foundation (DONE)</summary>
-
 - [x] US-090: Tech Stack Foundation (Supabase live, lazy client)
 - [x] US-091: DNA Visual Components (Living Forest Design)
 - [x] US-093: DNA Flow Diagram
@@ -148,7 +187,6 @@
 
 <details>
 <summary>Sprint 11: DNA Interactivity & Content (DONE)</summary>
-
 - [x] US-100: Interactive DNA Input (Live Tokenization)
 - [x] US-101: Dynamic Attention & Prediction (Visualizations)
 - [x] US-102: DNA Content Population (4 concepts x EN+ET in Supabase)
@@ -157,7 +195,6 @@
 
 <details>
 <summary>Sprint 12: Phylogenetic Tree & Data Layer (DONE)</summary>
-
 - [x] US-104: Tree Content — 28 nodes in `nodes` table with hierarchy
 - [x] US-110: Interactive Phylogenetic Tree — D3 TreeView with zoom/pan
 - [x] US-112: Node Detail View — TreeDetailPanel with metadata, year, paper, motif
@@ -172,33 +209,6 @@
 
 ---
 
-## Supabase Schema (Live)
-
-**5 migrations applied:**
-
-| Table | Rows | Description |
-|-------|------|-------------|
-| `concepts` | 4 | DNA concepts (tokenization, embeddings, attention, prediction) |
-| `concept_translations` | 8 | 4 EN + 4 ET |
-| `nodes` | 28 | Phylogenetic tree (root → eras → architectures → models) |
-| `node_translations` | 56 | 28 EN + 28 ET |
-| `node_metadata` | 28 | Year, paper, use case, motif, program link, marketing hooks, DNA bridge |
-
----
-
-## Definition of Done
-
-- [ ] Feature works as specified
-- [ ] Keyboard navigable + screen reader compatible
-- [ ] Works on mobile (320px) to desktop (1920px)
-- [ ] All text in both ET and EN (ParaglideJS)
-- [ ] `npm run build` passes
-- [ ] `npm test` passes (70+ tests)
-- [ ] Deployed to preview and tested
-- [ ] No regressions
-
----
-
 ## Active Sprint: Sprint 13 — ParaglideJS + Supabase CMS + Marketing Pages
 
 > **Priority:** P0-Critical
@@ -210,27 +220,23 @@
 
 ### PHASE A: ParaglideJS Migration (Days 1-2) — 25h
 
-#### US-130: ParaglideJS Setup
-**Priority:** P0 | **Type:** Infrastructure | **Hours:** 4
+#### US-130: ParaglideJS Setup (DONE)
 - [x] Update `project.inlang/settings.json` with correct plugins
 - [x] Run `npm run paraglide:compile` → typed functions in `paraglide/`
 - [x] Create `lib/paraglide.ts` with language utilities
 - [x] Verify messages compile from existing `messages/*.json`
 
-#### US-131: Middleware & Routing
-**Priority:** P0 | **Type:** Infrastructure | **Hours:** 2
+#### US-131: Middleware & Routing (DONE)
 - [x] Replace `next-intl/middleware` → `@inlang/paraglide-next`
 - [x] Update `middleware.ts` for ParaglideJS routing
 - [x] Test `/et/` and `/en/` routes work
 
-#### US-132: Layout Migration
-**Priority:** P0 | **Type:** Infrastructure | **Hours:** 2
+#### US-132: Layout Migration (DONE)
 - [x] Remove `NextIntlClientProvider` from layout
 - [x] Add ParaglideJS `LanguageProvider`
 - [x] Update `generateMetadata()` to use ParaglideJS
 
 #### US-133: Component Migration (Core - 10 files)
-**Priority:** P0 | **Type:** Refactor | **Hours:** 6
 - [ ] `app/[locale]/page.tsx`
 - [ ] `components/WelcomeModal.tsx`
 - [ ] `components/SearchModal.tsx`
@@ -242,7 +248,6 @@
 - [ ] Pattern: `t('key')` → `m.ns_key()`
 
 #### US-134: Component Migration (UI - 15 files)
-**Priority:** P1 | **Type:** Refactor | **Hours:** 4
 - [ ] `components/TreeNavigation.tsx`
 - [x] `components/LanguageSwitcher.tsx` (Completed)
 - [ ] `components/SettingsDropdown.tsx`
@@ -252,24 +257,21 @@
 - [ ] `components/VectorDemo.tsx`
 
 #### US-135: Component Migration (Pages + SVGs - 30 files)
-**Priority:** P1 | **Type:** Refactor | **Hours:** 4
 - [x] `app/[locale]/tree-view/page.tsx` (Partially updated with GlobalNav)
 - [x] `app/[locale]/dna/page.tsx` (DONE)
-- [x] `app/[locale]/learn/*.tsx` (DONE)
+- [x] `app/[locale]/programs/*.tsx` (DONE)
 - [ ] `app/[locale]/concept/[conceptId]/*.tsx` (3 files)
 - [ ] `components/mobile/*.tsx` (6 files)
 - [ ] `components/visuals/*.tsx` (21 SVG files)
 
-#### US-136: Cleanup next-intl
-**Priority:** P1 | **Type:** Cleanup | **Hours:** 1
+#### US-136: Cleanup next-intl (Pending)
 - [ ] `npm uninstall next-intl`
 - [ ] Delete `i18n.ts`
 - [ ] Remove all `getMessages`, `getTranslations` imports
 - [ ] `npm run build` → 0 errors
 - [ ] `npm test` → all pass
 
-#### US-137: ParaglideJS Verification
-**Priority:** P1 | **Type:** Testing | **Hours:** 2
+#### US-137: ParaglideJS Verification (Pending)
 - [ ] Test locale switching
 - [ ] Test SSR/SSG both locales
 - [ ] TypeScript catches missing translations
@@ -277,107 +279,17 @@
 
 ---
 
-### PHASE B: Supabase CMS for Programs (Days 2-3) — 7h
-
-#### US-138: Programs Database Schema
-**Priority:** P0 | **Type:** Infrastructure | **Hours:** 2
-```sql
-programs                  -- id, slug, color, duration, price, discounts
-program_translations      -- name, tagline, description (ET + EN)
-program_features          -- icon, sort_order
-feature_translations      -- title, description (ET + EN)
-program_curriculum        -- week_number, hours, type
-curriculum_translations   -- title, topics[] (ET + EN)
-```
-- [x] Create `supabase/migrations/20260135_programs_schema.sql`
-- [x] Follow existing RLS pattern (public read)
-
-#### US-139: Seed Program Data
-**Priority:** P0 | **Type:** Data | **Hours:** 2
-- [x] AIKI: €1590, 6 weeks, 60h, #6366f1
-- [x] AIVO: €1290/€900, 4 weeks, 40h, #10b981
-- [x] AIME: €2490, 10 weeks, 100h, #8b5cf6
-- [x] 4 features per program (ET + EN)
-- [x] Curriculum weeks with topics (ET + EN)
-- [x] Create `supabase/migrations/20260136_seed_programs.sql`
-
-#### US-140: Programs Server Actions
-**Priority:** P1 | **Type:** Feature | **Hours:** 3
-- [x] `actions/getPrograms.ts`
-- [x] `actions/getProgram.ts`
-- [ ] `actions/getProgramCurriculum.ts`
-- [x] Type-safe with Supabase types
-
----
-
-### PHASE C: Marketing Landing Pages (Days 3-5) — 35h
-
-#### US-141: Programs Route Structure
-**Priority:** P0 | **Type:** Foundation | **Hours:** 4
-- [ ] `app/[locale]/programs/page.tsx` (overview)
-- [ ] `app/[locale]/programs/aiki/page.tsx`
-- [ ] `app/[locale]/programs/aivo/page.tsx`
-- [ ] `app/[locale]/programs/aime/page.tsx`
-- [ ] `app/[locale]/programs/apply/page.tsx`
-- [ ] Programs link in header nav
-
-#### US-142: Landing Page Components
-**Priority:** P1 | **Type:** Components | **Hours:** 12
-- [ ] `components/programs/ProgramHero.tsx`
-- [ ] `components/programs/ProgramFeatures.tsx`
-- [ ] `components/programs/ProgramCurriculum.tsx`
-- [ ] `components/programs/ProgramPricing.tsx`
-- [ ] `components/programs/ProgramFAQ.tsx`
-- [ ] `components/programs/ProgramCTA.tsx`
-- [ ] `components/programs/ProgramComparison.tsx`
-- [ ] DNA View design: dark, glass cards, glowing accents
-
-#### US-143: AIKI Landing Page
-**Priority:** P1 | **Type:** Page | **Hours:** 6
-- [ ] Hero: "Saa AI koolitajaks 6 nädalaga"
-- [ ] Features: T-V-A-P, 4C teaching, portfolio, certificate
-- [ ] Curriculum: Week 0-5
-- [ ] Pricing: €1590 / 3×€563
-- [ ] FAQ: 5-7 questions
-
-#### US-144: AIVO Landing Page
-**Priority:** P1 | **Type:** Page | **Hours:** 5
-- [ ] Hero: "Automatiseeri töövood AI-ga"
-- [ ] Graduate discount banner: 30% = €900
-- [ ] Features: Zapier, Make, OpenAI API
-- [ ] Curriculum: Week 0-4
-- [ ] Dual pricing: full vs graduate
-
-#### US-145: AIME Landing Page
-**Priority:** P1 | **Type:** Page | **Hours:** 5
-- [ ] Hero: "Täielik AI kompetents"
-- [ ] Value comparison: same as grad path
-- [ ] Combined 10-week curriculum
-- [ ] Pricing comparison table
-
-#### US-146: Lead Capture Form
-**Priority:** P1 | **Type:** Feature | **Hours:** 3
-- [ ] `components/programs/LeadCaptureForm.tsx`
-- [ ] Fields: email, name, phone, programs[]
-- [ ] Supabase `program_leads` insert
-- [ ] UTM tracking
-
----
-
 ### PHASE D: Integration & Polish (Day 5)
 
 #### US-111: DNA to Tree Bridge (UI)
-**Priority:** P1 | **Type:** Navigation | **Hours:** 2
-- [ ] "Deep Dive" buttons on DNA cards → Tree nodes
-- [ ] Use `node_metadata.dna_concept_id`
+- [x] Deep Dive buttons on DNA Cards (DONE)
+- [x] Use `node_metadata.dna_concept_id`
 
 #### US-147: Tree → Programs CTAs
-**Priority:** P1 | **Type:** Integration | **Hours:** 2
 - [ ] TreeDetailPanel "Master This Skill" → `/programs/{id}`
 - [ ] Track CTA clicks in `cta_interactions`
 
 #### US-121: Bug Fixes
-**Priority:** P2 | **Type:** Maintenance | **Hours:** 2
 - [ ] Fix `tree-view/page.tsx` imports
 - [ ] DNAComponentCard render logic audit
 - [ ] TreeView organic curved lines
