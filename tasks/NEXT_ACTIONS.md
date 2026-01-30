@@ -1,36 +1,35 @@
-# 🚀 Next Actions Strategy: The Pivot (UX Repair)
+# 🚀 Next Actions Strategy: Guided Paths
 
 **Date:** 2026-01-30
-**Goal:** Fix the Fundamental Flow (DNA -> Seed -> Tree)
-**Motivation:** Focus group feedback indicated cognitive overload and broken metaphors.
+**Goal:** Connect Intent to Navigation (Phase F)
 
 ---
 
 ## 👨‍💻 @ANTIGRAVITY (Lead Architect)
-**Status:** Architecture Pivot.
-**Focus:** Implementing "The Lens" and "The Seed" logic.
+**Status:** Architecture Support.
+**Focus:** Ensuring the Tree component can handle filtering efficiently.
 
-### 1. **UX Architecture (Phase E)**
-*   **Context:** The current "Rushing River" DNA view is unusable for novices.
+### 1. **Tree Logic Support**
+*   **Context:** `TreeView` is currently a monolithic D3/SVG component.
 *   **Tasks:**
-    *   **US-152:** Implement `DNAControlContext` (Global state for flow speed/pause).
-    *   **Refactor:** Update `DNAView` to respect this context (slow down on hover).
-    *   **US-153:** Build `SeedSelectionView` (The "Missing Link" page).
+    *   **Architecture:** If necessary, lift the filtering logic out of the visual component into a hook (`useTreeFilter`).
+    *   **Review:** Ensure the dimming effect is performant (CSS class switching vs re-rendering).
 
 ---
 
 ## 🤖 @SWARM (Agents)
-**Focus:** Visuals & Interaction.
+**Focus:** Implementation of Guided Paths.
 
-### 2. **Visual Components**
-*   **Context:** We need new visuals for the Seed and the Controls.
+### 2. **Phase F: Guided Paths**
+*   **Context:** Users arrive at `/tree-view` with `?intent=builder`.
 *   **Tasks:**
-    *   **Seed Visual:** A pulsing, living seed component (SVG/Framer).
-    *   **Micro-Lessons:** Small popovers for DNA steps (T/V/A/P) explaining what's happening.
+    *   **US-154:** Modify `TreeView.tsx` to highlight nodes based on intent.
+    *   **Visuals:** Add "Pulse" to the start node.
+    *   **Default:** Handle case with no intent.
 
 ---
 
 ## 🚦 Execution Order
 
-1.  **Antigravity** sets up the `DNAControlContext` and slows down the river.
-2.  **Swarm** creates the `SeedSelectionView` components.
+1.  **Swarm** executes `tasks/swarm_phase_f_guided_paths.md`.
+2.  **Antigravity** reviews the PR.
