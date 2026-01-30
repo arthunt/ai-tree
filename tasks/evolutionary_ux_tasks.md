@@ -13,7 +13,7 @@ Transform the static application into a **Biodynamic System** where complexity i
 ### 1. **US-160: DNA Rich Visualizations (Sequential)**
 Work on these strictly in order. Do not start the next until the previous is polished.
 
-*   [ ] **Task 1.1: The Tokenization Slicer**
+*   [x] **Task 1.1: The Tokenization Slicer**
     *   **Context:** `components/dna/DNAInput.tsx` (or new component).
     *   **Visual:** When user types, animate the text splitting into chunks.
     *   **Metaphor:** "Chopping vegetables for a stew."
