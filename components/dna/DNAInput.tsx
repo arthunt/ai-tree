@@ -4,8 +4,11 @@ import { useDNA } from "./DNAContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Play, RefreshCw } from "lucide-react";
 
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+
 export function DNAInput() {
     const { inputText, setInputText, runSimulation, isPlaying, currentStep, resetSimulation } = useDNA();
+    const t = useTranslations('dna.input');
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && !isPlaying && inputText) {
@@ -29,7 +32,7 @@ export function DNAInput() {
                         onChange={(e) => setInputText(e.target.value)}
                         onKeyDown={handleKeyDown}
                         disabled={isPlaying}
-                        placeholder="Type anything (e.g. 'Why is the sky blue?')"
+                        placeholder={t('placeholder')}
                         className="w-full bg-transparent border-none focus:ring-0 text-white placeholder-gray-500 text-lg py-3 px-4 disabled:opacity-50"
                     />
 
@@ -64,7 +67,7 @@ export function DNAInput() {
 
             {/* Helper Text */}
             <div className="mt-3 flex justify-between px-4 text-xs text-brand-teal/60 font-mono">
-                <span>INTERACTIVE MODE</span>
+                <span>{t('interactiveMode')}</span>
                 <AnimatePresence>
                     {isPlaying && (
                         <motion.span
@@ -72,7 +75,7 @@ export function DNAInput() {
                             animate={{ opacity: 1, y: 0 }}
                             key={currentStep}
                         >
-                            STATUS: {currentStep.toUpperCase()}...
+                            {t('status', { step: currentStep.toUpperCase() })}
                         </motion.span>
                     )}
                 </AnimatePresence>

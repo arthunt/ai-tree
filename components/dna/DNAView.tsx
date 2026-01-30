@@ -11,7 +11,12 @@ interface DNAViewProps {
     content?: ConceptTranslation[];
 }
 
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+
+import { GlobalNav } from '@/components/GlobalNav';
+
 export function DNAView({ content = [] }: DNAViewProps) {
+    const t = useTranslations('dna');
     // Map concept IDs to colors
     const colorMap: Record<string, string> = {
         tokenization: 'var(--dna-t)',
@@ -22,6 +27,7 @@ export function DNAView({ content = [] }: DNAViewProps) {
 
     return (
         <DNAProvider>
+            <GlobalNav transparent />
             <div className="relative min-h-screen w-full bg-void overflow-hidden text-white selection:bg-brand-teal selection:text-bg-void">
                 {/* Background Ambient Glow */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -39,12 +45,10 @@ export function DNAView({ content = [] }: DNAViewProps) {
                         className="text-center mb-16 relative z-20"
                     >
                         <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-white to-brand-cyan drop-shadow-[0_0_15px_rgba(56,189,248,0.3)]">
-                            The Mechanism
+                            {t('header.title')}
                         </h1>
                         <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
-                            Every AI thought follows the same <span className="text-white font-medium">4-step journey</span>.
-                            <br className="hidden sm:block" />
-                            From raw text to meaning, and back again.
+                            {t('header.subtitle')}
                         </p>
                     </motion.header>
 

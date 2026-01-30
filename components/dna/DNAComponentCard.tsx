@@ -6,6 +6,7 @@ import { useDNA, DNAStep } from './DNAContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface DNAComponentCardProps {
     title: string;
@@ -19,6 +20,7 @@ export function DNAComponentCard({ title, description, metaphor, color, index }:
     const { currentStep, tokens, vectors, predictions, attentionWeights } = useDNA();
     const params = useParams();
     const locale = params.locale as string;
+    const t = useTranslations('dna.card');
 
     const nodeMapping: Record<number, string> = {
         0: 'tokens',
@@ -37,7 +39,7 @@ export function DNAComponentCard({ title, description, metaphor, color, index }:
 
     const myStep = stepMap[index];
     const isActive = currentStep === myStep;
-    const deepDiveLabel = locale === 'et' ? 'SÜVENE &rarr;' : 'DEEP DIVE &rarr;';
+    const deepDiveLabel = t('deepDive');
 
     return (
         <div className="flex flex-col h-full relative group">

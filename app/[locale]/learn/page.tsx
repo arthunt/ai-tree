@@ -7,6 +7,7 @@ import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglid
 import { useProgress } from '@/lib/useProgress';
 import { Brain, MessageSquare, Database, Bot, SlidersHorizontal, ArrowLeft, Clock, BookOpen, ChevronRight, Check } from 'lucide-react';
 import pathsData from '@/data/learning-paths.json';
+import { GlobalNav } from '@/components/GlobalNav';
 
 const iconMap: Record<string, typeof Brain> = {
   brain: Brain,
@@ -30,15 +31,8 @@ export default function LearnIndexPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50/50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+      <GlobalNav />
       <div className="container mx-auto px-4 max-w-5xl py-8 sm:py-16">
-        {/* Back link */}
-        <Link
-          href={`/${locale}`}
-          className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 mb-8 transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {t('backToHome')}
-        </Link>
 
         {/* Header */}
         <motion.div

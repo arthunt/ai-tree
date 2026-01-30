@@ -1142,5 +1142,25 @@
     "keepExploring": "Keep Exploring",
     "awesome": "Awesome!",
     "certificate": "Certificate of Completion"
+  },
+  "dna": {
+    "header": {
+      "title": "The Mechanism",
+      "subtitle": "Every AI thought follows the same 4-step journey. From raw text to meaning, and back again."
+    },
+    "input": {
+      "placeholder": "Type anything (e.g. 'Why is the sky blue?')",
+      "interactiveMode": "INTERACTIVE MODE",
+      "status": "STATUS: {step}..."
+    },
+    "card": {
+      "deepDive": "DEEP DIVE →"
+    }
+  },
+  "nav": {
+    "tree": "Tree",
+    "mechanism": "Mechanism",
+    "learn": "Programs",
+    "back": "Back"
   }
 }

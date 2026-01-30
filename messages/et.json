@@ -1142,5 +1142,25 @@
     "keepExploring": "Jätka avastamist",
     "awesome": "Vapustav!",
     "certificate": "Lõpetamistunnistus"
+  },
+  "dna": {
+    "header": {
+      "title": "Mehhanism",
+      "subtitle": "Iga AI mõte järgib sama 4-sammulist teekonda. Alates toorest tekstist tähenduseni ja tagasi."
+    },
+    "input": {
+      "placeholder": "Kirjuta midagi (nt 'Miks taevas on sinine?')",
+      "interactiveMode": "INTERAKTIIVNE REŽIIM",
+      "status": "OLEK: {step}..."
+    },
+    "card": {
+      "deepDive": "SÜVENE →"
+    }
+  },
+  "nav": {
+    "tree": "Puu",
+    "mechanism": "Mehhanism",
+    "learn": "Programmid",
+    "back": "Tagasi"
   }
 }
