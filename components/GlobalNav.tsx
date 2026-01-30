@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface GlobalNavProps {
     extraControls?: React.ReactNode;
     transparent?: boolean;
+    locale?: string;
 }
 
 export function GlobalNav({ extraControls, transparent = false }: GlobalNavProps) {
