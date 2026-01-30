@@ -289,24 +289,24 @@ feature_translations      -- title, description (ET + EN)
 program_curriculum        -- week_number, hours, type
 curriculum_translations   -- title, topics[] (ET + EN)
 ```
-- [ ] Create `supabase/migrations/20260135_programs_schema.sql`
-- [ ] Follow existing RLS pattern (public read)
+- [x] Create `supabase/migrations/20260135_programs_schema.sql`
+- [x] Follow existing RLS pattern (public read)
 
 #### US-139: Seed Program Data
 **Priority:** P0 | **Type:** Data | **Hours:** 2
-- [ ] AIKI: €1590, 6 weeks, 60h, #6366f1
-- [ ] AIVO: €1290/€900, 4 weeks, 40h, #10b981
-- [ ] AIME: €2490, 10 weeks, 100h, #8b5cf6
-- [ ] 4 features per program (ET + EN)
-- [ ] Curriculum weeks with topics (ET + EN)
-- [ ] Create `supabase/migrations/20260136_seed_programs.sql`
+- [x] AIKI: €1590, 6 weeks, 60h, #6366f1
+- [x] AIVO: €1290/€900, 4 weeks, 40h, #10b981
+- [x] AIME: €2490, 10 weeks, 100h, #8b5cf6
+- [x] 4 features per program (ET + EN)
+- [x] Curriculum weeks with topics (ET + EN)
+- [x] Create `supabase/migrations/20260136_seed_programs.sql`
 
 #### US-140: Programs Server Actions
 **Priority:** P1 | **Type:** Feature | **Hours:** 3
-- [ ] `actions/getPrograms.ts`
-- [ ] `actions/getProgram.ts`
+- [x] `actions/getPrograms.ts`
+- [x] `actions/getProgram.ts`
 - [ ] `actions/getProgramCurriculum.ts`
-- [ ] Type-safe with Supabase types
+- [x] Type-safe with Supabase types
 
 ---
 
