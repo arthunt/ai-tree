@@ -10,13 +10,15 @@
 
 ## 🟡 In Progress (Sprint 13 Continued)
 
-*   **Tree "Guided Paths" (US-154):** Connecting the Seed intent to the Tree View.
 *   **Documentation:** Updating `AI_TREE_MASTER_REFERENCE.md`.
 
 ---
 
 ## 🟢 Completed (Recent)
 
+*   **Guided Paths (Phase F):**
+    *   **Intent Filtering:** `TreeView` now highlights matches for `builder`/`thinker`.
+    *   **Guide Pulse:** Visual cue for where to start.
 *   **UX Repair (Phase E.1):**
     *   **The Lens:** DNA animation control (slow/pause).
     *   **The Seed:** Intent capture page (`/seed`).
