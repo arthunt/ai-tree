@@ -1,36 +1,34 @@
-"use client";
-
-import { motion } from 'framer-motion';
-import * as Icons from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 import { ProgramFeature } from '@/lib/types';
 
 interface ProgramFeaturesProps {
     features: ProgramFeature[];
     color: string;
+    heading?: string;
 }
 
-export function ProgramFeatures({ features, color }: ProgramFeaturesProps) {
-    // Dynamic icon mapping
-    const getIcon = (iconName: string) => {
-        // @ts-ignore
-        const Icon = Icons[iconName] || Icons.Star;
-        return Icon;
-    };
+function getIcon(name: string): React.ComponentType<{ size?: number; className?: string }> {
+    const key = name.charAt(0).toUpperCase() + name.slice(1).replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+    const Icon = (LucideIcons as Record<string, unknown>)[key] as React.ComponentType<{ size?: number; className?: string }> | undefined;
+    return Icon || LucideIcons.Star;
+}
 
+export function ProgramFeatures({ features, color, heading }: ProgramFeaturesProps) {
     return (
-        <div className="py-20 bg-black/20">
-            <div className="container mx-auto px-4">
+        <section className="py-20 bg-black/20">
+            <div className="container mx-auto px-4 max-w-6xl">
+                {heading && (
+                    <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-12">
+                        {heading}
+                    </h2>
+                )}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {features.map((feature, index) => {
                         const Icon = getIcon(feature.icon);
 
                         return (
-                            <motion.div
-                                key={feature.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
+                            <div
+                                key={feature.id || index}
                                 className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 transition-all group"
                             >
                                 <div
@@ -45,11 +43,11 @@ export function ProgramFeatures({ features, color }: ProgramFeaturesProps) {
                                 <p className="text-sm text-gray-400 leading-relaxed">
                                     {feature.description}
                                 </p>
-                            </motion.div>
+                            </div>
                         );
                     })}
                 </div>
             </div>
-        </div>
+        </section>
     );
 }

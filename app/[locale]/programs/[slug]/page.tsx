@@ -7,16 +7,21 @@ import { ProgramPricing } from '@/components/programs/ProgramPricing';
 import { ProgramFAQList } from '@/components/programs/ProgramFAQ';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import enMessages from '@/messages/en.json';
+import etMessages from '@/messages/et.json';
 
 type Props = {
-    params: {
+    params: Promise<{
         slug: string;
         locale: string;
-    };
+    }>;
 };
 
+const messages: Record<string, typeof enMessages> = { en: enMessages, et: etMessages };
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const program = await getProgram(params.slug, params.locale);
+    const { slug, locale } = await params;
+    const program = await getProgram(slug, locale);
     if (!program) return { title: 'Program Not Found' };
 
     return {
@@ -26,54 +31,70 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProgramPage({ params }: Props) {
-    const program = await getProgram(params.slug, params.locale);
+    const { slug, locale } = await params;
+    const program = await getProgram(slug, locale);
 
     if (!program) {
         notFound();
     }
 
+    const t = messages[locale] ?? messages.en;
+    const p = t.programs;
+
     return (
         <main className="min-h-screen bg-black text-white selection:bg-brand-purple/30 selection:text-white">
-            <GlobalNav locale={params.locale} />
+            <GlobalNav transparent />
 
             <ProgramHero
-                title={program.code} // Using "AIKI" / "AIVO" as the big title
-                tagline={program.full_name} // "Rakenduslik AI..."
-                description={program.tagline || ''}
-                price={(program.price_cents / 100).toLocaleString('et-EE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })}
-                color={program.color}
-                programId={program.id}
-                slug={program.slug}
+                program={program}
+                labels={{
+                    apply: p.hero.apply,
+                    weeks: p.hero.weeks,
+                    hours: p.hero.hours,
+                }}
             />
 
-            {/* Features Grid */}
-            {program.features && (
+            {program.features && program.features.length > 0 && (
                 <ProgramFeatures
                     features={program.features}
                     color={program.color}
+                    heading={p.features.heading}
                 />
             )}
 
-            {/* Detailed Outcomes/Description Area could go here */}
-
-            {/* Curriculum */}
-            {program.curriculum && (
+            {program.curriculum && program.curriculum.length > 0 && (
                 <ProgramCurriculumList
                     curriculum={program.curriculum}
                     color={program.color}
+                    labels={{
+                        heading: p.curriculum.heading,
+                        subtitle: p.curriculum.subtitle,
+                        week: p.curriculum.week,
+                    }}
                 />
             )}
 
-            {/* Pricing / CTA */}
             <ProgramPricing
                 program={program}
-                color={program.color}
+                labels={{
+                    heading: p.pricing.heading,
+                    headingAccent: p.pricing.headingAccent,
+                    benefits: p.pricing.benefits,
+                    guarantee: p.pricing.guarantee,
+                    guaranteeDesc: p.pricing.guaranteeDesc,
+                    totalInvestment: p.pricing.totalInvestment,
+                    vatNote: p.pricing.vatNote,
+                    flexiblePayment: p.pricing.flexiblePayment,
+                    cta: p.pricing.cta,
+                    paymentNote: p.pricing.paymentNote,
+                    graduateDiscount: p.pricing.graduateDiscount,
+                }}
             />
 
-            {/* FAQ */}
-            {program.faq && (
+            {program.faq && program.faq.length > 0 && (
                 <ProgramFAQList
                     faq={program.faq}
+                    heading={p.faq.heading}
                 />
             )}
         </main>

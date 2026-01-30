@@ -1,94 +1,107 @@
-"use client";
-
-import { motion } from 'framer-motion';
-import { ArrowRight, Brain, Zap, Crown } from 'lucide-react';
-import Link from 'next/link';
+import { Program } from '@/lib/types';
+import * as LucideIcons from 'lucide-react';
 
 interface ProgramHeroProps {
-    title: string;
-    tagline: string;
-    description: string;
-    price: string;
-    color: string;
-    programId: string;
-    slug: string;
-    onApply?: () => void;
+    program: Program;
+    labels: {
+        apply: string;
+        weeks: string;
+        hours: string;
+    };
 }
 
-export function ProgramHero({
-    title,
-    tagline,
-    description,
-    price,
-    color,
-    programId
-}: ProgramHeroProps) {
-    const Icons: Record<string, any> = {
-        aiki: Brain,
-        aivo: Zap,
-        aime: Crown
-    };
+function getIcon(name: string): React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }> {
+    const key = name.charAt(0).toUpperCase() + name.slice(1).replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+    const Icon = (LucideIcons as Record<string, unknown>)[key] as React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }> | undefined;
+    return Icon || LucideIcons.Sparkles;
+}
 
-    const Icon = Icons[programId] || Brain;
+export function ProgramHero({ program, labels }: ProgramHeroProps) {
+    const Icon = getIcon(program.icon || 'sparkles');
+    const price = new Intl.NumberFormat('et-EE', {
+        style: 'currency',
+        currency: 'EUR',
+        maximumFractionDigits: 0,
+    }).format(program.price_cents / 100);
 
     return (
-        <div className="relative overflow-hidden py-24 sm:py-32">
-            {/* Ambient Background */}
+        <section className="relative overflow-hidden py-24 md:py-32">
+            {/* Background glow */}
             <div
-                className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-20 pointer-events-none"
+                className="absolute inset-0 opacity-20 pointer-events-none"
                 style={{
-                    background: `radial-gradient(circle at 50% 0%, ${color}, transparent 70%)`
+                    background: `radial-gradient(ellipse 80% 60% at 50% 40%, ${program.color}40, transparent)`,
                 }}
             />
+            <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-10 blur-3xl pointer-events-none"
+                style={{ backgroundColor: program.color }}
+            />
 
-            <div className="container mx-auto px-4 relative z-10 text-center">
-                <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    className="inline-flex items-center justify-center p-4 rounded-2xl bg-white/5 border border-white/10 mb-8 backdrop-blur-sm"
+            <div className="relative container mx-auto px-4 max-w-5xl text-center">
+                {/* Icon */}
+                <div
+                    className="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-8 backdrop-blur-sm"
+                    style={{
+                        background: `${program.color}15`,
+                        border: `2px solid ${program.color}40`,
+                    }}
                 >
-                    <Icon size={48} style={{ color }} />
-                </motion.div>
+                    <Icon size={40} style={{ color: program.color }} />
+                </div>
 
-                <motion.h1
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.1 }}
-                    className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 mb-6 tracking-tight"
-                >
-                    {title}
-                </motion.h1>
-
-                <motion.p
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-xl md:text-2xl text-brand-beige/80 max-w-2xl mx-auto mb-10 font-light"
-                >
-                    {tagline}
-                </motion.p>
-
-                <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-4"
-                >
-                    <Link
-                        href="#apply"
-                        className="group relative px-8 py-4 bg-white text-black font-bold rounded-full text-lg hover:bg-gray-100 transition-all flex items-center gap-2"
+                {/* Code badge */}
+                <div className="mb-4">
+                    <span
+                        className="inline-block px-3 py-1 rounded-full text-xs font-mono tracking-widest uppercase"
+                        style={{
+                            color: program.color,
+                            backgroundColor: `${program.color}15`,
+                            border: `1px solid ${program.color}30`,
+                        }}
                     >
-                        Apply Now
-                        <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                        <span className="absolute -top-3 -right-3 bg-red-500 text-white text-xs px-2 py-1 rounded-full animate-bounce">
-                            Limited Spots
-                        </span>
-                    </Link>
-                    <div className="text-white/60 text-sm">
-                        Starting from <span className="text-white font-mono text-lg ml-1">{price}</span>
-                    </div>
-                </motion.div>
+                        {program.code}
+                    </span>
+                </div>
+
+                {/* Title */}
+                <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
+                    {program.full_name || program.name}
+                </h1>
+
+                {/* Tagline */}
+                <p className="text-xl md:text-2xl text-white/70 max-w-2xl mx-auto mb-8 leading-relaxed">
+                    {program.tagline}
+                </p>
+
+                {/* Meta badges */}
+                <div className="flex flex-wrap items-center justify-center gap-4 mb-10 text-sm text-white/50">
+                    <span className="flex items-center gap-1.5">
+                        <LucideIcons.Calendar className="w-4 h-4" />
+                        {program.duration_weeks} {labels.weeks}
+                    </span>
+                    <span className="w-1 h-1 rounded-full bg-white/30" />
+                    <span className="flex items-center gap-1.5">
+                        <LucideIcons.Clock className="w-4 h-4" />
+                        {program.academic_hours} {labels.hours}
+                    </span>
+                    <span className="w-1 h-1 rounded-full bg-white/30" />
+                    <span className="font-mono text-white/70">{price}</span>
+                </div>
+
+                {/* CTA */}
+                <a
+                    href="#pricing"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-lg font-semibold text-white transition-all hover:scale-105 hover:shadow-2xl"
+                    style={{
+                        background: `linear-gradient(135deg, ${program.color}, ${program.color}cc)`,
+                        boxShadow: `0 8px 32px ${program.color}40`,
+                    }}
+                >
+                    {labels.apply}
+                    <LucideIcons.ArrowRight className="w-5 h-5" />
+                </a>
             </div>
-        </div>
+        </section>
     );
 }

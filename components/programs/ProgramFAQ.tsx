@@ -7,16 +7,17 @@ import { ProgramFAQ } from '@/lib/types';
 
 interface ProgramFAQListProps {
     faq: ProgramFAQ[];
+    heading: string;
 }
 
-export function ProgramFAQList({ faq }: ProgramFAQListProps) {
+export function ProgramFAQList({ faq, heading }: ProgramFAQListProps) {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <div className="py-20 bg-zinc-950">
+        <section className="py-20">
             <div className="container mx-auto px-4 max-w-3xl">
                 <h2 className="text-3xl font-bold text-center text-white mb-12">
-                    Frequently Asked Questions
+                    {heading}
                 </h2>
 
                 <div className="space-y-4">
@@ -29,11 +30,11 @@ export function ProgramFAQList({ faq }: ProgramFAQListProps) {
                                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                                 className="w-full p-6 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
                             >
-                                <span className="font-semibold text-white">{item.question}</span>
+                                <span className="font-semibold text-white pr-4">{item.question}</span>
                                 {openIndex === index ? (
-                                    <Minus size={20} className="text-gray-400" />
+                                    <Minus size={20} className="text-gray-400 flex-shrink-0" />
                                 ) : (
-                                    <Plus size={20} className="text-gray-400" />
+                                    <Plus size={20} className="text-gray-400 flex-shrink-0" />
                                 )}
                             </button>
 
@@ -55,6 +56,6 @@ export function ProgramFAQList({ faq }: ProgramFAQListProps) {
                     ))}
                 </div>
             </div>
-        </div>
+        </section>
     );
 }

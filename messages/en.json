@@ -1161,6 +1161,58 @@
       "exploring": "Exploring deeper..."
     }
   },
+  "programs": {
+    "catalog": {
+      "title": "Choose Your Path",
+      "subtitle": "From understanding the mechanism to building automation. Select the program that fits your goals.",
+      "duration": "Duration",
+      "weeks": "Weeks",
+      "effort": "Effort",
+      "totalHours": "h Total",
+      "viewDetails": "View Details",
+      "bestValue": "Best Value",
+      "compare": "Compare Programs",
+      "compareFeature": "Feature",
+      "comparePrice": "Price",
+      "compareDuration": "Duration",
+      "compareHours": "Hours",
+      "compareLevel": "Level"
+    },
+    "hero": {
+      "apply": "Apply Now",
+      "weeks": "weeks",
+      "hours": "hours"
+    },
+    "features": {
+      "heading": "What You'll Learn"
+    },
+    "curriculum": {
+      "heading": "Week-by-Week Curriculum",
+      "subtitle": "A structured journey from foundation to mastery",
+      "week": "Week"
+    },
+    "pricing": {
+      "heading": "Invest in",
+      "headingAccent": "Your Future",
+      "benefits": [
+        "Lifetime access to course materials",
+        "Certificate of completion",
+        "Community access & networking",
+        "Hands-on projects & exercises"
+      ],
+      "guarantee": "30-Day Guarantee",
+      "guaranteeDesc": "Not satisfied? Full refund within 30 days, no questions asked.",
+      "totalInvestment": "Total Investment",
+      "vatNote": "VAT not included",
+      "flexiblePayment": "Flexible payment available",
+      "cta": "Enroll Now",
+      "paymentNote": "Secure payment. Start learning immediately.",
+      "graduateDiscount": "Graduate Discount"
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions"
+    }
+  },
   "nav": {
     "tree": "Tree",
     "mechanism": "Mechanism",

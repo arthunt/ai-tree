@@ -1161,6 +1161,58 @@
       "exploring": "Uurime sügavamale..."
     }
   },
+  "programs": {
+    "catalog": {
+      "title": "Vali Oma Tee",
+      "subtitle": "Mehhanismi mõistmisest automatiseerimise ehitamiseni. Vali programm, mis sobib sinu eesmärkidega.",
+      "duration": "Kestus",
+      "weeks": "Nädalat",
+      "effort": "Maht",
+      "totalHours": "h Kokku",
+      "viewDetails": "Vaata Lähemalt",
+      "bestValue": "Parim Valik",
+      "compare": "Võrdle Programme",
+      "compareFeature": "Omadus",
+      "comparePrice": "Hind",
+      "compareDuration": "Kestus",
+      "compareHours": "Tunnid",
+      "compareLevel": "Tase"
+    },
+    "hero": {
+      "apply": "Kandideeri",
+      "weeks": "nädalat",
+      "hours": "tundi"
+    },
+    "features": {
+      "heading": "Mida Õpid"
+    },
+    "curriculum": {
+      "heading": "Nädala-nädala Õppekava",
+      "subtitle": "Struktureeritud teekond alustest meisterlikkuseni",
+      "week": "Nädal"
+    },
+    "pricing": {
+      "heading": "Investeeri",
+      "headingAccent": "Oma Tulevikku",
+      "benefits": [
+        "Eluaegne ligipääs kursuse materjalidele",
+        "Lõputunnistus",
+        "Kogukonna ligipääs ja võrgustik",
+        "Praktilised projektid ja harjutused"
+      ],
+      "guarantee": "30-Päeva Garantii",
+      "guaranteeDesc": "Pole rahul? Täielik tagasimakse 30 päeva jooksul, ilma küsimusteta.",
+      "totalInvestment": "Koguinvesteering",
+      "vatNote": "Käibemaks ei sisaldu",
+      "flexiblePayment": "Paindlik maksmine saadaval",
+      "cta": "Registreeru",
+      "paymentNote": "Turvaline makse. Alusta õppimist kohe.",
+      "graduateDiscount": "Lõpetaja Soodustus"
+    },
+    "faq": {
+      "heading": "Korduma Kippuvad Küsimused"
+    }
+  },
   "nav": {
     "tree": "Puu",
     "mechanism": "Mehhanism",

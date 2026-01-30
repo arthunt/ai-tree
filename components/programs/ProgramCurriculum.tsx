@@ -1,44 +1,45 @@
-"use client";
-
-import { motion } from 'framer-motion';
 import { ProgramCurriculum } from '@/lib/types';
-import { Calendar, Clock } from 'lucide-react';
+import { Clock } from 'lucide-react';
 
-interface ProgramCurriculumProps {
+interface ProgramCurriculumListProps {
     curriculum: ProgramCurriculum[];
     color: string;
+    labels: {
+        heading: string;
+        subtitle: string;
+        week: string;
+    };
 }
 
-export function ProgramCurriculumList({ curriculum, color }: ProgramCurriculumProps) {
+export function ProgramCurriculumList({ curriculum, color, labels }: ProgramCurriculumListProps) {
     return (
-        <div className="py-20">
+        <section className="py-20">
             <div className="container mx-auto px-4 max-w-4xl">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500 mb-4">
-                        Curriculum
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                        {labels.heading}
                     </h2>
-                    <p className="text-gray-400">Step-by-step to mastery</p>
+                    <p className="text-gray-400">{labels.subtitle}</p>
                 </div>
 
                 <div className="space-y-4">
                     {curriculum.map((week, index) => (
-                        <motion.div
+                        <div
                             key={index}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.05 }}
                             className="group relative bg-white/5 border border-white/5 rounded-2xl overflow-hidden hover:bg-white/10 transition-colors"
                         >
-                            <div className="absolute left-0 top-0 w-1 h-full transition-all group-hover:h-full h-0" style={{ backgroundColor: color }} />
+                            <div
+                                className="absolute left-0 top-0 w-1 h-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                style={{ backgroundColor: color }}
+                            />
 
                             <div className="p-6 md:p-8 flex flex-col md:flex-row gap-6">
-                                <div className="flex-shrink-0 md:w-48 flex flex-col justify-center border-r border-white/5 pr-6">
+                                <div className="flex-shrink-0 md:w-48 flex flex-col justify-center md:border-r border-white/5 md:pr-6">
                                     <span
                                         className="text-xs font-bold uppercase tracking-wider mb-1"
                                         style={{ color }}
                                     >
-                                        Week {week.week_number}
+                                        {labels.week} {week.week_number}
                                     </span>
                                     <div className="flex items-center gap-2 text-white/50 text-sm mt-2">
                                         <Clock size={14} />
@@ -49,7 +50,7 @@ export function ProgramCurriculumList({ curriculum, color }: ProgramCurriculumPr
                                 </div>
 
                                 <div className="flex-grow">
-                                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-white transition-colors">
+                                    <h3 className="text-xl font-bold text-white mb-2">
                                         {week.title}
                                     </h3>
                                     {week.subtitle && (
@@ -61,7 +62,7 @@ export function ProgramCurriculumList({ curriculum, color }: ProgramCurriculumPr
                                         {week.topics?.map((topic, i) => (
                                             <span
                                                 key={i}
-                                                className="px-3 py-1 bg-black/30 rounded-full text-xs text-brand-beige/70 border border-white/5"
+                                                className="px-3 py-1 bg-black/30 rounded-full text-xs text-white/60 border border-white/5"
                                             >
                                                 {topic}
                                             </span>
@@ -69,10 +70,10 @@ export function ProgramCurriculumList({ curriculum, color }: ProgramCurriculumPr
                                     </div>
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
