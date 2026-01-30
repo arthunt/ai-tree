@@ -111,7 +111,7 @@ export function DNAFlowDiagram() {
                 {/* Signal Packets (Moving Dots) */}
                 {currentStep === 'vectorizing' && (
                     <motion.circle r="4" fill="white" filter="url(#glow)">
-                        <motion.animateMotion
+                        <animateMotion
                             path={`M ${positions.tokenization}% 50% L ${positions.vectorizing}% 50%`}
                             dur="2s"
                             repeatCount="indefinite"
@@ -120,7 +120,7 @@ export function DNAFlowDiagram() {
                 )}
                 {currentStep === 'attention' && (
                     <motion.circle r="4" fill="white" filter="url(#glow)">
-                        <motion.animateMotion
+                        <animateMotion
                             path={`M ${positions.vectorizing}% 50% L ${positions.attention}% 50%`}
                             dur="3s" // Slower for complexity
                             repeatCount="indefinite"
@@ -129,7 +129,7 @@ export function DNAFlowDiagram() {
                 )}
                 {currentStep === 'prediction' && (
                     <motion.circle r="4" fill="white" filter="url(#glow)">
-                        <motion.animateMotion
+                        <animateMotion
                             path={`M ${positions.attention}% 50% L ${positions.prediction}% 50%`}
                             dur="1s" // Fast prediction
                             repeatCount="indefinite"
