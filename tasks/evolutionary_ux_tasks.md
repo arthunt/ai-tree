@@ -19,17 +19,17 @@ Work on these strictly in order. Do not start the next until the previous is pol
     *   **Metaphor:** "Chopping vegetables for a stew."
     *   **Action:** Replace the static text display with a framer-motion staged animation.
 
-*   [ ] **Task 1.2: The Vector Map**
+*   [x] **Task 1.2: The Vector Map**
     *   **Context:** New Component `components/dna/VectorMap.tsx`.
     *   **Visual:** A 2D SVG plot. Randomly place "King" and "Queen" close together, and "Banana" far away.
     *   **Key Concept:** "Meaning is Distance."
 
-*   [ ] **Task 1.3: The Attention Spotlight**
+*   [x] **Task 1.3: The Attention Spotlight**
     *   **Context:** `components/dna/AttentionVis.tsx`.
     *   **Visual:** Draw curved bezier lines between tokens. Thickness = Importance.
     *   **Action:** Show how "Bank" connects to "River".
 
-*   [ ] **Task 1.4: The Probability Bar Chart**
+*   [x] **Task 1.4: The Probability Bar Chart**
     *   **Context:** `components/dna/PredictionVis.tsx`.
     *   **Visual:** Simple bar chart of top 3 next tokens.
     *   **Action:** Animate a "Strikethrough" on the wrong choices and a "Highlight" on the winner.
