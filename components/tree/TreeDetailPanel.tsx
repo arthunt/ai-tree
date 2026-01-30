@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Calendar, FileText, Sparkles, GraduationCap } from 'lucide-react';
 import { TreeContentSimple } from '@/actions/getTreeContent';
 import Link from 'next/link';
-import { trackProgramInterest } from '@/lib/analytics';
 
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
@@ -132,7 +131,6 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                                 </p>
                                 <Link
                                     href={`/programs/${node.relatedProgramId}`}
-                                    onClick={() => trackProgramInterest(node.relatedProgramId!, 'tree-detail')}
                                     className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-700 dark:text-indigo-300 hover:text-indigo-800 dark:hover:text-white transition-colors"
                                 >
                                     {t('viewProgramLabel')} <ExternalLink className="w-4 h-4" />

@@ -8,12 +8,14 @@ export interface TreeContentSimple {
     parentId: string | null;
     title: string;
     description?: string;
+    significance?: string;
     type: 'root' | 'trunk' | 'branch' | 'leaf';
 
     // Metadata (Enrichment)
     year?: number;
     motif?: string;
     paper?: string;
+    paperUrl?: string;
 
     // Marketing (Swarm)
     relatedProgramId?: 'aiki' | 'aivo' | 'aime' | null;
@@ -42,13 +44,15 @@ export async function getTreeContent(locale: string = 'en'): Promise<TreeContent
                 parent_id,
                 type,
                 node_translations!inner (
-                    title,
-                    explanation
+                    display_name,
+                    description,
+                    significance
                 ),
                 node_metadata (
                     year_introduced,
                     visual_motif,
                     key_paper_title,
+                    key_paper_url,
                     related_program_id,
                     marketing_hook_en,
                     marketing_hook_et
@@ -61,20 +65,31 @@ export async function getTreeContent(locale: string = 'en'): Promise<TreeContent
             return MOCK_TREE;
         }
 
+        // DB type → UI type mapping
+        const typeMap: Record<string, TreeContentSimple['type']> = {
+            root: 'root',
+            era: 'trunk',
+            architecture: 'branch',
+            model: 'leaf',
+        };
+
         // Map to flat structure
         return nodes.map((n: any) => {
+            const trans = n.node_translations[0] || {};
             const meta = n.node_metadata?.[0] || {};
             return {
                 id: n.id,
                 parentId: n.parent_id,
-                title: n.node_translations[0]?.title || n.id,
-                description: n.node_translations[0]?.explanation,
-                type: n.type || 'branch',
+                title: trans.display_name || n.id,
+                description: trans.description,
+                significance: trans.significance,
+                type: typeMap[n.type] || 'branch',
 
                 // Metadata
                 year: meta.year_introduced,
                 motif: meta.visual_motif,
                 paper: meta.key_paper_title,
+                paperUrl: meta.key_paper_url,
 
                 // Marketing
                 relatedProgramId: meta.related_program_id,

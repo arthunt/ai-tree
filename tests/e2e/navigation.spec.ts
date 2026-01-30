@@ -1,5 +1,49 @@
 import { test, expect } from '@playwright/test';
 
+test.describe('Seed Flow Tests', () => {
+  test('should display three path choices on /seed', async ({ page }) => {
+    await page.goto('/en/seed');
+    await page.waitForLoadState('networkidle');
+
+    // Should show the seed page with 3 path buttons
+    const pathButtons = page.locator('button').filter({ hasText: /builder|thinker|explorer/i });
+    await expect(pathButtons).toHaveCount(3);
+  });
+
+  test('builder path should navigate to tree-view with intent', async ({ page }) => {
+    await page.goto('/en/seed');
+    await page.waitForLoadState('networkidle');
+
+    const builderButton = page.locator('button').filter({ hasText: /builder/i }).first();
+    if (await builderButton.count() > 0) {
+      await builderButton.click();
+      await expect(page).toHaveURL(/\/en\/tree-view\?intent=builder/, { timeout: 5000 });
+    }
+  });
+
+  test('thinker path should navigate to tree-view with intent', async ({ page }) => {
+    await page.goto('/en/seed');
+    await page.waitForLoadState('networkidle');
+
+    const thinkerButton = page.locator('button').filter({ hasText: /thinker/i }).first();
+    if (await thinkerButton.count() > 0) {
+      await thinkerButton.click();
+      await expect(page).toHaveURL(/\/en\/tree-view\?intent=thinker/, { timeout: 5000 });
+    }
+  });
+
+  test('explorer path should navigate to tree-view with intent', async ({ page }) => {
+    await page.goto('/en/seed');
+    await page.waitForLoadState('networkidle');
+
+    const explorerButton = page.locator('button').filter({ hasText: /explorer/i }).first();
+    if (await explorerButton.count() > 0) {
+      await explorerButton.click();
+      await expect(page).toHaveURL(/\/en\/tree-view\?intent=explorer/, { timeout: 5000 });
+    }
+  });
+});
+
 test.describe('Navigation Tests', () => {
   test('should open concept lightbox when clicking a concept', async ({ page }) => {
     await page.goto('/et/');
