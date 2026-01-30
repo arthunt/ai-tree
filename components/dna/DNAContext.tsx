@@ -63,44 +63,87 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         return text.trim().split(/\s+/).filter(t => t.length > 0);
     }, []);
 
-    // Simple "Toy" Vectorizer (Random numbers)
+    // Smart Mock Vectorizer
     const vectorize = useCallback((tokens: string[]) => {
-        return tokens.map(() => [Math.random(), Math.random(), Math.random()]);
+        return tokens.map(t => {
+            const lower = t.toLowerCase();
+            // Cluster 1: Royalty
+            if (['king', 'queen', 'prince', 'princess', 'royal'].some(k => lower.includes(k))) {
+                return [0.7 + (Math.random() * 0.1), 0.7 + (Math.random() * 0.1)];
+            }
+            // Cluster 2: Fruit/Nature
+            if (['apple', 'banana', 'fruit', 'tree', 'forest'].some(k => lower.includes(k))) {
+                return [0.2 + (Math.random() * 0.1), 0.2 + (Math.random() * 0.1)];
+            }
+            // Cluster 3: AI
+            if (['ai', 'intelligence', 'robot', 'future'].some(k => lower.includes(k))) {
+                return [0.8 + (Math.random() * 0.1), 0.2 + (Math.random() * 0.1)];
+            }
+            // Random scatter
+            return [Math.random(), Math.random()];
+        });
     }, []);
 
-    // Simple "Toy" Attention (Random connections)
+    // Smart Mock Attention
     const calculateAttention = useCallback((tokens: string[]) => {
         const weights = [];
         for (let i = 1; i < tokens.length; i++) {
+            const current = tokens[i].toLowerCase();
             for (let j = Math.max(0, i - 3); j < i; j++) {
-                if (Math.random() > 0.3) {
-                    weights.push({
-                        fromIndex: i,
-                        toIndex: j,
-                        strength: Math.random()
-                    });
+                const prev = tokens[j].toLowerCase();
+                let strength = Math.random() * 0.3; // Low base noise
+
+                // Strong Connections
+                if (prev === 'artificial' && current === 'intelligence') strength = 0.95;
+                if (prev === 'machine' && current === 'learning') strength = 0.95;
+                if (prev === 'large' && current === 'language') strength = 0.95;
+                if (prev === 'neural' && current === 'network') strength = 0.95;
+                if (prev === 'bank' && (current === 'account' || current === 'river')) strength = 0.8;
+
+                if (strength > 0.4) {
+                    weights.push({ fromIndex: i, toIndex: j, strength });
                 }
             }
         }
-        return weights;
+        return weights.sort((a, b) => b.strength - a.strength); // Strongest first
     }, []);
 
-    // Simple "Toy" Predictor
+    // Smart Mock Predictor
     const predict = useCallback(() => {
-        const candidates = ['sky', 'blue', 'future', 'dream', 'code', 'human', 'ai'];
-        const probs = [];
-        let remaining = 1.0;
-        for (let i = 0; i < 4; i++) {
-            const p = Math.random() * (remaining * 0.8);
-            remaining -= p;
-            probs.push({
-                token: candidates[Math.floor(Math.random() * candidates.length)],
-                probability: p
-            });
+        // Context-aware predictions based on last token (mock)
+        const lastToken = tokens.length > 0 ? tokens[tokens.length - 1].toLowerCase() : "";
+        let candidates = [
+            { token: 'and', probability: 0.1 },
+            { token: 'the', probability: 0.1 },
+            { token: 'is', probability: 0.1 },
+            { token: 'future', probability: 0.05 }
+        ];
+
+        // Override for specific contexts
+        if (lastToken === 'artificial') {
+            candidates = [
+                { token: 'intelligence', probability: 0.92 },
+                { token: 'flower', probability: 0.02 },
+                { token: 'flavor', probability: 0.01 },
+                { token: 'selection', probability: 0.05 }
+            ];
+        } else if (lastToken === 'machine') {
+            candidates = [
+                { token: 'learning', probability: 0.88 },
+                { token: 'gun', probability: 0.05 },
+                { token: 'turning', probability: 0.02 },
+                { token: 'washable', probability: 0.05 }
+            ];
+        } else if (lastToken === 'jingle') {
+            candidates = [
+                { token: 'bells', probability: 0.99 },
+                { token: 'balls', probability: 0.005 },
+                { token: 'smells', probability: 0.005 }
+            ];
         }
-        probs.push({ token: "...", probability: remaining });
-        return probs.sort((a, b) => b.probability - a.probability);
-    }, []);
+
+        return candidates.sort((a, b) => b.probability - a.probability);
+    }, [tokens]);
 
     const runSimulation = useCallback(() => {
         if (!inputText) return;

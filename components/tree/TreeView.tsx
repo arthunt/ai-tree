@@ -55,6 +55,10 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data.length]); // Only run once on data load
 
+    // Data Ref for Zoom Closure
+    const dataRef = useRef(data);
+    useEffect(() => { dataRef.current = data; }, [data]);
+
     // Zoom Logic
     const zoomBehavior = useMemo(() => {
         return d3.zoom<SVGSVGElement, unknown>()
@@ -63,8 +67,58 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
                 if (gRef.current) {
                     d3.select(gRef.current).attr('transform', event.transform);
                 }
+            })
+            .on('end', (event) => {
+                const k = event.transform.k;
+
+                // SEMANTIC ZOOM (LOD Triggers)
+                if (k < 0.5) {
+                    // Zoom Out -> Go to SPROUT (LOD 2)
+                    // Collapse Trunks and Branches
+                    const newSet = new Set<string>();
+                    dataRef.current.forEach(node => {
+                        if (node.type === 'trunk' || node.type === 'branch') {
+                            newSet.add(node.id);
+                        }
+                    });
+
+                    if (newSet.size > 0) {
+                        setCollapsedIds(prev => {
+                            // Only update if significantly different to avoid thrashing?
+                            // Simple check: strict equality of size? 
+                            // Let's just set it. React batched updates are fine.
+                            // But we want to avoid re-collapsing if already collapsed.
+                            // Let's check size.
+                            if (prev.size === newSet.size) return prev;
+                            return newSet;
+                        });
+                    }
+
+                } else if (k > 1.2) {
+                    // Zoom In -> Go to TREE (LOD 3)
+                    // Expand Trunks (so Branches are visible), but keep Branches collapsed (Leaves hidden)?
+                    // Or Expand Trunks AND Branches? 
+                    // "Auto-expand visible nodes to LOD 3" -> Show Branches. 
+                    // So we must UNCLEAR 'trunk' nodes from the set.
+
+                    setCollapsedIds(prev => {
+                        const next = new Set(prev);
+                        let changed = false;
+
+                        dataRef.current.forEach(node => {
+                            if (node.type === 'trunk') {
+                                if (next.has(node.id)) {
+                                    next.delete(node.id);
+                                    changed = true;
+                                }
+                            }
+                        });
+
+                        return changed ? next : prev;
+                    });
+                }
             });
-    }, []);
+    }, []); // Empty deps to keep zoom instance stable
 
     useEffect(() => {
         if (!svgRef.current) return;
