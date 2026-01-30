@@ -1,37 +1,40 @@
 # 🚀 Next Actions Strategy: The Divide & Conquer Plan
 
 **Date:** 2026-01-30
-**Goal:** Marketing Landing Pages (Phase C) & Programs UI
+**Goal:** Lead Capture & Checkout Flow (Phase D)
 
 ---
 
 ## 👨‍💻 @ANTIGRAVITY (Lead Architect)
-**Status:** Phase B (Schema) Complete. Support Mode.
+**Status:** Phase C (Landing Pages) review complete.
+**Next Focus:** Schema for Leads & Admin Strategy.
 
-### 1. **Oversight & Review**
-*   **Context:** The Database Schema is live (tables: `programs`, `curriculum`, `features`).
-*   **Role:** Review Swarm's UI implementation for best practices and performance.
+### 1. **Data Architecture (Phase D)**
+*   **Context:** We are capturing interest. We need to store it safely.
+*   **Tasks:**
+    *   **US-146:** Design `leads` table schema.
+    *   **Security:** Ensure RLS allows insert-only, read-by-admin.
 
 ---
 
 ## 🤖 @SWARM (Agents)
-**Focus:** UI Implementation, Server Components, Design System.
+**Focus:** Frontend Forms & Interactions.
 
-### 2. **Marketing Landing Pages (Phase C)**
-*   **Context:** We have the data (`getPrograms`), now we need the pages to sell them.
+### 2. **Lead Capture Implementation (Phase D)**
+*   **Context:** The "Apply Now" buttons are dead links.
 *   **Tasks:**
-    *   **US-141 (Routing):** Create `/programs`, `/programs/aiki`, `/programs/aivo`, `/programs/aime`.
-    *   **US-142 (Components):** Build `ProgramHero`, `ProgramFeatures`, `ProgramCurriculum`, `ProgramPricing`.
-    *   **Design:** "Dark Glass" aesthetic. High-end. Same vibe as DNA View.
-    *   **Wiring:** Use `getPrograms` action to fetch real data + `useTranslations` for UI labels.
+    *   **US-147 (UI):** Create `LeadCaptureForm` component (Dialog/Modal preferred).
+    *   **US-148 (Action):** Implement `submitLead` server action with validation (Zod).
+    *   **Experience:** Upon success, show "Confetti" or "Welcome" state.
+    *   **Wiring:** Connect `ProgramPricing` buttons to open this form.
 
-### 3. **Lead Capture (Growth)**
-*   **Tasks:**
-    *   **US-146:** Create a `LeadCaptureForm` (Email, Phone, Intent) for the "Apply" flow.
+### 3. **Interactive "Seeds" (Future)**
+*   **Context:** After applying, give them a taste of the content.
+*   **Idea:** Unlocking a specific "seed" node in the tree based on program interest.
 
 ---
 
 ## 🚦 Execution Order
 
-1.  **Swarm** spins up for **Phase C (Landing Pages)** immediately using the new `getPrograms` action.
-2.  **Swarm** reads `tasks/swarm_phase_c_landing_pages.md` for specific component specs.
+1.  **Antigravity** creates `leads` migration.
+2.  **Swarm** implements `LeadCaptureForm` + Server Action.
