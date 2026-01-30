@@ -32,9 +32,6 @@ export function LanguageProvider({ children, initialLocale }: LanguageProviderPr
     }
   }, [params.locale]);
 
-  // Also set on initial mount
-  setLanguageTag(currentLocale);
-
   const setLocale = useCallback((newLocale: AvailableLanguageTag) => {
     // Update ParaglideJS language tag
     setLanguageTag(newLocale);

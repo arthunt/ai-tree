@@ -6,11 +6,8 @@ export const metadata = {
     description: 'Explore the fundamental building blocks of Artificial Intelligence.',
 };
 
-interface PageProps {
-    params: { locale: string };
-}
-
-export default async function DNAPage({ params }: PageProps) {
-    const content = await getDNAContent(params.locale);
+export default async function DNAPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    const content = await getDNAContent(locale);
     return <DNAView content={content} />;
 }
