@@ -209,16 +209,45 @@
 
 ---
 
-## Active Sprint: Sprint 13 — ParaglideJS + Supabase CMS + Marketing Pages
+## Active Sprint: Sprint 13 — UX Repair & "The Seed" (Pivot)
 
 > **Priority:** P0-Critical
-> **Goal:** 1) Migrate next-intl → ParaglideJS, 2) Programs in Supabase CMS, 3) Marketing landing pages
-> **Rationale:** Type-safe i18n, compile-time optimization, "headless CMS" architecture
-> **Pricing:** AIKI €1590 | AIVO €1290 (€900 grads) | AIME €2490
+> **Goal:** Fix the "Rushing River" problem, implement "The Seed" intent capture, and simplify Tree navigation.
+> **Rationale:** "Flashy" features don't matter if users are confused in the first 10 seconds.
+> **Focus:** Usability > Features.
 
 ---
 
-### PHASE A: ParaglideJS Migration (Days 1-2) — 25h
+### PHASE E: UX & Flow Repair (New Priority)
+
+#### US-152: DNA Animation Control ("The Lens")
+**Priority:** P0 | **Type:** UX | **Hours:** 6
+- [ ] Slow down default animation speed (0.5x).
+- [ ] "Hover to Pause/Investigate" interaction.
+- [ ] Click opens a "Micro-Lesson" modal for T/V/A/P steps.
+- [ ] Explicit "Play/Pause" controls if needed.
+
+#### US-153: "The Seed" Intent Capture
+**Priority:** P0 | **Type:** New Feature | **Hours:** 8
+- [ ] Create a new intermediate view between DNA and Tree.
+- [ ] Visual: Single pulsing seed.
+- [ ] Interaction: three choices ("Build", "Teach", "Explore").
+- [ ] Outcome: Highlights specific path in the Tree based on choice.
+
+#### US-154: Tree "Guided Paths"
+**Priority:** P1 | **Type:** UX | **Hours:** 6
+- [ ] "Dim" unrelated nodes based on Seed choice.
+- [ ] "Next Step" pulsing indicator on the Tree.
+- [ ] Simplify initial zoom level (don't show everything at once).
+
+---
+
+### DEPRECATED / MOVED TO P2 (Was Phase F)
+
+#### Phase F: Polish & Cleanup
+- [ ] Mobile responsiveness (US-150)
+- [ ] Localization QA (US-151)
+- [ ] Cleanup legacy files
 
 #### US-130: ParaglideJS Setup (DONE)
 - [x] Update `project.inlang/settings.json` with correct plugins
