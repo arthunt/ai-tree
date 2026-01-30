@@ -156,12 +156,37 @@ export function DNAComponentCard({ title, description, metaphor, color, index }:
                                 >
                                     {description}
                                 </motion.p>
-                                <button
-                                    className="mt-6 text-sm font-semibold text-brand-teal hover:text-brand-cyan transition-colors"
-                                    type="button"
+                                import Link from 'next/link';
+                                import {useParams} from 'next/navigation';
+
+                                // ... inside component
+                                const params = useParams();
+                                const locale = params.locale as string;
+
+                                const nodeMapping: Record<number, string> = {
+                                    0: 'tokenization-process', // Tokenization
+        1: 'word2vec',             // Vectorization -> Embeddings
+        2: 'transformer',          // Attention -> Transformer (using 'transformer' from mock/db existing, assuming 'attention-paper' might be content node)
+                                // Wait, Swarm migration used 'attention-paper'. I should stick to that if possible, 
+                                // BUT 'transformer' is the main node I have in Mock/DB usually. 
+                                // Let's use 'transformer' for now as it's safer, or I add 'attention-paper' to Mock.
+                                // Swarm migration: UPDATE node_metadata WHERE node_id = 'attention-paper'. 
+                                // This implies 'attention-paper' node exists.
+                                // I'll use 'transformer' for Attention as it's the main parent node usually. 
+                                // Actually, let's use the IDs Swarm defined: 'attention-paper' and 'gpt-1'.
+                                // I will add them to Mock.
+                                2: 'attention-paper',
+                                3: 'gpt-1'
+    };
+
+                                // ...
+
+                                <Link
+                                    href={`/${locale}/tree-view?node=${nodeMapping[index]}`}
+                                    className="mt-6 inline-block text-sm font-semibold text-brand-teal hover:text-brand-cyan transition-colors"
                                 >
                                     EXPLORE DEEPER &rarr;
-                                </button>
+                                </Link>
                             </motion.div>
                         )}
                     </AnimatePresence>

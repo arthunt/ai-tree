@@ -23,15 +23,24 @@ export default function TreeViewPage() {
   const params = useParams();
   const locale = params.locale as string;
 
+  const searchParams = useSearchParams();
+  const targetNodeId = searchParams.get('node');
+
   // Fetch real data
   useEffect(() => {
     async function init() {
       const data = await getTreeContent(locale);
       setTreeDataState(data);
       setIsLoading(false);
+
+      // Auto-select node from query param
+      if (targetNodeId) {
+        const found = data.find(n => n.id === targetNodeId);
+        if (found) setSelectedNode(found);
+      }
     }
     init();
-  }, [locale]);
+  }, [locale, targetNodeId]);
 
   // Handle ESC key
   useEffect(() => {
