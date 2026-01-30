@@ -6,6 +6,7 @@ import { useDNA, DNAStep } from './DNAContext';
 import { TokenizationSlicer } from './TokenizationSlicer';
 import { VectorMap } from './VectorMap';
 import { AttentionSpotlight } from './AttentionSpotlight';
+import { PredictionBarChart } from './PredictionBarChart';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
@@ -123,29 +124,15 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
                             </motion.div>
                         ) : isActive && index === 3 ? (
                             <motion.div
-                                key="predictions"
+                                key="prediction-chart"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="space-y-2 w-full"
+                                className="w-full"
                             >
-                                {predictions.map((p, i) => (
-                                    <div key={i} className="flex items-center gap-2 text-xs">
-                                        <span className="w-12 text-right font-mono text-brand-cyan shrink-0 truncate">
-                                            {p.token}
-                                        </span>
-                                        <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
-                                            <motion.div
-                                                initial={{ width: 0 }}
-                                                animate={{ width: `${p.probability * 100}%` }}
-                                                transition={{ duration: 0.5, delay: i * 0.1 }}
-                                                className="h-full bg-brand-cyan"
-                                            />
-                                        </div>
-                                        <span className="w-8 text-right text-gray-400 font-mono">
-                                            {(p.probability * 100).toFixed(0)}%
-                                        </span>
-                                    </div>
-                                ))}
+                                <PredictionBarChart
+                                    predictions={predictions}
+                                    isActive={isActive}
+                                />
                             </motion.div>
                         ) : (
                             <motion.p
