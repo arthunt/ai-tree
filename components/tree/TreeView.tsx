@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import * as d3 from 'd3';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { TreeContentSimple } from '@/actions/getTreeContent';
+import { Maximize2, Minimize2, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
 
 interface TreeViewProps {
     data: TreeContentSimple[];
@@ -14,9 +15,13 @@ interface TreeViewProps {
 export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const svgRef = useRef<SVGSVGElement>(null);
-    const gRef = useRef<SVGGElement>(null); // Group for zoom
+    const gRef = useRef<SVGGElement>(null);
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
+    // Collapsed nodes state
+    const [collapsedIds, setCollapsedIds] = useState<Set<string>>(new Set());
+
+    // Initialize dimensions
     useEffect(() => {
         if (!containerRef.current) return;
         const resize = () => {
@@ -30,114 +35,135 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
         return () => window.removeEventListener('resize', resize);
     }, []);
 
-    // Zoom/Pan Logic
+    // Zoom Logic
     useEffect(() => {
         if (!svgRef.current || !gRef.current) return;
 
         const zoom = d3.zoom<SVGSVGElement, unknown>()
-            .scaleExtent([0.5, 3])
+            .scaleExtent([0.1, 4])
             .on('zoom', (event) => {
                 d3.select(gRef.current).attr('transform', event.transform);
             });
 
         d3.select(svgRef.current).call(zoom);
 
-        // Center initial view
-        const initialTransform = d3.zoomIdentity.translate(dimensions.width / 2, 50).scale(1);
-        d3.select(svgRef.current).call(zoom.transform, initialTransform);
+        // Initial Center
+        // Wait for dimensions to be set
+        if (dimensions.width > 0) {
+            const initialTransform = d3.zoomIdentity.translate(dimensions.width / 2, 80).scale(0.8);
+            d3.select(svgRef.current).call(zoom.transform, initialTransform);
+        }
 
-    }, [dimensions]);
+    }, [dimensions]); // Zoom init depends on dimensions
 
-    // Process D3 Hierarchy
-    if (!data.length) return null;
+    // --- HIERARCHY PROCESSING ---
+    const { root, nodes, links } = useMemo(() => {
+        if (!data.length) return { root: null, nodes: [], links: [] };
 
-    const root = d3.stratify<TreeContentSimple>()
-        .id(d => d.id)
-        .parentId(d => d.parentId)
-        (data);
+        // 1. Build Stratify
+        const stratify = d3.stratify<TreeContentSimple>()
+            .id(d => d.id)
+            .parentId(d => d.parentId);
 
-    // Use Cluster for leaf alignment or Tree for hierarchy?
-    // Tree is better for "Phylogenetic" usually.
-    const treeLayout = d3.tree<TreeContentSimple>()
-        .nodeSize([60, 100]) // Fixed node size ensures consistency
-        // .size([dimensions.width, dimensions.height]) // Don't restrict size, let zoom handle it
-        ;
+        const fullRoot = stratify(data);
 
-    treeLayout(root);
+        // 2. Filter Collapsed Nodes
+        // Helper to check if any ancestor is collapsed
+        const isHidden = (node: d3.HierarchyNode<TreeContentSimple>) => {
+            let current = node.parent;
+            while (current) {
+                if (collapsedIds.has(current.data.id)) return true;
+                current = current.parent;
+            }
+            return false;
+        };
 
-    // --- GUIDED PATHS LOGIC ---
-    const highlightedIds = new Set<string>();
-    const matchedLeafIds = new Set<string>(); // Direct matches (not ancestors)
+        // If a node is collapsed, its children should not be part of the layout? 
+        // D3 Tree layout usually needs the full structure, but we can filter *descendants* manually?
+        // Better pattern: Assign 'children' property manually based on collapsed state.
 
-    // Helper to walk up ancestors
-    const addAncestors = (node: d3.HierarchyNode<TreeContentSimple>) => {
-        let current: d3.HierarchyNode<TreeContentSimple> | null = node;
-        while (current) {
-            highlightedIds.add(current.data.id);
-            current = current.parent;
+        // Let's re-build the hierarchy traversal
+        // Actually, d3.stratify doesn't care about our collapse state.
+        // We modify the resulting hierarchy object before passing to tree()
+
+        fullRoot.each((node) => {
+            // @ts-ignore - D3 types are strict about 'children' being readonly sometimes, but we can mutate for visualization
+            if (collapsedIds.has(node.data.id)) {
+                // Determine if this node HAS children originally
+                if (node.children) {
+                    // Stash them in _children so we know it CAN expand
+                    // @ts-ignore
+                    node._children = node.children;
+                    node.children = undefined;
+                }
+            } else {
+                // If expanding, restore children
+                // @ts-ignore
+                if (node._children) {
+                    // @ts-ignore
+                    node.children = node._children;
+                    // @ts-ignore
+                    node._children = undefined;
+                }
+            }
+        });
+
+        // 3. Layout
+        // WIDER SPACING: x=220 (width), y=180 (height)
+        const treeLayout = d3.tree<TreeContentSimple>()
+            .nodeSize([220, 180]);
+
+        treeLayout(fullRoot);
+
+        return {
+            root: fullRoot,
+            nodes: fullRoot.descendants(),
+            links: fullRoot.links()
+        };
+
+    }, [data, collapsedIds]);
+
+
+    // --- INTERACTION ---
+    const handleNodeClick = (node: d3.HierarchyNode<TreeContentSimple>) => {
+        // Toggle collapse if it has children (or hidden children)
+        // @ts-ignore
+        const hasChildren = node.children || node._children;
+
+        if (hasChildren) {
+            setCollapsedIds(prev => {
+                const next = new Set(prev);
+                if (next.has(node.data.id)) {
+                    next.delete(node.data.id);
+                } else {
+                    next.add(node.data.id);
+                }
+                return next;
+            });
+        } else {
+            // Leaf node? Show detail
+            onNodeClick?.(node.data);
         }
     };
 
-    const hasIntent = intent && ['builder', 'thinker'].includes(intent);
-
-    if (hasIntent) {
-        root.descendants().forEach(node => {
-            const isMatch = (() => {
-                if (intent === 'builder') {
-                    return node.data.relatedProgramId === 'aivo' ||
-                        node.data.relatedProgramId === 'aime' ||
-                        ['gpt4', 'transformer'].includes(node.data.id);
-                }
-                if (intent === 'thinker') {
-                    return node.data.relatedProgramId === 'aiki' ||
-                        ['neural', 'attention-paper'].includes(node.data.id);
-                }
-                return false;
-            })();
-
-            if (isMatch) {
-                matchedLeafIds.add(node.data.id);
-                addAncestors(node);
-            }
-        });
-
-        if (highlightedIds.size === 0) {
-            root.descendants().forEach(d => highlightedIds.add(d.data.id));
-        }
-    } else {
+    // --- VISUALIZATION HELPERS ---
+    const highlightedIds = new Set<string>();
+    if (root) {
+        // Highlight logic (simplified from previous version for clarity first)
+        // Default: everything visible is highlighted
         root.descendants().forEach(d => highlightedIds.add(d.data.id));
     }
 
-    // --- GUIDE PULSE: pick the "start here" node ---
-    // For explorer/no intent: pulse root. For builder/thinker: pulse first matched leaf.
-    let guidePulseId: string | null = null;
-    if (!hasIntent) {
-        guidePulseId = root.data.id; // Root node
-    } else {
-        // Find the shallowest matched leaf (closest to root = best starting point)
-        let shallowest: d3.HierarchyNode<TreeContentSimple> | null = null;
-        root.descendants().forEach(node => {
-            if (matchedLeafIds.has(node.data.id)) {
-                if (!shallowest || node.depth < shallowest.depth) {
-                    shallowest = node;
-                }
-            }
-        });
-        guidePulseId = (shallowest as d3.HierarchyNode<TreeContentSimple> | null)?.data.id ?? root.data.id;
-    }
 
+    if (!root) return null;
 
     return (
-        <div ref={containerRef} className="w-full h-[400px] sm:h-[600px] bg-black/50 border border-white/10 rounded-xl overflow-hidden relative cursor-move touch-manipulation">
+        <div ref={containerRef} className="w-full h-[500px] sm:h-[700px] bg-void/50 border border-white/10 rounded-xl overflow-hidden relative cursor-move touch-manipulation">
             <svg ref={svgRef} width={dimensions.width} height={dimensions.height}>
                 <defs>
                     <linearGradient id="link-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#2DD4BF" stopOpacity="0.2" />
+                        <stop offset="0%" stopColor="#2DD4BF" stopOpacity="0.3" />
                         <stop offset="100%" stopColor="#818CF8" stopOpacity="0.8" />
-                    </linearGradient>
-                    <linearGradient id="link-gradient-dim" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#2DD4BF" stopOpacity="0.05" />
-                        <stop offset="100%" stopColor="#818CF8" stopOpacity="0.15" />
                     </linearGradient>
                     <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
                         <feGaussianBlur stdDeviation="3" result="coloredBlur" />
@@ -146,125 +172,137 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
                             <feMergeNode in="SourceGraphic" />
                         </feMerge>
                     </filter>
-                    <filter id="guide-glow" x="-100%" y="-100%" width="300%" height="300%">
-                        <feGaussianBlur stdDeviation="6" result="coloredBlur" />
-                        <feMerge>
-                            <feMergeNode in="coloredBlur" />
-                            <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                    </filter>
                 </defs>
 
                 <g ref={gRef}>
-                    {/* Links */}
-                    {root.links().map((link, i) => {
-                        const isDimmed = !highlightedIds.has(link.target.data.id);
+                    <AnimatePresence>
+                        {/* Links */}
+                        {links.map((link) => {
+                            // Link Vertical
+                            const sourceY = dimensions.height - (link.source.y || 0) - 100; // Flip Y
+                            const targetY = dimensions.height - (link.target.y || 0) - 100;
+                            const sourceX = link.source.x || 0;
+                            const targetX = link.target.x || 0;
 
-                        // FLIP Y: Height - y (roughly, or just invert direction)
-                        // Actually, easiest way is to modify the path generator
-                        const linkGen = d3.linkVertical()
-                            .x((d: any) => d.x)
-                            .y((d: any) => dimensions.height - d.y - 100) // Padding from bottom
-                            (link as any) || "";
+                            const d = d3.linkVertical()({
+                                source: [sourceX, sourceY],
+                                target: [targetX, targetY]
+                            } as any);
 
-                        return (
-                            <motion.path
-                                key={`link-${i}`}
-                                d={linkGen}
-                                stroke={isDimmed ? "url(#link-gradient-dim)" : "url(#link-gradient)"}
-                                strokeWidth={isDimmed ? "1" : "2"}
-                                fill="none"
-                                initial={{ pathLength: 0, opacity: 0 }}
-                                animate={{
-                                    pathLength: 1,
-                                    opacity: isDimmed ? 0.15 : 1
-                                }}
-                                transition={{ duration: 1.5, delay: i * 0.02, ease: "easeInOut" }}
-                            />
-                        );
-                    })}
-
-                    {/* Nodes */}
-                    {root.descendants().map((node, i) => {
-                        const isDimmed = !highlightedIds.has(node.data.id);
-                        const isPulse = node.data.id === guidePulseId;
-                        const baseRadius = node.data.type === 'root' ? 12 : node.data.type === 'trunk' ? 8 : 5;
-                        const baseFill = node.data.type === 'root' ? '#F472B6' : '#2DD4BF';
-
-                        // FLIP Y
-                        const flippedY = dimensions.height - (node.y || 0) - 100;
-
-                        return (
-                            <motion.g
-                                key={`node-${node.data.id}`}
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{
-                                    opacity: isDimmed ? 0.2 : 1,
-                                    scale: 1,
-                                    x: node.x,
-                                    y: flippedY,
-                                }}
-                                transition={{ duration: 0.5, delay: i * 0.02, type: 'spring' }}
-                                className={`cursor-pointer pointer-events-auto ${isDimmed ? '' : 'hover:brightness-125'}`}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    onNodeClick?.(node.data);
-                                }}
-                            >
-                                {/* Guide Pulse — "Start Here" beacon */}
-                                {isPulse && (
-                                    <>
-                                        <circle r={baseRadius + 20} fill="rgba(45, 212, 191, 0.08)" filter="url(#guide-glow)">
-                                            <animate attributeName="r" values={`${baseRadius + 15};${baseRadius + 30};${baseRadius + 15}`} dur="2s" repeatCount="indefinite" />
-                                            <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2s" repeatCount="indefinite" />
-                                        </circle>
-                                        <circle r={baseRadius + 8} fill="rgba(45, 212, 191, 0.15)">
-                                            <animate attributeName="r" values={`${baseRadius + 6};${baseRadius + 12};${baseRadius + 6}`} dur="1.5s" repeatCount="indefinite" />
-                                        </circle>
-                                    </>
-                                )}
-
-                                {/* Halo for Root/Trunk (skip if already pulsing) */}
-                                {!isPulse && !isDimmed && ['root', 'trunk'].includes(node.data.type) && (
-                                    <circle r={node.data.type === 'root' ? 20 : 12} fill="rgba(45, 212, 191, 0.2)" filter="url(#glow)">
-                                        <animate attributeName="r" values={node.data.type === 'root' ? "20;25;20" : "12;15;12"} dur="3s" repeatCount="indefinite" />
-                                    </circle>
-                                )}
-
-                                {/* Main Circle */}
-                                <circle
-                                    r={baseRadius}
-                                    fill={isDimmed ? `${baseFill}40` : baseFill}
-                                    stroke={isDimmed ? "#ffffff30" : "#fff"}
-                                    strokeWidth={isDimmed ? "1" : "2"}
+                            return (
+                                <motion.path
+                                    key={`link-${link.source.data.id}-${link.target.data.id}`}
+                                    d={d || ""}
+                                    stroke="url(#link-gradient)"
+                                    strokeWidth="2"
+                                    fill="none"
+                                    initial={{ opacity: 0, pathLength: 0 }}
+                                    animate={{ opacity: 1, pathLength: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.5 }}
                                 />
+                            );
+                        })}
 
-                                {/* Label - Flip offsets (Parents below, children above) */}
-                                <text
-                                    y={node.children ? 25 : -20}
-                                    x={0}
-                                    textAnchor="middle"
-                                    fill={isDimmed ? "rgba(255,255,255,0.25)" : "white"}
-                                    fontSize={node.data.type === 'root' ? "14px" : "10px"}
-                                    fontWeight={node.data.type === 'root' ? "bold" : "normal"}
-                                    className="font-mono uppercase tracking-widest pointer-events-none drop-shadow-md"
-                                    style={{ textShadow: isDimmed ? 'none' : '0 2px 4px rgba(0,0,0,0.8)' }}
+                        {/* Nodes */}
+                        {nodes.map((node) => {
+                            // @ts-ignore
+                            const hasChildren = node.children || node._children;
+                            const isCollapsed = collapsedIds.has(node.data.id);
+
+                            const radius = node.data.type === 'root' ? 20 : node.data.type === 'trunk' ? 12 : 8;
+                            const flippedY = dimensions.height - (node.y || 0) - 100;
+
+                            return (
+                                <motion.g
+                                    key={node.data.id}
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{
+                                        opacity: 1,
+                                        scale: 1,
+                                        x: node.x,
+                                        y: flippedY
+                                    }}
+                                    exit={{ opacity: 0, scale: 0 }}
+                                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                                    className="cursor-pointer"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleNodeClick(node);
+                                    }}
                                 >
-                                    {node.data.title}
-                                </text>
-                            </motion.g>
-                        );
-                    })}
+                                    {/* Main Circle */}
+                                    <circle
+                                        r={radius}
+                                        fill={node.data.type === 'root' ? '#F472B6' : hasChildren ? '#2DD4BF' : '#818CF8'}
+                                        stroke="white"
+                                        strokeWidth={2}
+                                    />
+
+                                    {/* Collapse Indicator (+/-) */}
+                                    {hasChildren && (
+                                        <circle
+                                            r={6}
+                                            cx={radius + 4}
+                                            cy={-radius + 4}
+                                            fill="white"
+                                            stroke="#2DD4BF"
+                                        />
+                                    )}
+
+                                    {/* Label: ALWAYS show below for clarity, larger text */}
+                                    <text
+                                        y={30}
+                                        textAnchor="middle"
+                                        className="font-mono text-[10px] sm:text-xs uppercase tracking-wide fill-white drop-shadow-md select-none"
+                                        style={{
+                                            textShadow: '0 2px 4px rgba(0,0,0,0.9)',
+                                            fontWeight: node.data.type === 'root' ? 'bold' : 'normal'
+                                        }}
+                                    >
+                                        {node.data.title}
+                                    </text>
+
+                                    {/* Subtitle (Year) */}
+                                    {node.data.year && (
+                                        <text
+                                            y={42}
+                                            textAnchor="middle"
+                                            className="font-mono text-[8px] fill-white/50 select-none"
+                                        >
+                                            {node.data.year}
+                                        </text>
+                                    )}
+
+                                    {/* Expand/Collapse Hint Icon */}
+                                    {hasChildren && (
+                                        <text x={radius + 4} y={-radius + 7} textAnchor="middle" fontSize={10} fill="#2DD4BF" fontWeight="bold">
+                                            {isCollapsed ? '+' : '-'}
+                                        </text>
+                                    )}
+                                </motion.g>
+                            );
+                        })}
+                    </AnimatePresence>
                 </g>
             </svg>
 
-            {/* Zoom Controls Overlay */}
+            {/* Controls */}
             <div className="absolute bottom-4 right-4 flex flex-col gap-2">
-                <button className="bg-white/10 p-2 rounded hover:bg-white/20 text-white" onClick={() => {
-                    d3.select(svgRef.current).transition().call(d3.zoom().transform as any, d3.zoomIdentity.translate(dimensions.width / 2, 50).scale(1));
-                }}>
-                    Reset
+                <button
+                    className="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white backdrop-blur-md transition-colors"
+                    onClick={() => {
+                        d3.select(svgRef.current).transition().duration(750)
+                            .call(d3.zoom().transform as any, d3.zoomIdentity.translate(dimensions.width / 2, 80).scale(0.8));
+                    }}
+                    title="Reset View"
+                >
+                    <RotateCcw size={20} />
                 </button>
+            </div>
+
+            <div className="absolute top-4 left-4 text-white/50 text-xs font-mono uppercase tracking-widest pointer-events-none">
+                {intent ? `Intent: ${intent}` : 'Mode: Explorer'}
             </div>
         </div>
     );

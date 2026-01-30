@@ -27,6 +27,7 @@ interface DNAContextType {
     // Actions
     runSimulation: () => void;
     resetSimulation: () => void;
+    nextStep: () => void;
     setPlaybackSpeed: (speed: number) => void;
     togglePause: () => void;
     openLesson: (step: DNAStep) => void;
@@ -113,6 +114,18 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         setPredictions(predict());
     }, [inputText, tokenize, vectorize, calculateAttention, predict]);
 
+    // Manual Step Advance
+    const nextStep = useCallback(() => {
+        const nextIndex = STEP_ORDER.indexOf(currentStep) + 1;
+        if (nextIndex < STEP_ORDER.length) {
+            setCurrentStep(STEP_ORDER[nextIndex]);
+            // Reset timer loop
+            if (stepTimerRef.current) clearTimeout(stepTimerRef.current);
+        } else {
+            setIsPlaying(false);
+        }
+    }, [currentStep]);
+
     // The Game Loop
     useEffect(() => {
         // Clear previous timer
@@ -131,14 +144,13 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             return;
         }
 
-        const nextStep = STEP_ORDER[nextIndex];
+        // Calculate Next Step
+        const nextStepName = STEP_ORDER[nextIndex];
         const duration = BASE_STEP_DURATION / playbackSpeed;
 
         stepTimerRef.current = setTimeout(() => {
-            setCurrentStep(nextStep);
-
-            // Loop functionality? For now, just stop at idle (end).
-            if (nextStep === 'idle') {
+            setCurrentStep(nextStepName);
+            if (nextStepName === 'idle') {
                 setIsPlaying(false);
             }
         }, duration);
@@ -183,6 +195,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             predictions,
             runSimulation,
             resetSimulation,
+            nextStep,
             setPlaybackSpeed,
             togglePause,
             openLesson,
