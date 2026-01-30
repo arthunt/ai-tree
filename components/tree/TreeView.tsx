@@ -123,7 +123,7 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
                 }
             }
         });
-        guidePulseId = shallowest?.data.id ?? root.data.id;
+        guidePulseId = (shallowest as d3.HierarchyNode<TreeContentSimple> | null)?.data.id ?? root.data.id;
     }
 
 
@@ -166,13 +166,13 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
                                     .x((d: any) => d.x)
                                     .y((d: any) => d.y)
                                     (link as any) || ""}
-                                stroke="url(#link-gradient)"
-                                strokeWidth="2"
+                                stroke={isDimmed ? "url(#link-gradient-dim)" : "url(#link-gradient)"}
+                                strokeWidth={isDimmed ? "1" : "2"}
                                 fill="none"
                                 initial={{ pathLength: 0, opacity: 0 }}
                                 animate={{
                                     pathLength: 1,
-                                    opacity: isDimmed ? 0.1 : 1
+                                    opacity: isDimmed ? 0.15 : 1
                                 }}
                                 transition={{ duration: 1.5, delay: i * 0.02, ease: "easeInOut" }}
                             />
@@ -182,6 +182,9 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
                     {/* Nodes */}
                     {root.descendants().map((node, i) => {
                         const isDimmed = !highlightedIds.has(node.data.id);
+                        const isPulse = node.data.id === guidePulseId;
+                        const baseRadius = node.data.type === 'root' ? 12 : node.data.type === 'trunk' ? 8 : 5;
+                        const baseFill = node.data.type === 'root' ? '#F472B6' : '#2DD4BF';
 
                         return (
                             <motion.g
@@ -192,17 +195,29 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
                                     scale: 1,
                                     x: node.x,
                                     y: node.y,
-                                    filter: isDimmed ? 'grayscale(100%)' : 'none'
                                 }}
                                 transition={{ duration: 0.5, delay: i * 0.02, type: 'spring' }}
                                 className={`cursor-pointer pointer-events-auto ${isDimmed ? '' : 'hover:brightness-125'}`}
                                 onClick={(e) => {
-                                    e.stopPropagation(); // Prevent zoom drag start if possible
+                                    e.stopPropagation();
                                     onNodeClick?.(node.data);
                                 }}
                             >
-                                {/* Halo for Root/Trunk OR Highlighted Leaf */}
-                                {(['root', 'trunk'].includes(node.data.type) || (intent && !isDimmed && node.data.type === 'leaf')) && (
+                                {/* Guide Pulse — "Start Here" beacon */}
+                                {isPulse && (
+                                    <>
+                                        <circle r={baseRadius + 20} fill="rgba(45, 212, 191, 0.08)" filter="url(#guide-glow)">
+                                            <animate attributeName="r" values={`${baseRadius + 15};${baseRadius + 30};${baseRadius + 15}`} dur="2s" repeatCount="indefinite" />
+                                            <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2s" repeatCount="indefinite" />
+                                        </circle>
+                                        <circle r={baseRadius + 8} fill="rgba(45, 212, 191, 0.15)">
+                                            <animate attributeName="r" values={`${baseRadius + 6};${baseRadius + 12};${baseRadius + 6}`} dur="1.5s" repeatCount="indefinite" />
+                                        </circle>
+                                    </>
+                                )}
+
+                                {/* Halo for Root/Trunk (skip if already pulsing) */}
+                                {!isPulse && !isDimmed && ['root', 'trunk'].includes(node.data.type) && (
                                     <circle r={node.data.type === 'root' ? 20 : 12} fill="rgba(45, 212, 191, 0.2)" filter="url(#glow)">
                                         <animate attributeName="r" values={node.data.type === 'root' ? "20;25;20" : "12;15;12"} dur="3s" repeatCount="indefinite" />
                                     </circle>
@@ -210,10 +225,10 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
 
                                 {/* Main Circle */}
                                 <circle
-                                    r={node.data.type === 'root' ? 12 : node.data.type === 'trunk' ? 8 : 5}
-                                    fill={node.data.type === 'root' ? '#F472B6' : '#2DD4BF'}
-                                    stroke="#fff"
-                                    strokeWidth="2"
+                                    r={baseRadius}
+                                    fill={isDimmed ? `${baseFill}40` : baseFill}
+                                    stroke={isDimmed ? "#ffffff30" : "#fff"}
+                                    strokeWidth={isDimmed ? "1" : "2"}
                                 />
 
                                 {/* Label */}
@@ -221,11 +236,11 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
                                     y={node.children ? -20 : 20}
                                     x={0}
                                     textAnchor="middle"
-                                    fill="white"
+                                    fill={isDimmed ? "rgba(255,255,255,0.25)" : "white"}
                                     fontSize={node.data.type === 'root' ? "14px" : "10px"}
                                     fontWeight={node.data.type === 'root' ? "bold" : "normal"}
                                     className="font-mono uppercase tracking-widest pointer-events-none drop-shadow-md"
-                                    style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}
+                                    style={{ textShadow: isDimmed ? 'none' : '0 2px 4px rgba(0,0,0,0.8)' }}
                                 >
                                     {node.data.title}
                                 </text>
