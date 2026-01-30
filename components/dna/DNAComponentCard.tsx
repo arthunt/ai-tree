@@ -1,64 +1,108 @@
-'use client';
+"use client";
 
-import React from 'react';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { GlowingNode } from '@/components/ui/GlowingNode';
+import { useDNA, DNAStep } from './DNAContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface DNAComponentCardProps {
     title: string;
     description: string;
     metaphor?: string;
     color: string;
-    index?: number;
+    index: number;
 }
 
-export function DNAComponentCard({
-    title,
-    description,
-    metaphor,
-    color,
-    index = 0
-}: DNAComponentCardProps) {
+export function DNAComponentCard({ title, description, metaphor, color, index }: DNAComponentCardProps) {
+    const { currentStep, tokens, vectors } = useDNA();
+
+    // Map index to step for activation logic
+    const stepMap: Record<number, DNAStep> = {
+        0: 'tokenization',
+        1: 'vectorizing',
+        2: 'attention',
+        3: 'prediction'
+    };
+
+    const myStep = stepMap[index];
+    const isActive = currentStep === myStep;
+
     return (
-        <GlassCard className="w-full max-w-md p-8 flex flex-col gap-6" intensity="high">
-            <div className="flex items-center gap-4">
-                <h2 className="text-3xl font-bold tracking-tight text-white">{title}</h2>
-            </div>
-
-            <div className="space-y-4">
-                {/* Node Visualization */}
-                <div className="h-48 relative flex items-center justify-center mb-[-1rem] z-10">
-                    <GlowingNode
-                        color={color}
-                        size={isActive ? 60 : 40}
-                    />
-                    {isActive && (
-                        <div className={`absolute inset-0 bg-${color}/20 blur-3xl rounded-full animate-pulse`}></div>
-                    )}
-                </div>          <p className="text-lg text-gray-200 leading-relaxed font-light">
-                    {description}
-                </p>
-
-                {metaphor && (
-                    <div className="mt-4 pt-4 border-t border-white/10">
-                        <p className="text-sm text-brand-cyan/80 font-mono uppercase tracking-wider mb-2">
-                            THE METAPHOR
-                        </p>
-                        <p className="text-gray-300 italic">
-                            &ldquo;{metaphor}&rdquo;
-                        </p>
-                    </div>
+        <div className="flex flex-col h-full relative group">
+            {/* Node Visualization */}
+            <div className="h-48 relative flex items-center justify-center mb-[-1rem] z-10">
+                <GlowingNode
+                    color={color}
+                    size={isActive ? 60 : 40}
+                />
+                {isActive && (
+                    <div className={`absolute inset-0 bg-${color}/20 blur-3xl rounded-full animate-pulse`}></div>
                 )}
             </div>
 
-            <div className="mt-auto pt-6 flex justify-end">
-                <button
-                    className="text-sm font-semibold text-brand-teal hover:text-brand-cyan transition-colors"
-                    type="button"
-                >
-                    EXPLORE DEEPER &rarr;
-                </button>
-            </div>
-        </GlassCard>
+            {/* Card Content */}
+            <GlassCard
+                className={`relative flex-1 p-6 pt-10 transition-all duration-500 ${isActive ? 'border-brand-teal/50 ring-1 ring-brand-teal/50 bg-brand-teal/5' : ''}`}
+                intensity={isActive ? "high" : "low"}
+            >
+                <div className="mb-4">
+                    <h3 className="text-2xl font-bold text-white mb-2" style={{ textShadow: isActive ? `0 0 20px ${color}` : 'none' }}>
+                        {title}
+                    </h3>
+                    {metaphor && (
+                        <span className="text-xs font-mono uppercase tracking-widest opacity-60" style={{ color }}>
+                            {metaphor}
+                        </span>
+                    )}
+                </div>
+
+                <div className="relative min-h-[100px]">
+                    <AnimatePresence mode="wait">
+                        {isActive && index === 0 ? (
+                            <motion.div
+                                key="tokens"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="flex flex-wrap gap-2"
+                            >
+                                {tokens.map((t, i) => (
+                                    <span key={i} className="px-2 py-1 bg-brand-teal/20 border border-brand-teal/50 rounded text-brand-teal font-mono text-sm">
+                                        {t}
+                                    </span>
+                                ))}
+                            </motion.div>
+                        ) : isActive && index === 1 ? (
+                            <motion.div
+                                key="vectors"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="space-y-1 font-mono text-[10px] text-green-400 overflow-hidden"
+                            >
+                                {vectors.slice(0, 5).map((v, i) => (
+                                    <div key={i}>[{v.map(n => n.toFixed(2)).join(', ')}]</div>
+                                ))}
+                            </motion.div>
+                        ) : (
+                            <motion.div>
+                                <motion.p
+                                    key="static"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="text-gray-300 leading-relaxed text-sm"
+                                >
+                                    {description}
+                                </motion.p>
+                                <button
+                                    className="mt-6 text-sm font-semibold text-brand-teal hover:text-brand-cyan transition-colors"
+                                    type="button"
+                                >
+                                    EXPLORE DEEPER &rarr;
+                                </button>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+            </GlassCard>
+        </div>
     );
 }
