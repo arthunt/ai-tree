@@ -154,7 +154,125 @@
 
 ---
 
-## Active Sprint: Sprint 12 — The Phylogenetic Tree (Stage 4: Puu)
+## Active Sprint: Sprint 13 — Marketing Integration (Programs Landing Pages)
+
+> **Priority:** P1-High
+> **Goal:** Create landing pages for AIKI, AIVO, AIME programs with lead capture and application forms
+> **Pricing:** AIKI €1590 | AIVO €1290 (€900 for AIKI grads) | AIME €2490 (bundle)
+> **Protocol:** Build landing pages following DNA View design system, integrate with Supabase
+
+### PRICING SUMMARY
+```
+ÜKSIKPROGRAMMID:
+- AIKI: €1590 (6 nädalat, 60h)
+- AIVO: €1290 (4 nädalat, 40h)
+- Eraldi ostes: €2880
+
+LÕPETAJA SOODUSTUS:
+- AIVO AIKI tunnistusega: €900 (30% soodustus, sääst €390)
+
+OSTURAJAD:
+- AIKI + AIVO eraldi: €2880
+- AIKI → AIVO lõpetaja hinnaga: €1590 + €900 = €2490 (sääst €390)
+- AIME pakett: €2490 (sääst €390)
+
+MAKSEPLAANID:
+- AIKI: 3 × €563 = €1689 (+€99, 6%)
+- AIVO: 3 × €460 = €1380 (+€90, 7%)
+- AIME: 4 × €673 = €2692 (+€202, 8%)
+```
+
+### US-120: Apply Marketing Database Schema
+**Priority:** P0 | **Type:** Infrastructure | **Hours:** 1
+- [ ] Run `lib/supabase/marketing-schema.sql` in Supabase SQL Editor
+- [ ] Verify tables: `program_cohorts`, `program_leads`, `program_applications`
+- [ ] Verify functions: `capture_program_lead()`, `get_active_cohorts()`, `validate_discount()`
+- [ ] Insert sample cohorts and discount codes
+
+### US-121: Programs Route Structure
+**Priority:** P0 | **Type:** Foundation | **Hours:** 4
+- [ ] Create `app/[locale]/programs/page.tsx` (programs overview)
+- [ ] Create `app/[locale]/programs/aiki/page.tsx`
+- [ ] Create `app/[locale]/programs/aivo/page.tsx`
+- [ ] Create `app/[locale]/programs/aime/page.tsx`
+- [ ] Create `app/[locale]/programs/apply/page.tsx`
+- [ ] Update header navigation with Programs dropdown
+
+### US-122: Programs i18n Translations
+**Priority:** P0 | **Type:** i18n | **Hours:** 4
+- [ ] Add `programs` namespace to `messages/et.json`
+- [ ] Add `programs` namespace to `messages/en.json`
+- [ ] Include: nav, common, overview, aiki, aivo, aime, apply, cta sections
+- [ ] Full Estonian curriculum descriptions
+
+### US-123: Program Landing Page Components
+**Priority:** P1 | **Type:** Components | **Hours:** 12
+- [ ] `components/programs/ProgramHero.tsx` - Full viewport hero with CTA
+- [ ] `components/programs/ProgramFeatures.tsx` - 4-feature grid
+- [ ] `components/programs/ProgramCurriculum.tsx` - Expandable weeks
+- [ ] `components/programs/ProgramPricing.tsx` - Price display with discounts & installments
+- [ ] `components/programs/ProgramFAQ.tsx` - Accordion FAQ
+- [ ] `components/programs/ProgramCTA.tsx` - Contextual call-to-action
+- [ ] `components/programs/ProgramComparison.tsx` - Compare all programs
+- [ ] Follow DNA View design: dark theme, glass cards, glowing accents
+
+### US-124: AIKI Landing Page
+**Priority:** P1 | **Type:** Page | **Hours:** 6
+- [ ] Hero: "Saa AI koolitajaks 6 nädalaga"
+- [ ] Features: T-V-A-P mastery, 4C teaching, portfolio, certificate
+- [ ] Curriculum: Week 0-5 breakdown
+- [ ] Pricing: €1590 single, €1689 installments
+- [ ] FAQ: 5-7 common questions
+- [ ] CTA: Apply button → /programs/apply?program=aiki
+
+### US-125: AIVO Landing Page
+**Priority:** P1 | **Type:** Page | **Hours:** 6
+- [ ] Hero: "Automatiseeri töövood AI-ga"
+- [ ] Features: Zapier, Make, OpenAI API, consulting
+- [ ] Curriculum: Week 0-4 breakdown
+- [ ] Pricing: €1290 full / €900 for AIKI grads (30% off)
+- [ ] Highlight AIKI graduate discount prominently
+- [ ] CTA: Apply button → /programs/apply?program=aivo
+
+### US-126: AIME Bundle Landing Page
+**Priority:** P1 | **Type:** Page | **Hours:** 6
+- [ ] Hero: "Täielik AI kompetents ühes paketis"
+- [ ] Value proposition: Same price as grad discount path, guaranteed spots
+- [ ] Combined curriculum overview (10 weeks)
+- [ ] Pricing: €2490 (save €390 vs separate)
+- [ ] Comparison table vs separate purchase
+- [ ] CTA: Apply button → /programs/apply?program=aime
+
+### US-127: Lead Capture Form
+**Priority:** P1 | **Type:** Feature | **Hours:** 4
+- [ ] `components/programs/LeadCaptureForm.tsx`
+- [ ] Fields: email, name (optional), phone (optional), programs[]
+- [ ] Supabase integration: `capture_program_lead()` function
+- [ ] UTM tracking from URL params
+- [ ] Success state with next steps
+
+### US-128: Application Form (Multi-step)
+**Priority:** P2 | **Type:** Feature | **Hours:** 8
+- [ ] `components/programs/ApplicationForm.tsx`
+- [ ] Step 1: Personal info (name, email, phone, city)
+- [ ] Step 2: Background (role, company, LinkedIn, experience)
+- [ ] Step 3: Motivation (why join, goals, how heard)
+- [ ] Step 4: AIKI certificate check (for AIVO applicants)
+- [ ] Step 5: Payment method selection
+- [ ] Discount code validation
+- [ ] Supabase `program_applications` insert
+
+### US-129: CTA Integration in AI-Tree
+**Priority:** P2 | **Type:** Integration | **Hours:** 4
+- [ ] Add "Want to teach AI?" CTA after DNA completion → AIKI
+- [ ] Add "Automate with AI" CTA on agent/MCP concepts → AIVO
+- [ ] Add contextual CTAs to Tree node detail panel
+- [ ] Track CTA interactions in `cta_interactions` table
+- [ ] Programs link in footer
+
+---
+
+## Previous Sprint: Sprint 12 — The Phylogenetic Tree (Stage 4: Puu)
 
 > **Priority:** P1-High
 > **Goal:** Visualize the "Tree of Thoughts" (26 nodes from Swarm) and connect it to the DNA View.
