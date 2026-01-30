@@ -4,9 +4,10 @@ import { GlassCard } from '@/components/ui/GlassCard';
 import { GlowingNode } from '@/components/ui/GlowingNode';
 import { useDNA, DNAStep } from './DNAContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+import { useState } from 'react';
+import { SeedTransition } from './SeedTransition';
 
 interface DNAComponentCardProps {
     title: string;
@@ -21,6 +22,7 @@ export function DNAComponentCard({ title, description, metaphor, color, index }:
     const params = useParams();
     const locale = params.locale as string;
     const t = useTranslations('dna.card');
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
     const nodeMapping: Record<number, string> = {
         0: 'tokens',
@@ -172,17 +174,27 @@ export function DNAComponentCard({ title, description, metaphor, color, index }:
                         )}
                     </AnimatePresence>
 
-                    {/* Deep Dive Link (Always Visible or at least present) */}
-                    <Link
-                        href={`/${locale}/tree-view?node=${nodeMapping[index]}`}
+                    {/* Deep Dive Button (Triggers Seed Transition) */}
+                    <button
+                        onClick={() => setIsTransitioning(true)}
                         className={`mt-6 inline-block text-xs font-bold tracking-wider transition-all border-b border-transparent hover:border-current ${isActive ? 'text-white' : 'text-brand-teal hover:text-brand-cyan'
-                            }`}
+                            } cursor-pointer bg-transparent`}
                         style={{ alignSelf: 'flex-start' }}
                     >
                         {deepDiveLabel}
-                    </Link>
+                    </button>
                 </div>
             </GlassCard>
+
+            {/* Seed Transition Overlay */}
+            {isTransitioning && (
+                <SeedTransition
+                    color={color}
+                    conceptId={nodeMapping[index]}
+                    locale={locale}
+                    onComplete={() => setIsTransitioning(false)}
+                />
+            )}
         </div>
     );
 }

@@ -262,6 +262,7 @@
     },
     {
       "id": "tokens",
+      "dna_id": "tokenization",
       "level": "roots",
       "title": "Tokenid",
       "simpleName": "Tekstiklotsid",
@@ -283,6 +284,7 @@
     },
     {
       "id": "vectors",
+      "dna_id": "vectorizing",
       "level": "roots",
       "title": "Vektorid (Embeddings)",
       "simpleName": "Tähenduste kaart",
@@ -305,6 +307,7 @@
     },
     {
       "id": "attention",
+      "dna_id": "attention",
       "level": "roots",
       "title": "Tähelepanu (Attention Mechanism)",
       "simpleName": "Fookus",
@@ -378,6 +381,7 @@
     },
     {
       "id": "temperature-sampling",
+      "dna_id": "prediction",
       "level": "trunk",
       "title": "Temperatuur ja Valideerimine (Temperature & Sampling)",
       "simpleName": "Loovuse nupp",

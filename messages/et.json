@@ -1155,6 +1155,10 @@
     },
     "card": {
       "deepDive": "SÜVENE →"
+    },
+    "seed": {
+      "growing": "Kasvab puuks...",
+      "exploring": "Uurime sügavamale..."
     }
   },
   "nav": {

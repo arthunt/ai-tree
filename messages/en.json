@@ -1155,6 +1155,10 @@
     },
     "card": {
       "deepDive": "DEEP DIVE →"
+    },
+    "seed": {
+      "growing": "Growing into the Tree...",
+      "exploring": "Exploring deeper..."
     }
   },
   "nav": {
