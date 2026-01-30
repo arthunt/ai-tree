@@ -33,4 +33,8 @@
 ## 🚦 Execution Order
 
 1.  **Swarm** executes `tasks/stage_6_audit.md` (Tasks 4-6) to complete the Launch Audit.
-2.  **Launch:** Declare V1.0 Ready.
+4.  **Launch:** Declare V1.0 Ready.
+
+### 4. **Evolutionary UX (Future Iterations)**
+*   New vision documented in `tasks/evolutionary_ux_backlog.md`.
+*   Focus: DNA -> Seed -> Sprout -> Tree (Progressive Disclosure).

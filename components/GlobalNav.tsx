@@ -76,7 +76,7 @@ export function GlobalNav({ extraControls, transparent = false }: GlobalNavProps
 
                     <div className="hidden sm:flex items-center gap-3">
                         <LanguageSwitcher />
-                        <DarkModeToggle />
+                        <DarkModeToggle variant={transparent ? 'transparent' : 'default'} />
                     </div>
 
                     {/* Mobile Menu Toggle */}
@@ -96,7 +96,7 @@ export function GlobalNav({ extraControls, transparent = false }: GlobalNavProps
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700"
+                        className={`md:hidden border-b ${transparent ? 'bg-gray-900/95 backdrop-blur-md border-white/10' : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700'}`}
                     >
                         <nav className="flex flex-col p-4 gap-2">
                             {links.map(link => (
@@ -106,14 +106,14 @@ export function GlobalNav({ extraControls, transparent = false }: GlobalNavProps
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     className={`px-4 py-3 rounded-lg text-lg ${isActive(link.href)
                                         ? 'bg-brand-teal/10 text-brand-teal font-bold'
-                                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                                        : transparent ? 'text-gray-200 hover:bg-white/10' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
                                 >
                                     {link.label}
                                 </Link>
                             ))}
-                            <div className="h-px bg-gray-200 dark:bg-gray-700 my-2" />
+                            <div className={`h-px my-2 ${transparent ? 'bg-white/10' : 'bg-gray-200 dark:bg-gray-700'}`} />
                             <div className="flex items-center justify-between px-2">
-                                <span className="text-sm text-gray-500">{t('settings')}</span>
+                                <span className={`text-sm ${transparent ? 'text-gray-400' : 'text-gray-500'}`}>{t('settings')}</span>
                                 <div className="flex gap-2">
                                     <LanguageSwitcher />
                                     <DarkModeToggle />

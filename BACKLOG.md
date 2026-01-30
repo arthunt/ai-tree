@@ -236,6 +236,24 @@
 
 ---
 
+### PHASE G: Evolutionary UX (The Living Tree)
+> **Status:** Planned (Next)
+> **Detailed Plan:** `tasks/evolutionary_ux_backlog.md`
+> **Goal:** Transform the static tree into a "Level of Detail" exploration journey.
+
+#### US-160: DNA Rich Visualizations
+- [ ] Tokenization Slicer Animation
+- [ ] Vector Distance Map (King/Queen)
+- [ ] Attention Spotlight Lines
+- [ ] Probability Distribution Chart
+
+#### US-161: Progressive Tree Disclosure ("Sprout")
+- [ ] Collapsed default state (Roots only)
+- [ ] "Zoom to Fit" on expansion
+- [ ] Curriculum Mode narrative overlay
+
+---
+
 ### DEPRECATED / MOVED TO P2 (Was Phase F)
 
 #### Phase F: Polish & Cleanup
