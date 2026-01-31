@@ -12,17 +12,17 @@
 > All agents can now use `lib/concepts/api.ts` to read/write concepts.
 
 ### `@opus` (Claude Code) — Next Tasks
-| # | Task | Depends On | Description |
-|---|------|------------|-------------|
-| 1 | **5.1** Fruits Migration | — | Seed APPLICATIONS into concepts DB, update FruitsView to use SDK |
-| 2 | **5.2** Orchard Migration | — | Seed CAREERS into concepts DB, update OrchardView to use SDK |
-| 3 | **3.3** Sprout Migration | 3.2 | Map sprout_lessons → concepts table, update SproutView |
-| 4 | **1.4** Visual Calibration | 2.4 | Verify dark/light mode logic after 7-stage update |
+| # | Task | Status | Depends On | Description |
+|---|------|--------|------------|-------------|
+| 1 | **5.1** Fruits Migration | ✅ DONE | — | Seed APPLICATIONS into concepts DB, update FruitsView to use SDK |
+| 2 | **5.2** Orchard Migration | ✅ DONE | — | Seed CAREERS into concepts DB, update OrchardView to use SDK |
+| 3 | **3.3** Sprout Migration | ⏳ NEXT | 3.2 | Map sprout_lessons → concepts table, update SproutView |
+| 4 | **1.4** Visual Calibration | ⏳ BLOCKED | 2.4 | Verify dark/light mode logic after 7-stage update |
 
 ### `@gemini` — Next Tasks
 | # | Task | Depends On | Description |
 |---|------|------------|-------------|
-| 1 | **2.4** 7-Stage StageSelector | — | Add Istik to EvolutionStage, StageSelector, JourneyContext, create /istik route |
+| 1 | **2.4** 7-Stage StageSelector | ✅ DONE | — | Add Istik to EvolutionStage, StageSelector, JourneyContext, create /istik route |
 | 2 | **2.7** Unified Card variants | — | Implement sprout, tree, istik card variants |
 | 3 | **3.1** Seed Stage content | — | Create SeedView with Deep Earth theme, seed concepts into DB |
 | 4 | **3.2** Sprout Redefinition | — | Redefine Sprout as "Emergent Properties", new concepts in DB |
@@ -151,13 +151,13 @@
     - [x] 2.3.4 Build passes, DNAView renders with new data source
     - [x] 2.3.5 Old MOCK_DNA_DATA removed (now in lib/concepts/mock-data.ts)
 
-- [ ] **2.4 StageSelector: 7-Stage Update** `@gemini` `@opus` P1
-    > Add Istik to the navigation system.
-    - [ ] 2.4.1 Update `EvolutionStage` type: add `'istik'`
-    - [ ] 2.4.2 Update `StageSelector` component with 7 stages
-    - [ ] 2.4.3 Create `/[locale]/istik` route (placeholder page)
-    - [ ] 2.4.4 Add translation keys for "Istik" / "Sapling" stage label (EN + ET)
-    - [ ] 2.4.5 Update `JourneyContext` stage order
+- [x] **2.4 StageSelector: 7-Stage Update** `@gemini` `@opus` DONE
+    > Add Sapling (formerly Istik) to the navigation system.
+    - [x] 2.4.1 Update `EvolutionStage` type: add `'sapling'`
+    - [x] 2.4.2 Update `StageSelector` component with 7 stages
+    - [x] 2.4.3 Create `/[locale]/sapling` route (placeholder page)
+    - [x] 2.4.4 Add translation keys for "Sapling" stage label (EN + ET)
+    - [x] 2.4.5 Update `JourneyContext` stage order
 
 - [x] **2.5 Sprout Level Content** `@gemini` DONE
     - [x] Create `/sprout` page.
@@ -166,13 +166,14 @@
     - [x] Create `docs/DESIGN_SYSTEM_RULES.md` (Codified Standards).
     - [x] Enforce Theme: Transitional Dawn (Indigo/Purple).
     - [x] Enforce i18n: Migrate hardcoded strings to `en.json`.
-- [ ] **2.7 Unified Card System** `@gemini` IN PROGRESS
+- [ ] **2.7 Unified Card System** `@gemini` 🔄 IN PROGRESS
     > UnifiedConceptCard created with dna/sprout/tree variants. Needs Istik variant.
     - [x] Create `UnifiedConceptCard` (merging DNA/Concept cards).
     - [x] Implement variant: `dna` (Dark/Glass with per-step colors).
     - [ ] Implement variant: `sprout` (Dawn/Transitional).
     - [ ] Implement variant: `tree` (Light/Clean).
-    - [ ] Implement variant: `istik` (Morning Green / Sandbox).
+    - [ ] Implement variant: `seed` (Deep Earth) <!-- Added for completion -->
+    - [ ] Implement variant: `sapling` (Morning Green / Sandbox).
 - [x] **2.8 Tree Explorer Component** `@gemini` DONE
     - [x] Create grid layout with tabs: [Roots] [Trunk] [Branches] [Leaves].
     - [x] Implement "Map View" toggle (lazy-loaded D3 graph).
@@ -184,7 +185,7 @@
 
 > **Goal:** Build the Seed stage and redefine Sprout for the new 7-stage journey. Ref: VISION_AND_STRATEGY.md Decision 6b/6c.
 
-- [ ] **3.1 Seed Stage: Data & Training** `@gemini` `@opus` P0
+- [ ] **3.1 Seed Stage: Data & Training** `@gemini` `@opus` 🔄 IN PROGRESS
     > Ref: VISION_AND_STRATEGY.md Decision 6b.
     - [ ] 3.1.1 Create Seed concepts in DB: `dataset`, `common-crawl`, `the-pile`, `data-cleaning`, `bias-in-data`, `loss-function`, `backpropagation`, `compute-cluster`, `epochs`, `overfitting`, `weights`, `base-model`, `checkpoints`, `evaluation`
     - [ ] 3.1.2 Create `SeedView` component with Deep Earth theme (stone-900 -> amber-950)
@@ -243,17 +244,19 @@
 
 > **Goal:** Move all hardcoded content to Concept Objects and enable cross-stage relationships.
 
-- [ ] **5.1 Fruits Migration** `@opus` P1
-    - [ ] 5.1.1 Move `APPLICATIONS` array to concepts table (stage='fruits')
-    - [ ] 5.1.2 Add translations EN + ET
-    - [ ] 5.1.3 Update `FruitsView` to use Concept SDK
-    - [ ] 5.1.4 Remove hardcoded data from component
+- [x] **5.1 Fruits Migration** `@opus` DONE
+    > Migration: `20260203_fruits_orchard_content.sql`. FruitsView now server-fetches from SDK.
+    - [x] 5.1.1 Move `APPLICATIONS` array to concepts table (stage='fruits'): aiki, aivo, codegen, visionary
+    - [x] 5.1.2 Add translations EN + ET (title, subtitle/category, explanation, metaphor)
+    - [x] 5.1.3 Update `FruitsView` to use Concept SDK via `getStageContent('fruits')`
+    - [x] 5.1.4 Remove hardcoded APPLICATIONS array; icon mapping via `ICON_MAP`
 
-- [ ] **5.2 Orchard Migration** `@opus` P1
-    - [ ] 5.2.1 Move `CAREERS` array to concepts table (stage='orchard')
-    - [ ] 5.2.2 Add translations EN + ET
-    - [ ] 5.2.3 Update `OrchardView` to use Concept SDK
-    - [ ] 5.2.4 Remove hardcoded data from component
+- [x] **5.2 Orchard Migration** `@opus` DONE
+    > Same migration file. OrchardView now server-fetches; salary stored in `hint` field.
+    - [x] 5.2.1 Move `CAREERS` array to concepts table (stage='orchard'): ai-engineer, prompt-architect, data-scientist, ai-ethicist, mlops-specialist
+    - [x] 5.2.2 Add translations EN + ET (title, subtitle/role, explanation, metaphor, hint/salary)
+    - [x] 5.2.3 Update `OrchardView` to use Concept SDK via `getStageContent('orchard')`
+    - [x] 5.2.4 Remove hardcoded CAREERS array; icon mapping via `ICON_MAP`
 
 - [ ] **5.3 Tree Integration** `@gemini` `@opus` P2
     > Bridge existing `nodes` table with concepts system.

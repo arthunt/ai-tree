@@ -1,4 +1,5 @@
 import { OrchardView } from '@/components/orchard/OrchardView';
+import { getStageContent } from '@/actions/getConcepts';
 
 // Prerender params for SSG
 export function generateStaticParams() {
@@ -13,6 +14,7 @@ export const metadata = {
     description: 'Explore career paths and professional opportunities in AI.'
 };
 
-export default function OrchardPage({ params }: { params: { locale: string } }) {
-    return <OrchardView locale={params.locale} />;
+export default async function OrchardPage({ params }: { params: { locale: string } }) {
+    const concepts = await getStageContent('orchard', params.locale);
+    return <OrchardView concepts={concepts} locale={params.locale} />;
 }

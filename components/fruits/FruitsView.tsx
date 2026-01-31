@@ -6,42 +6,24 @@ import { FruitsCard } from './FruitsCard';
 import { StageSelector } from '@/components/StageSelector';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
+import type { Concept } from '@/lib/concepts';
 import { Brain, Code, Image as ImageIcon, MessageSquare } from 'lucide-react';
 
+/** Map icon name from DB to React component */
+const ICON_MAP: Record<string, React.ReactNode> = {
+    MessageSquare: <MessageSquare size={20} />,
+    Brain: <Brain size={20} />,
+    Code: <Code size={20} />,
+    Image: <ImageIcon size={20} />,
+};
+
 interface FruitsViewProps {
-    content?: any[]; // Allow external content, but we'll seed mock data initially
+    concepts: Concept[];
     locale: string;
 }
 
-export function FruitsView({ content, locale }: FruitsViewProps) {
+export function FruitsView({ concepts, locale }: FruitsViewProps) {
     const t = useTranslations();
-    // Dummy Data for visual scaffolding
-    const APPLICATIONS = [
-        {
-            title: "AIKI",
-            description: "AI-powered creative writing assistant. Generate stories, poems, and scripts with context-aware suggestions.",
-            category: "Creative",
-            icon: <MessageSquare size={20} />
-        },
-        {
-            title: "AIVO",
-            description: "Voice synthesis and audio generation engine. Create lifelike speech from text in multiple languages.",
-            category: "Audio",
-            icon: <Brain size={20} />
-        },
-        {
-            title: "CodeGen",
-            description: "Intelligent code completion and refactoring tool. Supports TypeScript, Python, and Rust.",
-            category: "Development",
-            icon: <Code size={20} />
-        },
-        {
-            title: "Visionary",
-            description: "Text-to-image generation pipeline. Create stunning visuals from natural language prompts.",
-            category: "Visual",
-            icon: <ImageIcon size={20} />
-        }
-    ];
 
     return (
         <div className="min-h-screen relative pb-32 overflow-hidden bg-gradient-to-b from-amber-50 via-white to-stone-50">
@@ -72,19 +54,19 @@ export function FruitsView({ content, locale }: FruitsViewProps) {
             {/* Application Grid */}
             <div className="container mx-auto px-4 md:px-6 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-                    {APPLICATIONS.map((app, index) => (
+                    {concepts.map((concept, index) => (
                         <motion.div
-                            key={app.title}
+                            key={concept.id}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}
                         >
                             <FruitsCard
-                                title={app.title}
-                                description={app.description}
-                                category={app.category}
+                                title={concept.title}
+                                description={concept.explanation}
+                                category={concept.subtitle ?? concept.category}
                                 index={index}
-                                icon={app.icon}
+                                icon={concept.icon ? ICON_MAP[concept.icon] : undefined}
                             />
                         </motion.div>
                     ))}

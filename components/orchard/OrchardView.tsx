@@ -6,52 +6,25 @@ import { OrchardCard } from './OrchardCard';
 import { StageSelector } from '@/components/StageSelector';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
+import type { Concept } from '@/lib/concepts';
 import { Briefcase, Code, LineChart, Cpu, ShieldCheck, Palette } from 'lucide-react';
 
+/** Map icon name from DB to React component */
+const ICON_MAP: Record<string, React.ReactNode> = {
+    Code: <Code size={20} />,
+    Palette: <Palette size={20} />,
+    LineChart: <LineChart size={20} />,
+    ShieldCheck: <ShieldCheck size={20} />,
+    Cpu: <Cpu size={20} />,
+};
+
 interface OrchardViewProps {
+    concepts: Concept[];
     locale: string;
 }
 
-export function OrchardView({ locale }: OrchardViewProps) {
+export function OrchardView({ concepts, locale }: OrchardViewProps) {
     const t = useTranslations();
-    // Dummy Data for Career Paths
-    const CAREERS = [
-        {
-            title: "AI Engineer",
-            role: "Engineering",
-            salary: "$120k - $250k",
-            description: "Build and deploy the models that power intelligent applications. Requires Python, PyTorch/TensorFlow.",
-            icon: <Code size={20} />
-        },
-        {
-            title: "Prompt Architect",
-            role: "Design / Logic",
-            salary: "$90k - $180k",
-            description: "Craft and optimize the instructions that guide LLMs to desired outputs. High creativity required.",
-            icon: <Palette size={20} />
-        },
-        {
-            title: "Data Scientist",
-            role: "Science",
-            salary: "$110k - $200k",
-            description: "Analyze vast datasets to find patterns and train predictive models.",
-            icon: <LineChart size={20} />
-        },
-        {
-            title: "AI Ethicist",
-            role: "Policy",
-            salary: "$100k - $190k",
-            description: "Ensure AI systems are fair, unbiased, and safe for humanity.",
-            icon: <ShieldCheck size={20} />
-        },
-        {
-            title: "ML Ops Specialist",
-            role: "Operations",
-            salary: "$130k - $240k",
-            description: "Manage the infrastructure and pipelines that keep AI models running in production.",
-            icon: <Cpu size={20} />
-        }
-    ];
 
     return (
         <div className="min-h-screen relative pb-32 overflow-hidden bg-gradient-to-b from-orange-50 via-rose-50 to-stone-100">
@@ -83,20 +56,20 @@ export function OrchardView({ locale }: OrchardViewProps) {
             {/* Career Grid */}
             <div className="container mx-auto px-4 md:px-6 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-                    {CAREERS.map((career, index) => (
+                    {concepts.map((career, index) => (
                         <motion.div
-                            key={career.title}
+                            key={career.id}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}
                         >
                             <OrchardCard
                                 title={career.title}
-                                description={career.description}
-                                role={career.role}
-                                salary={career.salary}
+                                description={career.explanation}
+                                role={career.subtitle ?? career.category}
+                                salary={career.hint ?? undefined}
                                 index={index}
-                                icon={career.icon}
+                                icon={career.icon ? ICON_MAP[career.icon] : undefined}
                             />
                         </motion.div>
                     ))}

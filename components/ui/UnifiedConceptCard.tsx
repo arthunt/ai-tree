@@ -7,7 +7,7 @@ import { Check, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { GlowingNode } from '@/components/ui/GlowingNode';
 
-export type CardVariant = 'dna' | 'sprout' | 'tree';
+export type CardVariant = 'dna' | 'seed' | 'sprout' | 'sapling' | 'tree';
 
 interface UnifiedConceptCardProps {
     variant: CardVariant;
@@ -46,6 +46,17 @@ const VARIANT_STYLES: Record<CardVariant, {
         nodeSizeActive: 48,
         nodeSizeDefault: 32
     },
+    seed: {
+        // Deep Earth: Amber/Stone themes
+        activeBorder: 'border-amber-500/60 ring-2 ring-amber-500/20',
+        activeBg: 'bg-stone-800/80',
+        completedBorder: 'border-amber-600/40',
+        completedBg: 'bg-amber-900/20',
+        defaultBorder: 'border-stone-700/50',
+        defaultBg: 'bg-stone-900/60',
+        nodeSizeActive: 50,
+        nodeSizeDefault: 30
+    },
     sprout: {
         activeBorder: 'border-white/40 ring-2 ring-white/20',
         activeBg: 'bg-white/10',
@@ -53,6 +64,17 @@ const VARIANT_STYLES: Record<CardVariant, {
         completedBg: 'bg-indigo-500/10',
         defaultBorder: 'border-white/10',
         defaultBg: 'bg-white/5', // Lighter transitional feel
+        nodeSizeActive: 50,
+        nodeSizeDefault: 30
+    },
+    sapling: {
+        // Morning Green: Emerald/Teal themes
+        activeBorder: 'border-emerald-400/50 ring-2 ring-emerald-400/20',
+        activeBg: 'bg-emerald-900/40',
+        completedBorder: 'border-emerald-600/40',
+        completedBg: 'bg-emerald-900/20',
+        defaultBorder: 'border-emerald-800/30',
+        defaultBg: 'bg-emerald-950/30',
         nodeSizeActive: 50,
         nodeSizeDefault: 30
     },
@@ -85,7 +107,13 @@ export function UnifiedConceptCard({
 }: UnifiedConceptCardProps) {
 
     const styles = VARIANT_STYLES[variant];
-    const cardColor = color || (variant === 'dna' ? '#00FFFF' : (variant === 'sprout' ? '#A78BFA' : '#10B981')); // Default fallbacks
+    const cardColor = color || (
+        variant === 'dna' ? '#00FFFF' :
+            variant === 'seed' ? '#F59E0B' : // Amber
+                variant === 'sprout' ? '#A78BFA' : // Indigo/Purple 
+                    variant === 'sapling' ? '#10B981' : // Emerald
+                        '#10B981' // Tree (Emerald)
+    );
 
     return (
         <div
