@@ -80,12 +80,12 @@ export function DNAInput() {
     }, [currentStep, isPlaying, isPaused, playbackSpeed]);
 
     return (
-        <div className="w-full max-w-2xl lg:max-w-4xl mx-auto mb-4 md:mb-6 relative z-10">
+        <div className="w-full max-w-2xl lg:max-w-full mx-auto mb-2 md:mb-3 relative z-10">
             <div className="relative group">
                 {/* Background Glow */}
                 <div className={`absolute -inset-0.5 bg-gradient-to-r from-brand-teal to-brand-cyan rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500 ${isPlaying ? 'opacity-50 animate-pulse' : ''}`}></div>
 
-                <div className="relative flex flex-col bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+                <div className="relative flex flex-col bg-black/50 backdrop-blur-xl border border-white/10 rounded-xl md:rounded-2xl shadow-2xl overflow-hidden">
 
                     {/* Top Row: Input & Controls */}
                     <div className="flex items-center p-2">

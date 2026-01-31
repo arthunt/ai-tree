@@ -97,7 +97,7 @@ export function UnifiedConceptCard({
             }}
         >
             {/* Visual Header Slot (Glowing Node or Number) */}
-            <div className="h-14 md:h-20 relative flex items-center justify-center mb-[-1rem] z-10 pointer-events-none">
+            <div className="h-12 md:h-14 relative flex items-center justify-center mb-[-0.75rem] z-10 pointer-events-none">
                 {visualSlot ? visualSlot : (
                     <>
                         <GlowingNode

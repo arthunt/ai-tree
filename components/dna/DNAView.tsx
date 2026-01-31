@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRef, useCallback } from 'react';
 import { DNAComponentCard } from '@/components/dna/DNAComponentCard';
 import { CompletionCard } from '@/components/dna/CompletionCard';
-import { DNAFlowDiagram } from '@/components/dna/DNAFlowDiagram';
 import { DNAProvider, useDNA, DNAStep } from './DNAContext';
 import { DNAInput } from './DNAInput';
 import { DNAStepNav } from './DNAStepNav';
@@ -95,18 +94,18 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-center mb-4 md:mb-8 relative z-20"
+                        className="text-center mb-3 md:mb-4 relative z-20"
                     >
-                        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-2 md:mb-4 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-white to-brand-cyan drop-shadow-[0_0_15px_rgba(56,189,248,0.3)]">
+                        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-1 md:mb-2 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-white to-brand-cyan drop-shadow-[0_0_15px_rgba(56,189,248,0.3)]">
                             {t('header.title')}
                         </h1>
-                        <p className="text-sm sm:text-lg md:text-2xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+                        <p className="text-sm sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
                             {t('header.subtitle')}
                         </p>
                     </motion.header>
 
                     {/* INTERACTIVE INPUT */}
-                    <div className="relative z-30" onMouseEnter={() => {
+                    <div className="relative z-30 w-full max-w-7xl" onMouseEnter={() => {
                         // Explicitly pause when typing
                         if (!isPaused) togglePause();
                     }}>
@@ -114,12 +113,7 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                     </div>
 
                     {/* Main Flow Visualization */}
-                    <div className="relative w-full max-w-7xl mt-2 md:mt-4">
-                        {/* Connecting Flow Lines (SVG) (Hidden on mobile for now as cards stack) */}
-                        <div className="absolute inset-0 z-0 pointer-events-none hidden lg:block">
-                            <DNAFlowDiagram />
-                        </div>
-
+                    <div className="relative w-full max-w-7xl mt-1 md:mt-2">
                         {/* Sticky Mobile Step Navigation (breadcrumbs + next button) */}
                         <DNAStepNav onScrollToCard={scrollToCard} />
 
