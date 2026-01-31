@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-export type EvolutionStage = 'dna' | 'seed' | 'sprout' | 'tree' | 'fruits' | 'orchard';
+export type EvolutionStage = 'dna' | 'seed' | 'sprout' | 'sapling' | 'tree' | 'fruits' | 'orchard';
 
 interface JourneyContextType {
     currentStage: EvolutionStage;
@@ -28,6 +28,7 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
         if (pathname?.includes('/dna')) return 'dna';
         if (pathname?.includes('/seed')) return 'seed';
         if (pathname?.includes('/sprout')) return 'sprout';
+        if (pathname?.includes('/sapling')) return 'sapling';
         if (pathname?.includes('/tree-view')) {
             // Check query params if we want to be specific, but for now default to 'tree'
             // and let the component logic decide based on zoom level if it wants to be 'sprout'
@@ -81,6 +82,9 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
                 break;
             case 'sprout':
                 if (!pathname?.includes('/sprout')) router.push(`/${locale}/sprout`);
+                break;
+            case 'sapling':
+                if (!pathname?.includes('/sapling')) router.push(`/${locale}/sapling`);
                 break;
             case 'tree':
                 if (!pathname?.includes('/tree-view')) {

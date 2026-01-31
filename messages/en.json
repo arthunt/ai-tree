@@ -247,6 +247,7 @@
       "branches": "Branches",
       "leaves": "Leaves",
       "fruits": "Fruits",
+      "sapling": "Sapling",
       "orchard": "Orchard"
     }
   },
