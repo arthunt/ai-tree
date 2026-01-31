@@ -217,6 +217,18 @@
     "subwordInsight": "<strong>Long words get split!</strong> Tokens marked with <code>##</code> are subword pieces. AI breaks unfamiliar or long words into smaller known parts, similar to how you might sound out an unfamiliar word syllable by syllable.",
     "disclaimer": "This is a simplified tokenizer. Real language models use more sophisticated methods like BPE (Byte Pair Encoding) or WordPiece."
   },
+  "sprout": {
+    "phaseLabel": "Phase 2: Foundations",
+    "title": "The Sprout",
+    "subtitle": "Before the tree can grow branches, it needs strong roots. Understand the 6 core mechanisms that power every AI model.",
+    "card": {
+      "analogyLabel": "Analogy",
+      "readFull": "Read full lesson",
+      "tapToLearn": "Tap to learn",
+      "visualLink": "Tap to interact"
+    },
+    "inputPlaceholder": "Ask about these concepts..."
+  },
   "navigation": {
     "viewOptions": "View options",
     "levelSections": "AI concept levels",

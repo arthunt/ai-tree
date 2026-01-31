@@ -59,7 +59,14 @@
 - [ ] **2.3 Sprout Level Content** `@gemini` ✅ DONE
     - [x] Create `/sprout` page.
     - [x] Content: Tokens, Vectors, Attention, Context, Prompting, Hallucination.
+    - [x] Content: Tokens, Vectors, Attention, Context, Prompting, Hallucination.
 
+- [x] **2.4 Sprout Alignment & Design Rules** `@gemini` ✅ DONE
+    - [x] Create `docs/DESIGN_SYSTEM_RULES.md` (Codified Standards).
+    - [x] Enforce Theme: Transitional Dawn (Indigo/Purple).
+    - [x] Enforce Input: Wire up to Toast (Coming Soon).
+    - [x] Enforce i18n: Migrate hardcoded strings to `en.json`.
+    - [x] ⚠️ Fix Header Sizing (Mobile `text-4xl` -> `text-2xl`, etc).
 ## 🛠️ Phase 2: The Unified Tree (Focus: Tree View)
 
 > **Goal:** Replace the technical D3 graph with a user-friendly Explorer.
@@ -67,9 +74,10 @@
 - [ ] **2.1 Unified Card System** `@freelance` 👈 OPEN FOR PICKUP
     - [ ] Create `UnifiedConceptCard` (merging DNA/Concept cards).
     - [ ] Implement variants: `SimNode` (Dark/Glass), `KnowledgeNode` (Light/Clean).
-- [ ] **2.2 Tree Explorer Component** `@gemini` 🔄 IN PROGRESS
-    - [ ] Create grid layout with tabs: [Roots] [Trunk] [Branches] [Leaves].
-    - [ ] Implement "Map View" toggle (lazy-loaded D3 graph) for Desktop only.
+- [x] **2.2 Tree Explorer Component** `@gemini` ✅ DONE
+    - [x] Create grid layout with tabs: [Roots] [Trunk] [Branches] [Leaves].
+    - [x] Implement "Map View" toggle (lazy-loaded D3 graph).
+    - [x] Refactor to Server-Side Data Fetching.
 
 ## 🍎 Phase 3: The Harvest (Business Integration)
 

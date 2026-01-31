@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { SproutCard } from './SproutCard';
 import { FloatingInput } from '@/components/ui/FloatingInput';
 import { StageSelector } from '@/components/StageSelector';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+import { useToast } from '@/lib/useToast';
 
 interface SproutViewProps {
     content: any[];
@@ -11,14 +13,26 @@ interface SproutViewProps {
 }
 
 export function SproutView({ content, locale }: SproutViewProps) {
+    const t = useTranslations();
+    const { showToast } = useToast();
+
     const getLocalized = (json: any) => {
         return json?.[locale] || json?.['en'] || '';
     };
 
+    const handleSearch = (query: string) => {
+        showToast(
+            "Sprout search coming soon",
+            "info"
+        );
+    };
+
     return (
-        <div className="min-h-screen relative pb-32">
-            {/* Background Gradient (Dawn/Sunrise Theme) */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900/50 -z-10" />
+        <div className="min-h-screen relative pb-32 overflow-hidden">
+            {/* Background Gradient (Dawn/Sunrise Theme - Transitional) */}
+            {/* Moving from Data (Dark) to Light. Indigo/Violet to indicate early morning. */}
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-950 via-purple-950 to-slate-900 -z-10" />
+            <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-20 -z-10" />
 
             {/* Header */}
             <header className="pt-24 pb-12 px-6 text-center max-w-4xl mx-auto">
@@ -28,14 +42,13 @@ export function SproutView({ content, locale }: SproutViewProps) {
                     transition={{ duration: 0.8 }}
                 >
                     <span className="inline-block py-1 px-3 rounded-full bg-brand-teal/10 border border-brand-teal/20 text-brand-teal text-xs font-bold tracking-widest uppercase mb-4">
-                        Phase 2: Foundations
+                        {t('sprout.phaseLabel')}
                     </span>
-                    <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-brand-cyan to-brand-teal mb-6">
-                        The Sprout
+                    <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-indigo-400 mb-4 sm:mb-6">
+                        {t('sprout.title')}
                     </h1>
-                    <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                        Before the tree can grow branches, it needs strong roots.
-                        Understand the 6 core mechanisms that power every AI model.
+                    <p className="text-sm sm:text-lg text-indigo-200/80 max-w-2xl mx-auto leading-relaxed">
+                        {t('sprout.subtitle')}
                     </p>
                 </motion.div>
             </header>
@@ -58,7 +71,11 @@ export function SproutView({ content, locale }: SproutViewProps) {
 
             {/* Floating Controls */}
             <StageSelector />
-            <FloatingInput position="bottom" placeholder="Ask about these concepts..." />
+            <FloatingInput
+                position="bottom"
+                placeholder={t('sprout.inputPlaceholder') || "Ask about these concepts..."}
+                onSubmit={handleSearch}
+            />
         </div>
     );
 }

@@ -11,6 +11,8 @@
 
 **Purpose:** This document is the absolute authority on the project's vision, metaphor, and architectural decisions. All other agents and developers must align with this document. If a conflict arises, *this document wins*.
 
+> **Implementation Rules:** See [`docs/DESIGN_SYSTEM_RULES.md`](./DESIGN_SYSTEM_RULES.md) for strict UI/UX enforcement guidelines (Theme, Input, i18n).
+
 ---
 
 ## 🏗️ Decision 1: Level Structure

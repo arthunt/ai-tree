@@ -13,8 +13,11 @@ interface SproutCardProps {
     visualType: string;
 }
 
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+
 export function SproutCard({ title, description, analogy, index, visualType }: SproutCardProps) {
     const [isExpanded, setIsExpanded] = useState(false);
+    const t = useTranslations();
 
     // Stagger animation based on index
     const variants = {
@@ -67,7 +70,7 @@ export function SproutCard({ title, description, analogy, index, visualType }: S
                     <div className="mb-4 p-3 rounded-lg bg-black/20 border border-white/5">
                         <div className="flex items-center gap-2 mb-1 text-xs text-brand-gold uppercase tracking-wider font-semibold">
                             <Lightbulb size={12} />
-                            <span>Analogy</span>
+                            <span>{t('sprout.card.analogyLabel')}</span>
                         </div>
                         <p className="text-sm text-gray-300 italic">&quot;{analogy}&quot;</p>
                     </div>
@@ -84,7 +87,7 @@ export function SproutCard({ title, description, analogy, index, visualType }: S
 
                         <div className="mt-4 flex items-center gap-2 text-xs text-brand-teal font-medium">
                             <BookOpen size={14} />
-                            <span>Read full lesson</span>
+                            <span>{t('sprout.card.readFull')}</span>
                         </div>
                     </motion.div>
                 </div>
@@ -93,7 +96,7 @@ export function SproutCard({ title, description, analogy, index, visualType }: S
                 {!isExpanded && (
                     <div className="mt-4 pt-4 border-t border-white/5 flex justify-between items-center text-xs text-white/30">
                         <span>{visualType.replace('_', ' ')}</span>
-                        <span className="group-hover:text-white transition-colors">Tap to learn →</span>
+                        <span className="group-hover:text-white transition-colors">{t('sprout.card.tapToLearn')} →</span>
                     </div>
                 )}
             </div>
