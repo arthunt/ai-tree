@@ -1,8 +1,7 @@
 import { getConceptsByStage, getRelatedConceptsForStage } from '@/lib/concepts/api';
-import { UnifiedConceptCard } from '@/components/ui/UnifiedConceptCard';
+import { SeedWorkspace } from './SeedWorkspace';
 import { RelatedConceptsPanel } from '@/components/concept/RelatedConceptsPanel';
 import { StageSelector } from '@/components/StageSelector';
-import { SeedHeroAnimation } from './SeedHeroAnimation';
 
 const i18n: Record<string, Record<string, string>> = {
     en: {
@@ -21,30 +20,6 @@ const i18n: Record<string, Record<string, string>> = {
     },
 };
 
-function SeedSection({ title, concepts }: { title: string; concepts: any[] }) {
-    if (concepts.length === 0) return null;
-
-    return (
-        <div className="mb-12 last:mb-0">
-            <h3 className="text-xl font-bold text-amber-500/80 mb-6 uppercase tracking-wider pl-1 border-l-4 border-amber-900/50">
-                {title}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {concepts.map((concept) => (
-                    <div key={concept.id} className="h-[280px]">
-                        <UnifiedConceptCard
-                            variant="seed"
-                            index={concept.sort_order}
-                            title={concept.title}
-                            description={concept.explanation}
-                        />
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-}
-
 export default async function SeedView({ locale }: { locale: string }) {
     const [concepts, relatedConcepts] = await Promise.all([
         getConceptsByStage('seed', locale),
@@ -58,23 +33,15 @@ export default async function SeedView({ locale }: { locale: string }) {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-stone-900 via-stone-950 to-amber-950 pb-20">
-            {/* Hero Section */}
-            <div className="relative pt-32 pb-16 px-6 text-center z-10 overflow-hidden">
-                <SeedHeroAnimation />
-
-                <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-amber-100 to-amber-600 mb-4 drop-shadow-sm relative z-20">
-                    {t.title}
-                </h1>
-                <p className="text-lg md:text-xl text-stone-400 max-w-2xl mx-auto leading-relaxed relative z-20">
-                    {t.subtitle}
-                </p>
-            </div>
-
-            {/* Content Grid */}
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <SeedSection title={t.dataset} concepts={datasetConcepts} />
-                <SeedSection title={t.training} concepts={trainingConcepts} />
-                <SeedSection title={t.model} concepts={modelConcepts} />
+            {/* Interactive Workspace */}
+            <div className="relative pt-32">
+                <SeedWorkspace
+                    locale={locale}
+                    datasetConcepts={datasetConcepts}
+                    trainingConcepts={trainingConcepts}
+                    modelConcepts={modelConcepts}
+                    i18n={t}
+                />
             </div>
 
             {/* Related Concepts from Other Stages */}

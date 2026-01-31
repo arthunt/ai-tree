@@ -11,15 +11,51 @@
 > **Prerequisite complete:** Concept Object schema (2.1), SDK (2.2), and DNA migration (2.3) are done.
 > All agents can now use `lib/concepts/api.ts` to read/write concepts.
 
-### `@opus` (Claude Code) — Next Tasks
+### `@opus` (Claude Code) — Current Sprint
+
+#### Block A: Seed Interactive Wiring `🔄 IN PROGRESS`
+> SeedContext, SeedStepNav, SeedHeroAnimation all exist as standalone components but SeedView is a static server component that doesn't use them. This block wires everything together.
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| A1 | **3.1.9** Seed View → Interactive | 🔄 IN PROGRESS | Convert SeedView from static server component to client shell wrapping SeedProvider + SeedStepNav + SeedHeroAnimation. Concept cards rendered below hero. |
+| A2 | **3.1.10** Verify DB category values | ⏳ NEXT | Confirm `concepts.category` has values `data`/`training`/`model` for seed concepts; fix filter if not |
+| A3 | **3.1.8** Card ↔ Phase activation | ⏳ NEXT | Highlight/dim SeedCards based on `SeedContext.phase` — dataset cards active in `selection`, training in `training`, model in `complete` |
+| A4 | **3.1.11** SeedCard deep-dive stub → real | ⏳ NEXT | Replace `console.log` onDeepDive with inline expand showing `metaphor`, `deep_dive`, `question` fields |
+| A5 | **3.1.12** Fix typo "Paramaters" → "Parameters" | ⏳ NEXT | `SeedHeroAnimation.tsx:225` |
+
+#### Block B: Seed i18n Sweep
+> Move all hardcoded strings in Seed components to `messages/en.json` + `messages/et.json`.
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| B1 | **6.1.1** SeedView inline i18n object → messages | ⏳ BLOCKED (A1) | Move `const i18n = {...}` (title, subtitle, section headers) to ParaglideJS keys |
+| B2 | **6.1.2** SeedHeroAnimation strings → messages | ⏳ BLOCKED (A1) | "Select Training Data", "Ingest Data", "Compressing Knowledge", "Base Model Ready", data source labels, stats |
+| B3 | **6.1.3** SeedStepNav strings → messages | ⏳ BLOCKED (A1) | "Ingestion", "Training", "Model", "Reset Run" |
+| B4 | **6.1.4** SeedCard fallback → i18n | ⏳ BLOCKED (A1) | Replace `"Analyze Process"` fallback with proper i18n key |
+| B5 | **6.1.5** FruitsCard fallback → i18n | ⏳ NEXT | Replace `"Launch App"` hardcoded fallback |
+| B6 | **6.1.6** OrchardCard fallback → i18n | ⏳ NEXT | Replace `"View Career Path"` hardcoded fallback |
+
+#### Block C: Concept Deep-Dive (6.2)
+> Enable tap-to-expand on concept cards across all stages. Show metaphor, deep_dive content, and related concepts.
+
 | # | Task | Status | Depends On | Description |
 |---|------|--------|------------|-------------|
-| 1 | **3.1.x** Seed Data Fix | 🔄 IN PROGRESS | — | Fix broken category filtering, add `parent_id` grouping, i18n hardcoded strings |
-| 2 | **6.1** Stage i18n Sweep | ⏳ NEXT | 3.1.x | Remove all remaining hardcoded ET/EN strings across Seed, Sprout, Fruits, Orchard views |
-| 3 | **5.4.4** Related Concepts Wiring | ⏳ NEXT | — | Wire existing RelatedConceptsPanel into stage detail views using relationship data |
-| 4 | **6.2** Concept Card Deep-Dive | ⏳ NEXT | 5.4.4 | Enable tap-to-expand on UnifiedConceptCard to show metaphor, deep_dive, relationships |
+| C1 | **6.2.1** Build `ConceptDetailPanel` | ⏳ BLOCKED (A) | — | Reusable inline-expand component showing metaphor, deep_dive, question, related concept chips |
+| C2 | **6.2.2** Wire into FruitsView | ⏳ BLOCKED (C1) | C1 | Tap FruitsCard → expand with concept detail |
+| C3 | **6.2.3** Wire into OrchardView | ⏳ BLOCKED (C1) | C1 | Tap OrchardCard → expand with concept detail |
+| C4 | **6.2.4** Wire into SeedView | ⏳ BLOCKED (A1, C1) | A1, C1 | Tap SeedCard → expand with concept detail |
+
+#### Block D: Mock Data & Housekeeping
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| D1 | Add sapling mock data | ⏳ NEXT | `lib/concepts/mock-data.ts` has no sapling entries — needed for offline dev |
+| D2 | Add tree mock data | ⏳ NEXT | Same — no tree entries in mock-data.ts |
+| D3 | Build check | ⏳ NEXT | Verify `npm run build` passes with zero TS errors |
 
 #### Completed (this sprint)
+- ✅ 5.4.4 Related Concepts Wiring — `getRelatedConceptsForStage()` API + `RelatedConceptsPanel` wired into all 5 stage views
 - ✅ 1.6 P2 DNA Polish — metaphor prominence, help button, reset confirm, deep-dive label
 - ✅ 5.3 Tree Integration — bridge nodes to concept objects, deep-dive panel
 - ✅ 5.5 Learning Paths Migration — validated IDs, updated translations
@@ -33,12 +69,12 @@
 ### `@gemini` — Current Tasks
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | Finish remaining: sprout, tree, seed, sapling visuals |
-| 2 | **3.1** Seed Stage Polish | 🔄 IN PROGRESS | Hero animation ("Compression"), theme polish |
+| 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | Finish remaining: sprout, tree visuals (seed+sapling done) |
+| 2 | **3.1** Seed Stage Polish | ✅ DONE | Hero animation, SeedContext, SeedStepNav all created (wiring by @opus) |
 | 3 | **4.1** Sapling Page & Theme | ⏳ NEXT | Polish skeleton, Morning Green theme |
 | 4 | **4.2** Prompt Sandbox Refinement | ⏳ NEXT | Mobile layout, iteration tracking, feedback scoring |
 | 5 | **4.3** Sapling Practice Modules | 🔄 IN PROGRESS | 4 guided modules: First Prompt, Refinement, Temp, Eval (Adding validation logic) |
-| 6 | **5.4.4** Related Concepts Panel | ⏳ NEXT | Visual component showing concept relationships |
+| 6 | ~~**5.4.4** Related Concepts Panel~~ | ✅ DONE | Wired by @opus into all 5 stage views |
 
 ### `@swarm` (Claude Flow) — Available
 | # | Task | Description |
@@ -198,16 +234,20 @@
 
 > **Goal:** Build the Seed stage and redefine Sprout for the new 7-stage journey. Ref: VISION_AND_STRATEGY.md Decision 6b/6c.
 
-- [ ] **3.1 Seed Stage: Training Simulation** `@gemini` 🔄 IN PROGRESS
+- [ ] **3.1 Seed Stage: Training Simulation** `@gemini` `@opus` 🔄 IN PROGRESS
     > Ref: VISION_AND_STRATEGY.md Decision 6b (Interactive Training Run).
     - [x] 3.1.1 Create Seed concepts in DB ✅ 14 concepts in `concepts` table
     - [x] 3.1.2 Create `SeedView` (Basic shell with Deep Earth theme) ✅
-    - [ ] 3.1.3 Create `SeedContext` (State Machine: `selection` -> `training` -> `model`)
-    - [ ] 3.1.4 Implement `SeedStepNav` (Sticky navigation for the 3 phases)
-    - [ ] 3.1.5 Hero: "Ingestion Dashboard" (Drag-and-drop data sources)
-    - [ ] 3.1.6 Hero: "Training Loop" (Epiphany animation, loss curve visualization)
-    - [ ] 3.1.7 Hero: "Checkpoint" (Model solidification)
-    - [ ] 3.1.8 Wiring: Concept cards highlight/activate based on simulation state
+    - [x] 3.1.3 Create `SeedContext` (State Machine: `selection` -> `processing` -> `training` -> `complete`) ✅ Exists with training loop sim
+    - [x] 3.1.4 Implement `SeedStepNav` (Sticky navigation for the 3 phases) ✅ Exists with progress bar
+    - [x] 3.1.5 Hero: "Ingestion Dashboard" (Data source selection buttons) ✅ Exists in `SeedHeroAnimation`
+    - [x] 3.1.6 Hero: "Training Loop" (Canvas particles + loss curve visualization) ✅ Exists in `SeedHeroAnimation`
+    - [x] 3.1.7 Hero: "Checkpoint" (Model solidification with stats) ✅ Exists in `SeedHeroAnimation`
+    - [ ] 3.1.8 Wiring: Concept cards highlight/activate based on simulation state `@opus`
+    - [ ] 3.1.9 Wire SeedView: wrap in SeedProvider + render SeedStepNav + SeedHeroAnimation `@opus`
+    - [ ] 3.1.10 Verify DB category values (`data`/`training`/`model`) for seed concepts `@opus`
+    - [ ] 3.1.11 Replace SeedCard `console.log` onDeepDive with real expand behavior `@opus`
+    - [ ] 3.1.12 Fix typo "Paramaters" → "Parameters" in SeedHeroAnimation `@opus`
 
 - [x] **3.2 Sprout Content Redefinition** `@opus` DONE
     > Migration: `20260204_sprout_concepts.sql`. 6 concepts with "Emergent Properties" framing.
@@ -283,8 +323,8 @@
     - [x] 5.4.1 Define prerequisite relationships (tokenization→embeddings→attention→prediction chain, + cross-stage)
     - [x] 5.4.2 Define cross-stage deepening (DNA→Seed→Sprout→Fruits→Orchard flow)
     - [x] 5.4.3 Define application links (Sprout→Fruits applies, Fruits→Orchard career links)
-    - [ ] 5.4.4 Build "Related Concepts" panel component
-    - [ ] 5.4.5 Update learning paths to reference concept IDs from unified table
+    - [x] 5.4.4 Build "Related Concepts" panel component ✅ `RelatedConceptsPanel` wired into all 5 stage views via `getRelatedConceptsForStage()`
+    - [x] 5.4.5 Update learning paths to reference concept IDs from unified table ✅ (done in 5.5)
 
 - [x] **5.5 Learning Paths Migration** `@opus` DONE
     - [x] 5.5.1 All 5 paths now use validated concept IDs from unified DB (24 IDs verified)
