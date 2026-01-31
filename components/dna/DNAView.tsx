@@ -108,12 +108,12 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                             <DNAFlowDiagram />
                         </div>
 
-                        {/* Cards Grid - Mobile: horizontal snap scroll, Tablet+: grid */}
-                        <div className="relative z-10 flex overflow-x-auto snap-x snap-mandatory gap-4 px-[5vw] pb-4 scrollbar-hide md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:px-0 md:pb-0 md:gap-8 lg:grid-cols-4 lg:gap-12">
+                        {/* Cards Grid - Mobile: horizontal snap scroll (One Card Per View), Tablet+: grid */}
+                        <div className="relative z-10 flex overflow-x-auto snap-x snap-mandatory gap-4 px-4 pb-8 scrollbar-hide md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:px-0 md:pb-0 md:gap-8 lg:grid-cols-4 lg:gap-12">
                             {content.map((item, index) => (
                                 <div
                                     key={item.concept_id}
-                                    className="min-w-[85vw] snap-center md:min-w-0"
+                                    className="min-w-[90vw] snap-center md:min-w-0"
                                 >
                                     <DNAComponentCard
                                         title={item.title}

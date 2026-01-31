@@ -70,11 +70,11 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
 
             {/* Card Content */}
             <GlassCard
-                className={`relative flex-1 p-6 pt-10 transition-all duration-500 ${isActive ? 'border-brand-teal/50 ring-1 ring-brand-teal/50 bg-brand-teal/5' : ''}`}
+                className={`relative flex-1 p-5 md:p-6 pt-8 md:pt-10 transition-all duration-500 ${isActive ? 'border-brand-teal/50 ring-1 ring-brand-teal/50 bg-brand-teal/5' : ''}`}
                 intensity={isActive ? "high" : "low"}
             >
                 <div className="mb-4">
-                    <h3 className="text-2xl font-bold text-white mb-2" style={{ textShadow: isActive ? `0 0 20px ${color}` : 'none' }}>
+                    <h3 className="text-xl md:text-2xl font-bold text-white mb-2" style={{ textShadow: isActive ? `0 0 20px ${color}` : 'none' }}>
                         {title}
                     </h3>
                     {metaphor && (
