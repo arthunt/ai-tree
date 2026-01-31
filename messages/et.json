@@ -1378,5 +1378,14 @@
     "card": {
       "visitApp": "Käivita Rakendus"
     }
+  },
+  "orchard": {
+    "title": "Karjääriirajad",
+    "subtitle": "Kujunda oma tulevikku. Avasta professionaalsed võimalused AI ökosüsteemis.",
+    "phaseLabel": "IV Faas: Aed",
+    "inputPlaceholder": "Sisesta oma oskused...",
+    "card": {
+      "viewPath": "Vaata Karjäärirada"
+    }
   }
 }

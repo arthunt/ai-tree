@@ -1,0 +1,66 @@
+"use client";
+
+import { UnifiedConceptCard } from '@/components/ui/UnifiedConceptCard';
+import { motion } from 'framer-motion';
+import { Briefcase, Building2, TrendingUp, Users } from 'lucide-react';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+
+interface OrchardCardProps {
+    title: string;
+    description: string;
+    role: string;
+    salary?: string;
+    index: number;
+    icon?: React.ReactNode;
+}
+
+export function OrchardCard({ title, description, role, salary, index, icon }: OrchardCardProps) {
+    const t = useTranslations();
+    const orchardColor = '#F43F5E'; // Rose-500 for a warm sunset feel
+
+    return (
+        <div className="h-full min-h-[280px]">
+            <UnifiedConceptCard
+                variant="tree"
+                title={title}
+                index={index}
+                isActive={false}
+                color={orchardColor}
+                visualSlot={
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
+                        {/* Abstract Background Decoration */}
+                        <Briefcase size={120} className="text-rose-900 -rotate-12" />
+                    </div>
+                }
+                deepDiveLabel={t('orchard.card.viewPath') || "View Career Path"}
+                onDeepDive={() => console.log('View Path', title)}
+            >
+                <div className="flex flex-col h-full bg-gradient-to-br from-rose-50/50 to-orange-50/50 -m-5 p-5 md:-m-6 md:p-6 rounded-b-2xl">
+                    {/* Header Icon */}
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="p-2.5 rounded-xl bg-white shadow-sm border border-rose-100 text-rose-500">
+                            {icon || <Briefcase size={20} />}
+                        </div>
+                        <div>
+                            <span className="block text-xs font-bold uppercase tracking-wider text-rose-600/70">
+                                {role}
+                            </span>
+                            {salary && (
+                                <span className="block text-[10px] font-mono text-stone-500">
+                                    {salary}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Description */}
+                    <div className="flex-1">
+                        <p className="text-sm text-stone-600 leading-relaxed font-medium">
+                            {description}
+                        </p>
+                    </div>
+                </div>
+            </UnifiedConceptCard>
+        </div>
+    );
+}

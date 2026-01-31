@@ -1378,5 +1378,14 @@
     "card": {
       "visitApp": "Launch App"
     }
+  },
+  "orchard": {
+    "title": "Career Paths",
+    "subtitle": "Cultivate your future. Explore the professional opportunities growing in the AI ecosystem.",
+    "phaseLabel": "Phase IV: The Orchard",
+    "inputPlaceholder": "Enter your skills...",
+    "card": {
+      "viewPath": "View Career Path"
+    }
   }
 }
