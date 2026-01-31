@@ -2,10 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { FruitsCard } from './FruitsCard';
-import { FloatingInput } from '@/components/ui/FloatingInput';
+
 import { StageSelector } from '@/components/StageSelector';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
-import { useToast } from '@/lib/useToast';
+
 import { Brain, Code, Image as ImageIcon, MessageSquare } from 'lucide-react';
 
 interface FruitsViewProps {
@@ -15,15 +15,6 @@ interface FruitsViewProps {
 
 export function FruitsView({ content, locale }: FruitsViewProps) {
     const t = useTranslations();
-    const { showToast } = useToast();
-
-    const handleSearch = (query: string) => {
-        showToast(
-            "Harvest search coming soon",
-            "info"
-        );
-    };
-
     // Dummy Data for visual scaffolding
     const APPLICATIONS = [
         {
@@ -102,11 +93,6 @@ export function FruitsView({ content, locale }: FruitsViewProps) {
 
             {/* Floating Controls */}
             <StageSelector />
-            <FloatingInput
-                position="bottom"
-                placeholder={t('fruits.inputPlaceholder') || "Search applications..."}
-                onSubmit={handleSearch}
-            />
         </div>
     );
 }

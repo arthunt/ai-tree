@@ -2,10 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { OrchardCard } from './OrchardCard';
-import { FloatingInput } from '@/components/ui/FloatingInput';
+
 import { StageSelector } from '@/components/StageSelector';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
-import { useToast } from '@/lib/useToast';
+
 import { Briefcase, Code, LineChart, Cpu, ShieldCheck, Palette } from 'lucide-react';
 
 interface OrchardViewProps {
@@ -14,15 +14,6 @@ interface OrchardViewProps {
 
 export function OrchardView({ locale }: OrchardViewProps) {
     const t = useTranslations();
-    const { showToast } = useToast();
-
-    const handleSearch = (query: string) => {
-        showToast(
-            "Career path search coming soon",
-            "info"
-        );
-    };
-
     // Dummy Data for Career Paths
     const CAREERS = [
         {
@@ -128,11 +119,6 @@ export function OrchardView({ locale }: OrchardViewProps) {
 
             {/* Floating Controls */}
             <StageSelector />
-            <FloatingInput
-                position="bottom"
-                placeholder={t('orchard.inputPlaceholder') || "Enter your skills..."}
-                onSubmit={handleSearch}
-            />
         </div>
     );
 }

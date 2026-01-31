@@ -74,18 +74,6 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                     <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-brand-cyan/5 blur-[120px] rounded-full animate-pulse-slow" style={{ animationDelay: '2s' }} />
                 </div>
 
-                {/* Control Hint Overlay (desktop only — mobile uses sticky DNAStepNav) */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2 }}
-                    className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-none hidden md:block"
-                >
-                    <div className="bg-black/40 backdrop-blur-md px-6 py-2 rounded-full border border-white/10 text-white/50 text-xs uppercase tracking-widest flex items-center gap-3">
-                        <span className="w-2 h-2 rounded-full bg-brand-teal animate-pulse" />
-                        {t('controlHint')}
-                    </div>
-                </motion.div>
 
                 <div className="relative z-10 flex flex-col items-center p-4 pt-14 sm:pt-16 sm:px-8 pb-20">
 

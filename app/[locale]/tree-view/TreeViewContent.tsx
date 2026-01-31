@@ -14,7 +14,7 @@ import { getTreeContent, TreeContentSimple } from '@/actions/getTreeContent';
 import { GlobalNav } from '@/components/GlobalNav';
 import { TreeExplorer } from '@/components/tree/TreeExplorer';
 import { TreeDetailPanel } from '@/components/tree/TreeDetailPanel';
-import { FloatingInput } from '@/components/ui/FloatingInput';
+
 
 interface TreeViewContentProps {
     initialData: TreeContentSimple[];
@@ -121,16 +121,7 @@ export function TreeViewContent({ initialData }: TreeViewContentProps) {
                 onClose={() => setSelectedNode(null)}
             />
 
-            {/* Context-Aware Input (Floating Bottom) */}
-            <FloatingInput
-                position="bottom"
-                value={searchParams.get('q') || ""}
-                placeholder={t('treeView.inputPlaceholder') || "Ask about the ecosystem..."}
-                onSubmit={(val) => {
-                    // Future: Implement RAG chat or Tree Filtering
-                    console.log("Tree Query:", val);
-                }}
-            />
+
         </div>
     );
 }

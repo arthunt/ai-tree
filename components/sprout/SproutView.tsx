@@ -2,10 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { SproutCard } from './SproutCard';
-import { FloatingInput } from '@/components/ui/FloatingInput';
+
 import { StageSelector } from '@/components/StageSelector';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
-import { useToast } from '@/lib/useToast';
+
 
 interface SproutViewProps {
     content: any[];
@@ -14,18 +14,11 @@ interface SproutViewProps {
 
 export function SproutView({ content, locale }: SproutViewProps) {
     const t = useTranslations();
-    const { showToast } = useToast();
-
     const getLocalized = (json: any) => {
         return json?.[locale] || json?.['en'] || '';
     };
 
-    const handleSearch = (query: string) => {
-        showToast(
-            "Sprout search coming soon",
-            "info"
-        );
-    };
+
 
     return (
         <div className="min-h-screen relative pb-32 overflow-hidden">
@@ -71,11 +64,6 @@ export function SproutView({ content, locale }: SproutViewProps) {
 
             {/* Floating Controls */}
             <StageSelector />
-            <FloatingInput
-                position="bottom"
-                placeholder={t('sprout.inputPlaceholder') || "Ask about these concepts..."}
-                onSubmit={handleSearch}
-            />
         </div>
     );
 }
