@@ -165,9 +165,8 @@ export function DNAInput() {
                         </div>
                     )}
 
-                    {/* Step Selector (visible when playing or has data) */}
-                    {(isPlaying || hasData) && (
-                        <div className="flex items-center justify-center gap-1 px-3 py-2 border-t border-white/5">
+                    {/* Step Selector (always visible; dimmed when no data) */}
+                    <div className={`flex items-center justify-center gap-1 px-3 py-2 border-t border-white/5 transition-opacity ${!isPlaying && !hasData ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
                             {/* Prev */}
                             <button
                                 onClick={prevStep}
@@ -213,7 +212,6 @@ export function DNAInput() {
                                 <SkipForward size={14} />
                             </button>
                         </div>
-                    )}
                 </div>
             </div>
 
