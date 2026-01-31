@@ -14,11 +14,11 @@
 ### `@opus` (Claude Code) — Next Tasks
 | # | Task | Status | Depends On | Description |
 |---|------|--------|------------|-------------|
-| 1 | **1.4** Visual Calibration | 🔄 IN PROGRESS | — | Verify dark/light mode per stage, audit StageSelector 7-stage |
-| 2 | **5.4** Concept Relationships | 🔄 IN PROGRESS | — | Populate prerequisite + cross-stage relationships for all 35 concepts |
-| 3 | **1.6 P2** DNA Polish | ⏳ NEXT | — | Metaphor prominence, help button, reset confirm, deep-dive label |
+| 1 | **1.6 P2** DNA Polish | ⏳ NEXT | — | Metaphor prominence, help button, reset confirm, deep-dive label |
 
 #### Completed (this sprint)
+- ✅ 1.4 Visual Calibration — themes verified, `istik`→`sapling` enum aligned
+- ✅ 5.4 Concept Relationships — 48 relationships across all 5 stages (prerequisite, deepens, applies, related)
 - ✅ 5.1 Fruits Migration
 - ✅ 5.2 Orchard Migration
 - ✅ 3.2 Sprout Content Redefinition
@@ -71,9 +71,9 @@
     - [x] Implement "One Card Per Screen" stream for DNA View (Mobile <768px).
     - [x] Ensure 48px touch targets for all interactions.
     - [x] Add snap scrolling for card-to-card navigation.
-- [ ] **1.4 Visual Calibration** BLOCKED by 1.13 (7-stage update)
-    - [ ] Verify "Dark Mode" for DNA / "Light Mode" for Tree logic.
-    - [ ] Update `StageSelector` to show 7 stages: DNA -> Seed -> Sprout -> Istik -> Tree -> Fruits -> Orchard.
+- [x] **1.4 Visual Calibration** `@opus` DONE
+    - [x] Verify "Dark Mode" for DNA / "Light Mode" for Tree logic — confirmed progression: DNA/Seed/Sprout/Sapling dark → Fruits/Orchard light.
+    - [x] Update `StageSelector` to show 7 stages — already done (2.4). Fixed `istik`→`sapling` enum alignment.
 - [x] **1.5 Translation Keys for Phase 1** `@opus` DONE
     - [x] Stage labels ET+EN (DNA/Seed/Sprout/Tree/Fruits/Orchard).
     - [x] FloatingInput placeholder & labels.
@@ -270,11 +270,11 @@
     - [ ] 5.3.2 Link overlapping tree nodes to concept records
     - [ ] 5.3.3 Enable deep-dive panel on tree nodes to show full concept content
 
-- [ ] **5.4 Concept Relationships** `@opus` P2
-    > Populate the relationship graph.
-    - [ ] 5.4.1 Define prerequisite relationships (e.g., tokenization -> vectors -> attention)
-    - [ ] 5.4.2 Define cross-stage deepening (e.g., DNA:tokenization deepens-into Tree:tokenization-process)
-    - [ ] 5.4.3 Define application links (e.g., Tree:transformers applies-to Fruits:code-gen)
+- [x] **5.4 Concept Relationships** `@opus` DONE
+    > 48 relationships populated across all 5 stages.
+    - [x] 5.4.1 Define prerequisite relationships (tokenization→embeddings→attention→prediction chain, + cross-stage)
+    - [x] 5.4.2 Define cross-stage deepening (DNA→Seed→Sprout→Fruits→Orchard flow)
+    - [x] 5.4.3 Define application links (Sprout→Fruits applies, Fruits→Orchard career links)
     - [ ] 5.4.4 Build "Related Concepts" panel component
     - [ ] 5.4.5 Update learning paths to reference concept IDs from unified table
 

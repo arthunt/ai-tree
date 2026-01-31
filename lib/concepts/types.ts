@@ -7,7 +7,7 @@ export type EvolutionStage =
   | 'dna'
   | 'seed'
   | 'sprout'
-  | 'istik'
+  | 'sapling'
   | 'tree'
   | 'fruits'
   | 'orchard';

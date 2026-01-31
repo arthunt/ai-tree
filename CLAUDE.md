@@ -754,3 +754,14 @@ Example spawn message:
 - 👀 Reviewer: [task]
 Working in parallel - I'll synthesize when they complete."
 ```
+
+## 🔄 WORKFLOW PROTOCOLS
+
+### ✅ Commit & Push Strategy
+**Rule:** After completing any significant unit of work (e.g., finishing a Task, implementing a Component, or running a Migration), the agent MUST:
+1.  **Stage All Changes:** `git add .`
+2.  **Commit:** `git commit -m "type(scope): description"` (following Conventional Commits)
+3.  **Push:** `git push` to the current branch
+4.  **Notify:** Confirm the push in the final `notify_user` message.
+
+**Drift Prevention:** This ensures that handoffs between agents (e.g., Gemini -> Opus) always happen on a synchronized codebase.
