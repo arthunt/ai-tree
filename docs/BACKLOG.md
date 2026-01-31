@@ -111,13 +111,21 @@
 
 > **Goal:** Connect knowledge to value (Application & Career).
 
-- [ ] **3.1 Fruits Level**
-    - [ ] Create `/fruits` page.
-    - [ ] Modules: Writing, Analysis, Automation, Image Gen.
-- [ ] **3.2 Orchard Level**
-    - [ ] Create `/orchard` page.
-    - [ ] Career Paths: Instructor, Automator, Developer, Creator.
-    - [ ] Links to AIKI/AIVO/AIME programs.
+- [ ] **3.1 The Seed (Data & Training)**
+    - [ ] **3.1.1 SeedView**: Deep Earth Theme (Stone/Amber).
+    - [ ] **3.1.2 Dynamic Steps**:
+        - [ ] Step 1: **The Dataset** (Raw noise/text).
+        - [ ] Step 2: **Compression** (Loss function reducing error).
+        - [ ] Step 3: **The Model** (Weights finalized).
+    - [ ] **3.1.3 Concepts**: Common Crawl, Backprop, Loss, Checkpoints.
+
+- [x] **3.2 Fruits Level (Applications)**
+    - [x] Create `/fruits` page.
+    - [x] Modules: Writing, Analysis, Automation, Image Gen.
+- [x] **3.3 Orchard Level (Careers)**
+    - [x] Create `/orchard` page.
+    - [x] Career Paths: Instructor, Automator, Developer, Creator.
+    - [x] Links to AIKI/AIVO/AIME programs.
 
 ---
 

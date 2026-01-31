@@ -17,7 +17,7 @@
 
 ## 🏗️ Decision 1: Level Structure
 **Verdict:** **Hybrid D (Optimized)**
-`DNA (Mechanism) → Seed (Intent) → Sprout (Foundations) → Tree (Knowledge) → Fruits (Applications) → Orchard (Careers)`
+`DNA (Mechanism) → Seed (Data/Training) → Sprout (Foundations) → Tree (Knowledge) → Fruits (Applications) → Orchard (Careers)`
 
 **Changes from V1:** 
 *   Removed **Nucleus**. (Rationale: Unnecessary onramp step. DNA is already the microscopic starting point).
@@ -28,7 +28,7 @@
 
 ## 🎨 Decision 2: Dark vs Light Theme
 **Verdict:** **B (Contextual)**
-`DNA = Cinematic Dark. Seed = Transitional. Sprout/Tree/Fruits = Content-First Light (Adaptive).`
+`DNA = Cinematic Dark. Seed = Deep Earth (Compression). Sprout/Tree/Fruits = Content-First Light (Adaptive).`
 
 **Rationale:**
 *   **Narrative Power:** DNA is the "wow" moment in the void.

@@ -1379,6 +1379,29 @@
       "visitApp": "Launch App"
     }
   },
+  "seed": {
+    "title": "The Training",
+    "subtitle": "Deep underground, raw data is compressed under intense heat into the seed of intelligence.",
+    "phaseLabel": "Phase I: The Seed",
+    "inputPlaceholder": "Query the training data...",
+    "card": {
+      "learnMore": "Analyze Process"
+    },
+    "steps": {
+      "dataset": {
+        "title": "The Dataset",
+        "desc": "Raw information collected from the world. This is the soil."
+      },
+      "training": {
+        "title": "Training (Compression)",
+        "desc": "The intense process of compressing data into weights. Maximizing pattern recognition."
+      },
+      "model": {
+        "title": "The Model",
+        "desc": "The final compressed artifact. A static file ready to be 'woken up'."
+      }
+    }
+  },
   "orchard": {
     "title": "Career Paths",
     "subtitle": "Cultivate your future. Explore the professional opportunities growing in the AI ecosystem.",

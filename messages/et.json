@@ -1379,6 +1379,29 @@
       "visitApp": "Käivita Rakendus"
     }
   },
+  "seed": {
+    "title": "Treenimine",
+    "subtitle": "Sügaval maa all pressitakse toorandmed suure kuumuse ja rõhu all intelligentsuse seemneks.",
+    "phaseLabel": "I Faas: Seeme",
+    "inputPlaceholder": "Päri treeningandmeid...",
+    "card": {
+      "learnMore": "Analüüsi Protsessi"
+    },
+    "steps": {
+      "dataset": {
+        "title": "Andmestik",
+        "desc": "Maailmast kogutud toores info (Common Crawl, Vikipeedia). See on muld."
+      },
+      "training": {
+        "title": "Treenimine (Kompressioon)",
+        "desc": "Intensiivne protsess andmete surumiseks kaaludesse. Mustrituvastuse maksimeerimine."
+      },
+      "model": {
+        "title": "Mudel",
+        "desc": "Lõplik kokkusurutud artefakt. Staatiline fail, mis on valmis 'äratamiseks'."
+      }
+    }
+  },
   "orchard": {
     "title": "Karjääriirajad",
     "subtitle": "Kujunda oma tulevikku. Avasta professionaalsed võimalused AI ökosüsteemis.",

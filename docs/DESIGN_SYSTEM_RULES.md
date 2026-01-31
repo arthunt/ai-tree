@@ -17,7 +17,7 @@ The application follows a strict visual progression from dark (underground) to l
 | Stage | Concept | Theme | Background | Text |
 | :--- | :--- | :--- | :--- | :--- |
 | **DNA** | The Code / Underground | **Cinematic Dark** | `bg-void` (black), neon accents | White on dark |
-| **Seed** | The Potential | **Germination** | Dark earth + green/gold | White on dark |
+| **Seed** | The Data & Training | **Deep Earth** | `bg-stone-900` to `bg-amber-950` gradient | White on dark |
 | **Sprout** | The Foundations | **Dawn / Transitional** | Slate-600 to morning sky, lighter glass | White → dark adaptive |
 | **Tree** | The Knowledge | **Daylight / Light** | White, paper, clean surfaces | Dark on light |
 | **Fruits** | The Applications | **Warm Daylight** | Warm whites, amber accents | Dark on light |
@@ -115,6 +115,7 @@ Consistent sizing prevents the "header too big / cards too small" problems.
 | Stage | Mobile Layout | Desktop Layout |
 | :--- | :--- | :--- |
 | **DNA** | Horizontal snap scroll, one card per view (`min-w-[85vw]`, `snap-x`) | 4-column grid (`lg:grid-cols-4`) |
+| **Seed** | Vertical stack (Process Flow) | 3-column grid (Data -> Training -> Model) |
 | **Sprout** | Vertical stack, one column | 3-column grid (`lg:grid-cols-3`) |
 | **Tree** | Card list with tabs | Card grid + optional D3 map toggle |
 

@@ -1,16 +1,18 @@
-import { Suspense } from 'react';
-import { SeedPageContent } from './SeedPageClient';
-import { Metadata } from 'next';
+import { SeedView } from '@/components/seed/SeedView';
 
-export const metadata: Metadata = {
-    title: 'Choose Your Path | AI Tree',
-    description: 'Select your intent: Build, Think, or Explore. Your journey starts here.',
+// Prerender params for SSG
+export function generateStaticParams() {
+    return [
+        { locale: 'en' },
+        { locale: 'et' }
+    ];
+}
+
+export const metadata = {
+    title: 'The Seed (Training) - AI Tree',
+    description: 'Explore how raw data is compressed into intelligence through training.',
 };
 
-export default function SeedPage() {
-    return (
-        <Suspense fallback={<div className="min-h-screen bg-void flex items-center justify-center text-brand-teal">Loading...</div>}>
-            <SeedPageContent />
-        </Suspense>
-    );
+export default function SeedPage({ params }: { params: { locale: string } }) {
+    return <SeedView locale={params.locale} />;
 }
