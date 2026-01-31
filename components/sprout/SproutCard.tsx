@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { cn } from '@/lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, Lightbulb, Box } from 'lucide-react';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+import { UnifiedConceptCard } from '@/components/ui/UnifiedConceptCard';
 
 interface SproutCardProps {
     title: string;
@@ -12,8 +13,6 @@ interface SproutCardProps {
     index: number;
     visualType: string;
 }
-
-import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 export function SproutCard({ title, description, analogy, index, visualType }: SproutCardProps) {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -30,42 +29,30 @@ export function SproutCard({ title, description, analogy, index, visualType }: S
             variants={variants}
             initial="hidden"
             animate="visible"
-            className={cn(
-                "relative group cursor-pointer transition-all duration-300",
-                "h-full min-h-[280px]",
-                isExpanded ? "z-20 scale-105" : "z-10 hover:-translate-y-2"
-            )}
-            onClick={() => setIsExpanded(!isExpanded)}
+            className="h-full min-h-[280px]"
         >
-            {/* Glass Background - Lighter/Transitional Theme */}
-            <div className={cn(
-                "absolute inset-0 rounded-3xl backdrop-blur-xl transition-all duration-300",
-                "border border-white/10 shadow-lg",
-                isExpanded
-                    ? "bg-white/10 ring-1 ring-white/20 shadow-2xl"
-                    : "bg-white/5 group-hover:bg-white/10"
-            )} />
-
-            {/* Content Container */}
-            <div className="relative p-6 h-full flex flex-col">
-
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <span className="text-[10rem] font-bold text-white/5 font-serif select-none dark:text-white/5">
-                        &quot;{title.charAt(0).toUpperCase()}&quot;
-                    </span>
-                </div>
-                {/* Header: Icon & Title */}
-                <div className="flex items-start justify-between mb-4">
-                    <div className="p-3 rounded-2xl bg-gradient-to-br from-brand-teal/20 to-brand-cyan/20 border border-white/5">
-                        <Box className="w-6 h-6 text-brand-cyan" />
+            <UnifiedConceptCard
+                variant="sprout"
+                title={title}
+                index={index}
+                isActive={isExpanded}
+                onCardClick={() => setIsExpanded(!isExpanded)}
+                visualSlot={
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
+                        <span className="text-[8rem] font-bold text-white font-serif select-none">
+                            &quot;{title.charAt(0).toUpperCase()}&quot;
+                        </span>
                     </div>
-                    <span className="text-xs font-mono text-white/40">#{String(index + 1).padStart(2, '0')}</span>
-                </div>
+                }
+            >
+                <div className="flex flex-col h-full">
+                    {/* Header Icon (kept from original design) */}
+                    <div className="flex items-start justify-between mb-4">
+                        <div className="p-2 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-white/5">
+                            <Box className="w-5 h-5 text-indigo-300" />
+                        </div>
+                    </div>
 
-                <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-
-                {/* Body Content */}
-                <div className="flex-1">
                     {/* Analogy (Always Visible) */}
                     <div className="mb-4 p-3 rounded-lg bg-black/20 border border-white/5">
                         <div className="flex items-center gap-2 mb-1 text-xs text-brand-gold uppercase tracking-wider font-semibold">
@@ -75,7 +62,7 @@ export function SproutCard({ title, description, analogy, index, visualType }: S
                         <p className="text-sm text-gray-300 italic">&quot;{analogy}&quot;</p>
                     </div>
 
-                    {/* Description (Visible on Expand) */}
+                    {/* Expandable Description */}
                     <motion.div
                         initial={false}
                         animate={{ height: isExpanded ? 'auto' : 0, opacity: isExpanded ? 1 : 0 }}
@@ -85,21 +72,25 @@ export function SproutCard({ title, description, analogy, index, visualType }: S
                             {description}
                         </p>
 
-                        <div className="mt-4 flex items-center gap-2 text-xs text-brand-teal font-medium">
+                        <div className="mt-4 flex items-center gap-2 text-xs text-indigo-300 font-medium">
                             <BookOpen size={14} />
                             <span>{t('sprout.card.readFull')}</span>
                         </div>
                     </motion.div>
-                </div>
 
-                {/* Visual Type Indicator */}
-                {!isExpanded && (
-                    <div className="mt-4 pt-4 border-t border-white/5 flex justify-between items-center text-xs text-white/30">
-                        <span>{visualType.replace('_', ' ')}</span>
-                        <span className="group-hover:text-white transition-colors">{t('sprout.card.tapToLearn')} →</span>
-                    </div>
-                )}
-            </div>
+                    {/* Footer / Visual Type Hint */}
+                    {!isExpanded && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="mt-auto pt-4 border-t border-white/5 flex justify-between items-center text-xs text-white/30"
+                        >
+                            <span>{visualType.replace('_', ' ')}</span>
+                            <span className="group-hover:text-white transition-colors">{t('sprout.card.tapToLearn')} →</span>
+                        </motion.div>
+                    )}
+                </div>
+            </UnifiedConceptCard>
         </motion.div>
     );
 }
