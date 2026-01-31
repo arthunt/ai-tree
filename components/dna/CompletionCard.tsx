@@ -61,14 +61,14 @@ export function CompletionCard() {
                 <div className="flex flex-col sm:flex-row gap-3">
                     <button
                         onClick={() => jumpToStep('tokenization')}
-                        className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-all text-sm"
+                        className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-all text-sm min-h-[48px]"
                     >
                         <RotateCcw size={16} />
                         {t('completion.replay')}
                     </button>
                     <button
                         onClick={() => router.push(`/${locale}/seed`)}
-                        className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-brand-teal/20 hover:bg-brand-teal/30 border border-brand-teal/30 text-brand-teal hover:text-white transition-all text-sm font-semibold"
+                        className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-brand-teal/20 hover:bg-brand-teal/30 border border-brand-teal/30 text-brand-teal hover:text-white transition-all text-sm font-semibold min-h-[48px]"
                     >
                         <Sprout size={16} />
                         {t('completion.explore')}

@@ -105,7 +105,7 @@ export function DNAInput() {
                                         exit={{ scale: 0.9, opacity: 0 }}
                                         onClick={handleRun}
                                         disabled={!inputText.trim()}
-                                        className="bg-white/10 hover:bg-white/20 text-brand-teal p-3 rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                                        className="bg-white/10 hover:bg-white/20 text-brand-teal p-3 min-h-[48px] min-w-[48px] flex items-center justify-center rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                                     >
                                         <Play size={20} fill="currentColor" />
                                     </motion.button>
@@ -118,7 +118,7 @@ export function DNAInput() {
                                             animate={{ scale: 1, opacity: 1 }}
                                             exit={{ scale: 0.9, opacity: 0 }}
                                             onClick={togglePause}
-                                            className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-xl transition-all"
+                                            className="bg-white/10 hover:bg-white/20 text-white p-3 min-h-[48px] min-w-[48px] flex items-center justify-center rounded-xl transition-all"
                                         >
                                             {isPaused ? <Play size={20} /> : <Pause size={20} />}
                                         </motion.button>
@@ -130,7 +130,7 @@ export function DNAInput() {
                                             animate={{ scale: 1, opacity: 1 }}
                                             exit={{ scale: 0.9, opacity: 0 }}
                                             onClick={nextStep}
-                                            className="bg-white/10 hover:bg-white/20 text-brand-teal p-3 rounded-xl transition-all"
+                                            className="bg-white/10 hover:bg-white/20 text-brand-teal p-3 min-h-[48px] min-w-[48px] flex items-center justify-center rounded-xl transition-all"
                                             title="Next Step"
                                         >
                                             <SkipForward size={20} />
@@ -143,7 +143,7 @@ export function DNAInput() {
                                             animate={{ scale: 1, opacity: 1 }}
                                             exit={{ scale: 0.9, opacity: 0 }}
                                             onClick={handleReset}
-                                            className="bg-white/10 hover:bg-white/20 text-red-400 p-3 rounded-xl transition-all"
+                                            className="bg-white/10 hover:bg-white/20 text-red-400 p-3 min-h-[48px] min-w-[48px] flex items-center justify-center rounded-xl transition-all"
                                         >
                                             <RefreshCw size={20} />
                                         </motion.button>
@@ -166,12 +166,12 @@ export function DNAInput() {
                     )}
 
                     {/* Step Selector (always visible; dimmed when no data) */}
-                    <div className={`flex items-center justify-center gap-1 px-3 py-2 border-t border-white/5 transition-opacity ${!isPlaying && !hasData ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
+                    <div className={`flex items-center justify-center gap-1.5 md:gap-1 px-3 py-2 border-t border-white/5 transition-opacity ${!isPlaying && !hasData ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
                             {/* Prev */}
                             <button
                                 onClick={prevStep}
                                 disabled={currentStep === 'tokenization' || currentStep === 'idle'}
-                                className="p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+                                className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
                                 title="Previous step"
                             >
                                 <SkipBack size={14} />
@@ -187,7 +187,7 @@ export function DNAInput() {
                                         key={step}
                                         onClick={() => jumpToStep(step)}
                                         className={`
-                                            w-8 h-8 rounded-lg text-xs font-bold font-mono transition-all
+                                            w-10 h-10 md:w-8 md:h-8 rounded-lg text-xs font-bold font-mono transition-all
                                             ${isCurrentStep
                                                 ? 'bg-brand-teal text-black shadow-[0_0_12px_rgba(45,212,191,0.4)]'
                                                 : isPast
@@ -206,7 +206,7 @@ export function DNAInput() {
                             <button
                                 onClick={nextStep}
                                 disabled={currentStep === 'idle' && !isPlaying}
-                                className="p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+                                className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
                                 title="Next step"
                             >
                                 <SkipForward size={14} />

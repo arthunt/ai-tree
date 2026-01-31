@@ -78,7 +78,7 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
                         {title}
                     </h3>
                     {metaphor && (
-                        <span className="text-xs font-mono uppercase tracking-widest opacity-60" style={{ color }}>
+                        <span className="text-xs md:text-sm font-mono uppercase tracking-widest opacity-60" style={{ color }}>
                             {metaphor}
                         </span>
                     )}
@@ -139,7 +139,7 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
                                 key="static"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="text-gray-300 leading-relaxed text-sm"
+                                className="text-gray-300 leading-relaxed text-sm md:text-base"
                             >
                                 {description}
                             </motion.p>

@@ -55,14 +55,14 @@ export function MicroLesson() {
                                 closeLesson();
                                 togglePause();
                             }}
-                            className="flex-1 py-3 bg-white text-black font-bold rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
+                            className="flex-1 py-3 min-h-[48px] bg-white text-black font-bold rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
                         >
                             <Play size={18} fill="currentColor" />
                             {t('resumeFlow')}
                         </button>
                         <button
                             onClick={closeLesson}
-                            className="flex-1 py-3 bg-white/5 text-white font-bold rounded-xl hover:bg-white/10 transition-colors"
+                            className="flex-1 py-3 min-h-[48px] bg-white/5 text-white font-bold rounded-xl hover:bg-white/10 transition-colors"
                         >
                             {t('exploreMore')}
                         </button>
@@ -71,7 +71,7 @@ export function MicroLesson() {
 
                 <button
                     onClick={closeLesson}
-                    className="absolute top-4 right-4 p-2 rounded-full bg-black/20 hover:bg-black/40 text-white/50 hover:text-white transition-colors"
+                    className="absolute top-4 right-4 p-3 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 text-white/50 hover:text-white transition-colors"
                 >
                     <X size={20} />
                 </button>

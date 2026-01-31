@@ -29,7 +29,7 @@ export function DNAView({ content = [] }: DNAViewProps) {
 
 function DNAInterface({ content }: DNAInterfaceProps) {
     const t = useTranslations('dna');
-    const { setPlaybackSpeed, jumpToStep, togglePause, isPaused, isComplete, hasData, inputText } = useDNA();
+    const { setPlaybackSpeed, jumpToStep, togglePause, isPaused, isComplete, hasData } = useDNA();
 
     // Map concept IDs to colors
     const colorMap: Record<string, string> = {
@@ -109,7 +109,7 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                         </div>
 
                         {/* Cards Grid - Mobile: horizontal snap scroll (One Card Per View), Tablet+: grid */}
-                        <div className="relative z-10 flex overflow-x-auto snap-x snap-mandatory gap-4 px-4 pb-8 scrollbar-hide md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:px-0 md:pb-0 md:gap-8 lg:grid-cols-4 lg:gap-12">
+                        <div className="relative z-10 flex overflow-x-auto snap-x snap-mandatory scroll-smooth-touch overscroll-contain gap-4 px-4 pb-8 scrollbar-hide md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:px-0 md:pb-0 md:gap-8 lg:grid-cols-4 lg:gap-12">
                             {content.map((item, index) => (
                                 <div
                                     key={item.concept_id}
