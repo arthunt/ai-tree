@@ -48,7 +48,9 @@
       "roots": "~25 min",
       "trunk": "~30 min",
       "branches": "~35 min",
-      "leaves": "~30 min"
+      "leaves": "~30 min",
+      "fruits": "~20 min",
+      "orchard": "~15 min"
     }
   },
   "treeView": {
@@ -67,6 +69,8 @@
     "trunkLabel": "2. Tüvi",
     "branchesLabel": "3. Oksad",
     "leavesLabel": "4. Lehed",
+    "fruitsLabel": "5. Viljad",
+    "orchardLabel": "6. Aed",
     "introducedLabel": "Tutvustatud",
     "keyPaperLabel": "Põhiartikkel",
     "masterSkillLabel": "Omanda See Oskus",
@@ -229,7 +233,9 @@
       "roots": "Juured",
       "trunk": "Tüvi",
       "branches": "Oksad",
-      "leaves": "Lehed"
+      "leaves": "Lehed",
+      "fruits": "Viljad",
+      "orchard": "Aed"
     }
   },
   "journey": {
@@ -273,7 +279,9 @@
       "roots": "Juured",
       "trunk": "Tüvi",
       "branches": "Oksad",
-      "leaves": "Lehed"
+      "leaves": "Lehed",
+      "fruits": "Viljad",
+      "orchard": "Aed"
     }
   },
   "skillSelector": {
