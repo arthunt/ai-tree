@@ -36,14 +36,15 @@ const VARIANT_STYLES: Record<CardVariant, {
     nodeSizeDefault: number;
 }> = {
     dna: {
-        activeBorder: 'border-brand-teal/60 ring-2 ring-brand-teal/30',
-        activeBg: 'bg-brand-teal/5',
+        // DNA uses per-step colors via inline style override (see §8 DESIGN_SYSTEM_RULES)
+        activeBorder: 'border-2 ring-2',
+        activeBg: '',
         completedBorder: 'border-green-500/30',
         completedBg: 'bg-green-500/5',
         defaultBorder: 'border-white/10',
         defaultBg: 'bg-black/20', // Classic dark DNA feel
-        nodeSizeActive: 60,
-        nodeSizeDefault: 40
+        nodeSizeActive: 48,
+        nodeSizeDefault: 32
     },
     sprout: {
         activeBorder: 'border-white/40 ring-2 ring-white/20',
@@ -96,7 +97,7 @@ export function UnifiedConceptCard({
             }}
         >
             {/* Visual Header Slot (Glowing Node or Number) */}
-            <div className="h-24 md:h-32 relative flex items-center justify-center mb-[-1rem] z-10 pointer-events-none">
+            <div className="h-14 md:h-20 relative flex items-center justify-center mb-[-1rem] z-10 pointer-events-none">
                 {visualSlot ? visualSlot : (
                     <>
                         <GlowingNode
@@ -118,6 +119,11 @@ export function UnifiedConceptCard({
                     isActive ? styles.activeBg : (isCompleted ? styles.completedBg : styles.defaultBg)
                 )}
                 intensity={isActive ? "high" : "medium"}
+                style={isActive && variant === 'dna' && color ? {
+                    borderColor: `${color}99`,
+                    boxShadow: `0 0 16px ${color}4D`,
+                    backgroundColor: `${color}0D`,
+                } : undefined}
             >
                 {/* Completion Badge */}
                 <AnimatePresence>

@@ -55,19 +55,34 @@
         - [ ] 1.6.12 Confirm destructive reset action
         - [ ] 1.6.13 Display current input text in DNAStepNav
         - [ ] 1.6.14 Clarify "Deep Dive" → "Learn More About [Step]"
-- [ ] **1.7 DNA Step Color Differentiation** `@opus` 🔄 IN PROGRESS
+- [x] **1.7 DNA Step Color Differentiation** `@opus` ✅ DONE
     > Ref: [`docs/DESIGN_SYSTEM_RULES.md`](./DESIGN_SYSTEM_RULES.md) Section 8
-    - [ ] Apply per-step colors to card active borders, step buttons, progress bar
-    - [ ] T=teal `#25EDBA`, V=blue `#3B82F6`, A=purple `#A855F7`, P=amber `#F59E0B`
-- [ ] **1.8 Accessibility: `prefers-reduced-motion`** `@opus` 🔄 IN PROGRESS
+    - [x] Apply per-step colors to card active borders, step buttons, progress bar
+    - [x] T=teal `#25EDBA`, V=blue `#3B82F6`, A=purple `#A855F7`, P=amber `#F59E0B`
+- [x] **1.8 Accessibility: `prefers-reduced-motion`** `@opus` ✅ DONE
     > Ref: [`docs/DESIGN_SYSTEM_RULES.md`](./DESIGN_SYSTEM_RULES.md) Section 7
-    - [ ] Add CSS media query to disable infinite animations
-    - [ ] Wrap Framer Motion animations with motion preference check
-- [ ] **1.9 i18n: Migrate DNA Hardcoded Strings** `@opus` 🔄 IN PROGRESS
+    - [x] Add CSS media query to disable infinite animations
+    - [x] Wrap Framer Motion animations with motion preference check
+- [x] **1.9 i18n: Migrate DNA Hardcoded Strings** `@opus` ✅ DONE
     > Ref: [`docs/DESIGN_SYSTEM_RULES.md`](./DESIGN_SYSTEM_RULES.md) Section 3
-    - [ ] Move `STEP_COMPLETE_MESSAGES` to translation keys
-    - [ ] Move `STEP_HINT_MESSAGES` to translation keys
-    - [ ] Move DNAStepNav labels ("Next", "Finish", "Done", "Playing", "Paused") to translation keys
+    - [x] Move `STEP_COMPLETE_MESSAGES` to translation keys
+    - [x] Move `STEP_HINT_MESSAGES` to translation keys
+    - [x] Move DNAStepNav labels ("Next", "Finish", "Done", "Playing", "Paused") to translation keys
+- [ ] **1.10 DNA Desktop: Responsive Input Width** `@opus` 👈 P1
+    > Input bar is fixed `max-w-2xl` (672px) — too narrow on wide screens, could be shorter vertically.
+    - [ ] Widen to `max-w-4xl` on `lg:` breakpoint (match cards grid width)
+    - [ ] Reduce input vertical padding on desktop (`py-3` → `py-2`)
+    - [ ] Reduce `mb-12` bottom margin to `mb-4 md:mb-6`
+- [ ] **1.11 DNA Desktop: Reduce Gap Between Input & Cards** `@opus` 👈 P1
+    > ~350px dead space stacks from input margin + cards margin + GlowingNode container.
+    - [ ] Reduce cards container top margin (`mt-12` → `mt-4 md:mt-6`)
+    - [ ] Shrink GlowingNode area from `md:h-48` (192px) to `md:h-24` (96px)
+    - [ ] Keep mobile `h-24` unchanged (already compact)
+- [ ] **1.12 DNA Desktop: GlowingNode Visibility** `@opus` 👈 P1
+    > 40-60px dot inside 192px container is barely visible. Node should be larger or container smaller.
+    - [ ] Increase desktop node size (`40/60` → `50/70`)
+    - [ ] Reduce container height (see 1.11)
+    - [ ] Consider adding subtle connecting line between node and card top
 
 - [ ] **2.3 Sprout Level Content** `@gemini` ✅ DONE
     - [x] Create `/sprout` page.

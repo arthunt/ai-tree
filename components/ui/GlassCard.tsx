@@ -1,15 +1,17 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 interface GlassCardProps {
     children: ReactNode;
     className?: string;
     intensity?: 'low' | 'medium' | 'high';
+    style?: CSSProperties;
 }
 
 export function GlassCard({
     children,
     className = '',
-    intensity = 'medium'
+    intensity = 'medium',
+    style
 }: GlassCardProps) {
 
     const bgIntensity = {
@@ -35,6 +37,7 @@ export function GlassCard({
         hover:border-white/20 hover:bg-white/15
         ${className}
       `}
+            style={style}
         >
             {/* Subtle top highlight for depth */}
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />

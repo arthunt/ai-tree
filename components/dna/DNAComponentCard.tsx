@@ -21,27 +21,12 @@ interface DNAComponentCardProps {
     onCardClick?: () => void;
 }
 
-const STEP_COMPLETE_MESSAGES: Record<DNAStep, string> = {
-    tokenization: 'Text tokenized! Each piece has a unique ID.',
-    vectorizing: 'Tokens vectorized! Similar words cluster together.',
-    attention: 'Attention mapped! See which words connect.',
-    prediction: 'Prediction complete! Check the top candidate.',
-    idle: ''
-};
-
-const STEP_HINT_MESSAGES: Record<DNAStep, string> = {
-    tokenization: '',
-    vectorizing: '',
-    attention: 'Tap a token to see its connections',
-    prediction: '',
-    idle: ''
-};
-
 export function DNAComponentCard({ title, description, metaphor, color, index, onCardClick }: DNAComponentCardProps) {
     const { currentStep, inputText, tokens, subTokens, vectors, predictions, attentionWeights, hasData, completedSteps } = useDNA();
     const params = useParams();
     const locale = params.locale as string;
     const t = useTranslations('dna.card');
+    const tSteps = useTranslations('dna.steps');
 
     const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -120,11 +105,11 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
                         </AnimatePresence>
                     </div>
 
-                    {/* Hints & Completion Messages - now inside UnifiedCard body */}
+                    {/* Hints & Completion Messages */}
                     <div>
                         {/* Step Complete Message */}
                         <AnimatePresence>
-                            {isCompleted && !isActive && STEP_COMPLETE_MESSAGES[myStep] && (
+                            {isCompleted && !isActive && myStep !== 'idle' && (
                                 <motion.div
                                     initial={{ opacity: 0, y: 8 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -132,21 +117,21 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
                                     className="mt-3 px-3 py-2 rounded-lg bg-green-500/10 border border-green-500/20"
                                 >
                                     <p className="text-xs font-mono text-green-400/90">
-                                        {STEP_COMPLETE_MESSAGES[myStep]}
+                                        {tSteps(`complete.${myStep}`)}
                                     </p>
                                 </motion.div>
                             )}
                         </AnimatePresence>
 
                         {/* Tap Hint */}
-                        {isActive && STEP_HINT_MESSAGES[myStep] && (
+                        {isActive && myStep === 'attention' && (
                             <motion.p
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 1.5 }}
                                 className="mt-3 text-center text-[11px] font-mono text-brand-teal/50 uppercase tracking-wider"
                             >
-                                {STEP_HINT_MESSAGES[myStep]}
+                                {tSteps('hint.attention')}
                             </motion.p>
                         )}
                     </div>

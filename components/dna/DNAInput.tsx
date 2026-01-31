@@ -80,7 +80,7 @@ export function DNAInput() {
     }, [currentStep, isPlaying, isPaused, playbackSpeed]);
 
     return (
-        <div className="w-full max-w-2xl mx-auto mb-12 relative z-10">
+        <div className="w-full max-w-2xl lg:max-w-4xl mx-auto mb-4 md:mb-6 relative z-10">
             <div className="relative group">
                 {/* Background Glow */}
                 <div className={`absolute -inset-0.5 bg-gradient-to-r from-brand-teal to-brand-cyan rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500 ${isPlaying ? 'opacity-50 animate-pulse' : ''}`}></div>
@@ -89,8 +89,8 @@ export function DNAInput() {
 
                     {/* Top Row: Input & Controls */}
                     <div className="flex items-center p-2">
-                        <div className="pl-4 text-brand-teal">
-                            <Sparkles size={20} className={isPlaying ? "animate-spin-slow" : ""} />
+                        <div className="pl-3 md:pl-4 text-brand-teal">
+                            <Sparkles size={18} className={isPlaying ? "animate-spin-slow" : ""} />
                         </div>
 
                         <input
@@ -101,7 +101,7 @@ export function DNAInput() {
                             disabled={isPlaying}
                             maxLength={500}
                             placeholder={t('placeholder')}
-                            className="w-full bg-transparent border-none focus:ring-0 text-white placeholder-gray-500 text-lg py-3 px-4 disabled:opacity-50"
+                            className="w-full bg-transparent border-none focus:ring-0 text-white placeholder-gray-500 text-base md:text-lg py-2 md:py-3 px-3 md:px-4 disabled:opacity-50"
                         />
 
                         <div className="flex gap-2">

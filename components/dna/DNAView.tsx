@@ -43,12 +43,12 @@ function DNAInterface({ content }: DNAInterfaceProps) {
         card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }, []);
 
-    // Map concept IDs to colors
+    // Map concept IDs to hex colors (hex needed for inline style opacity manipulation)
     const colorMap: Record<string, string> = {
-        tokenization: 'var(--dna-t)',
-        embeddings: 'var(--dna-v)',
-        attention: 'var(--dna-a)',
-        prediction: 'var(--dna-p)'
+        tokenization: '#25EDBA',
+        embeddings: '#3B82F6',
+        attention: '#A855F7',
+        prediction: '#F59E0B'
     };
 
     const stepMap: Record<number, DNAStep> = {
@@ -114,7 +114,7 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                     </div>
 
                     {/* Main Flow Visualization */}
-                    <div className="relative w-full max-w-7xl mt-4 md:mt-12">
+                    <div className="relative w-full max-w-7xl mt-2 md:mt-4">
                         {/* Connecting Flow Lines (SVG) (Hidden on mobile for now as cards stack) */}
                         <div className="absolute inset-0 z-0 pointer-events-none hidden lg:block">
                             <DNAFlowDiagram />
