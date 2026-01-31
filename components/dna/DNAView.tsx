@@ -88,7 +88,7 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                     </div>
                 </motion.div>
 
-                <div className="relative z-10 flex flex-col items-center justify-center min-h-screen min-h-screen-dynamic p-4 sm:p-8">
+                <div className="relative z-10 flex flex-col items-center justify-start md:justify-center min-h-screen min-h-screen-dynamic p-4 pt-14 sm:pt-16 sm:px-8">
 
                     {/* Header Section */}
                     <motion.header
@@ -97,10 +97,10 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                         transition={{ duration: 0.8 }}
                         className="text-center mb-6 md:mb-16 relative z-20"
                     >
-                        <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-white to-brand-cyan drop-shadow-[0_0_15px_rgba(56,189,248,0.3)]">
+                        <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-3 md:mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-white to-brand-cyan drop-shadow-[0_0_15px_rgba(56,189,248,0.3)]">
                             {t('header.title')}
                         </h1>
-                        <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+                        <p className="text-base sm:text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
                             {t('header.subtitle')}
                         </p>
                     </motion.header>
@@ -124,11 +124,11 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                         <DNAStepNav onScrollToCard={scrollToCard} />
 
                         {/* Cards Grid - Mobile: horizontal snap scroll (One Card Per View), Tablet+: grid */}
-                        <div ref={cardScrollRef} className="relative z-10 flex overflow-x-auto snap-x snap-mandatory scroll-smooth-touch overscroll-contain gap-4 px-4 pb-8 scrollbar-hide md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:px-0 md:pb-0 md:gap-8 lg:grid-cols-4 lg:gap-12">
+                        <div ref={cardScrollRef} className="relative z-10 flex overflow-x-auto snap-x snap-mandatory scroll-smooth-touch overscroll-contain gap-4 px-4 pt-2 pb-8 scrollbar-hide md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:px-0 md:pt-0 md:pb-0 md:gap-8 lg:grid-cols-4 lg:gap-12">
                             {content.map((item, index) => (
                                 <div
                                     key={item.concept_id}
-                                    className="min-w-[90vw] snap-center md:min-w-0"
+                                    className="min-w-[90vw] snap-center scroll-mt-28 md:min-w-0 md:scroll-mt-0"
                                 >
                                     <DNAComponentCard
                                         title={item.title}
