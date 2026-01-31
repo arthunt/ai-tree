@@ -2,7 +2,7 @@
 
 **Status:** Active Execution Plan
 **Source:** `docs/VISION_AND_STRATEGY.md` (V3.0)
-**Updated:** 2026-02-02
+**Updated:** 2026-02-01
 
 ---
 
@@ -14,24 +14,30 @@
 ### `@opus` (Claude Code) — Next Tasks
 | # | Task | Status | Depends On | Description |
 |---|------|--------|------------|-------------|
-| 1 | **5.1** Fruits Migration | ✅ DONE | — | Seed APPLICATIONS into concepts DB, update FruitsView to use SDK |
-| 2 | **5.2** Orchard Migration | ✅ DONE | — | Seed CAREERS into concepts DB, update OrchardView to use SDK |
-| 3 | **3.2+3.3** Sprout Redefinition + Migration | ✅ DONE | — | New Emergent Properties concepts, SproutView on SDK |
-| 4 | **1.4** Visual Calibration | ⏳ BLOCKED | 2.4 | Verify dark/light mode logic after 7-stage update |
+| 1 | **1.4** Visual Calibration | 🔄 IN PROGRESS | — | Verify dark/light mode per stage, audit StageSelector 7-stage |
+| 2 | **5.4** Concept Relationships | 🔄 IN PROGRESS | — | Populate prerequisite + cross-stage relationships for all 35 concepts |
+| 3 | **1.6 P2** DNA Polish | ⏳ NEXT | — | Metaphor prominence, help button, reset confirm, deep-dive label |
 
-### `@gemini` — Next Tasks
-| # | Task | Depends On | Description |
-|---|------|------------|-------------|
-| 1 | **2.4** 7-Stage StageSelector | ✅ DONE | — | Add Istik to EvolutionStage, StageSelector, JourneyContext, create /istik route |
-| 2 | **2.7** Unified Card variants | — | Implement sprout, tree, istik card variants |
-| 3 | **3.1** Seed Stage content | — | Create SeedView with Deep Earth theme, seed concepts into DB |
-| 4 | **3.2** Sprout Redefinition | — | Redefine Sprout as "Emergent Properties", new concepts in DB |
+#### Completed (this sprint)
+- ✅ 5.1 Fruits Migration
+- ✅ 5.2 Orchard Migration
+- ✅ 3.2 Sprout Content Redefinition
+- ✅ 3.3 Sprout Migration to SDK
 
-### `@swarm` (Claude Flow) — Next Tasks
-| # | Task | Depends On | Description |
-|---|------|------------|-------------|
-| 1 | **5.1+5.2** Fruits+Orchard parallel | — | Both are independent, can run concurrently |
-| 2 | **3.1+3.2** Seed+Sprout content | — | Content population can run in parallel |
+### `@gemini` — Current Tasks
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | Implement seed, sprout, tree, sapling card variants |
+| 2 | **3.1** Seed Stage content | 🔄 IN PROGRESS | SeedView + Deep Earth theme (partially done) |
+
+#### Completed
+- ✅ 2.4 7-Stage StageSelector
+
+### `@swarm` (Claude Flow) — Available
+| # | Task | Description |
+|---|------|-------------|
+| 1 | E2E smoke tests | Verify all 7 stage routes render with SDK data |
+| 2 | Accessibility audit | WCAG contrast + touch targets across all stages |
 
 ### Coordination Rules
 - **Concept SDK is SPOT** — all agents MUST use `lib/concepts/api.ts`, never query Supabase directly from components
