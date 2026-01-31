@@ -31,11 +31,12 @@ export function StageSelector() {
     if (!isEvolutionaryPage) return null;
 
     return (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]">
+
+        <div className="fixed bottom-6 left-0 right-0 z-[100] flex justify-center pointer-events-none">
             <motion.div
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                className="flex items-center gap-1 p-1.5 bg-gray-900/90 backdrop-blur-md border border-white/10 rounded-full shadow-2xl ring-1 ring-white/5 text-white"
+                className="pointer-events-auto max-w-[calc(100vw-32px)] overflow-x-auto scrollbar-hide flex items-center gap-1 p-1.5 bg-gray-900/90 backdrop-blur-md border border-white/10 rounded-full shadow-2xl ring-1 ring-white/5 text-white"
             >
                 {STAGES.map((item) => {
                     const isActive = currentStage === item.id;
@@ -46,7 +47,7 @@ export function StageSelector() {
                             key={item.id}
                             onClick={() => setStage(item.id)}
                             className={cn(
-                                "relative px-4 py-2 rounded-full flex items-center gap-2 transition-all duration-300 group outline-none",
+                                "relative px-4 py-3 md:py-2 rounded-full flex items-center gap-2 transition-all duration-300 group outline-none shrink-0",
                                 isActive
                                     ? "bg-white/10 text-white shadow-inner"
                                     : "text-white/40 hover:text-white/80 hover:bg-white/5"
@@ -62,7 +63,7 @@ export function StageSelector() {
                             )}
 
                             {/* Icon */}
-                            <Icon size={18} className="relative z-10" />
+                            <Icon size={20} className="relative z-10" />
 
                             {/* Label (Hidden on mobile unless active?) */}
                             <span className={cn(

@@ -143,12 +143,12 @@ export function UnifiedConceptCard({
                 <div className="mb-4">
                     <div className="flex justify-between items-start">
                         <h3
-                            className="text-xl md:text-2xl font-bold text-white mb-1 transition-all"
+                            className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1 transition-all leading-tight"
                             style={{ textShadow: isActive ? `0 0 15px ${cardColor}40` : 'none' }}
                         >
                             {title}
                         </h3>
-                        <span className="text-xs font-mono text-white/30 pt-1">#{String(index + 1).padStart(2, '0')}</span>
+                        <span className="text-[10px] md:text-xs font-mono text-white/30 pt-1 shrink-0">#{String(index + 1).padStart(2, '0')}</span>
                     </div>
                 </div>
 
