@@ -18,7 +18,8 @@ The application follows a strict visual progression from dark (underground) to l
 | :--- | :--- | :--- | :--- | :--- |
 | **DNA** | The Code / Underground | **Cinematic Dark** | `bg-void` (black), neon accents | White on dark |
 | **Seed** | The Data & Training | **Deep Earth** | `bg-stone-900` to `bg-amber-950` gradient | White on dark |
-| **Sprout** | The Foundations | **Dawn / Transitional** | Slate-600 to morning sky, lighter glass | White → dark adaptive |
+| **Sprout** | Emergent Properties | **Dawn / Transitional** | Indigo/violet → morning sky, lighter glass | White → dark adaptive |
+| **Istik** | Guided Practice | **Morning Green** | Emerald-tinted glass, `bg-emerald-950` → `bg-teal-900` | White on dark-green |
 | **Tree** | The Knowledge | **Daylight / Light** | White, paper, clean surfaces | Dark on light |
 | **Fruits** | The Applications | **Warm Daylight** | Warm whites, amber accents | Dark on light |
 | **Orchard** | The Careers / Harvest | **Golden Hour** | Warm tones, harvest imagery | Dark on light |
@@ -47,7 +48,10 @@ The application follows a strict visual progression from dark (underground) to l
 | Stage | Input Position | Role |
 | :--- | :--- | :--- |
 | **DNA** | Top (inline, relative) | Simulation Controller |
-| **Sprout/Tree/Fruits** | Bottom (fixed floating) | Search / Ask tool |
+| **Seed** | Bottom (fixed) | Goal/question entry (navigates to Tree) |
+| **Istik** | Inline (central) | Prompt Sandbox — core interaction, not floating |
+| **Tree** | Bottom (fixed floating) | Search / Ask tool |
+| **Sprout/Fruits/Orchard** | None | No input (Design Rule #2 — removed stubs) |
 
 **Validation:**
 - `maxLength={500}` on all text inputs
@@ -115,7 +119,8 @@ Consistent sizing prevents the "header too big / cards too small" problems.
 | Stage | Mobile Layout | Desktop Layout |
 | :--- | :--- | :--- |
 | **DNA** | Horizontal snap scroll, one card per view (`min-w-[85vw]`, `snap-x`) | 4-column grid (`lg:grid-cols-4`) |
-| **Seed** | Vertical stack (Process Flow) | 3-column grid (Data -> Training -> Model) |
+| **Seed** | Vertical stack (Process Flow) | 3-column grid (Dataset -> Training -> Model) |
+| **Istik** | Vertical stack (Guided Modules) | Split-screen sandbox (Prompt left, Output right) |
 | **Sprout** | Vertical stack, one column | 3-column grid (`lg:grid-cols-3`) |
 | **Tree** | Card list with tabs | Card grid + optional D3 map toggle |
 
@@ -237,7 +242,7 @@ Each DNA pipeline step has a distinct color for visual differentiation:
 | :--- | :--- | :--- |
 | `GlassCard` | DNA cards | Available but not used by Sprout |
 | `GlowingNode` | DNA cards | DNA-specific |
-| `FloatingInput` | Sprout, Tree, Seed | Shared (but misused on Sprout — no handler) |
+| `FloatingInput` | Seed only | Shared (removed from Sprout/Tree/Fruits/Orchard — stubs) |
 | `StageSelector` | All stage pages | Shared |
 | `GlobalNav` | All pages | Shared |
 | `SproutCard` | Sprout only | Not shared — inline glass effects |
