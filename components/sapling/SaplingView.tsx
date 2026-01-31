@@ -1,10 +1,17 @@
 import { getConceptsByStage } from '@/lib/concepts/api';
 import { UnifiedConceptCard } from '@/components/ui/UnifiedConceptCard';
-import { PromptSandbox } from '@/components/sapling/PromptSandbox';
+import { SaplingWorkspace } from '@/components/sapling/SaplingWorkspace';
+import { RelatedConceptsPanel } from '@/components/concept/RelatedConceptsPanel';
 import { StageSelector } from '@/components/StageSelector';
+import { SaplingHeroAnimation } from './SaplingHeroAnimation';
 import { Info, Leaf } from 'lucide-react';
 
 export default async function SaplingView({ locale }: { locale: string }) {
+    // Fetch seed concepts to show as "Related Fundamentals"
+    const seedConcepts = await getConceptsByStage('seed', locale);
+    // Use first 3 concepts, default to empty array if undefined
+    const relatedConcepts = (seedConcepts || []).slice(0, 3);
+
     // Currently we might not have 'sapling' concepts in DB yet, but that's fine.
     // We will render the Sandbox as the primary feature.
     const concepts = await getConceptsByStage('sapling', locale);
@@ -12,26 +19,36 @@ export default async function SaplingView({ locale }: { locale: string }) {
     return (
         <div className="min-h-screen bg-gradient-to-b from-emerald-950 via-green-950 to-stone-950 pb-20">
             {/* Hero Section */}
-            <div className="relative pt-32 pb-12 px-6 text-center z-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/30 border border-emerald-800/50 mb-6 text-emerald-400 text-xs font-mono uppercase tracking-widest">
+            <div className="relative pt-32 pb-12 px-6 text-center z-10 overflow-hidden">
+                <SaplingHeroAnimation />
+
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/40 border border-emerald-500/30 mb-6 text-emerald-300 text-xs font-mono uppercase tracking-widest backdrop-blur-md relative z-20 shadow-lg shadow-emerald-900/20">
                     <Leaf size={12} />
                     {locale === 'et' ? 'Juhendatud Praktika' : 'Guided Practice'}
                 </div>
 
-                <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-emerald-100 to-emerald-600 mb-4 drop-shadow-sm">
+                <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-emerald-100 via-emerald-200 to-teal-500 mb-4 drop-shadow-sm relative z-20">
                     {locale === 'et' ? 'Nursery' : 'The Nursery'}
                 </h1>
 
-                <p className="text-lg md:text-xl text-emerald-100/60 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-lg md:text-xl text-emerald-100/70 max-w-2xl mx-auto leading-relaxed relative z-20">
                     {locale === 'et'
                         ? 'Siin saavad abstraktsed mudelid reaalseks. Katseta ja vaata ise.'
                         : 'Where abstract models become real. Experiment and see for yourself.'}
                 </p>
             </div>
 
-            {/* Main Interaction Area: The Sandbox */}
+            {/* Main Interaction Area: The Workspace */}
             <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 mb-20">
-                <PromptSandbox locale={locale} />
+                <SaplingWorkspace locale={locale} />
+            </div>
+
+            {/* Related Concepts (Fundamentals) */}
+            <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 pb-10">
+                <RelatedConceptsPanel
+                    concepts={relatedConcepts}
+                    locale={locale}
+                />
             </div>
 
             {/* Concepts Grid (If any are added later) */}

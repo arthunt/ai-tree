@@ -1,6 +1,6 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode, HTMLAttributes } from 'react';
 
-interface GlassCardProps {
+interface GlassCardProps extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode;
     className?: string;
     intensity?: 'low' | 'medium' | 'high';
@@ -11,7 +11,8 @@ export function GlassCard({
     children,
     className = '',
     intensity = 'medium',
-    style
+    style,
+    ...props
 }: GlassCardProps) {
 
     const bgIntensity = {
@@ -38,6 +39,7 @@ export function GlassCard({
         ${className}
       `}
             style={style}
+            {...props}
         >
             {/* Subtle top highlight for depth */}
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />

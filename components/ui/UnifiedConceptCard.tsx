@@ -68,23 +68,24 @@ const VARIANT_STYLES: Record<CardVariant, {
         nodeSizeDefault: 30
     },
     sapling: {
-        // Morning Green: Emerald/Teal themes
+        // Morning Green: Emerald/Teal themes - The Nursery
         activeBorder: 'border-emerald-400/50 ring-2 ring-emerald-400/20',
-        activeBg: 'bg-emerald-900/40',
-        completedBorder: 'border-emerald-600/40',
-        completedBg: 'bg-emerald-900/20',
-        defaultBorder: 'border-emerald-800/30',
-        defaultBg: 'bg-emerald-950/30',
+        activeBg: 'bg-emerald-900/60', // Slightly richer background
+        completedBorder: 'border-emerald-500/40',
+        completedBg: 'bg-emerald-900/30',
+        defaultBorder: 'border-emerald-800/40',
+        defaultBg: 'bg-emerald-950/40',
         nodeSizeActive: 50,
         nodeSizeDefault: 30
     },
     tree: {
-        activeBorder: 'border-emerald-500/60',
-        activeBg: 'bg-white/40',
-        completedBorder: 'border-emerald-600/30',
-        completedBg: 'bg-emerald-100/20',
-        defaultBorder: 'border-stone-200/50',
-        defaultBg: 'bg-white/30', // Very light, paper-like
+        // Daylight: Knowledge Architecture - Distinctly lighter
+        activeBorder: 'border-sky-400/60 ring-2 ring-sky-400/20',
+        activeBg: 'bg-slate-800/90', // Keep dark base for legibility but lighter tint
+        completedBorder: 'border-sky-500/40',
+        completedBg: 'bg-sky-900/20',
+        defaultBorder: 'border-slate-600/50',
+        defaultBg: 'bg-slate-800/60', // Lighter grey/blue vs deep black
         nodeSizeActive: 50,
         nodeSizeDefault: 30
     }
@@ -112,7 +113,7 @@ export function UnifiedConceptCard({
             variant === 'seed' ? '#F59E0B' : // Amber
                 variant === 'sprout' ? '#A78BFA' : // Indigo/Purple 
                     variant === 'sapling' ? '#10B981' : // Emerald
-                        '#10B981' // Tree (Emerald)
+                        '#38BDF8' // Tree (Sky Blue for Daylight)
     );
 
     return (

@@ -5,7 +5,7 @@
       "icon": "brain",
       "difficulty": "beginner",
       "estimatedMinutes": 45,
-      "concepts": ["tokens", "vectors", "attention", "transformers", "context-windows", "hallucinations"],
+      "concepts": ["tokenization", "embeddings", "attention", "prediction", "context-windows", "hallucination"],
       "prerequisites": []
     },
     {
@@ -13,7 +13,7 @@
       "icon": "message-square",
       "difficulty": "intermediate",
       "estimatedMinutes": 40,
-      "concepts": ["tokens", "context-windows", "temperature-sampling", "prompting-basics", "hallucinations"],
+      "concepts": ["tokenization", "context-windows", "temperature-sampling", "prompting-basics", "hallucination"],
       "prerequisites": ["ai-fundamentals"]
     },
     {
@@ -21,24 +21,24 @@
       "icon": "database",
       "difficulty": "intermediate",
       "estimatedMinutes": 50,
-      "concepts": ["vectors", "context-windows", "rag", "memory", "context-engineering"],
+      "concepts": ["embeddings", "context-windows", "representations", "generalization"],
       "prerequisites": ["ai-fundamentals"]
     },
     {
-      "id": "ai-agents-path",
-      "icon": "bot",
-      "difficulty": "advanced",
-      "estimatedMinutes": 55,
-      "concepts": ["context-engineering", "function-calling", "ai-agents", "mcp", "memory", "security"],
-      "prerequisites": ["prompt-engineering", "build-rag-apps"]
-    },
-    {
-      "id": "fine-tuning-path",
+      "id": "training-deep-dive",
       "icon": "sliders",
       "difficulty": "advanced",
-      "estimatedMinutes": 35,
-      "concepts": ["tokens", "vectors", "attention", "training-vs-inference", "lora", "moe"],
+      "estimatedMinutes": 55,
+      "concepts": ["dataset", "data-cleaning", "loss-function", "backpropagation", "epochs", "overfitting", "weights", "base-model", "evaluation"],
       "prerequisites": ["ai-fundamentals"]
+    },
+    {
+      "id": "career-explorer",
+      "icon": "briefcase",
+      "difficulty": "beginner",
+      "estimatedMinutes": 30,
+      "concepts": ["ai-engineer", "prompt-architect", "data-scientist", "ai-ethicist", "mlops-specialist"],
+      "prerequisites": []
     }
   ]
 }

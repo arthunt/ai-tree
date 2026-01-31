@@ -14,7 +14,7 @@
 ### `@opus` (Claude Code) — Next Tasks
 | # | Task | Status | Depends On | Description |
 |---|------|--------|------------|-------------|
-| 1 | **1.6 P2** DNA Polish | ⏳ NEXT | — | Metaphor prominence, help button, reset confirm, deep-dive label |
+| 1 | **1.6 P2** DNA Polish | ✅ DONE | — | Metaphor prominence, help button, reset confirm, deep-dive label |
 
 #### Completed (this sprint)
 - ✅ 1.4 Visual Calibration — themes verified, `istik`→`sapling` enum aligned
@@ -27,11 +27,12 @@
 ### `@gemini` — Current Tasks
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | Implement seed, sprout, tree, sapling card variants |
-| 2 | **3.1** Seed Stage content | 🔄 IN PROGRESS | SeedView + Deep Earth theme (partially done) |
-
-#### Completed
-- ✅ 2.4 7-Stage StageSelector
+| 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | Finish remaining: sprout, tree, seed, sapling visuals |
+| 2 | **3.1** Seed Stage Polish | 🔄 IN PROGRESS | Hero animation ("Compression"), theme polish |
+| 3 | **4.1** Sapling Page & Theme | ⏳ NEXT | Polish skeleton, Morning Green theme |
+| 4 | **4.2** Prompt Sandbox Refinement | ⏳ NEXT | Mobile layout, iteration tracking, feedback scoring |
+| 5 | **4.3** Sapling Practice Modules | ⏳ NEXT | 4 guided modules: First Prompt, Refinement, Temp, Eval |
+| 6 | **5.4.4** Related Concepts Panel | ⏳ NEXT | Visual component showing concept relationships |
 
 ### `@swarm` (Claude Flow) — Available
 | # | Task | Description |
@@ -91,12 +92,12 @@
         - [x] 1.6.7 Card peek view — show 15% of next card (85vw)
         - [x] 1.6.8 Reduce mobile header prominence (h1 -> text-2xl, subtitle -> text-sm)
         - [x] 1.6.9 Desktop layout fix — cards no longer pushed below fold
-    - [ ] **P2 — Polish** (deferred)
-        - [ ] 1.6.10 Metaphor text prominence increase
-        - [ ] 1.6.11 Re-accessible help button for MicroLesson
-        - [ ] 1.6.12 Confirm destructive reset action
-        - [ ] 1.6.13 Display current input text in DNAStepNav
-        - [ ] 1.6.14 Clarify "Deep Dive" -> "Learn More About [Step]"
+    - [x] **P2 — Polish** `@opus` DONE
+        - [x] 1.6.10 Metaphor text prominence increase (italic + quotes + higher opacity)
+        - [x] 1.6.11 Re-accessible help button for MicroLesson (HelpCircle icon on cards)
+        - [x] 1.6.12 Confirm destructive reset action (tap-to-confirm with red flash)
+        - [x] 1.6.13 Display current input text in DNAStepNav (truncated below step name)
+        - [x] 1.6.14 Clarify "Deep Dive" -> "Learn More About [Step]" (dynamic label with step title)
 - [x] **1.7 DNA Step Color Differentiation** `@opus` DONE
     - [x] Apply per-step colors to card active borders, step buttons, progress bar
     - [x] T=teal `#25EDBA`, V=blue `#3B82F6`, A=purple `#A855F7`, P=amber `#F59E0B`
@@ -264,11 +265,11 @@
     - [x] 5.2.3 Update `OrchardView` to use Concept SDK via `getStageContent('orchard')`
     - [x] 5.2.4 Remove hardcoded CAREERS array; icon mapping via `ICON_MAP`
 
-- [ ] **5.3 Tree Integration** `@gemini` `@opus` P2
-    > Bridge existing `nodes` table with concepts system.
-    - [ ] 5.3.1 Add `concept_id` FK column to `nodes` table
-    - [ ] 5.3.2 Link overlapping tree nodes to concept records
-    - [ ] 5.3.3 Enable deep-dive panel on tree nodes to show full concept content
+- [x] **5.3 Tree Integration** `@opus` DONE
+    > Migration `20260208_tree_concept_bridge.sql`. 5 nodes linked to concepts. TreeDetailPanel shows concept deep-dive.
+    - [x] 5.3.1 Add `concept_id` FK column to `nodes` table
+    - [x] 5.3.2 Link overlapping tree nodes to concept records (tokenization-process, word2vec, attention-paper, gpt-1, backpropagation)
+    - [x] 5.3.3 Enable deep-dive panel on tree nodes to show full concept content
 
 - [x] **5.4 Concept Relationships** `@opus` DONE
     > 48 relationships populated across all 5 stages.
