@@ -58,7 +58,7 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
             }}
         >
             {/* Node Visualization */}
-            <div className="h-48 relative flex items-center justify-center mb-[-1rem] z-10">
+            <div className="h-24 md:h-48 relative flex items-center justify-center mb-[-1rem] z-10">
                 <GlowingNode
                     color={color}
                     size={isActive ? 60 : 40}

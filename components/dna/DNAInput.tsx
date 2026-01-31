@@ -165,8 +165,8 @@ export function DNAInput() {
                         </div>
                     )}
 
-                    {/* Step Selector (always visible; dimmed when no data) */}
-                    <div className={`flex items-center justify-center gap-1.5 md:gap-1 px-3 py-2 border-t border-white/5 transition-opacity ${!isPlaying && !hasData ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
+                    {/* Step Selector (hidden on mobile — shown in sticky DNAStepNav instead) */}
+                    <div className={`hidden md:flex items-center justify-center gap-1.5 md:gap-1 px-3 py-2 border-t border-white/5 transition-opacity ${!isPlaying && !hasData ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
                             {/* Prev */}
                             <button
                                 onClick={prevStep}
@@ -215,8 +215,8 @@ export function DNAInput() {
                 </div>
             </div>
 
-            {/* Helper Text */}
-            <div className="mt-3 flex justify-between px-4 text-xs text-brand-teal/60 font-mono">
+            {/* Helper Text (hidden on mobile to save space) */}
+            <div className="mt-3 hidden md:flex justify-between px-4 text-xs text-brand-teal/60 font-mono">
                 <span>{t('interactiveMode')}</span>
                 <AnimatePresence>
                     {isPlaying && (

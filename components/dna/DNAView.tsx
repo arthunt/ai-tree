@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRef, useCallback } from 'react';
 import { DNAComponentCard } from '@/components/dna/DNAComponentCard';
 import { CompletionCard } from '@/components/dna/CompletionCard';
 import { DNAFlowDiagram } from '@/components/dna/DNAFlowDiagram';
@@ -31,6 +32,16 @@ export function DNAView({ content = [] }: DNAViewProps) {
 function DNAInterface({ content }: DNAInterfaceProps) {
     const t = useTranslations('dna');
     const { setPlaybackSpeed, jumpToStep, togglePause, isPaused, isComplete, hasData } = useDNA();
+    const cardScrollRef = useRef<HTMLDivElement>(null);
+
+    // Scroll the card carousel to a specific card index
+    const scrollToCard = useCallback((index: number) => {
+        const container = cardScrollRef.current;
+        if (!container) return;
+        const card = container.children[index] as HTMLElement;
+        if (!card) return;
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }, []);
 
     // Map concept IDs to colors
     const colorMap: Record<string, string> = {
@@ -64,12 +75,12 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                     <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-brand-cyan/5 blur-[120px] rounded-full animate-pulse-slow" style={{ animationDelay: '2s' }} />
                 </div>
 
-                {/* Control Hint Overlay */}
+                {/* Control Hint Overlay (desktop only — mobile uses sticky DNAStepNav) */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 2 }}
-                    className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
+                    className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-none hidden md:block"
                 >
                     <div className="bg-black/40 backdrop-blur-md px-6 py-2 rounded-full border border-white/10 text-white/50 text-xs uppercase tracking-widest flex items-center gap-3">
                         <span className="w-2 h-2 rounded-full bg-brand-teal animate-pulse" />
@@ -84,7 +95,7 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-center mb-16 relative z-20"
+                        className="text-center mb-6 md:mb-16 relative z-20"
                     >
                         <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-white to-brand-cyan drop-shadow-[0_0_15px_rgba(56,189,248,0.3)]">
                             {t('header.title')}
@@ -103,17 +114,17 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                     </div>
 
                     {/* Main Flow Visualization */}
-                    <div className="relative w-full max-w-7xl mt-12">
+                    <div className="relative w-full max-w-7xl mt-4 md:mt-12">
                         {/* Connecting Flow Lines (SVG) (Hidden on mobile for now as cards stack) */}
                         <div className="absolute inset-0 z-0 pointer-events-none hidden lg:block">
                             <DNAFlowDiagram />
                         </div>
 
                         {/* Sticky Mobile Step Navigation (breadcrumbs + next button) */}
-                        <DNAStepNav />
+                        <DNAStepNav onScrollToCard={scrollToCard} />
 
                         {/* Cards Grid - Mobile: horizontal snap scroll (One Card Per View), Tablet+: grid */}
-                        <div className="relative z-10 flex overflow-x-auto snap-x snap-mandatory scroll-smooth-touch overscroll-contain gap-4 px-4 pb-8 scrollbar-hide md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:px-0 md:pb-0 md:gap-8 lg:grid-cols-4 lg:gap-12">
+                        <div ref={cardScrollRef} className="relative z-10 flex overflow-x-auto snap-x snap-mandatory scroll-smooth-touch overscroll-contain gap-4 px-4 pb-8 scrollbar-hide md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:px-0 md:pb-0 md:gap-8 lg:grid-cols-4 lg:gap-12">
                             {content.map((item, index) => (
                                 <div
                                     key={item.concept_id}
