@@ -1,4 +1,4 @@
-import { SeedView } from '@/components/seed/SeedView';
+import SeedView from '@/components/seed/SeedView';
 
 // Prerender params for SSG
 export function generateStaticParams() {

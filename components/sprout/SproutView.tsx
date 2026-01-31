@@ -6,17 +6,15 @@ import { SproutCard } from './SproutCard';
 import { StageSelector } from '@/components/StageSelector';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
+import type { Concept } from '@/lib/concepts';
 
 interface SproutViewProps {
-    content: any[];
+    concepts: Concept[];
     locale: string;
 }
 
-export function SproutView({ content, locale }: SproutViewProps) {
+export function SproutView({ concepts, locale }: SproutViewProps) {
     const t = useTranslations();
-    const getLocalized = (json: any) => {
-        return json?.[locale] || json?.['en'] || '';
-    };
 
 
 
@@ -49,14 +47,14 @@ export function SproutView({ content, locale }: SproutViewProps) {
             {/* Masonry Grid */}
             <div className="container mx-auto px-4 md:px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-                    {content.map((item, index) => (
+                    {concepts.map((concept, index) => (
                         <SproutCard
-                            key={item.slug}
+                            key={concept.id}
                             index={index}
-                            title={getLocalized(item.title)}
-                            description={getLocalized(item.description)}
-                            analogy={getLocalized(item.analogy)}
-                            visualType={item.visual_type}
+                            title={concept.title}
+                            description={concept.explanation}
+                            analogy={concept.metaphor}
+                            visualType={concept.visual_type}
                         />
                     ))}
                 </div>

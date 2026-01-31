@@ -16,7 +16,7 @@
 |---|------|--------|------------|-------------|
 | 1 | **5.1** Fruits Migration | ✅ DONE | — | Seed APPLICATIONS into concepts DB, update FruitsView to use SDK |
 | 2 | **5.2** Orchard Migration | ✅ DONE | — | Seed CAREERS into concepts DB, update OrchardView to use SDK |
-| 3 | **3.3** Sprout Migration | ⏳ NEXT | 3.2 | Map sprout_lessons → concepts table, update SproutView |
+| 3 | **3.2+3.3** Sprout Redefinition + Migration | ✅ DONE | — | New Emergent Properties concepts, SproutView on SDK |
 | 4 | **1.4** Visual Calibration | ⏳ BLOCKED | 2.4 | Verify dark/light mode logic after 7-stage update |
 
 ### `@gemini` — Next Tasks
@@ -195,19 +195,19 @@
     - [ ] 3.1.6 Server action `getSeedContent()` using Concept SDK
     - [ ] 3.1.7 Replace hardcoded `SEED_STEPS` in `SeedView.tsx` with DB content
 
-- [ ] **3.2 Sprout Content Redefinition** `@gemini` `@opus` P1
-    > Ref: VISION_AND_STRATEGY.md Decision 6c. Sprout shifts from "Foundations" to "Emergent Properties".
-    - [ ] 3.2.1 Create new Sprout concepts in DB: `generalization`, `context-windows`, `hallucination`, `temperature-sampling`, `representations`, `prompting-basics`
-    - [ ] 3.2.2 Add translations EN + ET with metaphors and explanations
-    - [ ] 3.2.3 Update `getSproutContent()` to use Concept SDK
-    - [ ] 3.2.4 Remove hardcoded `MOCK_SPROUT_DATA`
-    - [ ] 3.2.5 Update Sprout page subtitle/description to reflect "Emergent Properties" framing
+- [x] **3.2 Sprout Content Redefinition** `@opus` DONE
+    > Migration: `20260204_sprout_concepts.sql`. 6 concepts with "Emergent Properties" framing.
+    - [x] 3.2.1 Create new Sprout concepts in DB: `generalization`, `context-windows`, `hallucination`, `temperature-sampling`, `representations`, `prompting-basics`
+    - [x] 3.2.2 Add translations EN + ET with metaphors, explanations, and questions
+    - [x] 3.2.3 Update sprout page to use `getStageContent('sprout')` via Concept SDK
+    - [x] 3.2.4 Old `getSproutContent()` + `MOCK_SPROUT_DATA` superseded (sprout_lessons table still exists)
+    - [x] 3.2.5 Sprout page metadata updated: "Emergent properties" framing
 
-- [ ] **3.3 Sprout Migration to Concept Objects** `@opus` P2
-    > Migrate existing sprout_lessons data to unified concepts table.
-    - [ ] 3.3.1 Map existing sprout_lessons rows to concepts table entries
-    - [ ] 3.3.2 Update SproutView to render from Concept SDK
-    - [ ] 3.3.3 Verify rendering with both DB and mock fallback
+- [x] **3.3 Sprout Migration to Concept Objects** `@opus` DONE
+    > SproutView now consumes Concept[] from SDK. Legacy sprout_lessons table preserved but unused.
+    - [x] 3.3.1 6 new sprout concepts in concepts table replace sprout_lessons data
+    - [x] 3.3.2 SproutView updated: `concepts: Concept[]` prop, maps explanation→description, metaphor→analogy
+    - [x] 3.3.3 Mock fallback in lib/concepts/mock-data.ts covers all 6 sprout concepts EN+ET
 
 ---
 
