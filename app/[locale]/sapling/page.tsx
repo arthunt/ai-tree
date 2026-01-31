@@ -1,5 +1,8 @@
 import SaplingView from '@/components/sapling/SaplingView';
 
-export default function SaplingPage({ params }: { params: { locale: string } }) {
-    return <SaplingView locale={params.locale} />;
+export const revalidate = 60;
+
+export default async function SaplingPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    return <SaplingView locale={locale} />;
 }

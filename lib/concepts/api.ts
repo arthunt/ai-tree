@@ -11,6 +11,11 @@ import type { Concept, ConceptWithRelated, EvolutionStage } from './types';
  * Join a concept row with its translation into a flat Concept object.
  */
 function joinConceptTranslation(row: any): Concept {
+  // Supabase !inner join returns an array — extract first (and only) match
+  const t = Array.isArray(row.concept_translations)
+    ? row.concept_translations[0]
+    : row.concept_translations;
+
   return {
     id: row.id,
     stage: row.stage,
@@ -22,14 +27,14 @@ function joinConceptTranslation(row: any): Concept {
     color: row.color ?? null,
     parent_id: row.parent_id ?? null,
     // Translation fields from the joined relation
-    title: row.concept_translations?.title ?? row.title ?? '',
-    subtitle: row.concept_translations?.subtitle ?? row.subtitle ?? null,
-    explanation: row.concept_translations?.explanation ?? row.explanation ?? '',
-    metaphor: row.concept_translations?.metaphor ?? row.metaphor ?? '',
-    question: row.concept_translations?.question ?? row.question ?? null,
-    deep_dive: row.concept_translations?.deep_dive ?? row.deep_dive ?? null,
-    completion_message: row.concept_translations?.completion_message ?? row.completion_message ?? null,
-    hint: row.concept_translations?.hint ?? row.hint ?? null,
+    title: t?.title ?? '',
+    subtitle: t?.subtitle ?? null,
+    explanation: t?.explanation ?? '',
+    metaphor: t?.metaphor ?? '',
+    question: t?.question ?? null,
+    deep_dive: t?.deep_dive ?? null,
+    completion_message: t?.completion_message ?? null,
+    hint: t?.hint ?? null,
   };
 }
 

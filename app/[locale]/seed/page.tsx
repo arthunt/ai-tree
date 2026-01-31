@@ -1,6 +1,8 @@
 import SeedView from '@/components/seed/SeedView';
 
-// Prerender params for SSG
+// ISR: revalidate every 60s so new concepts appear quickly
+export const revalidate = 60;
+
 export function generateStaticParams() {
     return [
         { locale: 'en' },
@@ -13,6 +15,7 @@ export const metadata = {
     description: 'Explore how raw data is compressed into intelligence through training.',
 };
 
-export default function SeedPage({ params }: { params: { locale: string } }) {
-    return <SeedView locale={params.locale} />;
+export default async function SeedPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    return <SeedView locale={locale} />;
 }

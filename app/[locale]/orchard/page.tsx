@@ -1,7 +1,9 @@
 import { OrchardView } from '@/components/orchard/OrchardView';
 import { getStageContent } from '@/actions/getConcepts';
 
-// Prerender params for SSG
+// ISR: revalidate every 60s so new concepts appear quickly
+export const revalidate = 60;
+
 export function generateStaticParams() {
     return [
         { locale: 'en' },
@@ -14,7 +16,8 @@ export const metadata = {
     description: 'Explore career paths and professional opportunities in AI.'
 };
 
-export default async function OrchardPage({ params }: { params: { locale: string } }) {
-    const concepts = await getStageContent('orchard', params.locale);
-    return <OrchardView concepts={concepts} locale={params.locale} />;
+export default async function OrchardPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    const concepts = await getStageContent('orchard', locale);
+    return <OrchardView concepts={concepts} locale={locale} />;
 }
