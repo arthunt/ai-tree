@@ -143,7 +143,7 @@ export function DNAInput() {
                                             animate={{ scale: 1, opacity: 1 }}
                                             exit={{ scale: 0.9, opacity: 0 }}
                                             onClick={handleReset}
-                                            className="bg-white/10 hover:bg-white/20 text-red-400 p-3 min-h-[48px] min-w-[48px] flex items-center justify-center rounded-xl transition-all"
+                                            className="bg-white/10 hover:bg-white/20 text-white/50 hover:text-white/70 p-3 min-h-[48px] min-w-[48px] flex items-center justify-center rounded-xl transition-all"
                                         >
                                             <RefreshCw size={20} />
                                         </motion.button>

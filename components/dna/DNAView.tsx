@@ -6,6 +6,7 @@ import { CompletionCard } from '@/components/dna/CompletionCard';
 import { DNAFlowDiagram } from '@/components/dna/DNAFlowDiagram';
 import { DNAProvider, useDNA, DNAStep } from './DNAContext';
 import { DNAInput } from './DNAInput';
+import { DNAStepNav } from './DNAStepNav';
 import { MicroLesson } from './MicroLesson';
 import { ConceptTranslation } from '@/lib/supabase';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
@@ -107,6 +108,9 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                         <div className="absolute inset-0 z-0 pointer-events-none hidden lg:block">
                             <DNAFlowDiagram />
                         </div>
+
+                        {/* Sticky Mobile Step Navigation (breadcrumbs + next button) */}
+                        <DNAStepNav />
 
                         {/* Cards Grid - Mobile: horizontal snap scroll (One Card Per View), Tablet+: grid */}
                         <div className="relative z-10 flex overflow-x-auto snap-x snap-mandatory scroll-smooth-touch overscroll-contain gap-4 px-4 pb-8 scrollbar-hide md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:px-0 md:pb-0 md:gap-8 lg:grid-cols-4 lg:gap-12">
