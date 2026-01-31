@@ -1369,5 +1369,14 @@
       "tapToLearn": "Vajuta õppimiseks",
       "visualLink": "Vajuta suhtlemiseks"
     }
+  },
+  "fruits": {
+    "title": "Saak",
+    "subtitle": "Kus intellekt kannab vilja. Uuri AI süsteemi poolt loodud praktilisi rakendusi ja väärtust.",
+    "phaseLabel": "III Faas: Rakendus",
+    "inputPlaceholder": "Otsi rakendusi...",
+    "card": {
+      "visitApp": "Käivita Rakendus"
+    }
   }
 }

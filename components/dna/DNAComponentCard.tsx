@@ -27,7 +27,6 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
     const locale = params.locale as string;
     const t = useTranslations('dna.card');
     const tSteps = useTranslations('dna.steps');
-
     const [isTransitioning, setIsTransitioning] = useState(false);
 
     const nodeMapping: Record<number, string> = {
