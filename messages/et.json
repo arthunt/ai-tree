@@ -1329,5 +1329,17 @@
     "expand": "Laienda sisend",
     "collapse": "Sulge sisend",
     "submit": "Küsi"
+  },
+  "sprout": {
+    "phaseLabel": "2. Faas: Vundament",
+    "title": "Idu",
+    "subtitle": "Enne kui puu saab kasvatada oksi, vajab see tugevaid juuri. Mõista 6 põhimahhanismi, mis toidavad igat AI mudelit.",
+    "inputPlaceholder": "Küsi nende mõistete kohta...",
+    "card": {
+      "analogyLabel": "Analoogia",
+      "readFull": "Loe täispikka õppetundi",
+      "tapToLearn": "Vajuta õppimiseks",
+      "visualLink": "Vajuta suhtlemiseks"
+    }
   }
 }
