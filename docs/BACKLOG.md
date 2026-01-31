@@ -36,25 +36,38 @@
     - [x] Stage labels ET+EN (DNA/Seed/Sprout/Tree/Fruits/Orchard).
     - [x] FloatingInput placeholder & labels.
     - [x] Mobile navigation hints.
-- [ ] **1.6 DNA Mobile UX Overhaul** `@opus` `@swarm` 🔄 IN PROGRESS
+- [x] **1.6 DNA Mobile UX Overhaul** `@opus` `@swarm` ✅ P0+P1 DONE
     > Based on specialist review: [`docs/UX_RECOMMENDATIONS.md`](./UX_RECOMMENDATIONS.md)
-    - [ ] **P0 — Critical**
-        - [ ] 1.6.1 Step completion badge + contextual message on cards (`DNAComponentCard`)
-        - [ ] 1.6.2 Always-visible step nav — show dimmed when no data (`DNAStepNav`)
-        - [ ] 1.6.3 Enlarge nav touch targets (36→44px) + show step names (`DNAStepNav`)
-        - [ ] 1.6.4 Input length validation — maxLength 500 + counter (`DNAInput`)
-    - [ ] **P1 — High Impact**
-        - [ ] 1.6.5 Card visual states: active/complete/inactive with distinct borders
-        - [ ] 1.6.6 Token tap hint on cards + instructional text (`AttentionSpotlight`)
-        - [ ] 1.6.7 Card peek view — show 15% of next card (85vw)
-        - [ ] 1.6.8 Reduce mobile header prominence (h1 → text-2xl, subtitle → text-sm)
+    - [x] **P0 — Critical** ✅
+        - [x] 1.6.1 Step completion badge + contextual message on cards (`DNAComponentCard`)
+        - [x] 1.6.2 Always-visible step nav — show dimmed when no data (`DNAStepNav`)
+        - [x] 1.6.3 Enlarge nav touch targets (36→44px) + show step names (`DNAStepNav`)
+        - [x] 1.6.4 Input length validation — maxLength 500 (`DNAInput`)
+    - [x] **P1 — High Impact** ✅
+        - [x] 1.6.5 Card visual states: active/complete/inactive with distinct borders
+        - [x] 1.6.6 Token tap hint on cards + instructional text (`AttentionSpotlight`)
+        - [x] 1.6.7 Card peek view — show 15% of next card (85vw)
+        - [x] 1.6.8 Reduce mobile header prominence (h1 → text-2xl, subtitle → text-sm)
+        - [x] 1.6.9 Desktop layout fix — cards no longer pushed below fold
     - [ ] **P2 — Polish** (deferred)
-        - [ ] 1.6.9 `prefers-reduced-motion` support
         - [ ] 1.6.10 Metaphor text prominence increase
         - [ ] 1.6.11 Re-accessible help button for MicroLesson
         - [ ] 1.6.12 Confirm destructive reset action
         - [ ] 1.6.13 Display current input text in DNAStepNav
         - [ ] 1.6.14 Clarify "Deep Dive" → "Learn More About [Step]"
+- [ ] **1.7 DNA Step Color Differentiation** `@opus` 🔄 IN PROGRESS
+    > Ref: [`docs/DESIGN_SYSTEM_RULES.md`](./DESIGN_SYSTEM_RULES.md) Section 8
+    - [ ] Apply per-step colors to card active borders, step buttons, progress bar
+    - [ ] T=teal `#25EDBA`, V=blue `#3B82F6`, A=purple `#A855F7`, P=amber `#F59E0B`
+- [ ] **1.8 Accessibility: `prefers-reduced-motion`** `@opus` 🔄 IN PROGRESS
+    > Ref: [`docs/DESIGN_SYSTEM_RULES.md`](./DESIGN_SYSTEM_RULES.md) Section 7
+    - [ ] Add CSS media query to disable infinite animations
+    - [ ] Wrap Framer Motion animations with motion preference check
+- [ ] **1.9 i18n: Migrate DNA Hardcoded Strings** `@opus` 🔄 IN PROGRESS
+    > Ref: [`docs/DESIGN_SYSTEM_RULES.md`](./DESIGN_SYSTEM_RULES.md) Section 3
+    - [ ] Move `STEP_COMPLETE_MESSAGES` to translation keys
+    - [ ] Move `STEP_HINT_MESSAGES` to translation keys
+    - [ ] Move DNAStepNav labels ("Next", "Finish", "Done", "Playing", "Paused") to translation keys
 
 - [ ] **2.3 Sprout Level Content** `@gemini` ✅ DONE
     - [x] Create `/sprout` page.

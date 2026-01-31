@@ -7,16 +7,12 @@
   --background-start-rgb: 250, 250, 250;
   --background-end-rgb: 255, 255, 255;
 
-  /* DNA Theme (Light Mode Defaults) */
+  /* DNA Theme — Step Colors (Design System Rules §8) */
   --bg-void: #030712;
-  --dna-t: #F43F5E;
-  /* Rose-500 */
-  --dna-v: #34D399;
-  /* Emerald-400 */
-  --dna-a: #3B82F6;
-  /* Blue-500 */
-  --dna-p: #8B5CF6;
-  /* Violet-500 */
+  --dna-t: #25EDBA; /* Teal — Tokenization */
+  --dna-v: #3B82F6; /* Blue — Vectorizing */
+  --dna-a: #A855F7; /* Purple — Attention */
+  --dna-p: #F59E0B; /* Amber — Prediction */
 
   /* Brand Theme */
   --brand-teal: #25EDBA;
@@ -30,10 +26,10 @@
 
   /* DNA Theme stays consistent in Dark Mode */
   --bg-void: #030712;
-  --dna-t: #F43F5E;
-  --dna-v: #34D399;
-  --dna-a: #3B82F6;
-  --dna-p: #8B5CF6;
+  --dna-t: #25EDBA;
+  --dna-v: #3B82F6;
+  --dna-a: #A855F7;
+  --dna-p: #F59E0B;
 
   /* Brand Theme */
   --brand-teal: #25EDBA;
@@ -110,6 +106,25 @@ a:focus-visible,
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+}
+
+/* Reduced Motion — Design System Rules §7 */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-slow,
+  .animate-pulse,
+  .animate-spin-slow {
+    animation: none !important;
+  }
+
+  /* Disable Framer Motion spring/tween for users who prefer reduced motion */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

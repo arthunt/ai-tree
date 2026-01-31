@@ -1168,6 +1168,34 @@
     "card": {
       "deepDive": "SÜVENE →"
     },
+    "steps": {
+      "complete": {
+        "tokenization": "Tekst tokeniseeritud! Igal tükil on unikaalne ID.",
+        "vectorizing": "Tokenid vektoriseeritud! Sarnased sõnad koonduvad.",
+        "attention": "Tähelepanu kaardistatud! Vaata, kuidas sõnad seostuvad.",
+        "prediction": "Ennustus valmis! Kontrolli parimat kandidaati."
+      },
+      "hint": {
+        "attention": "Puuduta tokenit seoste nägemiseks"
+      }
+    },
+    "nav": {
+      "next": "Järgmine",
+      "finish": "Lõpeta",
+      "done": "Valmis",
+      "playing": "Mängib",
+      "paused": "Peatatud",
+      "stepOf": "Samm {current}/{total}",
+      "stepName": {
+        "tokenization": "Tokeniseeri",
+        "vectorizing": "Vektoriseeri",
+        "attention": "Tähelepanu",
+        "prediction": "Ennusta"
+      },
+      "thicknessLabel": "paksus = olulisus",
+      "tapToSpotlight": "puuduta sõna seoste nägemiseks",
+      "connections": "{count} seost"
+    },
     "seed": {
       "growing": "Kasvab puuks...",
       "exploring": "Uurime sügavamale..."

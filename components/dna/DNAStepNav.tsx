@@ -4,6 +4,7 @@ import { useDNA, DNAStep } from './DNAContext';
 import { ChevronRight, SkipForward, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 const ACTIVE_STEPS: DNAStep[] = ['tokenization', 'vectorizing', 'attention', 'prediction'];
 
@@ -14,11 +15,12 @@ const STEP_LABELS: Record<string, string> = {
     prediction: 'P',
 };
 
-const STEP_NAMES: Record<string, string> = {
-    tokenization: 'Tokenize',
-    vectorizing: 'Vectorize',
-    attention: 'Attention',
-    prediction: 'Predict',
+// Step colors (Design System Rules §8)
+const STEP_COLORS: Record<string, string> = {
+    tokenization: 'var(--dna-t)',
+    vectorizing: 'var(--dna-v)',
+    attention: 'var(--dna-a)',
+    prediction: 'var(--dna-p)',
 };
 
 interface DNAStepNavProps {
@@ -30,6 +32,7 @@ const BASE_STEP_DURATION = 4000;
 export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
     const { currentStep, nextStep, jumpToStep, isPlaying, isPaused, hasData, isComplete, playbackSpeed, completedSteps } = useDNA();
     const [progress, setProgress] = useState(0);
+    const t = useTranslations('dna.nav');
 
     const currentIndex = ACTIVE_STEPS.indexOf(currentStep);
     const isLastStep = currentStep === 'prediction';
@@ -91,12 +94,13 @@ export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
                                         className={`
                                             w-11 h-11 rounded-lg text-xs font-bold font-mono transition-all flex items-center justify-center
                                             ${isCurrent
-                                                ? 'bg-brand-teal text-black shadow-[0_0_12px_rgba(45,212,191,0.4)]'
+                                                ? 'text-black'
                                                 : isPast
                                                     ? 'bg-green-500/20 text-green-400 border border-green-500/30'
                                                     : 'bg-white/5 text-white/30'
                                             }
                                         `}
+                                        style={isCurrent ? { backgroundColor: STEP_COLORS[step], boxShadow: `0 0 12px ${STEP_COLORS[step]}` } : undefined}
                                     >
                                         {isPast && !isCurrent ? <Check size={14} /> : STEP_LABELS[step]}
                                     </button>
@@ -117,7 +121,7 @@ export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
                                     progress > 85 ? 'animate-pulse shadow-[0_0_16px_rgba(45,212,191,0.4)]' : ''
                                 }`}
                             >
-                                Next
+                                {t('next')}
                                 <SkipForward size={14} />
                             </button>
                         ) : (
@@ -125,13 +129,13 @@ export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
                                 onClick={handleNext}
                                 className="flex items-center gap-1.5 px-4 py-2 min-h-[44px] rounded-lg bg-brand-teal text-black text-sm font-bold transition-all active:scale-95"
                             >
-                                Finish
+                                {t('finish')}
                                 <Check size={14} />
                             </button>
                         )
                     ) : (
                         <div className="flex items-center gap-1.5 px-4 py-2 min-h-[44px] rounded-lg bg-brand-teal/10 border border-brand-teal/20 text-brand-teal/60 text-sm font-bold">
-                            <Check size={14} /> Done
+                            <Check size={14} /> {t('done')}
                         </div>
                     )}
                 </div>
@@ -140,7 +144,8 @@ export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
                 {isPlaying && !isPaused && currentStep !== 'idle' && (
                     <div className="h-1 w-full bg-white/5">
                         <motion.div
-                            className="h-full bg-brand-teal"
+                            className="h-full"
+                            style={{ backgroundColor: STEP_COLORS[currentStep] || 'var(--dna-t)' }}
                             initial={{ width: 0 }}
                             animate={{ width: `${progress}%` }}
                             transition={{ type: "tween", ease: "linear", duration: 0.05 }}
@@ -152,23 +157,23 @@ export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
                 <div className="flex items-center justify-between px-3 py-1.5 border-t border-white/5">
                     <div className="flex flex-col">
                         <span className="text-[11px] text-white/50 font-mono uppercase tracking-wider">
-                            Step {stepCount > 0 ? stepCount : 1} of {ACTIVE_STEPS.length}
+                            {t('stepOf', { current: String(stepCount > 0 ? stepCount : 1), total: String(ACTIVE_STEPS.length) })}
                         </span>
                         {currentStep !== 'idle' && (
-                            <span className="text-xs text-brand-teal/80 font-semibold mt-0.5">
-                                {STEP_NAMES[currentStep]}
+                            <span className="text-xs font-semibold mt-0.5" style={{ color: STEP_COLORS[currentStep] || 'var(--dna-t)', opacity: 0.8 }}>
+                                {t(`stepName.${currentStep}`)}
                             </span>
                         )}
                     </div>
                     {isPlaying && !isPaused && (
-                        <span className="text-[11px] text-brand-teal/60 font-mono flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-brand-teal animate-pulse" />
-                            Playing
+                        <span className="text-[11px] font-mono flex items-center gap-1.5" style={{ color: STEP_COLORS[currentStep] || 'var(--dna-t)', opacity: 0.6 }}>
+                            <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: STEP_COLORS[currentStep] || 'var(--dna-t)' }} />
+                            {t('playing')}
                         </span>
                     )}
                     {isPaused && (
                         <span className="text-[11px] text-white/40 font-mono">
-                            Paused
+                            {t('paused')}
                         </span>
                     )}
                 </div>

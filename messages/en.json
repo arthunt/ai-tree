@@ -1180,6 +1180,34 @@
     "card": {
       "deepDive": "DEEP DIVE →"
     },
+    "steps": {
+      "complete": {
+        "tokenization": "Text tokenized! Each piece has a unique ID.",
+        "vectorizing": "Tokens vectorized! Similar words cluster together.",
+        "attention": "Attention mapped! See which words connect.",
+        "prediction": "Prediction complete! Check the top candidate."
+      },
+      "hint": {
+        "attention": "Tap a token to see its connections"
+      }
+    },
+    "nav": {
+      "next": "Next",
+      "finish": "Finish",
+      "done": "Done",
+      "playing": "Playing",
+      "paused": "Paused",
+      "stepOf": "Step {current} of {total}",
+      "stepName": {
+        "tokenization": "Tokenize",
+        "vectorizing": "Vectorize",
+        "attention": "Attention",
+        "prediction": "Predict"
+      },
+      "thicknessLabel": "thickness = importance",
+      "tapToSpotlight": "tap a word to spotlight connections",
+      "connections": "{count} connections"
+    },
     "seed": {
       "growing": "Growing into the Tree...",
       "exploring": "Exploring deeper..."

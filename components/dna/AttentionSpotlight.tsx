@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 /**
  * AttentionSpotlight — US-160 Task 1.3
@@ -55,6 +56,7 @@ function strengthColor(s: number): string {
 }
 
 export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotlightProps) {
+    const t = useTranslations('dna.nav');
     const [hoveredToken, setHoveredToken] = useState<number | null>(null);
     const [selectedToken, setSelectedToken] = useState<number | null>(null);
 
@@ -138,6 +140,7 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                 {tokens.map((token, i) => {
                     const x = tokenX(i, tokens.length);
                     const isDimmed = connectedTokens !== null && !connectedTokens.has(i);
+                    const connectionCount = weights.filter(w => w.fromIndex === i || w.toIndex === i).length;
 
                     return (
                         <g key={`token-${i}`}>
@@ -195,7 +198,7 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
 
                             {/* Strength badge on hover */}
                             <AnimatePresence>
-                                {activeToken === i && weights.some(w => w.fromIndex === i || w.toIndex === i) && (
+                                {activeToken === i && connectionCount > 0 && (
                                     <motion.text
                                         x={x}
                                         y={TOKEN_Y - 16}
@@ -207,9 +210,7 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                                         animate={{ opacity: 1, y: TOKEN_Y - 16 }}
                                         exit={{ opacity: 0 }}
                                     >
-                                        {weights
-                                            .filter(w => w.fromIndex === i || w.toIndex === i)
-                                            .length} connections
+                                        {t('connections', { count: String(connectionCount) })}
                                     </motion.text>
                                 )}
                             </AnimatePresence>
@@ -226,7 +227,7 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                 className="mt-1 flex flex-col items-center gap-1"
             >
                 <span className="text-[10px] font-mono uppercase tracking-widest text-brand-teal/40">
-                    thickness = importance
+                    {t('thicknessLabel')}
                 </span>
                 {selectedToken === null && (
                     <motion.span
@@ -235,7 +236,7 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                         transition={{ duration: 2, repeat: Infinity }}
                         className="text-[10px] font-mono text-brand-teal/60"
                     >
-                        tap a word to spotlight connections
+                        {t('tapToSpotlight')}
                     </motion.span>
                 )}
             </motion.div>

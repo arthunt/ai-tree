@@ -18,6 +18,14 @@ const STEP_LABELS: Record<string, string> = {
     prediction: 'P',
 };
 
+// Step colors (Design System Rules §8)
+const STEP_COLORS: Record<string, string> = {
+    tokenization: 'var(--dna-t)',
+    vectorizing: 'var(--dna-v)',
+    attention: 'var(--dna-a)',
+    prediction: 'var(--dna-p)',
+};
+
 export function DNAInput() {
     const { inputText, setInputText, runSimulation, isPlaying, isPaused, togglePause, nextStep, prevStep, jumpToStep, currentStep, resetSimulation, playbackSpeed, hasData } = useDNA();
     const t = useTranslations('dna.input');
@@ -158,7 +166,8 @@ export function DNAInput() {
                     {isPlaying && (
                         <div className="h-1 w-full bg-white/5 relative">
                             <motion.div
-                                className="absolute top-0 left-0 h-full bg-brand-teal box-shadow-[0_0_10px_rgba(45,212,191,0.5)]"
+                                className="absolute top-0 left-0 h-full"
+                                style={{ backgroundColor: STEP_COLORS[currentStep] || 'var(--dna-t)' }}
                                 initial={{ width: 0 }}
                                 animate={{ width: `${progress}%` }}
                                 transition={{ type: "tween", ease: "linear", duration: 0.05 }}
@@ -190,12 +199,13 @@ export function DNAInput() {
                                         className={`
                                             w-10 h-10 md:w-8 md:h-8 rounded-lg text-xs font-bold font-mono transition-all
                                             ${isCurrentStep
-                                                ? 'bg-brand-teal text-black shadow-[0_0_12px_rgba(45,212,191,0.4)]'
+                                                ? 'text-black'
                                                 : isPast
                                                     ? 'bg-white/10 text-brand-teal/80 hover:bg-white/20'
                                                     : 'bg-white/5 text-white/30 hover:bg-white/10 hover:text-white/60'
                                             }
                                         `}
+                                        style={isCurrentStep ? { backgroundColor: STEP_COLORS[step], boxShadow: `0 0 12px ${STEP_COLORS[step]}` } : undefined}
                                         title={step}
                                     >
                                         {STEP_LABELS[step]}
