@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TreeContentSimple } from '@/actions/getTreeContent';
 import { RotateCcw } from 'lucide-react';
+import { useJourney } from '@/lib/contexts/JourneyContext';
 
 interface TreeViewProps {
     data: TreeContentSimple[];
@@ -17,6 +18,7 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
     const svgRef = useRef<SVGSVGElement>(null);
     const gRef = useRef<SVGGElement>(null);
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+    const { targetStage, setStage, currentStage } = useJourney();
 
     // Collapsed nodes state
     const [collapsedIds, setCollapsedIds] = useState<Set<string>>(new Set());
@@ -84,12 +86,9 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
 
                     if (newSet.size > 0) {
                         setCollapsedIds(prev => {
-                            // Only update if significantly different to avoid thrashing?
-                            // Simple check: strict equality of size? 
-                            // Let's just set it. React batched updates are fine.
-                            // But we want to avoid re-collapsing if already collapsed.
-                            // Let's check size.
                             if (prev.size === newSet.size) return prev;
+                            // Sync with Navigation
+                            setStage('sprout');
                             return newSet;
                         });
                     }
@@ -114,6 +113,8 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
                             }
                         });
 
+                        // Sync with Navigation
+                        setStage('tree');
                         return changed ? next : prev;
                     });
                 }
@@ -129,7 +130,45 @@ export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
             const initialTransform = d3.zoomIdentity.translate(dimensions.width / 2, 80).scale(0.8);
             d3.select(svgRef.current).call(zoomBehavior.transform, initialTransform);
         }
-    }, [dimensions, zoomBehavior]);
+    }, [dimensions, zoomBehavior, setStage]);
+
+    // --- JOURNEY STAGE LISTENER ---
+    // If user clicks "Sprout" or "Tree" in the StageSelector, we animate there.
+    useEffect(() => {
+        if (!targetStage) return;
+        if (!svgRef.current || dimensions.width === 0) return;
+
+        if (targetStage === 'sprout') {
+            // Collapse Trunks
+            const newSet = new Set<string>();
+            dataRef.current.forEach(node => {
+                if (node.type === 'trunk' || node.type === 'branch') {
+                    newSet.add(node.id);
+                }
+            });
+            setCollapsedIds(newSet);
+
+            // Zoom Out
+            d3.select(svgRef.current).transition().duration(1000)
+                // @ts-ignore
+                .call(zoomBehavior.transform, d3.zoomIdentity.translate(dimensions.width / 2, 80).scale(0.4));
+
+        } else if (targetStage === 'tree') {
+            // Expand Trunks
+            setCollapsedIds(prev => {
+                const next = new Set(prev);
+                dataRef.current.forEach(node => {
+                    if (node.type === 'trunk') next.delete(node.id);
+                });
+                return next;
+            });
+
+            // Zoom In
+            d3.select(svgRef.current).transition().duration(1000)
+                // @ts-ignore
+                .call(zoomBehavior.transform, d3.zoomIdentity.translate(dimensions.width / 2, 80).scale(1.0));
+        }
+    }, [targetStage, dimensions, zoomBehavior]);
 
 
     // --- HIERARCHY PROCESSING (ENCAPSULATION LOGIC) ---

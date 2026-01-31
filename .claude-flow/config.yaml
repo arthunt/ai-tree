@@ -1,19 +1,26 @@
-# Claude Flow V3 Runtime Configuration
-# Generated: 2026-01-27T20:38:10.036Z
+# Claude Flow V4 Runtime Configuration
+# Updated: 2026-01-31 (aligned with VISION_AND_STRATEGY.md V2.1)
 
-version: "3.0.0"
+version: "4.0.0"
+project: "dendrix-ai"
+
+# SPOT: docs/VISION_AND_STRATEGY.md (V2.1)
+# All agents MUST read this before any work.
 
 swarm:
-  topology: hierarchical-mesh
-  maxAgents: 15
-  autoScale: true
-  coordinationStrategy: consensus
+  topology: hierarchical
+  maxAgents: 8
+  autoScale: false
+  coordinationStrategy: specialized
+  consensus: raft
+  antiDrift: true
 
 memory:
   backend: hybrid
   enableHNSW: true
   persistPath: .claude-flow/data
   cacheSize: 100
+  namespace: project-truth
 
 neural:
   enabled: true
@@ -26,3 +33,68 @@ hooks:
 mcp:
   autoStart: false
   port: 3000
+
+# Agent role definitions for this project
+roles:
+  antigravity:
+    description: "Lead architect. Owns spine files (DNAContext, DNAView, DNAInput, StageSelector, layout, types)."
+    model: sonnet
+    canEdit:
+      - "components/dna/DNAContext.tsx"
+      - "components/dna/DNAView.tsx"
+      - "components/dna/DNAInput.tsx"
+      - "components/StageSelector.tsx"
+      - "lib/types.ts"
+      - "app/[locale]/layout.tsx"
+      - "app/[locale]/page.tsx"
+
+  animation-specialist:
+    description: "Animation & visualization. Owns DNA step animations."
+    model: sonnet
+    canEdit:
+      - "components/dna/TokenizationSlicer.tsx"
+      - "components/dna/VectorMap.tsx"
+      - "components/dna/AttentionSpotlight.tsx"
+      - "components/dna/PredictionBarChart.tsx"
+      - "components/dna/DNAFlowDiagram.tsx"
+
+  mobile-specialist:
+    description: "Mobile UX. Owns mobile components and responsive layouts."
+    model: sonnet
+    canEdit:
+      - "components/mobile/*"
+      - "components/dna/DNAComponentCard.tsx"
+
+  i18n-specialist:
+    description: "Translations & ParaglideJS. Owns message files."
+    model: haiku
+    canEdit:
+      - "messages/en.json"
+      - "messages/et.json"
+      - "lib/paraglide.ts"
+
+  content-specialist:
+    description: "Supabase content & concept data."
+    model: haiku
+    canEdit:
+      - "data/*"
+      - "supabase/migrations/*"
+
+  theme-specialist:
+    description: "Dark/light contextual theming."
+    model: sonnet
+    canEdit:
+      - "app/globals.css"
+      - "tailwind.config.ts"
+
+  tester:
+    description: "Tests & quality gates."
+    model: haiku
+    canEdit:
+      - "tests/*"
+      - "__tests__/*"
+
+  reviewer:
+    description: "Code review & a11y audit."
+    model: sonnet
+    readOnly: true

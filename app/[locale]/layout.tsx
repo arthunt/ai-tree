@@ -8,6 +8,8 @@ import { ThemeProvider } from '@/context/ThemeContext';
 import { ToastProvider } from '@/lib/useToast';
 import { ToastContainer } from '@/components/Toast';
 
+import { Suspense } from 'react';
+
 const inter = Inter({ subsets: ['latin'] });
 
 // Available locales for static generation
@@ -78,6 +80,12 @@ export async function generateMetadata({
   };
 }
 
+import { JourneyProvider } from '@/lib/contexts/JourneyContext';
+import { StageSelector } from '@/components/StageSelector';
+import { TransitionManager } from '@/components/TransitionManager';
+
+// ... (keep existing imports)
+
 export default async function RootLayout({
   children,
   params,
@@ -101,8 +109,14 @@ export default async function RootLayout({
         <LanguageProvider initialLocale={locale as AvailableLanguageTag}>
           <ThemeProvider>
             <ToastProvider>
-              {children}
-              <ToastContainer />
+              <Suspense fallback={null}>
+                <JourneyProvider>
+                  {children}
+                  <StageSelector />
+                  <TransitionManager />
+                  <ToastContainer />
+                </JourneyProvider>
+              </Suspense>
             </ToastProvider>
           </ThemeProvider>
         </LanguageProvider>

@@ -258,8 +258,31 @@
 
 ---
 
-### DEPRECATED / MOVED TO P2 (Was Phase F)
+### PHASE H: The Living Forest Flows (Unified UX Remediation)
+> **Status:** Active (Sprint 14)
+> **Goal:** Unify the fragmented "Strong Components" into a "Cohesive Narrative Journey".
 
+#### US-170: The Growth Slider (Stage Selector)
+- [x] Implement Stage Selector Component (DNA-Seed-Sprout-Tree-Forest)
+- [x] Connect Growth Slider to TreeView Zoom Levels
+- [x] Shared persistence (JourneyContext)
+
+#### US-171: Route & State Consolidation
+- [ ] Merge /proto into /garden or deprecate
+- [ ] Clean up Legacy Navigation
+
+#### US-172: DNA Flow Repair
+- [ ] Step Selector (Prev/Next/Jump)
+- [ ] Tap-to-Select for Touch Devices
+- [x] End-of-simulation Completion Card
+
+#### US-174: Visual Bridges
+- [ ] Morphing transitions (Token->Seed)
+- [ ] Grounding animation (Seed->Roots)
+
+---
+
+### DEPRECATED / MOVED TO P2 (Was Phase F)
 #### Phase F: Polish & Cleanup
 - [ ] Mobile responsiveness (US-150)
 - [ ] Localization QA (US-151)

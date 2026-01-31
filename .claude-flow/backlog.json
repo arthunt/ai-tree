@@ -1,10 +1,11 @@
 {
-  "version": "3.3.0",
-  "project": "ai-tree",
-  "updated": "2026-01-30",
+  "version": "4.0.0",
+  "project": "dendrix-ai",
+  "updated": "2026-01-31",
   "status": "active",
-  "vision": "Public AI learning platform with ParaglideJS i18n and Supabase headless CMS",
-  "principles": ["KISS", "Less is More", "Mobile-First", "Type-Safe"],
+  "spot": "docs/VISION_AND_STRATEGY.md (V2.1)",
+  "vision": "Dendrix.ai - Living AI learning platform: DNA → Seed → Sprout → Tree → Fruits → Orchard",
+  "principles": ["KISS", "Less is More", "Mobile-First", "Type-Safe", "Andragogy-First"],
   "infrastructure": {
     "github": "required",
     "vercel": "required",
@@ -19,439 +20,165 @@
     "db_nodes": 28,
     "db_dna_concepts": 4,
     "locales": ["et", "en"],
-    "completed_sprints": 12,
+    "completed_sprints": 13,
     "completed_stories": 95
   },
-  "pricing": {
-    "updated": "2026-01-30",
-    "programs": {
-      "aiki": {
-        "name_et": "Rakenduslik AI: Kasutajast Instruktoriks",
-        "name_en": "Applied AI: From User to Instructor",
-        "code": "AIKI",
-        "duration_weeks": 6,
-        "academic_hours": 60,
-        "price": 1590,
-        "color": "#6366f1",
-        "installments": { "count": 3, "amount": 563, "total": 1689, "fee_percent": 6 }
-      },
-      "aivo": {
-        "name_et": "AI Automatiseerimise Moodul",
-        "name_en": "AI Automation Module",
-        "code": "AIVO",
-        "duration_weeks": 4,
-        "academic_hours": 40,
-        "price": 1290,
-        "graduate_price": 900,
-        "graduate_discount_percent": 30,
-        "color": "#10b981",
-        "installments": { "count": 3, "amount": 460, "total": 1380, "fee_percent": 7 }
-      },
-      "aime": {
-        "name_et": "AI Meistri Pakett",
-        "name_en": "AI Master Bundle",
-        "code": "AIME",
-        "duration_weeks": 10,
-        "academic_hours": 100,
-        "price": 2490,
-        "savings_vs_separate": 390,
-        "color": "#8b5cf6",
-        "installments": { "count": 4, "amount": 673, "total": 2692, "fee_percent": 8 }
-      }
+  "architecture_decisions": {
+    "ratified": "2026-01-31",
+    "levels": "DNA → Seed → Sprout → Tree → Fruits → Orchard",
+    "theme": "Contextual: DNA=Dark Cinematic, Seed=Transitional, Sprout/Tree/Fruits=Light Content-First",
+    "tree_view": "Card-Based TreeExplorer primary, D3 Map Toggle desktop-only",
+    "input": "Context-Dependent: DNA=Top Fixed, Tree/Explorer=Bottom Floating",
+    "animations": "One Hero Animation per step, no ambient noise, prefers-reduced-motion mandatory",
+    "sprout_content": ["Tokens", "Vectors", "Attention", "Context Window", "Prompting", "Hallucination"],
+    "final_levels": "Fruits (Applications) → Orchard (Career Harvest)",
+    "deprecated_terms": ["Nucleus", "Forest", "Seeme", "Võrs"]
+  },
+  "dna_model": {
+    "pipeline": "TEXT → [T] → [V] → [A] → [P] → TEXT",
+    "components": {
+      "T": {"name": "Tokenization", "color": "#ef4444", "tree": "Roots"},
+      "V": {"name": "Vectors", "color": "#22c55e", "tree": "Trunk"},
+      "A": {"name": "Attention", "color": "#3b82f6", "tree": "Branches"},
+      "P": {"name": "Prediction", "color": "#a855f7", "tree": "Leaves"}
     }
   },
   "current_sprint": {
-    "id": "sprint-13",
-    "name": "ParaglideJS + Supabase CMS + Marketing Pages",
+    "id": "sprint-14",
+    "name": "Phase 1: Narrative & Mobile Core",
     "priority": "P0-Critical",
-    "total_hours": 69,
-    "goal": "1) Migrate next-intl → ParaglideJS, 2) Programs in Supabase CMS, 3) Marketing landing pages",
-    "phases": {
-      "A": { "name": "ParaglideJS Migration", "hours": 25, "days": "1-2" },
-      "B": { "name": "Supabase CMS Programs", "hours": 7, "days": "2-3" },
-      "C": { "name": "Marketing Landing Pages", "hours": 35, "days": "3-5" },
-      "D": { "name": "Integration & Polish", "hours": 6, "day": 5 }
+    "source": "docs/BACKLOG.md Phase 1",
+    "tasks": [
+      {
+        "id": "P1.1",
+        "title": "Tokenizer Matrix Reveal Animation",
+        "priority": "P0",
+        "status": "done",
+        "type": "animation",
+        "owner": "gemini",
+        "files": ["components/dna/TokenizationSlicer.tsx"],
+        "subtasks": [
+          "Implement pill-to-integer flip animation",
+          "Add Vector Preview morph state (numbers → coordinates)",
+          "Sync timing with DNAContext playbackSpeed"
+        ]
+      },
+      {
+        "id": "P1.2",
+        "title": "Context-Aware Navigation & Stage System",
+        "priority": "P0",
+        "status": "in_progress",
+        "type": "feature",
+        "owner": "gemini",
+        "files": ["components/StageSelector.tsx", "lib/contexts/JourneyContext.tsx", "components/TransitionManager.tsx", "components/tree/TreeView.tsx", "app/[locale]/layout.tsx"],
+        "notes": "⚠️ SPOT alignment needed: 'forest' → 'fruits'+'orchard', labels need ParaglideJS i18n, /proto route deprecated. See memory key 'gemini-alignment-flags' in project-truth namespace.",
+        "subtasks": [
+          "✅ StageSelector component created",
+          "✅ JourneyContext with URL-based navigation",
+          "✅ TransitionManager component",
+          "⚠️ Align EvolutionStage type: replace 'forest' with 'fruits' | 'orchard'",
+          "⚠️ StageSelector: add Fruits + Orchard stages, remove Forest",
+          "⚠️ Add ParaglideJS translations for stage labels",
+          "⚠️ Remove /proto route references"
+        ]
+      },
+      {
+        "id": "P1.3",
+        "title": "Mobile Layout Upgrade",
+        "priority": "P0",
+        "status": "in_progress",
+        "type": "mobile",
+        "owner": "opus",
+        "files": ["components/dna/DNAComponentCard.tsx", "components/dna/DNAView.tsx (responsive CSS only)"],
+        "subtasks": [
+          "One Card Per Screen stream for DNA View (mobile <768px)",
+          "48px touch targets audit & fix",
+          "Snap scrolling for card-to-card navigation"
+        ]
+      },
+      {
+        "id": "P1.4",
+        "title": "Visual Calibration",
+        "priority": "P1",
+        "status": "blocked",
+        "type": "theme",
+        "owner": "unassigned",
+        "blocked_by": "P1.2 (StageSelector alignment must complete first)",
+        "files": ["components/StageSelector.tsx", "app/[locale]/layout.tsx"],
+        "subtasks": [
+          "Implement dark/light theme switching logic",
+          "Update StageSelector: DNA → Seed → Sprout → Tree → Fruits → Orchard",
+          "Remove deprecated level names"
+        ]
+      },
+      {
+        "id": "P1.5",
+        "title": "Translation Keys for Phase 1",
+        "priority": "P1",
+        "status": "in_progress",
+        "type": "i18n",
+        "owner": "opus",
+        "files": ["messages/en.json", "messages/et.json"],
+        "subtasks": [
+          "Stage labels: DNA/Seed/Sprout/Tree/Fruits/Orchard (ET+EN)",
+          "FloatingInput placeholder text",
+          "Mobile navigation hints"
+        ]
+      }
+    ]
+  },
+  "upcoming_sprints": {
+    "sprint-15": {
+      "name": "Phase 2: The Unified Tree",
+      "tasks": [
+        {"id": "P2.1", "title": "Unified Card System", "type": "architecture"},
+        {"id": "P2.2", "title": "Tree Explorer Component", "type": "feature"},
+        {"id": "P2.3", "title": "Sprout Level Content", "type": "content"}
+      ]
     },
-    "stories": [
-      "US-130", "US-131", "US-132", "US-133", "US-134", "US-135", "US-136", "US-137",
-      "US-138", "US-139", "US-140",
-      "US-141", "US-142", "US-143", "US-144", "US-145", "US-146",
-      "US-111", "US-147", "US-121"
+    "sprint-16": {
+      "name": "Phase 3: The Harvest",
+      "tasks": [
+        {"id": "P3.1", "title": "Fruits Level", "type": "feature"},
+        {"id": "P3.2", "title": "Orchard Level", "type": "feature"}
+      ]
+    }
+  },
+  "file_ownership": {
+    "spine_antigravity_only": [
+      "components/dna/DNAContext.tsx",
+      "components/dna/DNAView.tsx",
+      "components/dna/DNAInput.tsx",
+      "components/StageSelector.tsx",
+      "lib/types.ts",
+      "app/[locale]/layout.tsx",
+      "app/[locale]/page.tsx"
     ],
-    "completed": []
-  },
-  "stories": {
-    "US-130": {
-      "id": "US-130",
-      "title": "ParaglideJS Setup",
-      "phase": "A",
-      "priority": "P0",
-      "hours": 4,
-      "status": "not_started",
-      "type": "infrastructure",
-      "description": "Configure ParaglideJS to compile typed functions from existing messages/*.json",
-      "tasks": [
-        "Update project.inlang/settings.json with correct plugins",
-        "Run npm run paraglide:compile → generates typed functions",
-        "Create lib/paraglide.ts with language utilities",
-        "Verify messages compile correctly"
-      ],
-      "files": ["project.inlang/settings.json", "lib/paraglide.ts", "paraglide/"]
-    },
-    "US-131": {
-      "id": "US-131",
-      "title": "Middleware & Routing Migration",
-      "phase": "A",
-      "priority": "P0",
-      "hours": 2,
-      "status": "not_started",
-      "type": "infrastructure",
-      "dependencies": ["US-130"],
-      "description": "Replace next-intl middleware with @inlang/paraglide-next",
-      "tasks": [
-        "Replace next-intl/middleware → @inlang/paraglide-next",
-        "Update middleware.ts for ParaglideJS routing",
-        "Test /et/ and /en/ routes work"
-      ],
-      "files": ["middleware.ts"]
-    },
-    "US-132": {
-      "id": "US-132",
-      "title": "Layout Migration",
-      "phase": "A",
-      "priority": "P0",
-      "hours": 2,
-      "status": "not_started",
-      "type": "infrastructure",
-      "dependencies": ["US-131"],
-      "description": "Remove NextIntlClientProvider and add ParaglideJS LanguageProvider",
-      "tasks": [
-        "Remove NextIntlClientProvider from layout",
-        "Add ParaglideJS LanguageProvider",
-        "Update generateMetadata() to use ParaglideJS"
-      ],
-      "files": ["app/[locale]/layout.tsx"]
-    },
-    "US-133": {
-      "id": "US-133",
-      "title": "Component Migration (Core - 10 files)",
-      "phase": "A",
-      "priority": "P0",
-      "hours": 6,
-      "status": "not_started",
-      "type": "refactor",
-      "dependencies": ["US-132"],
-      "description": "Migrate core components from useTranslations to ParaglideJS imports",
-      "migration_pattern": {
-        "from": "const t = useTranslations('namespace'); t('key')",
-        "to": "import * as m from '@/paraglide/messages'; m.namespace_key()"
-      },
-      "files": [
-        "app/[locale]/page.tsx",
-        "components/WelcomeModal.tsx",
-        "components/SearchModal.tsx",
-        "components/ConceptLightbox.tsx",
-        "components/ConceptCard.tsx",
-        "components/LevelSection.tsx"
-      ]
-    },
-    "US-134": {
-      "id": "US-134",
-      "title": "Component Migration (UI - 15 files)",
-      "phase": "A",
-      "priority": "P1",
-      "hours": 4,
-      "status": "not_started",
-      "type": "refactor",
-      "dependencies": ["US-133"],
-      "description": "Migrate UI components including critical LanguageSwitcher",
-      "files": [
-        "components/TreeNavigation.tsx",
-        "components/LanguageSwitcher.tsx",
-        "components/SettingsDropdown.tsx",
-        "components/ViewModeToggle.tsx",
-        "components/CelebrationModal.tsx",
-        "components/TokenizerDemo.tsx",
-        "components/VectorDemo.tsx"
-      ]
-    },
-    "US-135": {
-      "id": "US-135",
-      "title": "Component Migration (Pages + SVGs - 30 files)",
-      "phase": "A",
-      "priority": "P1",
-      "hours": 4,
-      "status": "not_started",
-      "type": "refactor",
-      "dependencies": ["US-134"],
-      "description": "Migrate remaining pages, mobile components, and SVG visual components",
-      "files": [
-        "app/[locale]/tree-view/page.tsx",
-        "app/[locale]/dna/page.tsx",
-        "app/[locale]/learn/*.tsx",
-        "app/[locale]/concept/[conceptId]/*.tsx",
-        "components/mobile/*.tsx",
-        "components/visuals/*.tsx"
-      ]
-    },
-    "US-136": {
-      "id": "US-136",
-      "title": "Cleanup next-intl",
-      "phase": "A",
-      "priority": "P1",
-      "hours": 1,
-      "status": "not_started",
-      "type": "cleanup",
-      "dependencies": ["US-135"],
-      "description": "Remove next-intl package and all related imports",
-      "tasks": [
-        "npm uninstall next-intl",
-        "Delete i18n.ts",
-        "Remove all getMessages, getTranslations imports",
-        "npm run build → 0 errors",
-        "npm test → all pass"
-      ]
-    },
-    "US-137": {
-      "id": "US-137",
-      "title": "ParaglideJS Verification",
-      "phase": "A",
-      "priority": "P1",
-      "hours": 2,
-      "status": "not_started",
-      "type": "testing",
-      "dependencies": ["US-136"],
-      "description": "Verify ParaglideJS works correctly across all scenarios",
-      "tasks": [
-        "Test locale switching",
-        "Test SSR/SSG both locales",
-        "TypeScript catches missing translations",
-        "Update existing i18n tests"
-      ]
-    },
-    "US-138": {
-      "id": "US-138",
-      "title": "Programs Database Schema",
-      "phase": "B",
-      "priority": "P0",
-      "hours": 2,
-      "status": "not_started",
-      "type": "infrastructure",
-      "description": "Create Supabase tables for programs following existing patterns",
-      "tables": [
-        "programs (id, slug, color, duration, price, discounts)",
-        "program_translations (name, tagline, description)",
-        "program_features + feature_translations",
-        "program_curriculum + curriculum_translations"
-      ],
-      "files": ["supabase/migrations/20260135_programs_schema.sql"]
-    },
-    "US-139": {
-      "id": "US-139",
-      "title": "Seed Program Data",
-      "phase": "B",
-      "priority": "P0",
-      "hours": 2,
-      "status": "not_started",
-      "type": "data",
-      "dependencies": ["US-138"],
-      "description": "Insert AIKI, AIVO, AIME programs with full content",
-      "data": {
-        "aiki": { "price": 1590, "weeks": 6, "hours": 60, "color": "#6366f1" },
-        "aivo": { "price": 1290, "grad_price": 900, "weeks": 4, "hours": 40, "color": "#10b981" },
-        "aime": { "price": 2490, "weeks": 10, "hours": 100, "color": "#8b5cf6" }
-      },
-      "files": ["supabase/migrations/20260136_seed_programs.sql"]
-    },
-    "US-140": {
-      "id": "US-140",
-      "title": "Programs Server Actions",
-      "phase": "B",
-      "priority": "P1",
-      "hours": 3,
-      "status": "not_started",
-      "type": "feature",
-      "dependencies": ["US-139"],
-      "description": "Create server actions to fetch programs from Supabase",
-      "files": [
-        "actions/getPrograms.ts",
-        "actions/getProgram.ts",
-        "actions/getProgramCurriculum.ts"
-      ]
-    },
-    "US-141": {
-      "id": "US-141",
-      "title": "Programs Route Structure",
-      "phase": "C",
-      "priority": "P0",
-      "hours": 4,
-      "status": "not_started",
-      "type": "foundation",
-      "dependencies": ["US-140"],
-      "description": "Create all program routes and add header nav",
-      "files": [
-        "app/[locale]/programs/page.tsx",
-        "app/[locale]/programs/aiki/page.tsx",
-        "app/[locale]/programs/aivo/page.tsx",
-        "app/[locale]/programs/aime/page.tsx",
-        "app/[locale]/programs/apply/page.tsx"
-      ]
-    },
-    "US-142": {
-      "id": "US-142",
-      "title": "Landing Page Components",
-      "phase": "C",
-      "priority": "P1",
-      "hours": 12,
-      "status": "not_started",
-      "type": "components",
-      "dependencies": ["US-141"],
-      "description": "Create reusable components following DNA View design system",
-      "design": {
-        "theme": "dark (bg-void)",
-        "cards": "glass morphism",
-        "accents": "brand-teal, brand-cyan glows",
-        "animations": "framer-motion"
-      },
-      "files": [
-        "components/programs/ProgramHero.tsx",
-        "components/programs/ProgramFeatures.tsx",
-        "components/programs/ProgramCurriculum.tsx",
-        "components/programs/ProgramPricing.tsx",
-        "components/programs/ProgramFAQ.tsx",
-        "components/programs/ProgramCTA.tsx",
-        "components/programs/ProgramComparison.tsx"
-      ]
-    },
-    "US-143": {
-      "id": "US-143",
-      "title": "AIKI Landing Page",
-      "phase": "C",
-      "priority": "P1",
-      "hours": 6,
-      "status": "not_started",
-      "type": "page",
-      "dependencies": ["US-142"],
-      "content": {
-        "hero_et": "Saa AI koolitajaks 6 nädalaga",
-        "hero_en": "Become an AI instructor in 6 weeks",
-        "features": ["T-V-A-P mastery", "4C teaching", "Portfolio", "Certificate"],
-        "curriculum": "Week 0-5",
-        "pricing": "€1590 or 3×€563"
-      }
-    },
-    "US-144": {
-      "id": "US-144",
-      "title": "AIVO Landing Page",
-      "phase": "C",
-      "priority": "P1",
-      "hours": 5,
-      "status": "not_started",
-      "type": "page",
-      "dependencies": ["US-142"],
-      "content": {
-        "hero_et": "Automatiseeri töövood AI-ga",
-        "hero_en": "Automate workflows with AI",
-        "graduate_discount": "30% = €900",
-        "features": ["Zapier", "Make", "OpenAI API"],
-        "curriculum": "Week 0-4"
-      }
-    },
-    "US-145": {
-      "id": "US-145",
-      "title": "AIME Landing Page",
-      "phase": "C",
-      "priority": "P1",
-      "hours": 5,
-      "status": "not_started",
-      "type": "page",
-      "dependencies": ["US-142"],
-      "content": {
-        "hero_et": "Täielik AI kompetents ühes paketis",
-        "hero_en": "Complete AI competency in one package",
-        "value": "Same price as grad path (€2490)",
-        "curriculum": "Combined 10 weeks"
-      }
-    },
-    "US-146": {
-      "id": "US-146",
-      "title": "Lead Capture Form",
-      "phase": "C",
-      "priority": "P1",
-      "hours": 3,
-      "status": "not_started",
-      "type": "feature",
-      "dependencies": ["US-141"],
-      "description": "Email capture with Supabase integration",
-      "files": ["components/programs/LeadCaptureForm.tsx"],
-      "fields": ["email (required)", "name", "phone", "programs[]"]
-    },
-    "US-111": {
-      "id": "US-111",
-      "title": "DNA to Tree Bridge (UI)",
-      "phase": "D",
-      "priority": "P1",
-      "hours": 2,
-      "status": "not_started",
-      "type": "navigation",
-      "description": "Connect DNA cards to Tree nodes using existing database bridge",
-      "tasks": [
-        "Deep Dive buttons on DNA cards → Tree nodes",
-        "Use node_metadata.dna_concept_id"
-      ]
-    },
-    "US-147": {
-      "id": "US-147",
-      "title": "Tree → Programs CTAs",
-      "phase": "D",
-      "priority": "P1",
-      "hours": 2,
-      "status": "not_started",
-      "type": "integration",
-      "description": "Wire TreeDetailPanel Master This Skill CTA to programs",
-      "tasks": [
-        "TreeDetailPanel CTA → /programs/{id}",
-        "Track clicks in cta_interactions"
-      ]
-    },
-    "US-121": {
-      "id": "US-121",
-      "title": "Bug Fixes",
-      "phase": "D",
-      "priority": "P2",
-      "hours": 2,
-      "status": "not_started",
-      "type": "maintenance",
-      "tasks": [
-        "Fix tree-view/page.tsx imports",
-        "DNAComponentCard render logic audit",
-        "TreeView organic curved lines"
-      ]
-    }
-  },
-  "i18n_migration": {
-    "from": "next-intl",
-    "to": "paraglide-js",
-    "pattern": {
-      "old": "const t = useTranslations('namespace'); t('key')",
-      "new": "import * as m from '@/paraglide/messages'; m.namespace_key()"
-    },
-    "files_to_migrate": {
-      "core": 10,
-      "ui": 15,
-      "pages_svgs": 30,
-      "total": 55
-    }
-  },
-  "supabase_cms": {
-    "principle": "Headless CMS - dynamic content in Supabase, static UI text in files",
-    "existing_tables": ["concepts", "concept_translations", "nodes", "node_translations", "node_metadata"],
-    "new_tables": ["programs", "program_translations", "program_features", "feature_translations", "program_curriculum", "curriculum_translations"]
+    "swarm_parallel_safe": [
+      "components/dna/TokenizationSlicer.tsx",
+      "components/dna/VectorMap.tsx",
+      "components/dna/AttentionSpotlight.tsx",
+      "components/dna/PredictionBarChart.tsx",
+      "components/dna/MicroLesson.tsx",
+      "components/dna/DNAComponentCard.tsx",
+      "components/ConceptCard.tsx",
+      "components/ConceptLightbox.tsx",
+      "components/mobile/*",
+      "messages/en.json",
+      "messages/et.json"
+    ]
   },
   "swarm_config": {
     "topology": "hierarchical",
     "max_agents": 8,
     "strategy": "specialized",
     "consensus": "raft"
+  },
+  "quality_gates": {
+    "performance": "DNA View < 100KB, LCP < 2.5s",
+    "accessibility": "WCAG AA, 48px touch targets, keyboard nav",
+    "i18n": "100% typed translations ET+EN via ParaglideJS",
+    "animations": "prefers-reduced-motion respected, one hero per step",
+    "mobile": "One-card-per-screen DNA stream, bottom floating input on Tree"
   }
 }

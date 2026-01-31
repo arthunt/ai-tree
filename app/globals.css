@@ -101,6 +101,16 @@ a:focus-visible,
   .touch-pan-y {
     touch-action: pan-y;
   }
+
+  /* Hide scrollbar (for DNA card snap scroll) */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 /* Support for dynamic viewport height (iOS Safari) */

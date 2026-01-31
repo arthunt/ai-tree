@@ -1,0 +1,135 @@
+{
+  "id": "phase1-narrative-mobile",
+  "name": "Phase 1: Narrative & Mobile Core",
+  "version": "1.0.0",
+  "created": "2026-01-31",
+  "source": "docs/VISION_AND_STRATEGY.md V2.1 + docs/BACKLOG.md Phase 1",
+  "topology": "hierarchical",
+  "maxAgents": 6,
+  "consensus": "raft",
+  "preConditions": {
+    "read": ["docs/VISION_AND_STRATEGY.md", "docs/AGENT_PROTOCOLS.md"],
+    "memorySearch": "vision-strategy-v2.1 in namespace project-truth"
+  },
+  "tasks": [
+    {
+      "id": "P1.1",
+      "title": "Tokenizer Matrix Reveal Animation",
+      "agent": "animation-specialist",
+      "model": "sonnet",
+      "priority": "P0",
+      "parallel": true,
+      "files": {
+        "modify": ["components/dna/TokenizationSlicer.tsx"],
+        "read": ["components/dna/DNAContext.tsx", "docs/technical/DNA_MECHANICS_REFERENCE.md"]
+      },
+      "instructions": "Implement the 'Matrix Reveal' animation: text pills flip to show integer token IDs underneath. Add a 'Vector Preview' transition state where numbers morph into coordinate pairs. Sync all animation timing with DNAContext's playbackSpeed. Use framer-motion. Must respect prefers-reduced-motion (fallback to instant state change). One hero animation only - no ambient particles or camera effects.",
+      "acceptanceCriteria": [
+        "Pill-to-integer flip animates on tokenization step",
+        "Vector preview morph works on vectorizing step",
+        "Timing syncs with playbackSpeed (0.5x, 1x, 2x)",
+        "prefers-reduced-motion: instant state change, no animation",
+        "Bundle impact < 5KB"
+      ]
+    },
+    {
+      "id": "P1.2",
+      "title": "Context-Aware Input System",
+      "agent": "antigravity",
+      "model": "sonnet",
+      "priority": "P0",
+      "parallel": true,
+      "files": {
+        "create": ["components/FloatingInput.tsx"],
+        "modify": ["components/dna/DNAInput.tsx", "components/dna/DNAView.tsx"],
+        "read": ["components/dna/DNAContext.tsx"]
+      },
+      "instructions": "Create FloatingInput component: fixed bottom-center, expandable on focus, with subtle glassmorphism on dark pages and clean border on light pages. DNAInput stays at TOP of DNAView as 'Simulation Controller'. FloatingInput will be used on Tree/Seed/Sprout pages as a search/ask interface. Both must use ParaglideJS for translations. DNAInput already works - only add FloatingInput and ensure DNAInput's position is locked top.",
+      "acceptanceCriteria": [
+        "FloatingInput renders bottom-center, fixed position",
+        "FloatingInput expands on focus with smooth animation",
+        "DNAInput remains at top of DNAView (unchanged behavior)",
+        "Both components are fully translated (ET+EN)",
+        "48px minimum touch target on mobile",
+        "Keyboard accessible (Enter to submit, Escape to collapse)"
+      ]
+    },
+    {
+      "id": "P1.3",
+      "title": "Mobile Layout Upgrade",
+      "agent": "mobile-specialist",
+      "model": "sonnet",
+      "priority": "P0",
+      "parallel": true,
+      "files": {
+        "modify": ["components/dna/DNAView.tsx", "components/dna/DNAComponentCard.tsx"],
+        "read": ["components/dna/DNAContext.tsx", "components/mobile/"]
+      },
+      "instructions": "Implement 'One Card Per Screen' stream layout for DNA View on mobile (< 768px). Each T-V-A-P card fills the viewport width with swipe/scroll navigation between cards. Desktop layout (4-column grid) stays unchanged. Ensure all touch targets are 48px minimum. Add snap scrolling for card-to-card navigation. Test with the existing DNAComponentCard component.",
+      "acceptanceCriteria": [
+        "Mobile: cards fill viewport width, vertical scroll with snap",
+        "Desktop: 4-column grid unchanged",
+        "All interactive elements >= 48px touch target",
+        "Snap scrolling works on iOS Safari and Chrome Android",
+        "Step selector syncs with visible card on scroll",
+        "No horizontal overflow on any screen size"
+      ]
+    },
+    {
+      "id": "P1.4",
+      "title": "Visual Calibration & StageSelector",
+      "agent": "antigravity",
+      "model": "sonnet",
+      "priority": "P1",
+      "parallel": false,
+      "dependsOn": ["P1.2"],
+      "files": {
+        "modify": ["components/StageSelector.tsx"],
+        "read": ["docs/VISION_AND_STRATEGY.md"]
+      },
+      "instructions": "Update StageSelector to display the ratified 6-level path: DNA → Seed → Sprout → Tree → Fruits → Orchard. Remove any references to deprecated terms (Nucleus, Forest, Seeme, Võrs). Add contextual theme support: dark background when on DNA page, light when on Tree/Sprout pages. Use ParaglideJS for all labels.",
+      "acceptanceCriteria": [
+        "Shows exactly: DNA → Seed → Sprout → Tree → Fruits → Orchard",
+        "No deprecated terms in code or UI",
+        "Dark variant for DNA page, light variant for Tree/Sprout",
+        "All labels translated ET+EN",
+        "Active step is visually highlighted",
+        "Keyboard navigable between steps"
+      ]
+    },
+    {
+      "id": "P1.5-i18n",
+      "title": "Translation Keys for Phase 1",
+      "agent": "i18n-specialist",
+      "model": "haiku",
+      "priority": "P1",
+      "parallel": true,
+      "files": {
+        "modify": ["messages/en.json", "messages/et.json"]
+      },
+      "instructions": "Add translation keys needed for Phase 1: FloatingInput placeholder/labels, StageSelector level names (DNA/Seed/Sprout/Tree/Fruits/Orchard), mobile card navigation hints. Follow existing message structure. Keys must match ParaglideJS compiled function names.",
+      "acceptanceCriteria": [
+        "All new UI strings have ET+EN translations",
+        "Key names follow existing conventions",
+        "No hardcoded strings in Phase 1 components"
+      ]
+    },
+    {
+      "id": "P1.6-review",
+      "title": "Phase 1 Quality Review",
+      "agent": "reviewer",
+      "model": "sonnet",
+      "priority": "P0",
+      "parallel": false,
+      "dependsOn": ["P1.1", "P1.2", "P1.3", "P1.4", "P1.5-i18n"],
+      "instructions": "Review all Phase 1 changes against quality gates: WCAG AA, 48px touch targets, prefers-reduced-motion, ParaglideJS translations, bundle size < 100KB for DNA View, keyboard navigation. Check for deprecated terms. Verify no conflicts between parallel agent changes.",
+      "acceptanceCriteria": [
+        "WCAG AA compliant",
+        "All quality gates pass",
+        "No file conflicts between agents",
+        "No deprecated terms anywhere",
+        "Build succeeds with 0 errors"
+      ]
+    }
+  ]
+}

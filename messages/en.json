@@ -1212,6 +1212,11 @@
         "label": "Explorer",
         "description": "I'm just browsing"
       }
+    },
+    "mobile": {
+      "swipeHint": "Swipe to explore steps",
+      "cardOf": "Step {current} of {total}",
+      "tapToExplore": "Tap card to explore"
     }
   },
   "programs": {
@@ -1294,5 +1299,27 @@
     "proto": "Proto",
     "back": "Back",
     "settings": "Settings"
+  },
+  "stages": {
+    "dna": "DNA",
+    "seed": "Seed",
+    "sprout": "Sprout",
+    "tree": "Tree",
+    "fruits": "Fruits",
+    "orchard": "Orchard",
+    "description": {
+      "dna": "The Mechanism — How AI processes text",
+      "seed": "Your Intent — What do you want to explore?",
+      "sprout": "Foundations — 6 essential AI concepts",
+      "tree": "Knowledge — Deep dive into all concepts",
+      "fruits": "Applications — What can AI do for you?",
+      "orchard": "Career Harvest — Professional paths in AI"
+    }
+  },
+  "floatingInput": {
+    "placeholder": "Ask anything about AI...",
+    "expand": "Expand input",
+    "collapse": "Collapse input",
+    "submit": "Ask"
   }
 }

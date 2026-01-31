@@ -6,14 +6,15 @@
 **Vision:** Transform from static presentation tool → multilingual AI learning platform
 
 ### 📋 Backlog & Planning Files
-- **`/BACKLOG.md`** - Human-readable product backlog (10 epics, 31 stories)
+- **`/docs/BACKLOG.md`** - Human-readable product backlog (SPOT)
 - **`/.claude-flow/backlog.json`** - Machine-readable backlog for agents
-- **`/I18N_ARCHITECTURE.md`** - Multilingual strategy documentation
-- **`/I18N_QUICK_START.md`** - 30-minute i18n setup guide
+- **`/docs/VISION_AND_STRATEGY.md`** - Definitive Strategy & Metaphor (SPOT)
+- **`/docs/technical/I18N_ARCHITECTURE.md`** - Multilingual strategy documentation
+- **`/docs/technical/I18N_QUICK_START.md`** - 30-minute i18n setup guide
 
-### 🧬 DNA View Documentation (NEW - Sprint 10)
-- **`/docs/AI_DNA_ARCHITECTURE.md`** - DNA model specification (T-V-A-P)
-- **`/docs/AI_TREE_MASTER_REFERENCE.md`** - Master reference for all agents/swarms
+### 🧬 DNA View Documentation
+- **`/docs/technical/DNA_MECHANICS_REFERENCE.md`** - DNA model specification (T-V-A-P)
+- **`/docs/AGENT_PROTOCOLS.md`** - Rules of engagement for all agents
 - **Sprint 10** - DNA View Foundation (36h, 6 user stories US-090 to US-095)
 
 ### 🎯 Current Priorities (P0-Critical)

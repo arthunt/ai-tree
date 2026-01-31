@@ -1212,6 +1212,11 @@
         "label": "Avastaja",
         "description": "Lihtsalt sirvimas"
       }
+    },
+    "mobile": {
+      "swipeHint": "Pühkige sammude avastamiseks",
+      "cardOf": "Samm {current}/{total}",
+      "tapToExplore": "Puudutage kaarti avastamiseks"
     }
   },
   "programs": {
@@ -1294,5 +1299,27 @@
     "proto": "Proto",
     "back": "Tagasi",
     "settings": "Seaded"
+  },
+  "stages": {
+    "dna": "DNA",
+    "seed": "Seeme",
+    "sprout": "Võrse",
+    "tree": "Puu",
+    "fruits": "Viljad",
+    "orchard": "Aed",
+    "description": {
+      "dna": "Mehhanism — Kuidas AI teksti töötleb",
+      "seed": "Sinu kavatsus — Mida soovid avastada?",
+      "sprout": "Alused — 6 olulist AI kontseptsiooni",
+      "tree": "Teadmised — Süvitsi kõikidesse kontseptsioonidesse",
+      "fruits": "Rakendused — Mida AI saab sinu heaks teha?",
+      "orchard": "Karjääri saak — Professionaalsed teed AI-s"
+    }
+  },
+  "floatingInput": {
+    "placeholder": "Küsi AI kohta midagi...",
+    "expand": "Laienda sisend",
+    "collapse": "Sulge sisend",
+    "submit": "Küsi"
   }
 }

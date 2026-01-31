@@ -78,7 +78,7 @@ function buildSliceMap(text: string, subTokens: string[]) {
     return slices;
 }
 
-type SliceStage = 'text' | 'cutting' | 'separating' | 'done';
+type SliceStage = 'text' | 'cutting' | 'separating' | 'numbering' | 'done';
 
 export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlicerProps) {
     const [stage, setStage] = useState<SliceStage>('text');
@@ -86,39 +86,54 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
     const subTokens = visualTokenize(text);
     const slices = buildSliceMap(text, subTokens);
 
-    // Scale factor: higher speed = shorter delays. Clamp to avoid division by zero.
+    // Scale factor: higher speed = shorter delays.
     const scale = useMemo(() => 1 / Math.max(playbackSpeed, 0.05), [playbackSpeed]);
 
-    // Stage progression when active (timings scale with playbackSpeed)
+    // Simple deterministic hash for "BPE-like" token IDs
+    const getTokenId = (token: string) => {
+        let hash = 0;
+        for (let i = 0; i < token.length; i++) {
+            hash = token.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return Math.abs(hash % 10000) + 1000; // 4-digit ID
+    };
+
+    // Stage progression
     useEffect(() => {
         if (!isActive) {
             setStage('text');
             return;
         }
 
-        // Stage 1: Show full text
+        let mounted = true;
+        const timeouts: NodeJS.Timeout[] = [];
+
+        const schedule = (nextStage: SliceStage, delay: number) => {
+            const t = setTimeout(() => {
+                if (mounted) setStage(nextStage);
+            }, delay * scale);
+            timeouts.push(t);
+        };
+
+        // Reset
         setStage('text');
 
-        // Stage 2: Show cuts
-        const t1 = setTimeout(() => setStage('cutting'), 600 * scale);
-
-        // Stage 3: Separate chunks
-        const t2 = setTimeout(() => setStage('separating'), 1500 * scale);
-
-        // Stage 4: Done (pills settled)
-        const t3 = setTimeout(() => setStage('done'), 2500 * scale);
+        // Timeline
+        schedule('cutting', 600);    // Cuts appear
+        schedule('separating', 1500); // Chunks fly apart
+        schedule('numbering', 3000);  // "Matrix Moment": Flip to numbers
+        schedule('done', 5500);       // Ready for next step (Vectors)
 
         return () => {
-            clearTimeout(t1);
-            clearTimeout(t2);
-            clearTimeout(t3);
+            mounted = false;
+            timeouts.forEach(clearTimeout);
         };
     }, [isActive, scale]);
 
     if (!isActive) return null;
 
     return (
-        <div className="w-full">
+        <div className="w-full perspective-1000">
             <AnimatePresence mode="wait">
                 {/* Stage 1-2: Text with cut lines */}
                 {(stage === 'text' || stage === 'cutting') && (
@@ -130,115 +145,91 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
                         transition={{ duration: 0.3 }}
                         className="relative font-mono text-lg tracking-wide"
                     >
-                        <div className="flex flex-wrap items-center">
+                        <div className="flex flex-wrap items-center justify-center">
                             {slices.map((slice, i) => {
-                                // Check if there's a space before this token
-                                const needsSpace = i > 0 &&
-                                    slices[i - 1].endIdx < slice.startIdx;
-
+                                const needsSpace = i > 0 && slices[i - 1].endIdx < slice.startIdx;
                                 return (
                                     <span key={i} className="relative inline-flex items-center">
-                                        {needsSpace && (
-                                            <span className="text-white/20 mx-0.5">·</span>
-                                        )}
+                                        {needsSpace && <span className="text-white/20 mx-0.5">·</span>}
                                         <span className="text-white">{slice.text}</span>
-
-                                        {/* The "Knife" cut line */}
                                         {stage === 'cutting' && i < slices.length - 1 && (
                                             <motion.span
-                                                className="inline-block w-0.5 h-6 mx-px rounded-full"
+                                                className="absolute right-0 top-0 bottom-0 w-0.5 h-full rounded-full bg-brand-teal/80 shadow-[0_0_8px_rgba(45,212,191,0.8)]"
                                                 initial={{ scaleY: 0, opacity: 0 }}
-                                                animate={{
-                                                    scaleY: 1,
-                                                    opacity: 1,
-                                                    background: [
-                                                        'rgba(45, 212, 191, 0)',
-                                                        'rgba(45, 212, 191, 1)',
-                                                        'rgba(45, 212, 191, 0.6)'
-                                                    ]
-                                                }}
-                                                transition={{
-                                                    duration: 0.3,
-                                                    delay: i * 0.08,
-                                                    ease: "easeOut"
-                                                }}
-                                                style={{
-                                                    boxShadow: '0 0 8px rgba(45, 212, 191, 0.8), 0 0 20px rgba(45, 212, 191, 0.3)'
-                                                }}
+                                                animate={{ scaleY: 1, opacity: 1 }}
+                                                transition={{ duration: 0.2, delay: i * 0.05 }}
                                             />
                                         )}
                                     </span>
                                 );
                             })}
                         </div>
-
-                        {/* "Slicing..." label */}
-                        {stage === 'cutting' && (
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                className="mt-2 text-[10px] font-mono uppercase tracking-widest text-brand-teal/50"
-                            >
-                                ✂️ slicing...
-                            </motion.div>
-                        )}
                     </motion.div>
                 )}
 
-                {/* Stage 3-4: Chunks flying apart into pills */}
-                {(stage === 'separating' || stage === 'done') && (
+                {/* Stage 3-5: Tokens -> Numbers -> Done */}
+                {(stage === 'separating' || stage === 'numbering' || stage === 'done') && (
                     <motion.div
-                        key="separated"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="flex flex-wrap gap-2"
+                        key="tokens"
+                        className="flex flex-wrap gap-3 justify-center perspective-1000"
                     >
                         {subTokens.map((token, i) => (
-                            <motion.span
-                                key={i}
-                                className="px-2.5 py-1 bg-brand-teal/20 border border-brand-teal/50 rounded-md text-brand-teal font-mono text-sm"
-                                initial={{
-                                    opacity: 0,
-                                    x: 0,
-                                    y: -8,
-                                    scale: 0.8,
-                                    rotate: (Math.random() - 0.5) * 20
-                                }}
-                                animate={{
-                                    opacity: 1,
-                                    x: 0,
-                                    y: 0,
-                                    scale: 1,
-                                    rotate: 0
-                                }}
-                                transition={{
-                                    type: "spring",
-                                    stiffness: 300,
-                                    damping: 20,
-                                    delay: i * 0.06
-                                }}
-                                style={{
-                                    boxShadow: stage === 'done'
-                                        ? '0 0 10px rgba(45, 212, 191, 0.15)'
-                                        : 'none'
-                                }}
-                            >
-                                {token}
-                            </motion.span>
-                        ))}
+                            <div key={i} className="relative h-10 min-w-[60px]" style={{ perspective: '1000px' }}>
+                                <motion.div
+                                    className="w-full h-full relative preserve-3d"
+                                    initial={{ rotateX: 0 }}
+                                    animate={{
+                                        rotateX: stage === 'numbering' || stage === 'done' ? 180 : 0,
+                                        y: stage === 'done' ? [0, -4, 0] : 0 // Gentle float at end
+                                    }}
+                                    transition={{
+                                        duration: 0.6,
+                                        delay: i * 0.1, // Staggered flip
+                                        type: "spring",
+                                        stiffness: 200,
+                                        damping: 20
+                                    }}
+                                    style={{ transformStyle: 'preserve-3d' }}
+                                >
+                                    {/* FRONT: Text Token */}
+                                    <div className="absolute inset-0 backface-hidden flex items-center justify-center px-3 bg-brand-teal/10 border border-brand-teal/30 rounded-lg text-brand-teal font-mono text-sm shadow-sm backdrop-blur-sm">
+                                        {token}
+                                    </div>
 
-                        {/* Token count badge */}
-                        <motion.span
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: subTokens.length * 0.06 + 0.2, type: "spring" }}
-                            className="px-2 py-1 text-[10px] font-mono text-white/40 border border-white/10 rounded-md"
-                        >
-                            {subTokens.length} tokens
-                        </motion.span>
+                                    {/* BACK: Token ID (The Matrix Reveal) */}
+                                    <div
+                                        className="absolute inset-0 backface-hidden flex items-center justify-center px-3 bg-brand-purple/20 border border-brand-purple/50 rounded-lg text-brand-purple font-mono font-bold text-sm shadow-[0_0_15px_rgba(168,85,247,0.3)] backdrop-blur-md"
+                                        style={{ transform: 'rotateX(180deg)' }}
+                                    >
+                                        {getTokenId(token)}
+                                    </div>
+                                </motion.div>
+                            </div>
+                        ))}
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Stage Indicator / Narration */}
+            <motion.div
+                key={stage}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-8 text-center"
+            >
+                {stage === 'cutting' && (
+                    <span className="text-xs font-mono text-brand-teal/60 uppercase tracking-widest">✂️ Slicing Text...</span>
+                )}
+                {stage === 'separating' && (
+                    <span className="text-xs font-mono text-brand-teal/80 uppercase tracking-widest">📦 Packaging Tokens...</span>
+                )}
+                {stage === 'numbering' && (
+                    <span className="text-xs font-mono text-brand-purple uppercase tracking-widest animate-pulse">🔢 Matrix Reveal: Token IDs</span>
+                )}
+                {stage === 'done' && (
+                    <span className="text-xs font-mono text-white/40 uppercase tracking-widest">✨ Ready for Vectorization</span>
+                )}
+            </motion.div>
         </div>
     );
 }

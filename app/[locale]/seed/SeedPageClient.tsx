@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { GlobalNav } from '@/components/GlobalNav';
 import { trackSeedIntent } from '@/lib/analytics';
+import { FloatingInput } from '@/components/ui/FloatingInput';
 
 const PATHS = [
     {
@@ -141,6 +142,16 @@ export function SeedPageContent() {
                     </motion.button>
                 ))}
             </motion.div>
+
+            {/* Floating Input (Manual Intent Entry) */}
+            <FloatingInput
+                position="bottom"
+                placeholder={t('inputPlaceholder') || "Or type your learning goal here..."}
+                onSubmit={(val) => {
+                    trackSeedIntent('custom_text');
+                    router.push(`/${locale}/tree-view?intent=custom&q=${encodeURIComponent(val)}`);
+                }}
+            />
         </div>
     );
 }

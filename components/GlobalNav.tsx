@@ -26,7 +26,6 @@ export function GlobalNav({ extraControls, transparent = false }: GlobalNavProps
         { href: `/${locale}/tree-view`, label: t('tree'), id: 'tree' },
         { href: `/${locale}/dna`, label: t('mechanism'), id: 'dna' },
         { href: `/${locale}/programs`, label: t('learn'), id: 'programs' },
-        { href: `/${locale}/proto`, label: t('proto'), id: 'proto' },
     ];
 
     const isActive = (href: string) => pathname?.includes(href);
