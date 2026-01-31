@@ -279,10 +279,10 @@
     - [ ] 5.4.4 Build "Related Concepts" panel component
     - [ ] 5.4.5 Update learning paths to reference concept IDs from unified table
 
-- [ ] **5.5 Learning Paths Migration** `@opus` P2
-    - [ ] 5.5.1 Move `data/learning-paths.json` concept references to use unified concept IDs
-    - [ ] 5.5.2 Validate all concept IDs exist in database
-    - [ ] 5.5.3 Add path-level translations to DB
+- [x] **5.5 Learning Paths Migration** `@opus` DONE
+    - [x] 5.5.1 All 5 paths now use validated concept IDs from unified DB (24 IDs verified)
+    - [x] 5.5.2 Removed stale paths (ai-agents-path, fine-tuning-path) → replaced with training-deep-dive, career-explorer
+    - [x] 5.5.3 Path translations updated in en.json + et.json, briefcase icon added
 
 ---
 

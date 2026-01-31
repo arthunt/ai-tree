@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { useProgress } from '@/lib/useProgress';
-import { Brain, MessageSquare, Database, Bot, SlidersHorizontal, ArrowLeft, Clock, BookOpen, ChevronRight, Check } from 'lucide-react';
+import { Brain, MessageSquare, Database, Bot, SlidersHorizontal, Briefcase, ArrowLeft, Clock, BookOpen, ChevronRight, Check } from 'lucide-react';
 import pathsData from '@/data/learning-paths.json';
 import { GlobalNav } from '@/components/GlobalNav';
 
@@ -15,6 +15,7 @@ const iconMap: Record<string, typeof Brain> = {
   database: Database,
   bot: Bot,
   sliders: SlidersHorizontal,
+  briefcase: Briefcase,
 };
 
 const difficultyColors: Record<string, string> = {

@@ -991,15 +991,15 @@
       "description": "Õpi ehitama AI rakendusi, mis kasutavad sinu enda andmeid. Embedding'idest kuni retrieval-augmented generation'ini.",
       "longDescription": "RAG on populaarseim muster ettevõtte AI rakenduste ehitamiseks. See rada katab vektoreid, kontekstihaldust, otsinguliine ja mälu — kõike, mis on vajalik AI ehitamiseks, mis tunneb sinu andmeid."
     },
-    "ai-agents-path": {
-      "title": "AI agendid ja tööriistad",
-      "description": "Ehita autonoomseid AI süsteeme, mis arutlevad, kasutavad tööriistu ja suhtlevad väliste teenustega.",
-      "longDescription": "AI agendid on järgmine piir. See rada katab kontekstitehnikat, funktsioonide kutsumist, agendi tsükleid, MCP protokolli, mäluhaldust ja turvalisust — kõike, mis on vajalik usaldusväärsete autonoomsete AI süsteemide ehitamiseks."
+    "training-deep-dive": {
+      "title": "Treenimise süvitsi",
+      "description": "Mõista, kuidas AI mudeleid treenitakse — andmestikest ja kaofunktsioonidest tagasilevitamise ja hindamiseni.",
+      "longDescription": "Mine sügavamale sellesse, kuidas mudelid õpivad. See rada katab kogu treenimise liini: andmete ettevalmistamine, kaofunktsioonid, tagasilevitamine, epohhi haldamine, ülesobitamise vältimine ja mudeli hindamine."
     },
-    "fine-tuning-path": {
-      "title": "Peenhäälestus ja mudeli treenimine",
-      "description": "Mõista mudeli treenimist, järeldamise optimeerimist ja tehnikaid nagu LoRA ja Mixture of Experts.",
-      "longDescription": "Mine sügavamale sellesse, kuidas mudeleid ehitatakse ja kohandatakse. See rada katab treenimise liini, tõhusat peenhäälestust LoRA-ga, järeldamise optimeerimist ja edasijõudnud arhitektuure nagu Mixture of Experts."
+    "career-explorer": {
+      "title": "AI karjääri avastaja",
+      "description": "Avasta AI karjääriradu — prompti arhitektist ML insenerini, andmeteadlasest AI eetikuni.",
+      "longDescription": "AI loob täiesti uusi karjääriradu. See rada tutvustab viit võtmerolli — AI insener, prompti arhitekt, andmeteadlane, AI eetik ja MLOps spetsialist — et leida see, mis sobib sinu oskuste ja huvidega."
     }
   },
   "connections": {

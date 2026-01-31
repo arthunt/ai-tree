@@ -9,7 +9,7 @@ import { ConceptLightbox } from '@/components/ConceptLightbox';
 import { Concept, TreeLevel } from '@/lib/types';
 import {
   Clock, BookOpen, Check, ChevronRight,
-  Brain, MessageSquare, Database, Bot, SlidersHorizontal,
+  Brain, MessageSquare, Database, Bot, SlidersHorizontal, Briefcase,
 } from 'lucide-react';
 import { GlobalNav } from '@/components/GlobalNav';
 
@@ -19,6 +19,7 @@ const iconMap: Record<string, typeof Brain> = {
   database: Database,
   bot: Bot,
   sliders: SlidersHorizontal,
+  briefcase: Briefcase,
 };
 
 const difficultyColors: Record<string, string> = {

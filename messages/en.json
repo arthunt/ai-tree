@@ -1003,15 +1003,15 @@
       "description": "Learn to build AI apps that use your own data. From embeddings to retrieval-augmented generation.",
       "longDescription": "RAG is the most popular pattern for building enterprise AI applications. This path covers vector embeddings, context management, retrieval pipelines, and memory — everything you need to build AI that knows your data."
     },
-    "ai-agents-path": {
-      "title": "AI Agents & Tools",
-      "description": "Build autonomous AI systems that reason, use tools, and interact with external services.",
-      "longDescription": "AI agents represent the next frontier. This path covers context engineering, function calling, agent loops, the Model Context Protocol (MCP), memory management, and security — everything needed to build reliable autonomous AI systems."
+    "training-deep-dive": {
+      "title": "Training Deep-Dive",
+      "description": "Understand how AI models are trained — from datasets and loss functions to backpropagation and evaluation.",
+      "longDescription": "Go deeper into how models learn. This path covers the full training pipeline: data preparation, loss functions, backpropagation, epoch management, overfitting prevention, and model evaluation."
     },
-    "fine-tuning-path": {
-      "title": "Fine-Tuning & Model Training",
-      "description": "Understand model training, inference optimization, and techniques like LoRA and Mixture of Experts.",
-      "longDescription": "Go deeper into how models are built and customized. This path covers the training pipeline, efficient fine-tuning with LoRA, inference optimization, and advanced architectures like Mixture of Experts."
+    "career-explorer": {
+      "title": "AI Career Explorer",
+      "description": "Discover career paths in AI — from prompt architect to ML engineer, data scientist to AI ethicist.",
+      "longDescription": "AI is creating entirely new career paths. This path introduces five key roles — AI Engineer, Prompt Architect, Data Scientist, AI Ethicist, and MLOps Specialist — so you can find the one that fits your skills and interests."
     }
   },
   "connections": {
