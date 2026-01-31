@@ -48,7 +48,7 @@ export function SproutCard({ title, description, analogy, index, visualType }: S
 
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <span className="text-[10rem] font-bold text-white/5 font-serif select-none dark:text-white/5">
-                        &quot;{lesson.slug.charAt(0).toUpperCase()}&quot;
+                        &quot;{title.charAt(0).toUpperCase()}&quot;
                     </span>
                 </div>
                 {/* Header: Icon & Title */}
@@ -69,7 +69,7 @@ export function SproutCard({ title, description, analogy, index, visualType }: S
                             <Lightbulb size={12} />
                             <span>Analogy</span>
                         </div>
-                        <p className="text-sm text-gray-300 italic">"{analogy}"</p>
+                        <p className="text-sm text-gray-300 italic">&quot;{analogy}&quot;</p>
                     </div>
 
                     {/* Description (Visible on Expand) */}
