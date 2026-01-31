@@ -30,7 +30,7 @@ interface DNAStepNavProps {
 const BASE_STEP_DURATION = 4000;
 
 export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
-    const { currentStep, nextStep, jumpToStep, isPlaying, isPaused, hasData, isComplete, playbackSpeed, completedSteps } = useDNA();
+    const { currentStep, nextStep, jumpToStep, isPlaying, isPaused, hasData, isComplete, playbackSpeed, completedSteps, inputText } = useDNA();
     const [progress, setProgress] = useState(0);
     const t = useTranslations('dna.nav');
 
@@ -153,15 +153,20 @@ export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
                     </div>
                 )}
 
-                {/* Step label with name */}
+                {/* Step label with name + input text */}
                 <div className="flex items-center justify-between px-3 py-1.5 border-t border-white/5">
-                    <div className="flex flex-col">
+                    <div className="flex flex-col min-w-0 flex-1 mr-2">
                         <span className="text-[11px] text-white/50 font-mono uppercase tracking-wider">
                             {t('stepOf', { current: String(stepCount > 0 ? stepCount : 1), total: String(ACTIVE_STEPS.length) })}
                         </span>
                         {currentStep !== 'idle' && (
                             <span className="text-xs font-semibold mt-0.5" style={{ color: STEP_COLORS[currentStep] || 'var(--dna-t)', opacity: 0.8 }}>
                                 {t(`stepName.${currentStep}`)}
+                            </span>
+                        )}
+                        {inputText && (
+                            <span className="text-[10px] text-white/30 truncate mt-0.5">
+                                &ldquo;{inputText.length > 40 ? inputText.slice(0, 40) + '...' : inputText}&rdquo;
                             </span>
                         )}
                     </div>

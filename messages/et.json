@@ -1164,10 +1164,14 @@
     "input": {
       "placeholder": "Kirjuta midagi (nt 'Miks taevas on sinine?')",
       "interactiveMode": "INTERAKTIIVNE REŽIIM",
-      "status": "OLEK: {step}..."
+      "status": "OLEK: {step}...",
+      "reset": "Lähtesta simulatsioon",
+      "confirmReset": "Vajuta uuesti lähtestamiseks"
     },
     "card": {
-      "deepDive": "SÜVENE →"
+      "deepDive": "SÜVENE →",
+      "learnMore": "Loe lähemalt: {step} →",
+      "helpTooltip": "Mis see samm on?"
     },
     "steps": {
       "complete": {

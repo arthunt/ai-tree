@@ -6,7 +6,7 @@ import { Sparkles, Play, RefreshCw, SkipForward, SkipBack, Pause } from "lucide-
 
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { trackDNASimulation } from '@/lib/analytics';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ACTIVE_STEPS: DNAStep[] = ['tokenization', 'vectorizing', 'attention', 'prediction'];
 const BASE_STEP_DURATION = 4000;
@@ -48,7 +48,18 @@ export function DNAInput() {
         runSimulation();
     };
 
+    const [confirmReset, setConfirmReset] = useState(false);
+    const confirmResetTimer = useRef<NodeJS.Timeout | null>(null);
+
     const handleReset = () => {
+        if (!confirmReset) {
+            setConfirmReset(true);
+            // Auto-dismiss after 2s if user doesn't confirm
+            confirmResetTimer.current = setTimeout(() => setConfirmReset(false), 2000);
+            return;
+        }
+        if (confirmResetTimer.current) clearTimeout(confirmResetTimer.current);
+        setConfirmReset(false);
         trackDNASimulation('reset');
         resetSimulation();
     };
@@ -145,16 +156,21 @@ export function DNAInput() {
                                             <SkipForward size={20} />
                                         </motion.button>
 
-                                        {/* Reset */}
+                                        {/* Reset (tap-to-confirm) */}
                                         <motion.button
                                             key="reset"
                                             initial={{ scale: 0.9, opacity: 0 }}
                                             animate={{ scale: 1, opacity: 1 }}
                                             exit={{ scale: 0.9, opacity: 0 }}
                                             onClick={handleReset}
-                                            className="bg-white/10 hover:bg-white/20 text-white/50 hover:text-white/70 p-3 min-h-[48px] min-w-[48px] flex items-center justify-center rounded-xl transition-all"
+                                            className={`p-3 min-h-[48px] min-w-[48px] flex items-center justify-center rounded-xl transition-all ${
+                                                confirmReset
+                                                    ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30 ring-1 ring-red-500/40'
+                                                    : 'bg-white/10 hover:bg-white/20 text-white/50 hover:text-white/70'
+                                            }`}
+                                            title={confirmReset ? t('confirmReset') : t('reset')}
                                         >
-                                            <RefreshCw size={20} />
+                                            <RefreshCw size={20} className={confirmReset ? 'animate-spin' : ''} />
                                         </motion.button>
                                     </>
                                 )}

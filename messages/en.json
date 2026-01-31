@@ -1176,10 +1176,14 @@
     "input": {
       "placeholder": "Type anything (e.g. 'Why is the sky blue?')",
       "interactiveMode": "INTERACTIVE MODE",
-      "status": "STATUS: {step}..."
+      "status": "STATUS: {step}...",
+      "reset": "Reset simulation",
+      "confirmReset": "Tap again to reset"
     },
     "card": {
-      "deepDive": "DEEP DIVE →"
+      "deepDive": "DEEP DIVE →",
+      "learnMore": "Learn more about {step} →",
+      "helpTooltip": "What is this step?"
     },
     "steps": {
       "complete": {

@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { useState } from 'react';
+import { HelpCircle } from 'lucide-react';
 import { SeedTransition } from './SeedTransition';
 
 interface DNAComponentCardProps {
@@ -22,7 +23,7 @@ interface DNAComponentCardProps {
 }
 
 export function DNAComponentCard({ title, description, metaphor, color, index, onCardClick }: DNAComponentCardProps) {
-    const { currentStep, inputText, tokens, subTokens, vectors, predictions, attentionWeights, hasData, completedSteps } = useDNA();
+    const { currentStep, inputText, tokens, subTokens, vectors, predictions, attentionWeights, hasData, completedSteps, openLesson } = useDNA();
     const params = useParams();
     const locale = params.locale as string;
     const t = useTranslations('dna.card');
@@ -47,7 +48,7 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
     const myStep = stepMap[index];
     const isActive = currentStep === myStep;
     const isCompleted = completedSteps.has(myStep);
-    const deepDiveLabel = t('deepDive');
+    const deepDiveLabel = t('learnMore', { step: title });
 
     return (
         <div className="h-full relative">
@@ -65,10 +66,18 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
                 <div className="flex flex-col h-full justify-between">
                     {/* Metaphor (DNA Specific Header info) */}
                     {metaphor && (
-                        <div className="mb-4 -mt-2">
-                            <span className="text-xs md:text-sm font-mono uppercase tracking-widest opacity-60" style={{ color }}>
-                                {metaphor}
-                            </span>
+                        <div className="mb-4 -mt-2 flex items-start justify-between gap-2">
+                            <p className="text-sm md:text-base italic text-white/80 leading-snug">
+                                &ldquo;{metaphor}&rdquo;
+                            </p>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); openLesson(myStep); }}
+                                className="shrink-0 p-1.5 rounded-lg text-white/30 hover:text-white/70 hover:bg-white/10 transition-colors"
+                                title={t('helpTooltip')}
+                                aria-label={t('helpTooltip')}
+                            >
+                                <HelpCircle size={16} />
+                            </button>
                         </div>
                     )}
 
