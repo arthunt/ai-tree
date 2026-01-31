@@ -46,6 +46,11 @@ export function SproutCard({ title, description, analogy, index, visualType }: S
             {/* Content Container */}
             <div className="relative p-6 h-full flex flex-col">
 
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <span className="text-[10rem] font-bold text-white/5 font-serif select-none dark:text-white/5">
+                        &quot;{lesson.slug.charAt(0).toUpperCase()}&quot;
+                    </span>
+                </div>
                 {/* Header: Icon & Title */}
                 <div className="flex items-start justify-between mb-4">
                     <div className="p-3 rounded-2xl bg-gradient-to-br from-brand-teal/20 to-brand-cyan/20 border border-white/5">
