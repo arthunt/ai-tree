@@ -12,37 +12,31 @@ import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglid
 import { useParams, useSearchParams } from 'next/navigation';
 import { getTreeContent, TreeContentSimple } from '@/actions/getTreeContent';
 import { GlobalNav } from '@/components/GlobalNav';
-import { TreeView } from '@/components/tree/TreeView';
+import { TreeExplorer } from '@/components/tree/TreeExplorer';
 import { TreeDetailPanel } from '@/components/tree/TreeDetailPanel';
 import { FloatingInput } from '@/components/ui/FloatingInput';
 
-export function TreeViewContent() {
+interface TreeViewContentProps {
+    initialData: TreeContentSimple[];
+}
+
+export function TreeViewContent({ initialData }: TreeViewContentProps) {
     const [selectedNode, setSelectedNode] = useState<TreeContentSimple | null>(null);
     const [showSimpleNames, setShowSimpleNames] = useState(true);
-    const [isLoading, setIsLoading] = useState(true);
-    const [treeDataState, setTreeDataState] = useState<TreeContentSimple[]>([]);
     const t = useTranslations();
-    const params = useParams();
-    const locale = params.locale as string;
-
     const searchParams = useSearchParams();
     const targetNodeId = searchParams.get('node');
 
-    // Fetch real data
-    useEffect(() => {
-        async function init() {
-            const data = await getTreeContent(locale);
-            setTreeDataState(data);
-            setIsLoading(false);
+    // Use initial data directly
+    const [treeDataState] = useState<TreeContentSimple[]>(initialData);
 
-            // Auto-select node from query param
-            if (targetNodeId) {
-                const found = data.find(n => n.id === targetNodeId);
-                if (found) setSelectedNode(found);
-            }
+    // Auto-select node from query param
+    useEffect(() => {
+        if (targetNodeId && initialData) {
+            const found = initialData.find(n => n.id === targetNodeId);
+            if (found) setSelectedNode(found);
         }
-        init();
-    }, [locale, targetNodeId]);
+    }, [targetNodeId, initialData]);
 
     // Handle ESC key
     useEffect(() => {
@@ -89,15 +83,11 @@ export function TreeViewContent() {
                 <section aria-labelledby="tree-diagram-heading">
                     <h2 id="tree-diagram-heading" className="sr-only">{t('treeView.diagramAriaLabel')}</h2>
                     <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 border-2 border-gray-100 dark:border-gray-700 overflow-hidden min-h-[600px]">
-                        {isLoading ? (
-                            <TreeDiagramSkeleton />
-                        ) : (
-                            <TreeView
-                                data={treeDataState}
-                                intent={searchParams.get('intent')}
-                                onNodeClick={setSelectedNode}
-                            />
-                        )}
+                        <TreeExplorer
+                            data={treeDataState}
+                            intent={searchParams.get('intent')}
+                            onNodeClick={setSelectedNode}
+                        />
                     </div>
                 </section>
 

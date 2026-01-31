@@ -13,7 +13,7 @@ interface TreeViewProps {
     intent?: string | null;
 }
 
-export function TreeView({ data, onNodeClick, intent }: TreeViewProps) {
+export function TreeVisualization({ data, onNodeClick, intent }: TreeViewProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const svgRef = useRef<SVGSVGElement>(null);
     const gRef = useRef<SVGGElement>(null);
