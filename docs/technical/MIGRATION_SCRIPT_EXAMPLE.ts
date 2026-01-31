@@ -249,11 +249,13 @@ function createGlossary(locale: string): NewGlossaryData {
         },
         context: {
           term: 'Kontekst',
+          keep_original: false,
           translated: true,
           short_explanation: 'Ümbritsev informatsioon, mis annab promptile tähenduse'
         },
         agent: {
           term: 'Agent',
+          keep_original: true,
           translated: false,
           short_explanation: 'Autonoomne AI süsteem, mis suudab kasutada tööriistu'
         }
@@ -310,11 +312,13 @@ function createGlossary(locale: string): NewGlossaryData {
         },
         context: {
           term: 'Context',
+          keep_original: true,
           translated: false,
           short_explanation: 'Surrounding information that gives meaning to a prompt'
         },
         agent: {
           term: 'Agent',
+          keep_original: true,
           translated: false,
           short_explanation: 'Autonomous AI system that can use tools'
         }
