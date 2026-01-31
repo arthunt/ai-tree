@@ -14,11 +14,17 @@
 ### `@opus` (Claude Code) — Next Tasks
 | # | Task | Status | Depends On | Description |
 |---|------|--------|------------|-------------|
-| 1 | **1.6 P2** DNA Polish | ✅ DONE | — | Metaphor prominence, help button, reset confirm, deep-dive label |
+| 1 | **3.1.x** Seed Data Fix | 🔄 IN PROGRESS | — | Fix broken category filtering, add `parent_id` grouping, i18n hardcoded strings |
+| 2 | **6.1** Stage i18n Sweep | ⏳ NEXT | 3.1.x | Remove all remaining hardcoded ET/EN strings across Seed, Sprout, Fruits, Orchard views |
+| 3 | **5.4.4** Related Concepts Wiring | ⏳ NEXT | — | Wire existing RelatedConceptsPanel into stage detail views using relationship data |
+| 4 | **6.2** Concept Card Deep-Dive | ⏳ NEXT | 5.4.4 | Enable tap-to-expand on UnifiedConceptCard to show metaphor, deep_dive, relationships |
 
 #### Completed (this sprint)
+- ✅ 1.6 P2 DNA Polish — metaphor prominence, help button, reset confirm, deep-dive label
+- ✅ 5.3 Tree Integration — bridge nodes to concept objects, deep-dive panel
+- ✅ 5.5 Learning Paths Migration — validated IDs, updated translations
 - ✅ 1.4 Visual Calibration — themes verified, `istik`→`sapling` enum aligned
-- ✅ 5.4 Concept Relationships — 48 relationships across all 5 stages (prerequisite, deepens, applies, related)
+- ✅ 5.4 Concept Relationships — 48 relationships across all 5 stages
 - ✅ 5.1 Fruits Migration
 - ✅ 5.2 Orchard Migration
 - ✅ 3.2 Sprout Content Redefinition
@@ -31,7 +37,7 @@
 | 2 | **3.1** Seed Stage Polish | 🔄 IN PROGRESS | Hero animation ("Compression"), theme polish |
 | 3 | **4.1** Sapling Page & Theme | ⏳ NEXT | Polish skeleton, Morning Green theme |
 | 4 | **4.2** Prompt Sandbox Refinement | ⏳ NEXT | Mobile layout, iteration tracking, feedback scoring |
-| 5 | **4.3** Sapling Practice Modules | ⏳ NEXT | 4 guided modules: First Prompt, Refinement, Temp, Eval |
+| 5 | **4.3** Sapling Practice Modules | 🔄 IN PROGRESS | 4 guided modules: First Prompt, Refinement, Temp, Eval (Adding validation logic) |
 | 6 | **5.4.4** Related Concepts Panel | ⏳ NEXT | Visual component showing concept relationships |
 
 ### `@swarm` (Claude Flow) — Available
@@ -194,13 +200,14 @@
 
 - [ ] **3.1 Seed Stage: Data & Training** `@gemini` `@opus` 🔄 IN PROGRESS
     > Ref: VISION_AND_STRATEGY.md Decision 6b.
-    - [ ] 3.1.1 Create Seed concepts in DB: `dataset`, `common-crawl`, `the-pile`, `data-cleaning`, `bias-in-data`, `loss-function`, `backpropagation`, `compute-cluster`, `epochs`, `overfitting`, `weights`, `base-model`, `checkpoints`, `evaluation`
-    - [ ] 3.1.2 Create `SeedView` component with Deep Earth theme (stone-900 -> amber-950)
-    - [ ] 3.1.3 Implement 3-phase layout: Dataset -> Training -> Model
-    - [ ] 3.1.4 Design "Compression" hero animation (data shrinking into model)
-    - [ ] 3.1.5 Add concept translations EN + ET
-    - [ ] 3.1.6 Server action `getSeedContent()` using Concept SDK
-    - [ ] 3.1.7 Replace hardcoded `SEED_STEPS` in `SeedView.tsx` with DB content
+    - [x] 3.1.1 Create Seed concepts in DB ✅ 14 concepts in `concepts` table (stage='seed')
+    - [x] 3.1.2 Create `SeedView` component with Deep Earth theme (stone-900 -> amber-950) ✅
+    - [ ] 3.1.3 Implement 3-phase layout: Dataset -> Training -> Model ⚠️ **BROKEN** — `c.category` field doesn't exist, all sections render empty
+    - [ ] 3.1.4 Design "Compression" hero animation (data shrinking into model) `@gemini`
+    - [x] 3.1.5 Add concept translations EN + ET ✅
+    - [x] 3.1.6 SeedView uses `getConceptsByStage('seed', locale)` via Concept SDK ✅
+    - [ ] 3.1.7 Remove hardcoded strings in SeedView (title, subtitle, section headers) `@opus`
+    - [ ] 3.1.8 Fix concept grouping — use `sort_order` ranges or `parent_id` instead of missing `category` `@opus`
 
 - [x] **3.2 Sprout Content Redefinition** `@opus` DONE
     > Migration: `20260204_sprout_concepts.sql`. 6 concepts with "Emergent Properties" framing.

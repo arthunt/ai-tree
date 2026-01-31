@@ -42,13 +42,13 @@ export function OrchardView({ concepts, locale }: OrchardViewProps) {
                     transition={{ duration: 0.8 }}
                 >
                     <span className="inline-block py-1 px-3 rounded-full bg-rose-100 border border-rose-200 text-rose-600 text-xs font-bold tracking-widest uppercase mb-4">
-                        {t('orchard.phaseLabel') || "Phase IV: The Orchard"}
+                        {t('orchard.phaseLabel')}
                     </span>
                     <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-stone-800 mb-6 tracking-tight">
-                        {t('orchard.title') || "Career Paths"}
+                        {t('orchard.title')}
                     </h1>
                     <p className="text-base sm:text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
-                        {t('orchard.subtitle') || "Cultivate your future. Explore the professional opportunities growing in the AI ecosystem."}
+                        {t('orchard.subtitle')}
                     </p>
                 </motion.div>
             </header>
@@ -83,8 +83,8 @@ export function OrchardView({ concepts, locale }: OrchardViewProps) {
                     >
                         <div className="text-center">
                             <Briefcase className="w-12 h-12 text-rose-300 mx-auto mb-3" />
-                            <h3 className="text-lg font-bold text-rose-800/60">Your Path?</h3>
-                            <p className="text-sm text-rose-700/50 mt-1">The field is growing every day.</p>
+                            <h3 className="text-lg font-bold text-rose-800/60">{t('orchard.yourPath')}</h3>
+                            <p className="text-sm text-rose-700/50 mt-1">{t('orchard.growingField')}</p>
                         </div>
                     </motion.div>
                 </div>

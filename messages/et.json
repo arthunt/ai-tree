@@ -1415,6 +1415,8 @@
     "subtitle": "Kujunda oma tulevikku. Avasta professionaalsed võimalused AI ökosüsteemis.",
     "phaseLabel": "IV Faas: Aed",
     "inputPlaceholder": "Sisesta oma oskused...",
+    "yourPath": "Sinu Rada?",
+    "growingField": "Valdkond kasvab iga päev.",
     "card": {
       "viewPath": "Vaata Karjäärirada"
     }

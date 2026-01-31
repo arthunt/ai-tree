@@ -3,7 +3,23 @@ import { UnifiedConceptCard } from '@/components/ui/UnifiedConceptCard';
 import { StageSelector } from '@/components/StageSelector';
 import { SeedHeroAnimation } from './SeedHeroAnimation';
 
-// Separate section component for cleaner layout
+const i18n: Record<string, Record<string, string>> = {
+    en: {
+        title: 'Training',
+        subtitle: 'How raw data becomes an intelligent model.',
+        dataset: '1. The Dataset',
+        training: '2. Training',
+        model: '3. The Model',
+    },
+    et: {
+        title: 'Treenimine',
+        subtitle: 'Kuidas toorandmetest saab intelligentne mudel.',
+        dataset: '1. Andmestik',
+        training: '2. Treenimine',
+        model: '3. Mudel',
+    },
+};
+
 function SeedSection({ title, concepts }: { title: string; concepts: any[] }) {
     if (concepts.length === 0) return null;
 
@@ -13,14 +29,13 @@ function SeedSection({ title, concepts }: { title: string; concepts: any[] }) {
                 {title}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {concepts.map((concept, idx) => (
+                {concepts.map((concept) => (
                     <div key={concept.id} className="h-[280px]">
                         <UnifiedConceptCard
                             variant="seed"
                             index={concept.sort_order}
                             title={concept.title}
                             description={concept.explanation}
-                        // Deep Dive could be enabled here later
                         />
                     </div>
                 ))}
@@ -31,11 +46,7 @@ function SeedSection({ title, concepts }: { title: string; concepts: any[] }) {
 
 export default async function SeedView({ locale }: { locale: string }) {
     const concepts = await getConceptsByStage('seed', locale);
-
-    // Group by category (Phase 1, 2, 3) relative to the backlog logic
-    // 'data' = Phase 1: The Dataset
-    // 'training' = Phase 2: Training
-    // 'model' = Phase 3: The Model
+    const t = i18n[locale] ?? i18n.en;
 
     const datasetConcepts = concepts.filter(c => c.category === 'data').sort((a, b) => a.sort_order - b.sort_order);
     const trainingConcepts = concepts.filter(c => c.category === 'training').sort((a, b) => a.sort_order - b.sort_order);
@@ -48,20 +59,18 @@ export default async function SeedView({ locale }: { locale: string }) {
                 <SeedHeroAnimation />
 
                 <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-amber-100 to-amber-600 mb-4 drop-shadow-sm relative z-20">
-                    {locale === 'et' ? 'Treening' : 'Training'}
+                    {t.title}
                 </h1>
                 <p className="text-lg md:text-xl text-stone-400 max-w-2xl mx-auto leading-relaxed relative z-20">
-                    {locale === 'et'
-                        ? 'Kuidas toorandmetest saab intelligentne mudel.'
-                        : 'How raw data becomes an intelligent model.'}
+                    {t.subtitle}
                 </p>
             </div>
 
             {/* Content Grid */}
             <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <SeedSection title={locale === 'et' ? '1. Andmestik' : '1. The Dataset'} concepts={datasetConcepts} />
-                <SeedSection title={locale === 'et' ? '2. Treening' : '2. Training'} concepts={trainingConcepts} />
-                <SeedSection title={locale === 'et' ? '3. Mudel' : '3. The Model'} concepts={modelConcepts} />
+                <SeedSection title={t.dataset} concepts={datasetConcepts} />
+                <SeedSection title={t.training} concepts={trainingConcepts} />
+                <SeedSection title={t.model} concepts={modelConcepts} />
             </div>
 
             {/* Navigation */}

@@ -1415,6 +1415,8 @@
     "subtitle": "Cultivate your future. Explore the professional opportunities growing in the AI ecosystem.",
     "phaseLabel": "Phase IV: The Orchard",
     "inputPlaceholder": "Enter your skills...",
+    "yourPath": "Your Path?",
+    "growingField": "The field is growing every day.",
     "card": {
       "viewPath": "View Career Path"
     }

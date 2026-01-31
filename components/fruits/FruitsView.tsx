@@ -40,13 +40,13 @@ export function FruitsView({ concepts, locale }: FruitsViewProps) {
                     transition={{ duration: 0.8 }}
                 >
                     <span className="inline-block py-1 px-3 rounded-full bg-orange-100 border border-orange-200 text-orange-600 text-xs font-bold tracking-widest uppercase mb-4">
-                        {t('fruits.phaseLabel') || "The Harvest"}
+                        {t('fruits.phaseLabel')}
                     </span>
                     <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-stone-800 mb-6 tracking-tight">
-                        {t('fruits.title') || "Applications"}
+                        {t('fruits.title')}
                     </h1>
                     <p className="text-base sm:text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
-                        {t('fruits.subtitle') || "Explore real-world applications powered by the intelligence grown from the tree."}
+                        {t('fruits.subtitle')}
                     </p>
                 </motion.div>
             </header>
