@@ -21,6 +21,9 @@ export interface TreeContentSimple {
     // Marketing (Swarm)
     relatedProgramId?: 'aiki' | 'aivo' | 'aime' | null;
     marketingHook?: string;
+
+    // Concept Object bridge (5.3)
+    conceptId?: string | null;
 }
 
 // Fallback mock
@@ -42,6 +45,7 @@ type MetadataRow = Database['public']['Tables']['node_metadata']['Row'];
 
 // Type for the joined query result
 interface JoinedNode extends Pick<NodeRow, 'id' | 'parent_id' | 'type'> {
+    concept_id?: string | null;
     node_translations: Pick<TranslationRow, 'display_name' | 'description' | 'significance'>[];
     node_metadata: Pick<MetadataRow, 'year_introduced' | 'visual_motif' | 'key_paper_title' | 'key_paper_url' | 'related_program_id' | 'marketing_hook_en' | 'marketing_hook_et'>[];
 }
@@ -55,6 +59,7 @@ export async function getTreeContent(locale: string = 'en'): Promise<TreeContent
                 id,
                 parent_id,
                 type,
+                concept_id,
                 node_translations!inner (
                     display_name,
                     description,
@@ -110,7 +115,10 @@ export async function getTreeContent(locale: string = 'en'): Promise<TreeContent
 
                 // Marketing
                 relatedProgramId: meta.related_program_id || undefined,
-                marketingHook: locale === 'et' ? (meta.marketing_hook_et || undefined) : (meta.marketing_hook_en || undefined)
+                marketingHook: locale === 'et' ? (meta.marketing_hook_et || undefined) : (meta.marketing_hook_en || undefined),
+
+                // Concept Object bridge
+                conceptId: n.concept_id || undefined,
             };
         });
 

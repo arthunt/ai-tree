@@ -74,7 +74,10 @@
     "introducedLabel": "Introduced",
     "keyPaperLabel": "Key Paper",
     "masterSkillLabel": "Master This Skill",
-    "viewProgramLabel": "View Program"
+    "viewProgramLabel": "View Program",
+    "conceptDeepDive": "Concept Deep-Dive",
+    "readMore": "Read more...",
+    "exploreStage": "Explore {stage} stage →"
   },
   "viewMode": {
     "both": "Both",

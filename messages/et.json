@@ -74,7 +74,10 @@
     "introducedLabel": "Tutvustatud",
     "keyPaperLabel": "Põhiartikkel",
     "masterSkillLabel": "Omanda See Oskus",
-    "viewProgramLabel": "Vaata Programmi"
+    "viewProgramLabel": "Vaata Programmi",
+    "conceptDeepDive": "Mõiste Süvitsi",
+    "readMore": "Loe lisaks...",
+    "exploreStage": "Avasta {stage} etapp →"
   },
   "viewMode": {
     "both": "Mõlemad",

@@ -1,10 +1,13 @@
 "use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, Calendar, FileText, Sparkles, GraduationCap } from 'lucide-react';
+import { X, ExternalLink, Calendar, FileText, Sparkles, GraduationCap, BookOpen } from 'lucide-react';
 import { TreeContentSimple } from '@/actions/getTreeContent';
+import { getConceptById } from '@/actions/getConcepts';
+import type { Concept } from '@/lib/concepts';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
@@ -31,6 +34,20 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
     const t = useTranslations('treeView');
     const params = useParams();
     const locale = params.locale as string;
+    const [linkedConcept, setLinkedConcept] = useState<Concept | null>(null);
+    const [loadingConcept, setLoadingConcept] = useState(false);
+
+    // Fetch linked concept when node changes
+    useEffect(() => {
+        setLinkedConcept(null);
+        if (!node?.conceptId) return;
+        setLoadingConcept(true);
+        getConceptById(node.conceptId, locale)
+            .then(c => setLinkedConcept(c))
+            .catch(() => setLinkedConcept(null))
+            .finally(() => setLoadingConcept(false));
+    }, [node?.conceptId, locale]);
+
     if (!node) return null;
 
     return (
@@ -117,6 +134,50 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                         </div>
                     )}
                 </div>
+
+                {/* Linked Concept Deep-Dive (5.3) */}
+                {(linkedConcept || loadingConcept) && (
+                    <div className="mb-8 p-5 rounded-2xl bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 border border-teal-100 dark:border-teal-500/30">
+                        <div className="flex items-center gap-2 mb-3">
+                            <BookOpen className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+                            <h3 className="text-sm font-bold uppercase tracking-wide text-teal-600 dark:text-teal-400">
+                                {t('conceptDeepDive')}
+                            </h3>
+                        </div>
+                        {loadingConcept ? (
+                            <div className="h-16 animate-pulse bg-teal-100/50 dark:bg-teal-800/30 rounded-lg" />
+                        ) : linkedConcept ? (
+                            <div className="space-y-3">
+                                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                                    {linkedConcept.explanation}
+                                </p>
+                                {linkedConcept.metaphor && (
+                                    <p className="text-sm italic text-teal-700 dark:text-teal-300 border-l-2 border-teal-300 dark:border-teal-600 pl-3">
+                                        &ldquo;{linkedConcept.metaphor}&rdquo;
+                                    </p>
+                                )}
+                                {linkedConcept.deep_dive && (
+                                    <details className="mt-2">
+                                        <summary className="text-xs font-semibold text-teal-600 dark:text-teal-400 cursor-pointer hover:text-teal-700">
+                                            {t('readMore')}
+                                        </summary>
+                                        <p className="mt-2 text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                                            {linkedConcept.deep_dive}
+                                        </p>
+                                    </details>
+                                )}
+                                <div className="pt-2">
+                                    <Link
+                                        href={`/${locale}/${linkedConcept.stage}`}
+                                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-700 dark:text-teal-300 hover:text-teal-800 dark:hover:text-white transition-colors"
+                                    >
+                                        {t('exploreStage', { stage: linkedConcept.stage })} <ExternalLink className="w-3 h-3" />
+                                    </Link>
+                                </div>
+                            </div>
+                        ) : null}
+                    </div>
+                )}
 
                 {/* Swarm Marketing Integration */}
                 {node.relatedProgramId && (
