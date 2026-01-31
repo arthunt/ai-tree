@@ -20,7 +20,7 @@ const TOKEN_COLORS = [
   'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
   'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
   'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
-  'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+  'bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-200',
   'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
 ];
 
@@ -179,13 +179,12 @@ export function TokenizerDemo() {
                         }
                       }}
                       exit={{ opacity: 0, scale: 0 }}
-                      className={`px-3 py-1.5 rounded-lg font-mono text-sm font-medium shadow-sm ${
-                        token.isDigit
+                      className={`px-3 py-1.5 rounded-lg font-mono text-sm font-medium shadow-sm ${token.isDigit
                           ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200 ring-1 ring-orange-300 dark:ring-orange-700'
                           : token.isSubword
                             ? 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200 ring-1 ring-teal-300 dark:ring-teal-700'
                             : token.color
-                      }`}
+                        }`}
                     >
                       {token.text}
                     </motion.span>
