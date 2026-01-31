@@ -56,6 +56,51 @@ const MODULES: Module[] = [
 export function SaplingWorkspace({ locale }: { locale: string }) {
     const [activeModule, setActiveModule] = useState<ModuleId | null>(null);
     const [prefill, setPrefill] = useState<{ text: string; temp: number } | null>(null);
+    const [completedModules, setCompletedModules] = useState<ModuleId[]>([]);
+    const [historyCount, setHistoryCount] = useState(0);
+
+    const handleLessonEvent = (type: 'run' | 'temp' | 'rating', value?: any) => {
+        if (!activeModule) return;
+
+        const currentModule = MODULES.find(m => m.id === activeModule);
+        if (!currentModule || completedModules.includes(activeModule)) return;
+
+        let isSuccess = false;
+
+        switch (activeModule) {
+            case 'basics':
+                // Success: Prompt length > 10
+                if (type === 'run' && typeof value === 'string' && value.length > 10) {
+                    isSuccess = true;
+                }
+                break;
+            case 'refinement':
+                // Success: Run at least twice (history count tracks this)
+                if (type === 'run') {
+                    const newCount = historyCount + 1;
+                    setHistoryCount(newCount);
+                    if (newCount >= 2) isSuccess = true;
+                }
+                break;
+            case 'temperature':
+                // Success: Change temperature from default (0.7)
+                if (type === 'temp' && typeof value === 'number' && Math.abs(value - 0.7) > 0.1) {
+                    isSuccess = true;
+                }
+                break;
+            case 'evaluation':
+                // Success: Click a rating button
+                if (type === 'rating') {
+                    isSuccess = true;
+                }
+                break;
+        }
+
+        if (isSuccess) {
+            setCompletedModules(prev => [...prev, activeModule]);
+            // Could add a toast here
+        }
+    };
 
     const handleModuleSelect = (module: Module) => {
         setActiveModule(module.id);
@@ -80,6 +125,9 @@ export function SaplingWorkspace({ locale }: { locale: string }) {
                     locale={locale}
                     initialPrompt={prefill?.text}
                     initialTemp={prefill?.temp}
+                    onPromptRun={(text) => handleLessonEvent('run', text)}
+                    onTempChange={(temp) => handleLessonEvent('temp', temp)}
+                    onRating={() => handleLessonEvent('rating')}
                 />
             </div>
 
@@ -137,6 +185,12 @@ export function SaplingWorkspace({ locale }: { locale: string }) {
                                     {isActive ? 'Active' : 'Start Module'}
                                     <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
                                 </div>
+
+                                {completedModules.includes(module.id) ? (
+                                    <div className="absolute top-4 right-4 text-emerald-400 bg-emerald-900/60 backdrop-blur-sm rounded-full p-1 border border-emerald-500/30">
+                                        <CheckCircle2 size={16} />
+                                    </div>
+                                ) : null}
 
                                 {isActive && (
                                     <motion.div

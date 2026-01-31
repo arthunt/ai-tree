@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, User, Bot, RotateCcw, Thermometer, Info } from 'lucide-react';
+import { Send, User, Bot, RotateCcw, Thermometer, Info, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { GlassCard } from '@/components/ui/GlassCard';
 
@@ -21,11 +21,13 @@ interface PromptSandboxProps {
     className?: string;
     initialPrompt?: string;
     initialTemp?: number;
+    onPromptRun?: (prompt: string) => void;
+    onTempChange?: (temp: number) => void;
+    onRating?: () => void;
 }
 
 // Mock LLM Response generator
 const generateMockResponse = (prompt: string, temperature: number): string => {
-    // ... (same as before)
     const responses = [
         "That's an interesting perspective. Based on the patterns I've learned, I can tell you that...",
         "Here's a simpler way to think about it: imagine a garden where every idea is a seed...",
@@ -38,7 +40,15 @@ const generateMockResponse = (prompt: string, temperature: number): string => {
     return responses[index];
 };
 
-export function PromptSandbox({ locale, className, initialPrompt, initialTemp }: PromptSandboxProps) {
+export function PromptSandbox({
+    locale,
+    className,
+    initialPrompt,
+    initialTemp,
+    onPromptRun,
+    onTempChange,
+    onRating
+}: PromptSandboxProps) {
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState<Message[]>([]);
     const [isTyping, setIsTyping] = useState(false);
@@ -52,12 +62,15 @@ export function PromptSandbox({ locale, className, initialPrompt, initialTemp }:
         if (initialTemp !== undefined) setTemperature(initialTemp);
     }, [initialPrompt, initialTemp]);
 
-    // Auto-scroll
-    useEffect(() => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        }
-    }, [messages, isTyping]);
+    // Report temperature changes
+    const handleTempChange = (val: number) => {
+        setTemperature(val);
+        onTempChange?.(val);
+    };
+
+    // Auto-scroll needs to be here...
+
+
 
     const calculateScore = (text: string, temp: number) => {
         // Mock scoring logic: rewards length and varying temperature
@@ -69,6 +82,9 @@ export function PromptSandbox({ locale, className, initialPrompt, initialTemp }:
 
     const handleSend = async () => {
         if (!input.trim()) return;
+
+        // Trigger external event
+        onPromptRun?.(input);
 
         const score = calculateScore(input, temperature);
         const attemptNumber = history.length + 1;
@@ -133,7 +149,7 @@ export function PromptSandbox({ locale, className, initialPrompt, initialTemp }:
                             type="range"
                             min="0" max="1" step="0.1"
                             value={temperature}
-                            onChange={(e) => setTemperature(parseFloat(e.target.value))}
+                            onChange={(e) => handleTempChange(parseFloat(e.target.value))}
                             className="w-full accent-emerald-500 h-1 bg-emerald-900 rounded-lg appearance-none cursor-pointer"
                         />
                     </div>
@@ -246,7 +262,7 @@ export function PromptSandbox({ locale, className, initialPrompt, initialTemp }:
                                             <motion.div
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
-                                                className="self-start flex items-center gap-3 px-2"
+                                                className="self-start flex flex-wrap items-center gap-3 px-2"
                                             >
                                                 <div className="flex items-center gap-1.5 text-[10px] text-emerald-500/70 font-mono uppercase tracking-wider bg-emerald-900/20 px-2 py-0.5 rounded-full border border-emerald-500/10">
                                                     <span>Quality Score:</span>
@@ -255,6 +271,19 @@ export function PromptSandbox({ locale, className, initialPrompt, initialTemp }:
                                                         msg.metrics.cost > 75 ? "text-emerald-400" : "text-emerald-600"
                                                     )}>{msg.metrics.cost}/100</span>
                                                 </div>
+
+                                                {/* Interaction Buttons (New) */}
+                                                {onRating && (
+                                                    <div className="flex items-center gap-1">
+                                                        <button
+                                                            onClick={onRating}
+                                                            className="p-1 hover:bg-emerald-500/20 rounded text-emerald-600 hover:text-emerald-300 transition-colors"
+                                                            aria-label="Rate response positively"
+                                                        >
+                                                            <CheckCircle2 size={14} />
+                                                        </button>
+                                                    </div>
+                                                )}
                                             </motion.div>
                                         )}
                                     </div>
