@@ -203,6 +203,70 @@ export async function getConceptsByIds(
   }
 }
 
+/**
+ * Get concepts from OTHER stages that relate to concepts in a given stage.
+ * Returns up to `limit` unique cross-stage concepts, sorted by relationship strength.
+ */
+export async function getRelatedConceptsForStage(
+  stage: EvolutionStage,
+  locale: string = 'en',
+  limit: number = 6
+): Promise<Concept[]> {
+  const supabase = getSupabase();
+  if (!supabase) return [];
+
+  try {
+    // Get all concept IDs in this stage
+    const { data: stageConcepts } = await supabase
+      .from('concepts')
+      .select('id')
+      .eq('stage', stage)
+      .eq('is_published', true);
+
+    if (!stageConcepts || stageConcepts.length === 0) return [];
+
+    const stageIds = stageConcepts.map((c: any) => c.id);
+
+    // Find relationships where stage concepts are source OR target
+    const [{ data: outbound }, { data: inbound }] = await Promise.all([
+      supabase
+        .from('concept_relationships')
+        .select('target_id, strength')
+        .in('source_id', stageIds),
+      supabase
+        .from('concept_relationships')
+        .select('source_id, strength')
+        .in('target_id', stageIds),
+    ]);
+
+    // Collect unique IDs from OTHER stages with max strength
+    const strengthMap = new Map<string, number>();
+    for (const r of outbound ?? []) {
+      if (!stageIds.includes(r.target_id)) {
+        strengthMap.set(r.target_id, Math.max(strengthMap.get(r.target_id) ?? 0, r.strength));
+      }
+    }
+    for (const r of inbound ?? []) {
+      if (!stageIds.includes(r.source_id)) {
+        strengthMap.set(r.source_id, Math.max(strengthMap.get(r.source_id) ?? 0, r.strength));
+      }
+    }
+
+    if (strengthMap.size === 0) return [];
+
+    // Sort by strength descending, take top N
+    const sortedIds = [...strengthMap.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, limit)
+      .map(([id]) => id);
+
+    return getConceptsByIds(sortedIds, locale);
+  } catch (err) {
+    console.error('getRelatedConceptsForStage error:', err);
+    return [];
+  }
+}
+
 // ── Mock data helpers ──────────────────────────────────────
 
 function getMockConcepts(stage: EvolutionStage, locale: string): Concept[] {

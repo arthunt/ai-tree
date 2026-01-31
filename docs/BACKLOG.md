@@ -198,16 +198,16 @@
 
 > **Goal:** Build the Seed stage and redefine Sprout for the new 7-stage journey. Ref: VISION_AND_STRATEGY.md Decision 6b/6c.
 
-- [ ] **3.1 Seed Stage: Data & Training** `@gemini` `@opus` 🔄 IN PROGRESS
-    > Ref: VISION_AND_STRATEGY.md Decision 6b.
-    - [x] 3.1.1 Create Seed concepts in DB ✅ 14 concepts in `concepts` table (stage='seed')
-    - [x] 3.1.2 Create `SeedView` component with Deep Earth theme (stone-900 -> amber-950) ✅
-    - [ ] 3.1.3 Implement 3-phase layout: Dataset -> Training -> Model ⚠️ **BROKEN** — `c.category` field doesn't exist, all sections render empty
-    - [ ] 3.1.4 Design "Compression" hero animation (data shrinking into model) `@gemini`
-    - [x] 3.1.5 Add concept translations EN + ET ✅
-    - [x] 3.1.6 SeedView uses `getConceptsByStage('seed', locale)` via Concept SDK ✅
-    - [ ] 3.1.7 Remove hardcoded strings in SeedView (title, subtitle, section headers) `@opus`
-    - [ ] 3.1.8 Fix concept grouping — use `sort_order` ranges or `parent_id` instead of missing `category` `@opus`
+- [ ] **3.1 Seed Stage: Training Simulation** `@gemini` 🔄 IN PROGRESS
+    > Ref: VISION_AND_STRATEGY.md Decision 6b (Interactive Training Run).
+    - [x] 3.1.1 Create Seed concepts in DB ✅ 14 concepts in `concepts` table
+    - [x] 3.1.2 Create `SeedView` (Basic shell with Deep Earth theme) ✅
+    - [ ] 3.1.3 Create `SeedContext` (State Machine: `selection` -> `training` -> `model`)
+    - [ ] 3.1.4 Implement `SeedStepNav` (Sticky navigation for the 3 phases)
+    - [ ] 3.1.5 Hero: "Ingestion Dashboard" (Drag-and-drop data sources)
+    - [ ] 3.1.6 Hero: "Training Loop" (Epiphany animation, loss curve visualization)
+    - [ ] 3.1.7 Hero: "Checkpoint" (Model solidification)
+    - [ ] 3.1.8 Wiring: Concept cards highlight/activate based on simulation state
 
 - [x] **3.2 Sprout Content Redefinition** `@opus` DONE
     > Migration: `20260204_sprout_concepts.sql`. 6 concepts with "Emergent Properties" framing.

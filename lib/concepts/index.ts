@@ -14,4 +14,5 @@ export {
   getConcept,
   getConceptWithRelated,
   getConceptsByIds,
+  getRelatedConceptsForStage,
 } from './api';

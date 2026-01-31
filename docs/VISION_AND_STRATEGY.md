@@ -149,14 +149,16 @@ Underground (Dark)                    Surface (Dawn)                         Sun
 
 Interactive simulation of a single forward pass. The learner types text and watches it flow through 4 pipeline stages.
 
-### 6b. Seed Content (3 phases)
-`Dataset -> Training (Compression) -> Model`
+### 6b. Seed Content (Interactive Training Run)
+`Dataset -> Training (Loop) -> Checkpoint (Model)`
 
-**Phase 1 — The Dataset:** Common Crawl, The Pile, data cleaning, bias in data.
-**Phase 2 — Training:** Loss function, backpropagation, compute clusters, epochs, overfitting.
-**Phase 3 — The Model:** Weights, base model, checkpoints, evaluation.
+An interactive simulation where the user acts as the **AI Engineer**, similar to the DNA stage's "Inference Simulation".
 
-Hero visualization: A "compression" animation showing massive data being squeezed into a compact model.
+**Step 1 — Ingestion (The Pile):** User selects raw data sources (Wikipedia, GitHub, etc.). Blocks of text "compress" into a clean dataset.
+**Step 2 — Training Loop (Epiphany):** User initiates backpropagation. A "Loss Curve" visualizes the error rate dropping. Concepts like `epochs`, `backpropagation`, and `compute-clusters` are active during this phase.
+**Step 3 — Checkpoint (The Model):** The fluid data solidifies into a structured crystal (the Model). Concepts like `overfitting`, `weights`, and `evaluation` are explored here.
+
+Hero visualization: An interactive "Training Dashboard" replacing the static hero.
 
 ### 6c. Sprout Content (6 concepts)
 `Generalization, Context Windows, Hallucination, Temperature & Sampling, Representations, Prompting Basics`

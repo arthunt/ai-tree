@@ -6,14 +6,16 @@ import { SproutCard } from './SproutCard';
 import { StageSelector } from '@/components/StageSelector';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
+import { RelatedConceptsPanel } from '@/components/concept/RelatedConceptsPanel';
 import type { Concept } from '@/lib/concepts';
 
 interface SproutViewProps {
     concepts: Concept[];
+    relatedConcepts?: Concept[];
     locale: string;
 }
 
-export function SproutView({ concepts, locale }: SproutViewProps) {
+export function SproutView({ concepts, relatedConcepts = [], locale }: SproutViewProps) {
     const t = useTranslations();
 
 
@@ -59,6 +61,16 @@ export function SproutView({ concepts, locale }: SproutViewProps) {
                     ))}
                 </div>
             </div>
+
+            {/* Related Concepts from Other Stages */}
+            {relatedConcepts.length > 0 && (
+                <div className="container mx-auto px-4 md:px-6 mt-16">
+                    <RelatedConceptsPanel
+                        concepts={relatedConcepts}
+                        locale={locale}
+                    />
+                </div>
+            )}
 
             {/* Floating Controls */}
             <StageSelector />

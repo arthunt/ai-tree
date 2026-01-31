@@ -3,6 +3,7 @@ import { SproutView } from '@/components/sprout/SproutView';
 import { GlobalNav } from '@/components/GlobalNav';
 import { Metadata } from 'next';
 import { getStageContent } from '@/actions/getConcepts';
+import { getRelatedConceptsForStage } from '@/lib/concepts/api';
 
 export const metadata: Metadata = {
     title: 'Sprout | AI Knowledge Tree',
@@ -11,7 +12,10 @@ export const metadata: Metadata = {
 
 export default async function SproutPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
-    const concepts = await getStageContent('sprout', locale);
+    const [concepts, relatedConcepts] = await Promise.all([
+        getStageContent('sprout', locale),
+        getRelatedConceptsForStage('sprout', locale, 6),
+    ]);
 
     return (
         <main className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 text-white overflow-hidden relative selection:bg-brand-teal/30">
@@ -19,7 +23,7 @@ export default async function SproutPage({ params }: { params: Promise<{ locale:
             <GlobalNav />
             {/* Main Content */}
             <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading Foundations...</div>}>
-                <SproutView concepts={concepts} locale={locale} />
+                <SproutView concepts={concepts} relatedConcepts={relatedConcepts} locale={locale} />
             </Suspense>
         </main>
     );

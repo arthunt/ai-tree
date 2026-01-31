@@ -1,5 +1,6 @@
 import { OrchardView } from '@/components/orchard/OrchardView';
 import { getStageContent } from '@/actions/getConcepts';
+import { getRelatedConceptsForStage } from '@/lib/concepts/api';
 
 // ISR: revalidate every 60s so new concepts appear quickly
 export const revalidate = 60;
@@ -18,6 +19,9 @@ export const metadata = {
 
 export default async function OrchardPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
-    const concepts = await getStageContent('orchard', locale);
-    return <OrchardView concepts={concepts} locale={locale} />;
+    const [concepts, relatedConcepts] = await Promise.all([
+        getStageContent('orchard', locale),
+        getRelatedConceptsForStage('orchard', locale, 6),
+    ]);
+    return <OrchardView concepts={concepts} relatedConcepts={relatedConcepts} locale={locale} />;
 }

@@ -1,4 +1,4 @@
-import { getConceptsByStage } from '@/lib/concepts/api';
+import { getConceptsByStage, getRelatedConceptsForStage } from '@/lib/concepts/api';
 import { UnifiedConceptCard } from '@/components/ui/UnifiedConceptCard';
 import { SaplingWorkspace } from '@/components/sapling/SaplingWorkspace';
 import { RelatedConceptsPanel } from '@/components/concept/RelatedConceptsPanel';
@@ -7,14 +7,10 @@ import { SaplingHeroAnimation } from './SaplingHeroAnimation';
 import { Info, Leaf } from 'lucide-react';
 
 export default async function SaplingView({ locale }: { locale: string }) {
-    // Fetch seed concepts to show as "Related Fundamentals"
-    const seedConcepts = await getConceptsByStage('seed', locale);
-    // Use first 3 concepts, default to empty array if undefined
-    const relatedConcepts = (seedConcepts || []).slice(0, 3);
-
-    // Currently we might not have 'sapling' concepts in DB yet, but that's fine.
-    // We will render the Sandbox as the primary feature.
-    const concepts = await getConceptsByStage('sapling', locale);
+    const [concepts, relatedConcepts] = await Promise.all([
+        getConceptsByStage('sapling', locale),
+        getRelatedConceptsForStage('sapling', locale, 6),
+    ]);
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-emerald-950 via-green-950 to-stone-950 pb-20">

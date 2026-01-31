@@ -1,5 +1,6 @@
-import { getConceptsByStage } from '@/lib/concepts/api';
+import { getConceptsByStage, getRelatedConceptsForStage } from '@/lib/concepts/api';
 import { UnifiedConceptCard } from '@/components/ui/UnifiedConceptCard';
+import { RelatedConceptsPanel } from '@/components/concept/RelatedConceptsPanel';
 import { StageSelector } from '@/components/StageSelector';
 import { SeedHeroAnimation } from './SeedHeroAnimation';
 
@@ -45,7 +46,10 @@ function SeedSection({ title, concepts }: { title: string; concepts: any[] }) {
 }
 
 export default async function SeedView({ locale }: { locale: string }) {
-    const concepts = await getConceptsByStage('seed', locale);
+    const [concepts, relatedConcepts] = await Promise.all([
+        getConceptsByStage('seed', locale),
+        getRelatedConceptsForStage('seed', locale, 6),
+    ]);
     const t = i18n[locale] ?? i18n.en;
 
     const datasetConcepts = concepts.filter(c => c.category === 'data').sort((a, b) => a.sort_order - b.sort_order);
@@ -72,6 +76,16 @@ export default async function SeedView({ locale }: { locale: string }) {
                 <SeedSection title={t.training} concepts={trainingConcepts} />
                 <SeedSection title={t.model} concepts={modelConcepts} />
             </div>
+
+            {/* Related Concepts from Other Stages */}
+            {relatedConcepts.length > 0 && (
+                <div className="max-w-7xl mx-auto px-6 relative z-10 mt-16">
+                    <RelatedConceptsPanel
+                        concepts={relatedConcepts}
+                        locale={locale}
+                    />
+                </div>
+            )}
 
             {/* Navigation */}
             <StageSelector />

@@ -6,6 +6,7 @@ import { FruitsCard } from './FruitsCard';
 import { StageSelector } from '@/components/StageSelector';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
+import { RelatedConceptsPanel } from '@/components/concept/RelatedConceptsPanel';
 import type { Concept } from '@/lib/concepts';
 import { Brain, Code, Image as ImageIcon, MessageSquare } from 'lucide-react';
 
@@ -19,10 +20,11 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 
 interface FruitsViewProps {
     concepts: Concept[];
+    relatedConcepts?: Concept[];
     locale: string;
 }
 
-export function FruitsView({ concepts, locale }: FruitsViewProps) {
+export function FruitsView({ concepts, relatedConcepts = [], locale }: FruitsViewProps) {
     const t = useTranslations();
 
     return (
@@ -72,6 +74,16 @@ export function FruitsView({ concepts, locale }: FruitsViewProps) {
                     ))}
                 </div>
             </div>
+
+            {/* Related Concepts from Other Stages */}
+            {relatedConcepts.length > 0 && (
+                <div className="relative z-10 mt-16 mx-4 md:mx-6 rounded-3xl bg-gradient-to-br from-stone-900 to-stone-800 p-8 max-w-7xl lg:mx-auto">
+                    <RelatedConceptsPanel
+                        concepts={relatedConcepts}
+                        locale={locale}
+                    />
+                </div>
+            )}
 
             {/* Floating Controls */}
             <StageSelector />
