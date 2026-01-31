@@ -88,16 +88,16 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                     </div>
                 </motion.div>
 
-                <div className="relative z-10 flex flex-col items-center justify-start md:justify-center min-h-screen min-h-screen-dynamic p-4 pt-14 sm:pt-16 sm:px-8">
+                <div className="relative z-10 flex flex-col items-center p-4 pt-14 sm:pt-16 sm:px-8 pb-20">
 
                     {/* Header Section */}
                     <motion.header
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-center mb-4 md:mb-16 relative z-20"
+                        className="text-center mb-4 md:mb-8 relative z-20"
                     >
-                        <h1 className="text-2xl sm:text-4xl md:text-7xl font-bold mb-2 md:mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-white to-brand-cyan drop-shadow-[0_0_15px_rgba(56,189,248,0.3)]">
+                        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-2 md:mb-4 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-white to-brand-cyan drop-shadow-[0_0_15px_rgba(56,189,248,0.3)]">
                             {t('header.title')}
                         </h1>
                         <p className="text-sm sm:text-lg md:text-2xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
