@@ -2,7 +2,43 @@
 
 **Status:** Active Execution Plan
 **Source:** `docs/VISION_AND_STRATEGY.md` (V3.0)
-**Updated:** 2026-02-01
+**Updated:** 2026-02-02
+
+---
+
+## 🎯 Next Sprint: Agent Task Assignments
+
+> **Prerequisite complete:** Concept Object schema (2.1), SDK (2.2), and DNA migration (2.3) are done.
+> All agents can now use `lib/concepts/api.ts` to read/write concepts.
+
+### `@opus` (Claude Code) — Next Tasks
+| # | Task | Depends On | Description |
+|---|------|------------|-------------|
+| 1 | **5.1** Fruits Migration | — | Seed APPLICATIONS into concepts DB, update FruitsView to use SDK |
+| 2 | **5.2** Orchard Migration | — | Seed CAREERS into concepts DB, update OrchardView to use SDK |
+| 3 | **3.3** Sprout Migration | 3.2 | Map sprout_lessons → concepts table, update SproutView |
+| 4 | **1.4** Visual Calibration | 2.4 | Verify dark/light mode logic after 7-stage update |
+
+### `@gemini` — Next Tasks
+| # | Task | Depends On | Description |
+|---|------|------------|-------------|
+| 1 | **2.4** 7-Stage StageSelector | — | Add Istik to EvolutionStage, StageSelector, JourneyContext, create /istik route |
+| 2 | **2.7** Unified Card variants | — | Implement sprout, tree, istik card variants |
+| 3 | **3.1** Seed Stage content | — | Create SeedView with Deep Earth theme, seed concepts into DB |
+| 4 | **3.2** Sprout Redefinition | — | Redefine Sprout as "Emergent Properties", new concepts in DB |
+
+### `@swarm` (Claude Flow) — Next Tasks
+| # | Task | Depends On | Description |
+|---|------|------------|-------------|
+| 1 | **5.1+5.2** Fruits+Orchard parallel | — | Both are independent, can run concurrently |
+| 2 | **3.1+3.2** Seed+Sprout content | — | Content population can run in parallel |
+
+### Coordination Rules
+- **Concept SDK is SPOT** — all agents MUST use `lib/concepts/api.ts`, never query Supabase directly from components
+- **Mock data** — when adding new stage concepts, also add mock entries to `lib/concepts/mock-data.ts`
+- **Translations** — every concept MUST have both EN and ET translations
+- **DB inserts** — use `supabase/migrations/` files, not ad-hoc SQL
+- **No hardcoded content** — all new content goes through the Concept Object system
 
 ---
 
@@ -91,29 +127,29 @@
 
 > **Goal:** Build the unified data architecture that all stages will use. Ref: VISION_AND_STRATEGY.md Decision 7.
 
-- [ ] **2.1 Supabase Schema: Concept Object Tables** `@opus` `@gemini` P0
-    > Create the foundational database schema for the unified concept system.
-    - [ ] 2.1.1 Create `concepts` table (id, stage, category, complexity, parent_id, sort_order, visual_type, icon, color, related_program_id, is_published)
-    - [ ] 2.1.2 Create `concept_translations` table (concept_id, locale, title, subtitle, explanation, metaphor, question, deep_dive, completion_message, hint)
-    - [ ] 2.1.3 Create `concept_relationships` table (source_id, target_id, relationship, strength)
-    - [ ] 2.1.4 Add RLS policies for public read access
-    - [ ] 2.1.5 Create indexes on (stage, sort_order) and (concept_id, locale)
+- [x] **2.1 Supabase Schema: Concept Object Tables** `@opus` DONE
+    > Evolved existing tables + created `concept_relationships`. Migration: `20260202_concept_objects.sql`
+    - [x] 2.1.1 ALTER `concepts` table: added stage (enum), parent_id, sort_order, visual_type, icon, color, related_program_id, is_published, timestamps
+    - [x] 2.1.2 ALTER `concept_translations` table: added subtitle, deep_dive, completion_message, hint
+    - [x] 2.1.3 CREATE `concept_relationships` table (source_id, target_id, relationship, strength)
+    - [x] 2.1.4 RLS policies for public read on all 3 tables
+    - [x] 2.1.5 Indexes on (stage, sort_order), (parent_id), (locale), (source_id), (target_id)
 
-- [ ] **2.2 TypeScript SDK: Concept API** `@opus` `@gemini` P0
-    > Build the client-side SDK for querying concepts.
-    - [ ] 2.2.1 Create `lib/concepts/types.ts` — `Concept`, `Stage`, `ConceptRelationship` types
-    - [ ] 2.2.2 Create `lib/concepts/api.ts` — `getConceptsByStage()`, `getConcept()`, `getConceptWithRelated()`, `getConceptsByIds()`
-    - [ ] 2.2.3 Create `lib/concepts/mock-data.ts` — Mock fallback data matching DB shape
-    - [ ] 2.2.4 Create server action `actions/getConcepts.ts` with Supabase query + mock fallback
-    - [ ] 2.2.5 Unit tests for SDK functions
+- [x] **2.2 TypeScript SDK: Concept API** `@opus` DONE
+    > `lib/concepts/` — types, api, mock-data, index barrel export + server actions
+    - [x] 2.2.1 `lib/concepts/types.ts` — Concept, ConceptWithRelated, EvolutionStage, ConceptVisualType
+    - [x] 2.2.2 `lib/concepts/api.ts` — getConceptsByStage(), getConcept(), getConceptWithRelated(), getConceptsByIds()
+    - [x] 2.2.3 `lib/concepts/mock-data.ts` — DNA concepts EN+ET matching DB shape
+    - [x] 2.2.4 `actions/getConcepts.ts` — server actions wrapping SDK
+    - [ ] 2.2.5 Unit tests for SDK functions (deferred — tracked in icebox)
 
-- [ ] **2.3 DNA Migration to Concept Objects** `@opus` P1
-    > Proof of concept: Migrate DNA's 4 concepts to the new schema.
-    - [ ] 2.3.1 Seed `concepts` table with tokenization, embeddings, attention, prediction (stage='dna')
-    - [ ] 2.3.2 Seed `concept_translations` for EN + ET
-    - [ ] 2.3.3 Update `getDNAContent()` to use new SDK (with fallback to mock)
-    - [ ] 2.3.4 Verify DNAView renders correctly with new data source
-    - [ ] 2.3.5 Remove old `MOCK_DNA_DATA` from `getDNAContent.ts`
+- [x] **2.3 DNA Migration to Concept Objects** `@opus` DONE
+    > getDNAContent() now uses getConceptsByStage('dna'). 75-line mock block removed.
+    - [x] 2.3.1 DB already has tokenization, embeddings, attention, prediction (stage='dna' backfilled)
+    - [x] 2.3.2 concept_translations EN + ET already seeded
+    - [x] 2.3.3 getDNAContent() rewritten to use Concept SDK with mock fallback
+    - [x] 2.3.4 Build passes, DNAView renders with new data source
+    - [x] 2.3.5 Old MOCK_DNA_DATA removed (now in lib/concepts/mock-data.ts)
 
 - [ ] **2.4 StageSelector: 7-Stage Update** `@gemini` `@opus` P1
     > Add Istik to the navigation system.
