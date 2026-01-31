@@ -218,14 +218,26 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                 })}
             </svg>
 
-            {/* Legend */}
+            {/* Legend + Tap Hint */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: weights.length * 0.15 + 0.5 }}
-                className="mt-1 text-[10px] font-mono uppercase tracking-widest text-brand-teal/40"
+                className="mt-1 flex flex-col items-center gap-1"
             >
-                thickness = importance
+                <span className="text-[10px] font-mono uppercase tracking-widest text-brand-teal/40">
+                    thickness = importance
+                </span>
+                {selectedToken === null && (
+                    <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: [0.4, 0.8, 0.4] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        className="text-[10px] font-mono text-brand-teal/60"
+                    >
+                        tap a word to spotlight connections
+                    </motion.span>
+                )}
             </motion.div>
         </div>
     );

@@ -12,6 +12,7 @@ import { useParams } from 'next/navigation';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { useState } from 'react';
 import { SeedTransition } from './SeedTransition';
+import { Check, ArrowRight } from 'lucide-react';
 
 interface DNAComponentCardProps {
     title: string;
@@ -22,8 +23,24 @@ interface DNAComponentCardProps {
     onCardClick?: () => void;
 }
 
+const STEP_COMPLETE_MESSAGES: Record<DNAStep, string> = {
+    tokenization: 'Text tokenized! Each piece has a unique ID.',
+    vectorizing: 'Tokens vectorized! Similar words cluster together.',
+    attention: 'Attention mapped! See which words connect.',
+    prediction: 'Prediction complete! Check the top candidate.',
+    idle: ''
+};
+
+const STEP_HINT_MESSAGES: Record<DNAStep, string> = {
+    tokenization: '',
+    vectorizing: '',
+    attention: 'Tap a token to see its connections',
+    prediction: '',
+    idle: ''
+};
+
 export function DNAComponentCard({ title, description, metaphor, color, index, onCardClick }: DNAComponentCardProps) {
-    const { currentStep, inputText, tokens, subTokens, vectors, predictions, attentionWeights, hasData } = useDNA();
+    const { currentStep, inputText, tokens, subTokens, vectors, predictions, attentionWeights, hasData, completedSteps } = useDNA();
     const params = useParams();
     const locale = params.locale as string;
     const t = useTranslations('dna.card');
@@ -46,6 +63,7 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
 
     const myStep = stepMap[index];
     const isActive = currentStep === myStep;
+    const isCompleted = completedSteps.has(myStep);
     const deepDiveLabel = t('deepDive');
 
     return (
@@ -70,9 +88,30 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
 
             {/* Card Content */}
             <GlassCard
-                className={`relative flex-1 p-5 md:p-6 pt-8 md:pt-10 transition-all duration-500 ${isActive ? 'border-brand-teal/50 ring-1 ring-brand-teal/50 bg-brand-teal/5' : ''}`}
+                className={`relative flex-1 p-5 md:p-6 pt-8 md:pt-10 transition-all duration-500 ${
+                    isActive
+                        ? 'border-2 border-brand-teal/60 ring-2 ring-brand-teal/30 bg-brand-teal/5'
+                        : isCompleted
+                            ? 'border-green-500/30 bg-green-500/5'
+                            : 'border-white/10'
+                }`}
                 intensity={isActive ? "high" : "low"}
             >
+                {/* Completion Badge */}
+                <AnimatePresence>
+                    {isCompleted && !isActive && (
+                        <motion.div
+                            initial={{ scale: 0, rotate: -180 }}
+                            animate={{ scale: 1, rotate: 0 }}
+                            exit={{ scale: 0 }}
+                            transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                            className="absolute top-3 right-3 w-7 h-7 rounded-full bg-green-500/20 border-2 border-green-500/60 flex items-center justify-center z-20"
+                        >
+                            <Check size={14} className="text-green-400" strokeWidth={3} />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
                 <div className="mb-4">
                     <h3 className="text-xl md:text-2xl font-bold text-white mb-2" style={{ textShadow: isActive ? `0 0 20px ${color}` : 'none' }}>
                         {title}
@@ -146,12 +185,41 @@ export function DNAComponentCard({ title, description, metaphor, color, index, o
                         )}
                     </AnimatePresence>
 
-                    {/* Deep Dive Button (Triggers Seed Transition) - 48px minimum touch target */}
+                    {/* Step Complete Message (shown on card when step finishes) */}
+                    <AnimatePresence>
+                        {isCompleted && !isActive && STEP_COMPLETE_MESSAGES[myStep] && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0 }}
+                                className="mt-3 px-3 py-2 rounded-lg bg-green-500/10 border border-green-500/20"
+                            >
+                                <p className="text-xs font-mono text-green-400/90">
+                                    {STEP_COMPLETE_MESSAGES[myStep]}
+                                </p>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* Tap Hint (e.g. "Tap a token to see connections" for Attention step) */}
+                    {isActive && STEP_HINT_MESSAGES[myStep] && (
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 1.5 }}
+                            className="mt-3 text-center text-[11px] font-mono text-brand-teal/50 uppercase tracking-wider"
+                        >
+                            {STEP_HINT_MESSAGES[myStep]}
+                        </motion.p>
+                    )}
+
+                    {/* Deep Dive Button - 48px minimum touch target */}
                     <button
                         onClick={() => setIsTransitioning(true)}
-                        className={`mt-6 inline-flex items-center min-h-[48px] px-3 py-2 text-xs font-bold tracking-wider transition-all border-b border-transparent hover:border-current ${isActive ? 'text-white' : 'text-brand-teal hover:text-brand-cyan'
+                        className={`mt-4 inline-flex items-center gap-1.5 min-h-[48px] px-3 py-2 text-xs font-bold tracking-wider transition-all border-b border-transparent hover:border-current ${isActive ? 'text-white' : 'text-brand-teal hover:text-brand-cyan'
                             } cursor-pointer bg-transparent -ml-3`}
                     >
+                        <ArrowRight size={14} />
                         {deepDiveLabel}
                     </button>
                 </div>

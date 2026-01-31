@@ -95,12 +95,12 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-center mb-6 md:mb-16 relative z-20"
+                        className="text-center mb-4 md:mb-16 relative z-20"
                     >
-                        <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-3 md:mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-white to-brand-cyan drop-shadow-[0_0_15px_rgba(56,189,248,0.3)]">
+                        <h1 className="text-2xl sm:text-4xl md:text-7xl font-bold mb-2 md:mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-white to-brand-cyan drop-shadow-[0_0_15px_rgba(56,189,248,0.3)]">
                             {t('header.title')}
                         </h1>
-                        <p className="text-base sm:text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+                        <p className="text-sm sm:text-lg md:text-2xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
                             {t('header.subtitle')}
                         </p>
                     </motion.header>
@@ -128,7 +128,7 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                             {content.map((item, index) => (
                                 <div
                                     key={item.concept_id}
-                                    className="min-w-[90vw] snap-center scroll-mt-28 md:min-w-0 md:scroll-mt-0"
+                                    className="min-w-[85vw] snap-center scroll-mt-28 md:min-w-0 md:scroll-mt-0"
                                 >
                                     <DNAComponentCard
                                         title={item.title}

@@ -88,9 +88,10 @@ export function DNAInput() {
                         <input
                             type="text"
                             value={inputText}
-                            onChange={(e) => setInputText(e.target.value)}
+                            onChange={(e) => { if (e.target.value.length <= 500) setInputText(e.target.value); }}
                             onKeyDown={handleKeyDown}
                             disabled={isPlaying}
+                            maxLength={500}
                             placeholder={t('placeholder')}
                             className="w-full bg-transparent border-none focus:ring-0 text-white placeholder-gray-500 text-lg py-3 px-4 disabled:opacity-50"
                         />

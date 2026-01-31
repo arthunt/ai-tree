@@ -36,6 +36,25 @@
     - [x] Stage labels ET+EN (DNA/Seed/Sprout/Tree/Fruits/Orchard).
     - [x] FloatingInput placeholder & labels.
     - [x] Mobile navigation hints.
+- [ ] **1.6 DNA Mobile UX Overhaul** `@opus` `@swarm` 🔄 IN PROGRESS
+    > Based on specialist review: [`docs/UX_RECOMMENDATIONS.md`](./UX_RECOMMENDATIONS.md)
+    - [ ] **P0 — Critical**
+        - [ ] 1.6.1 Step completion badge + contextual message on cards (`DNAComponentCard`)
+        - [ ] 1.6.2 Always-visible step nav — show dimmed when no data (`DNAStepNav`)
+        - [ ] 1.6.3 Enlarge nav touch targets (36→44px) + show step names (`DNAStepNav`)
+        - [ ] 1.6.4 Input length validation — maxLength 500 + counter (`DNAInput`)
+    - [ ] **P1 — High Impact**
+        - [ ] 1.6.5 Card visual states: active/complete/inactive with distinct borders
+        - [ ] 1.6.6 Token tap hint on cards + instructional text (`AttentionSpotlight`)
+        - [ ] 1.6.7 Card peek view — show 15% of next card (85vw)
+        - [ ] 1.6.8 Reduce mobile header prominence (h1 → text-2xl, subtitle → text-sm)
+    - [ ] **P2 — Polish** (deferred)
+        - [ ] 1.6.9 `prefers-reduced-motion` support
+        - [ ] 1.6.10 Metaphor text prominence increase
+        - [ ] 1.6.11 Re-accessible help button for MicroLesson
+        - [ ] 1.6.12 Confirm destructive reset action
+        - [ ] 1.6.13 Display current input text in DNAStepNav
+        - [ ] 1.6.14 Clarify "Deep Dive" → "Learn More About [Step]"
 
 - [ ] **2.3 Sprout Level Content** `@gemini` ✅ DONE
     - [x] Create `/sprout` page.

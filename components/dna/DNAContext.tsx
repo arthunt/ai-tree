@@ -29,6 +29,7 @@ interface DNAContextType {
     // Derived State
     isComplete: boolean;       // True when simulation finished (ran through all steps)
     hasData: boolean;          // True when tokens/vectors/etc. are populated
+    completedSteps: Set<DNAStep>; // Steps that have been visited/completed
 
     // Actions
     runSimulation: () => void;
@@ -58,6 +59,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const [playbackSpeed, setPlaybackSpeed] = useState(0.5); // Default to slower 0.5x as per US-152
     const [activeLesson, setActiveLesson] = useState<DNAStep | null>(null);
     const [isComplete, setIsComplete] = useState(false);
+    const [completedSteps, setCompletedSteps] = useState<Set<DNAStep>>(new Set());
 
     const [tokens, setTokens] = useState<string[]>([]);
     const [subTokens, setSubTokens] = useState<string[]>([]);
@@ -180,6 +182,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         const nextIndex = STEP_ORDER.indexOf(currentStep) + 1;
         if (nextIndex < STEP_ORDER.length) {
             const next = STEP_ORDER[nextIndex];
+            setCompletedSteps(prev => new Set(prev).add(currentStep));
             setCurrentStep(next);
             if (stepTimerRef.current) clearTimeout(stepTimerRef.current);
             if (next === 'idle') {
@@ -243,6 +246,8 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         const duration = BASE_STEP_DURATION / playbackSpeed;
 
         stepTimerRef.current = setTimeout(() => {
+            // Mark current step as completed before advancing
+            setCompletedSteps(prev => new Set(prev).add(currentStep));
             setCurrentStep(nextStepName);
             if (nextStepName === 'idle') {
                 setIsPlaying(false);
@@ -261,6 +266,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         setIsPlaying(false);
         setIsPaused(false);
         setIsComplete(false);
+        setCompletedSteps(new Set());
         setTokens([]);
         setSubTokens([]);
         setVectors([]);
@@ -293,6 +299,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             predictions,
             isComplete,
             hasData,
+            completedSteps,
             runSimulation,
             resetSimulation,
             nextStep,

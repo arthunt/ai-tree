@@ -28,7 +28,7 @@ interface DNAStepNavProps {
 const BASE_STEP_DURATION = 4000;
 
 export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
-    const { currentStep, nextStep, jumpToStep, isPlaying, isPaused, hasData, isComplete, playbackSpeed } = useDNA();
+    const { currentStep, nextStep, jumpToStep, isPlaying, isPaused, hasData, isComplete, playbackSpeed, completedSteps } = useDNA();
     const [progress, setProgress] = useState(0);
 
     const currentIndex = ACTIVE_STEPS.indexOf(currentStep);
@@ -67,14 +67,14 @@ export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
         }
     };
 
-    // Only show when simulation has data
-    if (!hasData) return null;
+    // Always visible — dimmed when no data
+    const navOpacity = hasData ? 'opacity-100' : 'opacity-30 pointer-events-none';
 
     return (
         <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="sticky top-0 z-40 md:hidden"
+            className={`sticky top-0 z-40 md:hidden ${navOpacity} transition-opacity`}
         >
             <div className="flex flex-col bg-black/80 backdrop-blur-xl border-b border-white/10">
                 {/* Main row: breadcrumbs + action */}
@@ -83,22 +83,22 @@ export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
                     <div className="flex items-center gap-1">
                         {ACTIVE_STEPS.map((step, i) => {
                             const isCurrent = currentStep === step;
-                            const isPast = currentIndex > i;
+                            const isPast = completedSteps.has(step);
                             return (
                                 <div key={step} className="flex items-center">
                                     <button
                                         onClick={() => handleStepClick(step, i)}
                                         className={`
-                                            w-9 h-9 rounded-lg text-xs font-bold font-mono transition-all flex items-center justify-center
+                                            w-11 h-11 rounded-lg text-xs font-bold font-mono transition-all flex items-center justify-center
                                             ${isCurrent
                                                 ? 'bg-brand-teal text-black shadow-[0_0_12px_rgba(45,212,191,0.4)]'
                                                 : isPast
-                                                    ? 'bg-white/15 text-brand-teal/80'
+                                                    ? 'bg-green-500/20 text-green-400 border border-green-500/30'
                                                     : 'bg-white/5 text-white/30'
                                             }
                                         `}
                                     >
-                                        {isPast ? <Check size={14} /> : STEP_LABELS[step]}
+                                        {isPast && !isCurrent ? <Check size={14} /> : STEP_LABELS[step]}
                                     </button>
                                     {i < ACTIVE_STEPS.length - 1 && (
                                         <ChevronRight size={12} className={`mx-0.5 ${isPast || isCurrent ? 'text-brand-teal/50' : 'text-white/15'}`} />
@@ -113,7 +113,9 @@ export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
                         !isLastStep ? (
                             <button
                                 onClick={handleNext}
-                                className="flex items-center gap-1.5 px-4 py-2 min-h-[40px] rounded-lg bg-brand-teal/20 hover:bg-brand-teal/30 border border-brand-teal/30 text-brand-teal text-sm font-bold transition-all active:scale-95"
+                                className={`flex items-center gap-1.5 px-4 py-2 min-h-[44px] rounded-lg bg-brand-teal/20 hover:bg-brand-teal/30 border border-brand-teal/30 text-brand-teal text-sm font-bold transition-all active:scale-95 ${
+                                    progress > 85 ? 'animate-pulse shadow-[0_0_16px_rgba(45,212,191,0.4)]' : ''
+                                }`}
                             >
                                 Next
                                 <SkipForward size={14} />
@@ -121,14 +123,14 @@ export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
                         ) : (
                             <button
                                 onClick={handleNext}
-                                className="flex items-center gap-1.5 px-4 py-2 min-h-[40px] rounded-lg bg-brand-teal text-black text-sm font-bold transition-all active:scale-95"
+                                className="flex items-center gap-1.5 px-4 py-2 min-h-[44px] rounded-lg bg-brand-teal text-black text-sm font-bold transition-all active:scale-95"
                             >
                                 Finish
                                 <Check size={14} />
                             </button>
                         )
                     ) : (
-                        <div className="flex items-center gap-1.5 px-4 py-2 min-h-[40px] rounded-lg bg-brand-teal/10 border border-brand-teal/20 text-brand-teal/60 text-sm font-bold">
+                        <div className="flex items-center gap-1.5 px-4 py-2 min-h-[44px] rounded-lg bg-brand-teal/10 border border-brand-teal/20 text-brand-teal/60 text-sm font-bold">
                             <Check size={14} /> Done
                         </div>
                     )}
@@ -146,21 +148,27 @@ export function DNAStepNav({ onScrollToCard }: DNAStepNavProps) {
                     </div>
                 )}
 
-                {/* Step label */}
-                <div className="flex items-center justify-between px-3 py-1 border-t border-white/5">
-                    <span className="text-[10px] text-white/40 font-mono uppercase tracking-wider">
-                        Step {stepCount > 0 ? stepCount : 1} of {ACTIVE_STEPS.length}
-                        {currentStep !== 'idle' && ` · ${STEP_NAMES[currentStep]}`}
-                    </span>
+                {/* Step label with name */}
+                <div className="flex items-center justify-between px-3 py-1.5 border-t border-white/5">
+                    <div className="flex flex-col">
+                        <span className="text-[11px] text-white/50 font-mono uppercase tracking-wider">
+                            Step {stepCount > 0 ? stepCount : 1} of {ACTIVE_STEPS.length}
+                        </span>
+                        {currentStep !== 'idle' && (
+                            <span className="text-xs text-brand-teal/80 font-semibold mt-0.5">
+                                {STEP_NAMES[currentStep]}
+                            </span>
+                        )}
+                    </div>
                     {isPlaying && !isPaused && (
-                        <span className="text-[10px] text-brand-teal/60 font-mono flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-brand-teal animate-pulse" />
+                        <span className="text-[11px] text-brand-teal/60 font-mono flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-brand-teal animate-pulse" />
                             Playing
                         </span>
                     )}
                     {isPaused && (
-                        <span className="text-[10px] text-white/40 font-mono">
-                            Paused · Tap card to explore
+                        <span className="text-[11px] text-white/40 font-mono">
+                            Paused
                         </span>
                     )}
                 </div>
