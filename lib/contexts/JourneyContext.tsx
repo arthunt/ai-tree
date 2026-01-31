@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-export type EvolutionStage = 'dna' | 'seed' | 'sprout' | 'tree' | 'forest';
+export type EvolutionStage = 'dna' | 'seed' | 'sprout' | 'tree' | 'fruits' | 'orchard';
 
 interface JourneyContextType {
     currentStage: EvolutionStage;
@@ -27,12 +27,14 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
     const getStageFromUrl = (): EvolutionStage => {
         if (pathname?.includes('/dna')) return 'dna';
         if (pathname?.includes('/seed')) return 'seed';
+        if (pathname?.includes('/sprout')) return 'sprout';
         if (pathname?.includes('/tree-view')) {
             // Check query params if we want to be specific, but for now default to 'tree'
             // and let the component logic decide based on zoom level if it wants to be 'sprout'
             return 'tree';
         }
-        if (pathname?.includes('/forest')) return 'forest';
+        if (pathname?.includes('/fruits')) return 'fruits';
+        if (pathname?.includes('/orchard')) return 'orchard';
         return 'dna'; // Default
     };
 
@@ -78,6 +80,8 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
                 if (!pathname?.includes('/seed')) router.push(`/${locale}/seed`);
                 break;
             case 'sprout':
+                if (!pathname?.includes('/sprout')) router.push(`/${locale}/sprout`);
+                break;
             case 'tree':
                 if (!pathname?.includes('/tree-view')) {
                     const intentParam = intent ? `?intent=${intent}` : '';
@@ -87,8 +91,11 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
                 // The TreeView component listens to `targetStage` from this context 
                 // and adjusts its Zoom/LOD accordingly.
                 break;
-            case 'forest':
-                if (!pathname?.includes('/forest')) router.push(`/${locale}/forest`);
+            case 'fruits':
+                if (!pathname?.includes('/fruits')) router.push(`/${locale}/fruits`);
+                break;
+            case 'orchard':
+                if (!pathname?.includes('/orchard')) router.push(`/${locale}/orchard`);
                 break;
         }
 

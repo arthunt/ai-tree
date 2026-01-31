@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Dna, CircleDot, Sprout, TreeDeciduous, LayoutGrid } from 'lucide-react';
+import { Dna, CircleDot, Sprout, TreeDeciduous, Cherry, LayoutGrid } from 'lucide-react';
 import { useJourney, EvolutionStage } from '@/lib/contexts/JourneyContext';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,8 @@ const STAGES: { id: EvolutionStage; label: string; icon: React.ElementType }[] =
     { id: 'seed', label: 'Seed', icon: CircleDot },
     { id: 'sprout', label: 'Sprout', icon: Sprout },
     { id: 'tree', label: 'Tree', icon: TreeDeciduous },
-    { id: 'forest', label: 'Forest', icon: LayoutGrid }, // Enabled
+    { id: 'fruits', label: 'Fruits', icon: Cherry },
+    { id: 'orchard', label: 'Orchard', icon: LayoutGrid },
 ];
 
 export function StageSelector() {
@@ -22,10 +23,10 @@ export function StageSelector() {
     const isEvolutionaryPage =
         pathname?.includes('/dna') ||
         pathname?.includes('/seed') ||
-        pathname?.includes('/tree-view') ||
         pathname?.includes('/sprout') ||
-        pathname?.includes('/forest') ||
-        pathname?.includes('/proto');
+        pathname?.includes('/tree-view') ||
+        pathname?.includes('/fruits') ||
+        pathname?.includes('/orchard');
 
     if (!isEvolutionaryPage) return null;
 

@@ -48,7 +48,9 @@
       "roots": "~25 min",
       "trunk": "~30 min",
       "branches": "~35 min",
-      "leaves": "~30 min"
+      "leaves": "~30 min",
+      "fruits": "~20 min",
+      "orchard": "~15 min"
     }
   },
   "treeView": {
@@ -67,6 +69,8 @@
     "trunkLabel": "2. Trunk",
     "branchesLabel": "3. Branches",
     "leavesLabel": "4. Leaves",
+    "fruitsLabel": "5. Fruits",
+    "orchardLabel": "6. Orchard",
     "introducedLabel": "Introduced",
     "keyPaperLabel": "Key Paper",
     "masterSkillLabel": "Master This Skill",
@@ -229,7 +233,9 @@
       "roots": "Roots",
       "trunk": "Trunk",
       "branches": "Branches",
-      "leaves": "Leaves"
+      "leaves": "Leaves",
+      "fruits": "Fruits",
+      "orchard": "Orchard"
     }
   },
   "journey": {
@@ -273,7 +279,9 @@
       "roots": "Roots",
       "trunk": "Trunk",
       "branches": "Branches",
-      "leaves": "Leaves"
+      "leaves": "Leaves",
+      "fruits": "Fruits",
+      "orchard": "Orchard"
     }
   },
   "skillSelector": {
