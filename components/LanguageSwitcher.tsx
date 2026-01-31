@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { useLanguage, type AvailableLanguageTag } from '@/context/LanguageContext';
-import * as m from '@/paraglide/messages';
 
 const locales: AvailableLanguageTag[] = ['et', 'en'];
 
@@ -27,7 +26,7 @@ export function LanguageSwitcher() {
                 ? 'text-white'
                 : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
             }`}
-            aria-label={locale === 'et' ? m.navigation_switchToEstonian() : m.navigation_switchToEnglish()}
+            aria-label={locale === 'et' ? 'Lülitu eesti keelele' : 'Switch to English'}
             aria-current={isActive ? 'true' : undefined}
             type="button"
           >
