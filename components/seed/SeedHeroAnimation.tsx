@@ -101,9 +101,9 @@ export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
                         className="absolute inset-0 flex flex-col items-center justify-center p-6"
                     >
                         <h3 className="text-amber-500 font-mono text-xs uppercase tracking-widest mb-2">{i18n.selectData}</h3>
-                        <p className="text-stone-400 text-xs text-center mb-6 max-w-[250px]">{i18n.selectDataHelp}</p>
+                        <p className="text-stone-400 text-[10px] md:text-xs text-center mb-4 md:mb-6 max-w-[250px]">{i18n.selectDataHelp}</p>
 
-                        <div className="flex flex-wrap justify-center gap-4 mb-8">
+                        <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-4 md:mb-8">
                             {DATA_SOURCES.map((source) => {
                                 const isSelected = selectedSources.has(source.id);
                                 return (
@@ -111,18 +111,18 @@ export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
                                         key={source.id}
                                         onClick={() => toggleSource(source.id)}
                                         className={cn(
-                                            "flex flex-col items-center justify-center w-28 h-28 rounded-xl border transition-all duration-300 group relative overflow-hidden",
+                                            "flex flex-col items-center justify-center w-20 h-20 md:w-28 md:h-28 rounded-xl border transition-all duration-300 group relative overflow-hidden",
                                             isSelected
                                                 ? "bg-amber-900/40 border-amber-500 text-amber-100 shadow-[0_0_15px_rgba(245,158,11,0.2)] transform scale-105"
                                                 : "bg-stone-900/40 border-stone-800 text-stone-500 hover:border-amber-900/50 hover:bg-stone-800/60"
                                         )}
                                     >
                                         <div className="absolute inset-0 bg-gradient-to-tr from-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        {isSelected && <div className="absolute top-2 right-2 text-amber-400"><Check size={14} /></div>}
+                                        {isSelected && <div className="absolute top-1 right-1 md:top-2 md:right-2 text-amber-400"><Check size={12} className="md:w-3.5 md:h-3.5" /></div>}
 
-                                        <Database size={24} className="mb-2" style={{ color: isSelected ? source.color : 'inherit' }} />
-                                        <span className="text-xs font-bold">{source.label}</span>
-                                        <span className="text-[10px] opacity-60 mt-1">{source.size}</span>
+                                        <Database className="mb-1 md:mb-2 w-5 h-5 md:w-6 md:h-6" style={{ color: isSelected ? source.color : 'inherit' }} />
+                                        <span className="text-[10px] md:text-xs font-bold">{source.label}</span>
+                                        <span className="text-[9px] md:text-[10px] opacity-60 mt-0.5 md:mt-1">{source.size}</span>
                                     </button>
                                 );
                             })}
@@ -131,9 +131,9 @@ export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
                         <button
                             onClick={startProcessing}
                             disabled={selectedSources.size === 0}
-                            className="flex items-center gap-2 px-8 py-3 rounded-full bg-amber-600 hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed text-stone-950 font-bold text-sm transition-all shadow-lg hover:shadow-amber-900/20 active:scale-95"
+                            className="flex items-center gap-2 px-6 py-2 md:px-8 md:py-3 rounded-full bg-amber-600 hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed text-stone-950 font-bold text-xs md:text-sm transition-all shadow-lg hover:shadow-amber-900/20 active:scale-95"
                         >
-                            <Upload size={16} />
+                            <Upload className="w-3 h-3 md:w-4 md:h-4" />
                             {i18n.ingestData}
                         </button>
                     </motion.div>
