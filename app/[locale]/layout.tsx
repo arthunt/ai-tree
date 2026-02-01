@@ -22,7 +22,7 @@ export function generateStaticParams() {
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://dendrix.ai';
 
 // Metadata translations (loaded statically since ParaglideJS compiles to functions)
-const metadataTranslations = {
+const metadataTranslations: Record<string, { title: string; description: string; keywords: string[] }> = {
   et: {
     title: 'AI Teadmiste Puu | Dendrix.ai',
     description: 'Terviklik interaktiivne raamistik AI kontseptide õpetamiseks ja mõistmiseks.',
@@ -32,6 +32,11 @@ const metadataTranslations = {
     title: 'AI Knowledge Tree | Dendrix.ai',
     description: 'Comprehensive interactive framework for teaching and understanding AI concepts.',
     keywords: ['AI', 'artificial intelligence', 'machine learning', 'education', 'AI training', 'Dendrix'],
+  },
+  ru: {
+    title: 'Дерево Знаний ИИ | Dendrix.ai',
+    description: 'Комплексная интерактивная платформа для изучения и понимания концепций искусственного интеллекта.',
+    keywords: ['ИИ', 'искусственный интеллект', 'машинное обучение', 'образование', 'обучение ИИ', 'Dendrix'],
   },
 };
 
@@ -52,12 +57,13 @@ export async function generateMetadata({
       languages: {
         et: `${BASE_URL}/et`,
         en: `${BASE_URL}/en`,
+        ru: `${BASE_URL}/ru`,
         'x-default': `${BASE_URL}/et`,
       },
     },
     openGraph: {
       type: 'website',
-      locale: locale === 'et' ? 'et_EE' : 'en_US',
+      locale: locale === 'et' ? 'et_EE' : locale === 'ru' ? 'ru_RU' : 'en_US',
       url: `${BASE_URL}/${locale}`,
       title: meta.title,
       description: meta.description,

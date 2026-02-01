@@ -324,7 +324,7 @@ export default function AITreePage() {
                         ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700'
                       }`}
-                    aria-label={loc === 'et' ? t('navigation.switchToEstonian') : t('navigation.switchToEnglish')}
+                    aria-label={`Switch to ${loc.toUpperCase()}`}
                     aria-current={loc === displayLocale ? 'true' : undefined}
                     type="button"
                   >

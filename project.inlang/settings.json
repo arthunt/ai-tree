@@ -3,12 +3,14 @@
   "baseLocale": "en",
   "locales": [
     "en",
-    "et"
+    "et",
+    "ru"
   ],
   "sourceLanguageTag": "en",
   "languageTags": [
     "en",
-    "et"
+    "et",
+    "ru"
   ],
   "modules": [
     "https://cdn.jsdelivr.net/npm/@inlang/plugin-message-format@2/dist/index.js"

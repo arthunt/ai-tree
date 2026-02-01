@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import treeData from '@/data/tree-concepts.json';
 import { TreeData } from '@/lib/types';
 import { ConceptPageClient } from './ConceptPageClient';
+import { availableLanguageTags } from '@/paraglide/runtime';
 
 const data = treeData as TreeData;
 
@@ -12,10 +13,9 @@ interface Props {
 
 // Generate static params for all concepts
 export async function generateStaticParams() {
-  const locales = ['et', 'en'];
   const params: { locale: string; conceptId: string }[] = [];
 
-  for (const locale of locales) {
+  for (const locale of availableLanguageTags) {
     for (const concept of data.concepts) {
       params.push({ locale, conceptId: concept.id });
     }
@@ -37,6 +37,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const title = locale === 'et'
     ? `${concept.title} | AI Teadmiste Puu`
+    : locale === 'ru'
+    ? `${concept.title} | Дерево Знаний ИИ`
     : `${concept.title} | AI Knowledge Tree`;
 
   const description = concept.metaphor;
@@ -51,6 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         et: `${baseUrl}/et/concept/${conceptId}`,
         en: `${baseUrl}/en/concept/${conceptId}`,
+        ru: `${baseUrl}/ru/concept/${conceptId}`,
         'x-default': `${baseUrl}/et/concept/${conceptId}`,
       },
     },
@@ -58,8 +61,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: `${baseUrl}/${locale}/concept/${conceptId}`,
-      siteName: locale === 'et' ? 'AI Teadmiste Puu' : 'AI Knowledge Tree',
-      locale: locale === 'et' ? 'et_EE' : 'en_US',
+      siteName: locale === 'et' ? 'AI Teadmiste Puu' : locale === 'ru' ? 'Дерево Знаний ИИ' : 'AI Knowledge Tree',
+      locale: locale === 'et' ? 'et_EE' : locale === 'ru' ? 'ru_RU' : 'en_US',
       type: 'article',
     },
     twitter: {

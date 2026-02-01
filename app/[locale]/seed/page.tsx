@@ -1,14 +1,12 @@
 import SeedView from '@/components/seed/SeedView';
 import { GlobalNav } from '@/components/GlobalNav';
+import { availableLanguageTags } from '@/paraglide/runtime';
 
 // ISR: revalidate every 60s so new concepts appear quickly
 export const revalidate = 60;
 
 export function generateStaticParams() {
-    return [
-        { locale: 'en' },
-        { locale: 'et' }
-    ];
+    return availableLanguageTags.map(locale => ({ locale }));
 }
 
 export const metadata = {

@@ -39,7 +39,7 @@ export function LanguageProvider({ children, initialLocale }: LanguageProviderPr
 
     // Navigate to the new locale path
     const segments = pathname.split('/');
-    if (segments[1] === 'et' || segments[1] === 'en') {
+    if (availableLanguageTags.includes(segments[1] as AvailableLanguageTag)) {
       segments[1] = newLocale;
     } else {
       segments.splice(1, 0, newLocale);
@@ -53,7 +53,7 @@ export function LanguageProvider({ children, initialLocale }: LanguageProviderPr
   const value: LanguageContextType = {
     locale: currentLocale,
     setLocale,
-    availableLocales: ['en', 'et'] as const,
+    availableLocales: availableLanguageTags,
   };
 
   return (

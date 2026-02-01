@@ -2,15 +2,13 @@ import { FruitsView } from '@/components/fruits/FruitsView';
 import { GlobalNav } from '@/components/GlobalNav';
 import { getStageContent } from '@/actions/getConcepts';
 import { getRelatedConceptsForStage } from '@/lib/concepts/api';
+import { availableLanguageTags } from '@/paraglide/runtime';
 
 // ISR: revalidate every 60s so new concepts appear quickly
 export const revalidate = 60;
 
 export function generateStaticParams() {
-    return [
-        { locale: 'en' },
-        { locale: 'et' }
-    ];
+    return availableLanguageTags.map(locale => ({ locale }));
 }
 
 export const metadata = {

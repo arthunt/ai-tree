@@ -3,14 +3,12 @@ import { TreeViewContent } from './TreeViewContent';
 import { TreeDiagramSkeleton } from '@/components/TreeDiagramSkeleton';
 import { Metadata } from 'next';
 import { getTreeContent } from '@/actions/getTreeContent';
+import { availableLanguageTags } from '@/paraglide/runtime';
 
 export const revalidate = 60;
 
 export function generateStaticParams() {
-    return [
-        { locale: 'en' },
-        { locale: 'et' }
-    ];
+    return availableLanguageTags.map(locale => ({ locale }));
 }
 
 export const metadata: Metadata = {

@@ -1,13 +1,11 @@
 import { DNAView } from '@/components/dna/DNAView';
 import { getStageContent } from '@/actions/getConcepts';
+import { availableLanguageTags } from '@/paraglide/runtime';
 
 export const revalidate = 60;
 
 export function generateStaticParams() {
-    return [
-        { locale: 'en' },
-        { locale: 'et' }
-    ];
+    return availableLanguageTags.map(locale => ({ locale }));
 }
 
 export const metadata = {
