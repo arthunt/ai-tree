@@ -1,19 +1,19 @@
 /**
  * ParaglideJS i18n utilities for AI Tree
- * 
+ *
  * This file provides language utilities and re-exports from paraglide.
- * 
+ *
  * Usage in components:
  * ```tsx
  * import * as m from '@/paraglide/messages'
  * import { languageTag, setLanguageTag, availableLanguageTags } from '@/lib/paraglide'
- * 
+ *
  * // Get translation
  * <h1>{m.header_title()}</h1>
- * 
+ *
  * // Get current language
  * const lang = languageTag()
- * 
+ *
  * // Switch language
  * setLanguageTag('et')
  * ```
@@ -30,17 +30,17 @@ export {
 } from '@/paraglide/runtime'
 
 // Type for available languages
-export type AvailableLanguageTag = 'en' | 'et'
+export type AvailableLanguageTag = 'en' | 'et' | 'ru'
 
 // Locale configuration
-export const locales = ['en', 'et'] as const
+export const locales = ['en', 'et', 'ru'] as const
 export const defaultLocale = 'et' as const
 
 // Helper to get locale from pathname
 export function getLocaleFromPathname(pathname: string): AvailableLanguageTag {
   const segments = pathname.split('/')
   const locale = segments[1]
-  if (locale === 'en' || locale === 'et') {
+  if (locale === 'en' || locale === 'et' || locale === 'ru') {
     return locale
   }
   return defaultLocale
@@ -50,7 +50,7 @@ export function getLocaleFromPathname(pathname: string): AvailableLanguageTag {
 export function createLocalizedPathname(pathname: string, locale: AvailableLanguageTag): string {
   const segments = pathname.split('/')
   // Check if first segment is a locale
-  if (segments[1] === 'en' || segments[1] === 'et') {
+  if (segments[1] === 'en' || segments[1] === 'et' || segments[1] === 'ru') {
     segments[1] = locale
     return segments.join('/')
   }
@@ -62,10 +62,12 @@ export function createLocalizedPathname(pathname: string, locale: AvailableLangu
 export const languageNames: Record<AvailableLanguageTag, string> = {
   en: 'English',
   et: 'Eesti',
+  ru: 'Русский',
 }
 
 // Language display names (native)
 export const languageNamesNative: Record<AvailableLanguageTag, string> = {
   en: 'English',
   et: 'Eesti keel',
+  ru: 'Русский язык',
 }

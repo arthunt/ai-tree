@@ -65,6 +65,16 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         completion_message: 'Tekst tokeniseeritud! Igal tükil on unikaalne ID.',
         hint: 'Proovi sisestada lause, et näha, kuidas see tokeniteks jagatakse.',
       },
+      ru: {
+        title: 'Токенизация',
+        explanation:
+          'Входной текст разбивается на маленькие фрагменты — токены. Это базовые единицы смысла для ИИ — как кусочки пазла, которые вместе складываются в полную картину.',
+        metaphor:
+          'Как нарезка овощей для рагу — целые ингредиенты превращаются в кусочки, с которыми можно работать по рецепту.',
+        question: 'Как машина начинает читать?',
+        completion_message: 'Текст токенизирован! У каждого фрагмента есть уникальный ID.',
+        hint: 'Попробуйте ввести предложение, чтобы увидеть, как оно разбивается на токены.',
+      },
     },
   },
   {
@@ -97,6 +107,16 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         question: 'Kuidas tehisintellekt mõistab sõnade tähendust?',
         completion_message: 'Vektorid kaardistatud! Sõnadel on nüüd koordinaadid tähendusruumis.',
         hint: 'Jälgi, kuidas tokenid muutuvad numbriteks.',
+      },
+      ru: {
+        title: 'Векторные представления',
+        explanation:
+          'Каждый токен преобразуется в список чисел, отражающих его значение в многомерном пространстве. Слова с похожими значениями оказываются рядом, формируя карту языка.',
+        metaphor:
+          'Как GPS-координаты для идей — «король» и «королева» рядом, а «король» и «банан» — на разных континентах.',
+        question: 'Как ИИ понимает значение слов?',
+        completion_message: 'Векторы построены! Слова теперь имеют координаты в пространстве смыслов.',
+        hint: 'Посмотрите, как токены превращаются в массивы чисел.',
       },
     },
   },
@@ -131,6 +151,16 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         completion_message: 'Tähelepanu arvutatud! Mudel näeb, kuidas sõnad seostuvad.',
         hint: 'Vaata, millised sõnad üksteisele tähelepanu pööravad.',
       },
+      ru: {
+        title: 'Механизм внимания',
+        explanation:
+          'Модель анализирует связь каждого токена с каждым другим токеном во входных данных. Это позволяет понимать контекст — знать, что «коса» означает разное в «русая коса» и «речная коса».',
+        metaphor:
+          'Как прожектор в тёмной комнате — он подсвечивает связи между словами, показывая, какие из них важнее всего друг для друга.',
+        question: 'Как модель понимает контекст?',
+        completion_message: 'Внимание рассчитано! Модель видит, как слова связаны между собой.',
+        hint: 'Посмотрите, какие слова обращают внимание друг на друга.',
+      },
     },
   },
   {
@@ -164,6 +194,16 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         completion_message: 'Ennustamine lõpetatud! Tehisintellekt on genereerinud oma vastuse.',
         hint: 'Vaata iga järgmise sõna tõenäosusi.',
       },
+      ru: {
+        title: 'Предсказание',
+        explanation:
+          'На основе всего собранного контекста модель вычисляет вероятность каждого возможного следующего токена. Она выбирает наиболее вероятный (или «творчески» пробует) и повторяет — по одному токену выстраивая ответ.',
+        metaphor:
+          'Как автодополнение на максимуме — вместо одного слова взвешиваются тысячи вариантов на основе всего изученного.',
+        question: 'Как ИИ генерирует текст?',
+        completion_message: 'Предсказание завершено! ИИ сгенерировал свой ответ.',
+        hint: 'Посмотрите вероятности для каждого следующего слова.',
+      },
     },
   },
 
@@ -193,6 +233,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         metaphor: 'Nagu kokkamine pärast 1000 retsepti järgimist — suudad improviseerida roa mis iganes külmkapis on.',
         question: 'Kuidas saab see vastata küsimustele, mille jaoks seda ei treenitud?',
       },
+      ru: {
+        title: 'Обобщение',
+        subtitle: 'Эмерджентное свойство',
+        explanation: 'После обучения на миллионах примеров модель развивает способность справляться с ситуациями, которых никогда не видела. Это эмерджентное свойство — применение изученных паттернов в новых контекстах — делает ИИ по-настоящему полезным, а не просто справочной таблицей.',
+        metaphor: 'Как научиться готовить по 1000 рецептам, а потом импровизировать из того, что есть в холодильнике.',
+        question: 'Как ИИ отвечает на вопросы, которых не было в обучении?',
+      },
     },
   },
   {
@@ -219,6 +266,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Kontekstiaken on tekstihulk, mida mudel suudab korraga töödelda — selle töömälu. Kõik, mis jääb aknast välja, unustatakse. Suuremad aknad võimaldavad sidusemaid vestlusi, kuid nõuavad rohkem arvutusvõimsust.',
         metaphor: 'Nagu sinu lühimälu vestluse ajal — kui keegi räägib tundide kaupa, hakkad unustama, mida alguses öeldi.',
         question: 'Miks AI mõnikord unustab, mida sa varem ütlesid?',
+      },
+      ru: {
+        title: 'Контекстное окно',
+        subtitle: 'Рабочая память',
+        explanation: 'Контекстное окно — это объём текста, который модель может учитывать одновременно, её рабочая память. Всё за пределами окна забывается. Большее окно позволяет вести более связные разговоры, но требует больше вычислений.',
+        metaphor: 'Как кратковременная память во время разговора — если собеседник говорит часами, вы начинаете забывать, что было сказано вначале.',
+        question: 'Почему ИИ иногда забывает, что вы сказали ранее?',
       },
     },
   },
@@ -247,6 +301,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         metaphor: 'Nagu unenägu, kus kõik tundub päris, aga pole — mudel ennustab sõnu, mitte ei kontrolli fakte.',
         question: 'Miks see mõnikord mõtleb asju välja?',
       },
+      ru: {
+        title: 'Галлюцинация',
+        subtitle: 'Уверенные ошибки',
+        explanation: 'Иногда модель генерирует текст, который звучит авторитетно, но фактически неверен. Это происходит потому, что модель предсказывает вероятные следующие токены, а не проверенные факты. У неё нет понятия истины — только правдоподобия.',
+        metaphor: 'Как сон, в котором всё выглядит реальным, но таковым не является — модель предсказывает слова, а не проверяет факты.',
+        question: 'Почему ИИ иногда выдумывает?',
+      },
     },
   },
   {
@@ -273,6 +334,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Temperatuur kontrollib, kui seiklushimuline on mudel järgmise sõna valimisel. Madal temperatuur (0,1) paneb valima tõenäoliseima variandi — ohutu ja ennustatav. Kõrge temperatuur (1,5) laseb uurida ebatõenäolisi variante — loov, aga riskantne.',
         metaphor: 'Nagu muusiku improvisatsiooni "metsikuse" nupu reguleerimine — keera madalaks truu koopia jaoks, kõrgeks eksperimentaalse džässi jaoks.',
         question: 'Kuidas sa kontrollid, kui loov või täpne AI on?',
+      },
+      ru: {
+        title: 'Температура и сэмплирование',
+        subtitle: 'Управление креативностью',
+        explanation: 'Температура контролирует, насколько «дерзко» модель выбирает следующее слово. Низкая температура (0,1) заставляет выбирать наиболее вероятный вариант — безопасно и предсказуемо. Высокая температура (1,5) позволяет исследовать маловероятные варианты — творчески, но рискованно.',
+        metaphor: 'Как регулировка «дикости» импровизации музыканта — убавьте для точного кавера, прибавьте для экспериментального джаза.',
+        question: 'Как управлять тем, насколько креативен или точен ИИ?',
       },
     },
   },
@@ -301,6 +369,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         metaphor: 'Nagu sinu aju ei salvesta sõbra fotot — see salvestab abstraktse tunde, kes nad on, nende isiksus, nende hääl.',
         question: 'Mida mudel tegelikult "teab" seestpoolt?',
       },
+      ru: {
+        title: 'Внутренние представления',
+        subtitle: 'Скрытое понимание',
+        explanation: 'Внутри своих слоёв модель строит абстрактные представления понятий — не просто слова, а связи, категории и иерархии. Эти внутренние карты позволяют ей «понимать», что Париж относится к Франции так же, как Токио к Японии.',
+        metaphor: 'Как ваш мозг не хранит фото друга — он хранит абстрактное ощущение того, кто этот человек, его характер, его голос.',
+        question: 'Что модель на самом деле «знает» внутри?',
+      },
     },
   },
   {
@@ -328,6 +403,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         metaphor: 'Nagu juhiste andmine hiilgavale praktikandile — mida selgem ja täpsem sinu ülesanne, seda parem tulemus.',
         question: 'Kuidas saad AI-lt parimaid tulemusi?',
       },
+      ru: {
+        title: 'Промптинг',
+        subtitle: 'Управление моделью',
+        explanation: 'Промптинг — это искусство составления входных данных, которые направляют модель к нужному результату. Чёткая структура, назначение ролей и примеры значительно улучшают качество ответов. Одна и та же модель может быть гениальной или бесполезной в зависимости от промпта.',
+        metaphor: 'Как давать инструкции блестящему стажёру — чем яснее и конкретнее задание, тем лучше результат.',
+        question: 'Как получить от ИИ наилучшие результаты?',
+      },
     },
   },
 
@@ -354,6 +436,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Massiivine tekstikogu, mida kasutatakse tehisintellekti mudeli õpetamiseks, sisaldades triljoneid sõnu raamatutest ja veebist.',
         metaphor: 'Kogu inimteadmiste raamatukogu.',
       },
+      ru: {
+        title: 'Обучающий набор данных',
+        explanation: 'Огромная коллекция текстов для обучения модели ИИ, содержащая триллионы слов из книг, веб-сайтов и кода.',
+        metaphor: 'Библиотека всех человеческих знаний.',
+      },
     },
   },
   {
@@ -376,6 +463,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         title: 'Common Crawl',
         explanation: 'Avatud veebiandmete arhiiv, mis moodustab suure osa LLM-ide treeningmaterjalist.',
         metaphor: 'Internetist tehtud hetktõmmis.',
+      },
+      ru: {
+        title: 'Common Crawl',
+        explanation: 'Открытый архив веб-данных, составляющий значительную часть обучающих данных для языковых моделей.',
+        metaphor: 'Снимок всего интернета.',
       },
     },
   },
@@ -400,6 +492,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Mitmekesine ja kureeritud andmestik, mis on loodud mudeli üldistusvõime parandamiseks.',
         metaphor: 'Hoolikalt tasakaalustatud toitumine.',
       },
+      ru: {
+        title: 'The Pile',
+        explanation: 'Разнообразный курируемый набор данных, созданный для улучшения способности модели к обобщению в разных областях.',
+        metaphor: 'Тщательно сбалансированный рацион.',
+      },
     },
   },
   {
@@ -423,6 +520,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Duplikaatide, vormindamisvigade ja madalakvaliteedilise teksti eemaldamine andmestikust.',
         metaphor: 'Vee filtreerimine enne pudelisse villimist.',
       },
+      ru: {
+        title: 'Очистка данных',
+        explanation: 'Процесс удаления дубликатов, ошибок форматирования и низкокачественного текста из набора данных.',
+        metaphor: 'Фильтрация воды перед розливом.',
+      },
     },
   },
   {
@@ -445,6 +547,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         title: 'Andmete Kallutatus',
         explanation: 'Ajaloolised ja sotsiaalsed eelarvamused treeningandmetes, mida mudel võib õppida kordama.',
         metaphor: 'Kui raamatukogus on vaid vanad raamatud, õpib tudeng vanu ideid.',
+      },
+      ru: {
+        title: 'Предвзятость данных',
+        explanation: 'Исторические и социальные предрассудки в обучающих данных, которые модель может научиться воспроизводить.',
+        metaphor: 'Если в библиотеке только старые книги, студент усвоит устаревшие идеи.',
       },
     },
   },
@@ -471,6 +578,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Matemaatiline viis arvutada, kui kaugel on mudeli ennustus tegelikust eesmärgist.',
         metaphor: 'Mäng "soe või külm".',
       },
+      ru: {
+        title: 'Функция потерь',
+        explanation: 'Математический способ вычислить, насколько предсказание модели отличается от правильного ответа.',
+        metaphor: 'Обратная связь в игре «горячо-холодно».',
+      },
     },
   },
   {
@@ -493,6 +605,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         title: 'Tagasilevi',
         explanation: 'Algoritm, mis uuendab mudeli kaalusid vastavalt kaofunktsiooni arvutatud veale.',
         metaphor: 'Löögi korrigeerimine pärast möödalasku.',
+      },
+      ru: {
+        title: 'Обратное распространение',
+        explanation: 'Алгоритм, который обновляет веса модели на основе ошибки, вычисленной функцией потерь.',
+        metaphor: 'Корректировка удара после промаха.',
       },
     },
   },
@@ -517,6 +634,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Tuhanded GPU-d, mis töötavad paralleelselt andmestiku töötlemiseks.',
         metaphor: 'Superajude tehas.',
       },
+      ru: {
+        title: 'Вычислительный кластер',
+        explanation: 'Тысячи GPU, работающих параллельно для обработки огромного набора данных и обновления модели.',
+        metaphor: 'Фабрика суперразумов.',
+      },
     },
   },
   {
@@ -540,6 +662,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Üks täielik läbimine läbi kogu treeningandmestiku.',
         metaphor: 'Õpiku kaanest kaaneni läbilugemine ühe korra.',
       },
+      ru: {
+        title: 'Эпохи',
+        explanation: 'Один полный проход по всему обучающему набору данных.',
+        metaphor: 'Прочитать учебник от корки до корки один раз.',
+      },
     },
   },
   {
@@ -562,6 +689,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         title: 'Ülesobitamine',
         explanation: 'Kui mudel jätab treeningandmed meelde selle asemel, et õppida üldisi mustreid.',
         metaphor: 'Vastuste päheõppimine aine mõistmise asemel.',
+      },
+      ru: {
+        title: 'Переобучение',
+        explanation: 'Когда модель запоминает обучающие данные вместо того, чтобы учиться обобщать, и плохо работает на новых данных.',
+        metaphor: 'Зубрить ответы вместо понимания предмета.',
       },
     },
   },
@@ -588,6 +720,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Reguleeritavad arvud mudeli sees, mis määravad, kuidas sisendsignaale töödeldakse.',
         metaphor: 'Keerulise masina seadistusnupud.',
       },
+      ru: {
+        title: 'Веса (параметры)',
+        explanation: 'Настраиваемые числа внутри модели, которые определяют, как обрабатываются входные сигналы.',
+        metaphor: 'Регуляторы на сложной машине.',
+      },
     },
   },
   {
@@ -610,6 +747,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         title: 'Baasmudel',
         explanation: 'Toores, eeltreenitud mudel enne peenhäälestamist spetsiifilisteks ülesanneteks.',
         metaphor: 'Geniaalne tudeng, kes teab fakte, kuid ei oska veel suhelda.',
+      },
+      ru: {
+        title: 'Базовая модель',
+        explanation: 'Необработанная предобученная модель до тонкой настройки для конкретных задач вроде чата или программирования.',
+        metaphor: 'Блестящий студент, знающий факты, но не умеющий общаться.',
       },
     },
   },
@@ -634,6 +776,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Mudeli salvestatud hetkeseisud treeningu ajal.',
         metaphor: 'Automaatne salvestamine videomängus.',
       },
+      ru: {
+        title: 'Контрольные точки',
+        explanation: 'Снимки состояния модели, сохраняемые на разных этапах обучения для предотвращения потери данных.',
+        metaphor: 'Автосохранение в видеоигре.',
+      },
     },
   },
   {
@@ -656,6 +803,11 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         title: 'Hindamine',
         explanation: 'Mudeli testimine andmetel, mida see pole varem näinud.',
         metaphor: 'Lõpueksam.',
+      },
+      ru: {
+        title: 'Оценка',
+        explanation: 'Тестирование модели на отложенном наборе данных, которых она раньше не видела, для измерения реальной производительности.',
+        metaphor: 'Выпускной экзамен.',
       },
     },
   },
@@ -688,6 +840,14 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         question: 'Mis juhtub, kui sa AI-lt midagi küsid?',
         hint: 'Proovi kõigepealt lihtsat küsimust, seejärel midagi keerulisemat.',
       },
+      ru: {
+        title: 'Первый промпт',
+        subtitle: 'Модуль 1',
+        explanation: 'Введите свой первый запрос к ИИ и посмотрите на результат. Поймите прямую причинно-следственную связь между вводом и выводом.',
+        metaphor: 'Как посадить первое семя — вы даёте инструкции, модель обеспечивает рост.',
+        question: 'Что происходит, когда вы спрашиваете ИИ?',
+        hint: 'Начните с простого вопроса, потом попробуйте что-то сложнее.',
+      },
     },
   },
   {
@@ -716,6 +876,14 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         metaphor: 'Nagu savi vormimine — iga läbimine täiustab kuju, kuni see vastab sinu visioonile.',
         question: 'Kuidas väikesed muutused viibas viivad suurte muutusteni väljundis?',
         hint: 'Proovi lisada "samm-sammult" või "stiilis", et näha erinevust.',
+      },
+      ru: {
+        title: 'Улучшение промпта',
+        subtitle: 'Модуль 2',
+        explanation: 'Одна задача, три попытки. Посмотрите, как итерация промпта улучшает результат — добавление контекста, структуры и примеров.',
+        metaphor: 'Как лепка из глины — каждый проход уточняет форму, пока она не совпадёт с вашим замыслом.',
+        question: 'Как маленькие изменения в промпте приводят к большим изменениям в результате?',
+        hint: 'Попробуйте добавить «пошагово» или «в стиле», чтобы увидеть разницу.',
       },
     },
   },
@@ -746,6 +914,14 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         question: 'Mis juhtub, kui keeread loovuse nuppu üles?',
         hint: 'Proovi temperatuuri 0,1 vs 1,5 sama viibaga.',
       },
+      ru: {
+        title: 'Температура и управление',
+        subtitle: 'Модуль 3',
+        explanation: 'Настройте температуру, top-p и максимальное число токенов. Посмотрите, как параметры меняют креативность, фокус и длину вывода ИИ в реальном времени.',
+        metaphor: 'Как смешивание коктейля — пропорции ингредиентов полностью меняют вкус.',
+        question: 'Что происходит, когда вы повышаете креативность?',
+        hint: 'Попробуйте температуру 0,1 против 1,5 на одном и том же промпте.',
+      },
     },
   },
   {
@@ -774,6 +950,14 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         metaphor: 'Nagu toidukriitik — sa õpid maitsma kriitiliselt, mitte lihtsalt sööma kõike, mida pakutakse.',
         question: 'Kuidas eristada head AI väljundit halvast?',
         hint: 'Otsi kõhklevat keelt, põhjendamata väiteid ja puuduvat konteksti.',
+      },
+      ru: {
+        title: 'Оценка результата',
+        subtitle: 'Модуль 4',
+        explanation: 'Научитесь оценивать качество вывода ИИ по трём измерениям: точность (верно ли это?), релевантность (отвечает ли на вопрос?) и безопасность (уместно ли это?).',
+        metaphor: 'Как ресторанный критик — вы учитесь пробовать критически, а не просто есть всё, что подают.',
+        question: 'Как отличить хороший вывод ИИ от плохого?',
+        hint: 'Ищите уклончивые формулировки, необоснованные утверждения и недостаток контекста.',
       },
     },
   },
@@ -804,6 +988,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         metaphor: 'Puutüve aastarõngad — iga kiht räägib erineva ajastu lugu.',
         question: 'Miks kulus AI-l 70 aastat, et kasulikuks saada?',
       },
+      ru: {
+        title: 'История ИИ',
+        subtitle: 'Корни',
+        explanation: 'От статьи Тьюринга 1950 года до современных трансформеров — ключевые вехи, «зимы» и прорывы, сформировавшие область.',
+        metaphor: 'Годичные кольца ствола — каждый слой рассказывает историю своей эпохи.',
+        question: 'Почему ИИ понадобилось 70 лет, чтобы стать полезным?',
+      },
     },
   },
   {
@@ -830,6 +1021,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: '"Attention is All You Need" arhitektuur, mis revolutsiooniliselt muutis keeletöötlust. Kodeerija-dekodeerija struktuur mitmepeamise tähelepanu ja positsiooniline kodeeringuga.',
         metaphor: 'Tüvi, mis toetab iga oksa — ilma selleta poleks kaasaegset AI-d.',
         question: 'Mis teeb transformerid paremaks varasematest lähenemistest?',
+      },
+      ru: {
+        title: 'Архитектура трансформера',
+        subtitle: 'Ствол',
+        explanation: 'Архитектура «Attention is All You Need», совершившая революцию в обработке языка. Структура кодер-декодер с многоголовым вниманием и позиционным кодированием.',
+        metaphor: 'Ствол, поддерживающий каждую ветвь — без него не было бы современного ИИ.',
+        question: 'Что делает трансформеры лучше предыдущих подходов?',
       },
     },
   },
@@ -858,6 +1056,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         metaphor: 'Nagu tudeng, kes kontrollib oma märkmeid enne vastamist — vähendades hallutsinatsioone faktidele toetudes.',
         question: 'Kuidas muuta AI vastused usaldusväärsemaks?',
       },
+      ru: {
+        title: 'RAG (генерация с поиском)',
+        subtitle: 'Ветви',
+        explanation: 'Сочетание языковой модели с поиском внешних знаний — модель ищет в базе данных перед генерацией, привязывая ответ к реальным данным.',
+        metaphor: 'Как студент, проверяющий конспекты перед ответом — снижает галлюцинации, опираясь на факты.',
+        question: 'Как сделать ответы ИИ более надёжными?',
+      },
     },
   },
   {
@@ -884,6 +1089,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Eeltreenitud baasmudeli edasine treenimine domeenispetsiifiliste andmetega. RLHF, LoRA ja juhiste häälestamine on võtmetehnikad.',
         metaphor: 'Nagu üldlaarsti saatmine spetsialiseeruma — sama alus, aga nüüd ekspert ühes valdkonnas.',
         question: 'Kuidas muuta üldmudel oma valdkonna eksperdiks?',
+      },
+      ru: {
+        title: 'Тонкая настройка',
+        subtitle: 'Ветви',
+        explanation: 'Дообучение предобученной базовой модели на данных конкретной области. RLHF, LoRA и настройка инструкций — ключевые техники.',
+        metaphor: 'Как отправить терапевта на специализацию — та же основа, но теперь эксперт в одной области.',
+        question: 'Как сделать общую модель экспертом в вашей области?',
       },
     },
   },
@@ -912,6 +1124,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         metaphor: 'Nagu töötaja palkamine konsultandi asemel — agendid ei nõusta ainult, vaid tegutsevad.',
         question: 'Mis juhtub, kui AI saab kasutada tööriistu ja otsuseid iseseisvalt vastu võtta?',
       },
+      ru: {
+        title: 'ИИ-агенты',
+        subtitle: 'Ветви',
+        explanation: 'Автономные системы, использующие языковые модели для планирования, рассуждения и выполнения многоэтапных задач. Использование инструментов, память и самокоррекция — ключевые возможности.',
+        metaphor: 'Как нанять сотрудника вместо консультанта — агенты не просто советуют, а действуют.',
+        question: 'Что происходит, когда ИИ может использовать инструменты и принимать решения самостоятельно?',
+      },
     },
   },
   {
@@ -938,6 +1157,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Mitme spetsialiseeritud mudeli kombineerimine — üks teksti, üks piltide, üks koodi jaoks — ühtseks torujuhtmeks, mis on suurem kui osade summa.',
         metaphor: 'Nagu džässiansambel — iga pill mängib oma osa, aga koos loovad nad midagi, mida ükski soolo ei suudaks.',
         question: 'Miks kasutada mitut mudelit ühe asemel?',
+      },
+      ru: {
+        title: 'Мультимодельные системы',
+        subtitle: 'Листья',
+        explanation: 'Объединение нескольких специализированных моделей — одна для текста, одна для изображений, одна для кода — в единый конвейер, который мощнее суммы частей.',
+        metaphor: 'Как джазовый ансамбль — каждый инструмент играет свою партию, но вместе они создают то, чего не достичь соло.',
+        question: 'Зачем использовать несколько моделей вместо одной?',
       },
     },
   },
@@ -966,6 +1192,12 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Tehisintellektiga loominguline kirjutamisassistent. Loo lugusid, luuletusi ja stsenaariume kontekstiteadlike soovitustega.',
         metaphor: 'Nagu kaasautor, kellel ei saa ideed kunagi otsa — sina juhid ja tema täidab loovad lüngad.',
       },
+      ru: {
+        title: 'AIKI',
+        subtitle: 'Творчество',
+        explanation: 'Творческий помощник для написания текстов на базе ИИ. Генерирует истории, стихи и сценарии с контекстно-зависимыми предложениями.',
+        metaphor: 'Как соавтор, у которого никогда не заканчиваются идеи — вы ведёте, а он заполняет творческие пробелы.',
+      },
     },
   },
   {
@@ -990,6 +1222,12 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         subtitle: 'Heli',
         explanation: 'Häälsünteesi ja heliloome mootor. Loo elutruu kõne tekstist mitmes keeles.',
         metaphor: 'Nagu näitleja, kes räägib iga keelt — muuda iga tekst loomulikuks, väljendusrikkaks kõneks.',
+      },
+      ru: {
+        title: 'AIVO',
+        subtitle: 'Аудио',
+        explanation: 'Движок синтеза речи и генерации звука. Создаёт реалистичную речь из текста на нескольких языках.',
+        metaphor: 'Как актёр озвучки, говорящий на любом языке — превращает любой текст в естественную выразительную речь.',
       },
     },
   },
@@ -1016,6 +1254,12 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         explanation: 'Intelligentne koodi täiendamise ja ümbertöötlemise tööriist. Toetab TypeScripti, Pythonit ja Rusti.',
         metaphor: 'Nagu paariprogrammeerimine eksperdiga — see loeb sinu kavatsust ja kirjutab teostuse.',
       },
+      ru: {
+        title: 'CodeGen',
+        subtitle: 'Разработка',
+        explanation: 'Интеллектуальный инструмент для автодополнения и рефакторинга кода. Поддерживает TypeScript, Python и Rust.',
+        metaphor: 'Как парное программирование с экспертом — он читает ваш замысел и пишет реализацию.',
+      },
     },
   },
   {
@@ -1040,6 +1284,12 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         subtitle: 'Visuaal',
         explanation: 'Tekst-pildiks genereerimise torujuhe. Loo vapustavaid visuaale loomuliku keele kirjeldustest.',
         metaphor: 'Nagu maalikunstnik, kes mõistab sõnu — kirjelda, mida näed oma meeles, ja see ilmub lõuendile.',
+      },
+      ru: {
+        title: 'Visionary',
+        subtitle: 'Визуал',
+        explanation: 'Конвейер генерации изображений из текста. Создавайте потрясающие визуалы из описаний на естественном языке.',
+        metaphor: 'Как художник, понимающий слова — опишите то, что видите мысленно, и оно появится на холсте.',
       },
     },
   },
@@ -1070,6 +1320,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         metaphor: 'Nagu meisterehitaja, kes konstrueerib aju — sina disainid mõtleva närvivõrgu arhitektuuri.',
         hint: '$120k - $250k',
       },
+      ru: {
+        title: 'Инженер ИИ',
+        subtitle: 'Инженерия',
+        explanation: 'Создание и развёртывание моделей для интеллектуальных приложений. Требуется Python, PyTorch/TensorFlow.',
+        metaphor: 'Как главный инженер, конструирующий мозг — вы проектируете нейронную архитектуру, которая думает.',
+        hint: '$120k - $250k',
+      },
     },
   },
   {
@@ -1095,6 +1352,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         subtitle: 'Disain / Loogika',
         explanation: 'Loo ja optimeeri juhiseid, mis suunavad keelemudeleid soovitud väljunditeni. Nõuab kõrget loovust.',
         metaphor: 'Nagu dirigent, kes juhib orkestrit — õiged juhised toovad keerukusest harmooniat.',
+        hint: '$90k - $180k',
+      },
+      ru: {
+        title: 'Архитектор промптов',
+        subtitle: 'Дизайн / Логика',
+        explanation: 'Создание и оптимизация инструкций, направляющих языковые модели к нужному результату. Требуется высокая креативность.',
+        metaphor: 'Как дирижёр, управляющий оркестром — правильные инструкции извлекают гармонию из сложности.',
         hint: '$90k - $180k',
       },
     },
@@ -1124,6 +1388,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         metaphor: 'Nagu arheoloog, kes sõelub kihte — mustrid kerkivad esile tohututest toorandmetest.',
         hint: '$110k - $200k',
       },
+      ru: {
+        title: 'Специалист по данным',
+        subtitle: 'Наука',
+        explanation: 'Анализ огромных наборов данных для поиска закономерностей и обучения прогнозных моделей.',
+        metaphor: 'Как археолог, просеивающий слои — закономерности проступают из гор необработанных данных.',
+        hint: '$110k - $200k',
+      },
     },
   },
   {
@@ -1151,6 +1422,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         metaphor: 'Nagu aia valvur — tagades, et iga kasvatatud vili on tervislik ja toitev.',
         hint: '$100k - $190k',
       },
+      ru: {
+        title: 'Этик ИИ',
+        subtitle: 'Политика',
+        explanation: 'Обеспечение справедливости, непредвзятости и безопасности систем ИИ для человечества.',
+        metaphor: 'Как хранитель сада — следит, чтобы каждый выращенный плод был здоровым и полезным.',
+        hint: '$100k - $190k',
+      },
     },
   },
   {
@@ -1176,6 +1454,13 @@ export const MOCK_CONCEPTS: MockConcept[] = [
         subtitle: 'Operatsioonid',
         explanation: 'Halda infrastruktuuri ja torujuhtmeid, mis hoiavad AI mudeleid tootmises töös.',
         metaphor: 'Nagu peainsener, kes hoiab elektrijaama töös — mudelid on kasulikud ainult siis, kui nad püsivad võrgus.',
+        hint: '$130k - $240k',
+      },
+      ru: {
+        title: 'Специалист ML Ops',
+        subtitle: 'Операции',
+        explanation: 'Управление инфраструктурой и конвейерами, обеспечивающими работу моделей ИИ в продакшене.',
+        metaphor: 'Как главный инженер электростанции — модели полезны, только если работают непрерывно.',
         hint: '$130k - $240k',
       },
     },
