@@ -442,6 +442,58 @@ export interface Database {
           resolved_at?: string | null
         }
       }
+
+      /**
+       * Content variants for A/B testing
+       * Enables testing different content framings across locales
+       */
+      content_variants: {
+        Row: {
+          id: string
+          content_key: string
+          locale: string
+          variant_name: string
+          content: string
+          is_active: boolean
+          weight: number
+          impressions: number
+          engagements: number
+          conversions: number
+          created_at: string
+          updated_at: string
+          created_by: string | null
+        }
+        Insert: {
+          id?: string
+          content_key: string
+          locale: string
+          variant_name: string
+          content: string
+          is_active?: boolean
+          weight?: number
+          impressions?: number
+          engagements?: number
+          conversions?: number
+          created_at?: string
+          updated_at?: string
+          created_by?: string | null
+        }
+        Update: {
+          id?: string
+          content_key?: string
+          locale?: string
+          variant_name?: string
+          content?: string
+          is_active?: boolean
+          weight?: number
+          impressions?: number
+          engagements?: number
+          conversions?: number
+          created_at?: string
+          updated_at?: string
+          created_by?: string | null
+        }
+      }
     }
     Views: {
       [_ in never]: never
@@ -479,6 +531,64 @@ export interface Database {
           total_time_spent: number
         }
       }
+
+      /**
+       * Record variant impression
+       */
+      record_variant_impression: {
+        Args: {
+          p_content_key: string
+          p_locale: string
+          p_variant_name: string
+        }
+        Returns: void
+      }
+
+      /**
+       * Record variant engagement
+       */
+      record_variant_engagement: {
+        Args: {
+          p_content_key: string
+          p_locale: string
+          p_variant_name: string
+        }
+        Returns: void
+      }
+
+      /**
+       * Record variant conversion
+       */
+      record_variant_conversion: {
+        Args: {
+          p_content_key: string
+          p_locale: string
+          p_variant_name: string
+        }
+        Returns: void
+      }
+
+      /**
+       * Get variant performance metrics
+       */
+      get_variant_performance: {
+        Args: {
+          p_content_key: string
+          p_locale?: string
+        }
+        Returns: {
+          content_key: string
+          locale: string
+          variant_name: string
+          content: string
+          impressions: number
+          engagements: number
+          conversions: number
+          engagement_rate: number
+          conversion_rate: number
+          is_active: boolean
+        }[]
+      }
     }
     Enums: {
       concept_status: 'viewed' | 'completed' | 'bookmarked'
@@ -497,6 +607,7 @@ export type DNAProgress = Database['public']['Tables']['dna_progress']['Row']
 export type LearningPathProgress = Database['public']['Tables']['learning_path_progress']['Row']
 export type AnalyticsEvent = Database['public']['Tables']['analytics_events']['Row']
 export type UserFeedback = Database['public']['Tables']['user_feedback']['Row']
+export type ContentVariant = Database['public']['Tables']['content_variants']['Row']
 
 // Insert types
 export type InsertLearningSession = Database['public']['Tables']['learning_sessions']['Insert']
@@ -504,3 +615,4 @@ export type InsertConceptProgress = Database['public']['Tables']['concept_progre
 export type InsertDNAProgress = Database['public']['Tables']['dna_progress']['Insert']
 export type InsertAnalyticsEvent = Database['public']['Tables']['analytics_events']['Insert']
 export type InsertUserFeedback = Database['public']['Tables']['user_feedback']['Insert']
+export type InsertContentVariant = Database['public']['Tables']['content_variants']['Insert']
