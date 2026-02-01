@@ -27,7 +27,7 @@ export function OrchardCard({ title, description, role, salary, index, icon, met
     return (
         <div className="h-full min-h-[280px]">
             <UnifiedConceptCard
-                variant="tree"
+                variant="orchard"
                 title={title}
                 index={index}
                 isActive={false}

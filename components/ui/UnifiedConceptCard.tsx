@@ -7,7 +7,7 @@ import { Check, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { GlowingNode } from '@/components/ui/GlowingNode';
 
-export type CardVariant = 'dna' | 'seed' | 'sprout' | 'sapling' | 'tree';
+export type CardVariant = 'dna' | 'seed' | 'sprout' | 'sapling' | 'tree' | 'fruits' | 'orchard';
 
 interface UnifiedConceptCardProps {
     variant: CardVariant;
@@ -81,11 +81,33 @@ const VARIANT_STYLES: Record<CardVariant, {
     tree: {
         // Daylight: Knowledge Architecture - Distinctly lighter
         activeBorder: 'border-sky-400/60 ring-2 ring-sky-400/20',
-        activeBg: 'bg-slate-800/90', // Keep dark base for legibility but lighter tint
+        activeBg: 'bg-slate-800/90',
         completedBorder: 'border-sky-500/40',
         completedBg: 'bg-sky-900/20',
         defaultBorder: 'border-slate-600/50',
-        defaultBg: 'bg-slate-800/60', // Lighter grey/blue vs deep black
+        defaultBg: 'bg-slate-800/60',
+        nodeSizeActive: 50,
+        nodeSizeDefault: 30
+    },
+    fruits: {
+        // Warm Daylight: Applications - Amber/Orange accents on light base
+        activeBorder: 'border-orange-400/60 ring-2 ring-orange-400/20',
+        activeBg: 'bg-orange-950/40',
+        completedBorder: 'border-orange-500/40',
+        completedBg: 'bg-orange-900/20',
+        defaultBorder: 'border-orange-200/40',
+        defaultBg: 'bg-white/80',
+        nodeSizeActive: 50,
+        nodeSizeDefault: 30
+    },
+    orchard: {
+        // Golden Hour: Careers - Rose/Sunset accents on warm base
+        activeBorder: 'border-rose-400/60 ring-2 ring-rose-400/20',
+        activeBg: 'bg-rose-950/40',
+        completedBorder: 'border-rose-500/40',
+        completedBg: 'bg-rose-900/20',
+        defaultBorder: 'border-rose-200/40',
+        defaultBg: 'bg-white/80',
         nodeSizeActive: 50,
         nodeSizeDefault: 30
     }
@@ -110,10 +132,12 @@ export function UnifiedConceptCard({
     const styles = VARIANT_STYLES[variant];
     const cardColor = color || (
         variant === 'dna' ? '#00FFFF' :
-            variant === 'seed' ? '#F59E0B' : // Amber
-                variant === 'sprout' ? '#A78BFA' : // Indigo/Purple 
-                    variant === 'sapling' ? '#10B981' : // Emerald
-                        '#38BDF8' // Tree (Sky Blue for Daylight)
+            variant === 'seed' ? '#F59E0B' :     // Amber
+                variant === 'sprout' ? '#A78BFA' :    // Indigo/Purple
+                    variant === 'sapling' ? '#10B981' :   // Emerald
+                        variant === 'fruits' ? '#F97316' :    // Orange
+                            variant === 'orchard' ? '#F43F5E' :   // Rose
+                                '#38BDF8' // Tree (Sky Blue for Daylight)
     );
 
     return (

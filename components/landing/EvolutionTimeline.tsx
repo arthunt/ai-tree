@@ -1,22 +1,14 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Dna, CircleDot, Sprout, TreeDeciduous, Cherry, LayoutGrid, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { STAGES } from '@/lib/stages';
 
 interface EvolutionTimelineProps {
     locale: string;
 }
-
-const STAGES = [
-    { id: 'dna', label: 'DNA', sub: 'Mechanism', icon: Dna, color: 'text-brand-teal', bg: 'bg-brand-teal/10', glow: 'shadow-[0_0_20px_rgba(45,212,191,0.3)]', href: '/dna' },
-    { id: 'seed', label: 'Seed', sub: 'Origins', icon: CircleDot, color: 'text-blue-400', bg: 'bg-blue-500/10', glow: 'shadow-[0_0_20px_rgba(96,165,250,0.3)]', href: '/seed' },
-    { id: 'sprout', label: 'Sprout', sub: 'Foundations', icon: Sprout, color: 'text-green-400', bg: 'bg-green-500/10', glow: 'shadow-[0_0_20px_rgba(74,222,128,0.3)]', href: '/sprout' },
-    { id: 'tree', label: 'Tree', sub: 'Knowledge', icon: TreeDeciduous, color: 'text-amber-400', bg: 'bg-amber-500/10', glow: 'shadow-[0_0_20px_rgba(251,191,36,0.3)]', href: '/tree-view' },
-    { id: 'fruits', label: 'Fruits', sub: 'Capabilities', icon: Cherry, color: 'text-rose-400', bg: 'bg-rose-500/10', glow: 'shadow-[0_0_20px_rgba(251,113,133,0.3)]', href: '/fruits' },
-    { id: 'orchard', label: 'Orchard', sub: 'Ecosystem', icon: LayoutGrid, color: 'text-purple-400', bg: 'bg-purple-500/10', glow: 'shadow-[0_0_20px_rgba(192,132,252,0.3)]', href: '/orchard' },
-];
 
 export function EvolutionTimeline({ locale }: EvolutionTimelineProps) {
     return (

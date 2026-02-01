@@ -1,4 +1,5 @@
 import { OrchardView } from '@/components/orchard/OrchardView';
+import { GlobalNav } from '@/components/GlobalNav';
 import { getStageContent } from '@/actions/getConcepts';
 import { getRelatedConceptsForStage } from '@/lib/concepts/api';
 
@@ -23,5 +24,10 @@ export default async function OrchardPage({ params }: { params: Promise<{ locale
         getStageContent('orchard', locale),
         getRelatedConceptsForStage('orchard', locale, 6),
     ]);
-    return <OrchardView concepts={concepts} relatedConcepts={relatedConcepts} locale={locale} />;
+    return (
+        <>
+            <GlobalNav />
+            <OrchardView concepts={concepts} relatedConcepts={relatedConcepts} locale={locale} />
+        </>
+    );
 }

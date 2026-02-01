@@ -26,7 +26,7 @@ export function FruitsCard({ title, description, category, index, icon, metaphor
     return (
         <div className="h-full min-h-[260px]">
             <UnifiedConceptCard
-                variant="tree"
+                variant="fruits"
                 title={title}
                 index={index}
                 isActive={false} // Fruits are generally static/link cards for now

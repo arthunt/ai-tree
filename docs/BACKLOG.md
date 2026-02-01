@@ -258,9 +258,48 @@
 |---|------|--------|-------------|
 | 6.1 | Seed i18n sweep | ✅ DONE | Block B — typed i18n interfaces threaded from server to client |
 | 6.2 | ConceptDetailPanel | ✅ DONE | Block C — reusable expand wired into Seed, Fruits, Orchard |
-| 6.3 | Sapling i18n sweep | ⏳ NEXT | Replace hardcoded locale checks in SaplingView with proper message keys |
-| 6.4 | Sprout i18n audit | ⏳ NEXT | Verify all SproutView strings use translation keys |
-| 6.5 | Tree i18n audit | ⏳ NEXT | Verify TreeView/TreeExplorer use translation keys |
+| 6.3 | Sapling i18n sweep | ✅ DONE | Typed i18n interface threaded from server SaplingView to client SaplingWorkspace |
+| 6.4 | Sprout i18n audit | ✅ DONE | All SproutView strings verified — uses `useParaglideTranslations` |
+| 6.5 | Tree i18n audit | ✅ DONE | TreeExplorer, TreeDetailPanel updated — `treeExplorer.*` and `treeView.*` keys |
+| 6.6 | Full app i18n sweep | ✅ DONE | RelatedConceptsPanel, SeedHeroAnimation tuning phase — all translated |
+
+---
+
+## Phase 7: Data & UX Consistency
+
+> **Goal:** Centralize stage definitions, enforce consistent navigation across all 7 stages, standardize data fetching patterns. Ref: VISION_AND_STRATEGY.md Decision 9.
+
+- [ ] **7.1 Centralized Stage Registry** `@opus` ⏳ NEXT
+    > Ref: Decision 9a. Single source of truth for all stage metadata.
+    - [ ] 7.1.1 Create `lib/stages.ts` with STAGES array (id, label, sub, icon, color, bg, glow, href, route)
+    - [ ] 7.1.2 Update `StageSelector.tsx` to import from `lib/stages.ts`
+    - [ ] 7.1.3 Update `EvolutionTimeline.tsx` to import from `lib/stages.ts` (add missing `sapling` stage)
+    - [ ] 7.1.4 Update `JourneyContext.tsx` to import stage-to-URL mapping from `lib/stages.ts`
+
+- [ ] **7.2 GlobalNav on All Stages** `@opus` ⏳ NEXT
+    > Ref: Decision 8 navigation rules. Every stage must have GlobalNav.
+    - [ ] 7.2.1 Add GlobalNav to `seed/page.tsx` (transparent, matching Seed dark theme)
+    - [ ] 7.2.2 Add GlobalNav to `sapling/page.tsx` (transparent, matching Sapling green theme)
+    - [ ] 7.2.3 Add GlobalNav to `fruits/page.tsx` (light variant)
+    - [ ] 7.2.4 Add GlobalNav to `orchard/page.tsx` (light variant)
+
+- [ ] **7.3 StageSelector on All Stages** `@opus` ⏳ NEXT
+    > Ref: Decision 8 navigation rules. Every stage must have StageSelector.
+    - [ ] 7.3.1 Add StageSelector to `TreeViewContent.tsx`
+    - [ ] 7.3.2 Verify DNA page has StageSelector (currently inside DNAView — confirm)
+
+- [ ] **7.4 Card Variant Fixes** `@opus` `@gemini` ⏳ NEXT
+    > Ref: Decision 9c. Fruits and Orchard must not use `variant="tree"`.
+    - [ ] 7.4.1 Add `fruits` variant to `UnifiedConceptCard` (warm daylight theme: amber/orange accents)
+    - [ ] 7.4.2 Add `orchard` variant to `UnifiedConceptCard` (golden hour theme: rose/sunset accents)
+    - [ ] 7.4.3 Update `FruitsCard` to use `variant="fruits"`
+    - [ ] 7.4.4 Update `OrchardCard` to use `variant="orchard"`
+
+- [ ] **7.5 Data Fetching Standardization** `@opus` 🔜 FUTURE
+    > Ref: Decision 9b. All stages should use the same SDK pattern.
+    - [ ] 7.5.1 Migrate `getDNAContent()` to use `getConceptsByStage('dna', locale)` internally
+    - [ ] 7.5.2 Remove deprecated `getSproutContent()` (already superseded but file may remain)
+    - [ ] 7.5.3 Audit all stage pages use `getStageContent()` or `getConceptsByStage()` consistently
 
 ---
 

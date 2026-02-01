@@ -1,21 +1,10 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Dna, CircleDot, Sprout, TreeDeciduous, Cherry, LayoutGrid, Leaf } from 'lucide-react';
-import { useJourney, EvolutionStage } from '@/lib/contexts/JourneyContext';
+import { useJourney } from '@/lib/contexts/JourneyContext';
 import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-
-const STAGES: { id: EvolutionStage; label: string; icon: React.ElementType }[] = [
-    { id: 'dna', label: 'DNA', icon: Dna },
-    { id: 'seed', label: 'Seed', icon: CircleDot },
-    { id: 'sprout', label: 'Sprout', icon: Sprout },
-    { id: 'sapling', label: 'Sapling', icon: Leaf },
-    { id: 'tree', label: 'Tree', icon: TreeDeciduous },
-    { id: 'fruits', label: 'Fruits', icon: Cherry },
-    { id: 'orchard', label: 'Orchard', icon: LayoutGrid },
-];
+import { STAGES } from '@/lib/stages';
 
 export function StageSelector() {
     const { currentStage, setStage } = useJourney();

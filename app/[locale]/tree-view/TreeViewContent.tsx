@@ -12,6 +12,7 @@ import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglid
 import { useParams, useSearchParams } from 'next/navigation';
 import { getTreeContent, TreeContentSimple } from '@/actions/getTreeContent';
 import { GlobalNav } from '@/components/GlobalNav';
+import { StageSelector } from '@/components/StageSelector';
 import { TreeExplorer } from '@/components/tree/TreeExplorer';
 import { TreeDetailPanel } from '@/components/tree/TreeDetailPanel';
 
@@ -121,7 +122,8 @@ export function TreeViewContent({ initialData }: TreeViewContentProps) {
                 onClose={() => setSelectedNode(null)}
             />
 
-
+            {/* Stage Navigation */}
+            <StageSelector />
         </div>
     );
 }

@@ -1,4 +1,5 @@
 import { FruitsView } from '@/components/fruits/FruitsView';
+import { GlobalNav } from '@/components/GlobalNav';
 import { getStageContent } from '@/actions/getConcepts';
 import { getRelatedConceptsForStage } from '@/lib/concepts/api';
 
@@ -23,5 +24,10 @@ export default async function FruitsPage({ params }: { params: Promise<{ locale:
         getStageContent('fruits', locale),
         getRelatedConceptsForStage('fruits', locale, 6),
     ]);
-    return <FruitsView concepts={concepts} relatedConcepts={relatedConcepts} locale={locale} />;
+    return (
+        <>
+            <GlobalNav />
+            <FruitsView concepts={concepts} relatedConcepts={relatedConcepts} locale={locale} />
+        </>
+    );
 }

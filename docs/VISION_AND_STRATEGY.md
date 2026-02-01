@@ -336,7 +336,7 @@ The migration from hardcoded content to the Concept Object system happens in pha
 
 ---
 
-## Decision 8: StageSelector & Navigation
+## Decision 8: StageSelector & Navigation (Updated)
 
 **Verdict:** Updated for 7 stages.
 
@@ -348,6 +348,74 @@ The stage selector appears on all stage pages. Each stage has:
 - Label (localized via ParaglideJS for UI chrome)
 - Route (`/[locale]/dna`, `/[locale]/seed`, etc.)
 - Theme indicator (visual dot showing dark/dawn/light progression)
+
+### Navigation Consistency Rules
+
+Every stage page MUST include both:
+
+1. **GlobalNav** — Top bar with back navigation, language switcher, dark mode toggle. Added at the page level (server component wrapper) for consistent placement.
+2. **StageSelector** — Bottom floating pill bar showing all 7 stages with active indicator.
+
+| Stage | GlobalNav Location | StageSelector Location |
+|:---|:---|:---|
+| **DNA** | Inside `DNAView` (transparent) | Inside `DNAView` |
+| **Seed** | `seed/page.tsx` wrapper | Inside `SeedView` |
+| **Sprout** | `sprout/page.tsx` wrapper | Inside `SproutView` |
+| **Sapling** | `sapling/page.tsx` wrapper | Inside `SaplingView` |
+| **Tree** | Inside `TreeViewContent` | Inside `TreeViewContent` |
+| **Fruits** | `fruits/page.tsx` wrapper | Inside `FruitsView` |
+| **Orchard** | `orchard/page.tsx` wrapper | Inside `OrchardView` |
+
+---
+
+## Decision 9: Data & UX Consistency
+
+**Verdict:** Centralize all stage metadata, enforce consistent navigation, standardize data fetching.
+
+### 9a. Centralized Stage Registry (`lib/stages.ts`)
+
+All stage metadata (icons, labels, routes, theme colors, sub-labels) MUST be defined once in `lib/stages.ts`. Components that need stage data import from this single source. No more duplicated stage arrays in `StageSelector.tsx`, `EvolutionTimeline.tsx`, or `JourneyContext.tsx`.
+
+### 9b. Data Fetching Standards
+
+All stages MUST use the Concept Object SDK (`lib/concepts/api.ts`) for content:
+
+| Pattern | Function | When to Use |
+|:---|:---|:---|
+| Stage content | `getConceptsByStage(stage, locale)` | Default for all stages |
+| Stage content + related | `getStageContent(stage, locale)` | Wrapper with fallback (actions/getConcepts.ts) |
+| Tree nodes | `getTreeContent(locale)` | Tree-specific (nodes table) |
+| Related cross-stage | `getRelatedConceptsForStage(stage, locale)` | All stages with cross-links |
+
+**Deprecated patterns** (to be removed):
+- `getDNAContent()` — should migrate to `getConceptsByStage('dna', locale)`
+- `getSproutContent()` — already superseded
+- Direct Supabase queries from components
+
+### 9c. Card Variant Standards
+
+`UnifiedConceptCard` MUST use the correct variant per stage:
+
+| Stage | Variant | Theme |
+|:---|:---|:---|
+| DNA | `dna` | Cinematic dark, neon accents |
+| Seed | `seed` | Deep earth, amber |
+| Sprout | `sprout` | Dawn, indigo/violet |
+| Sapling | `sapling` | Morning green, emerald |
+| Tree | `tree` | Daylight, clean surfaces |
+| Fruits | `fruits` (new) | Warm daylight, amber/orange |
+| Orchard | `orchard` (new) | Golden hour, sunset/rose |
+
+### 9d. Remaining Hardcoded Data (Migration Priority)
+
+| Priority | Data | Current Location | Target |
+|:---|:---|:---|:---|
+| P0 | Stage definitions | StageSelector + EvolutionTimeline + JourneyContext | `lib/stages.ts` |
+| P1 | Learning paths | `/data/learning-paths.json` | `learning_paths` table (future) |
+| P1 | Programs | `/lib/programs/data.ts` | Already in DB (`programs` table) — sync |
+| P2 | Icon mappings | Scattered across FruitsView, OrchardView, learn page | Centralized in `lib/icons.ts` or DB `icon` field |
+| P2 | DATA_SOURCES | `/components/seed/SeedContext.tsx` | i18n keys + potential DB table |
+| P3 | Mock data | `/lib/concepts/mock-data.ts` | Keep as development fallback, auto-sync with DB |
 
 ---
 
