@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Network, Dna } from 'lucide-react';
 import Link from 'next/link';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface ViewSelectorProps {
     isOpen: boolean;
@@ -13,6 +14,7 @@ interface ViewSelectorProps {
 }
 
 export function ViewSelector({ isOpen, onClose, locale }: ViewSelectorProps) {
+    const t = useTranslations();
     if (!isOpen) return null;
 
     return (
@@ -26,8 +28,8 @@ export function ViewSelector({ isOpen, onClose, locale }: ViewSelectorProps) {
                 >
                     <GlassCard className="p-8 md:p-12 border-white/10 bg-gray-900/90" intensity="high">
                         <div className="text-center mb-10">
-                            <h2 className="text-3xl font-bold text-white mb-3">Choose Your Path</h2>
-                            <p className="text-gray-400">How do you want to explore AI today?</p>
+                            <h2 className="text-3xl font-bold text-white mb-3">{t('landing.chooseYourPath')}</h2>
+                            <p className="text-gray-400">{t('landing.exploreQuestion')}</p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -40,13 +42,13 @@ export function ViewSelector({ isOpen, onClose, locale }: ViewSelectorProps) {
                                 <div className="w-16 h-16 rounded-full bg-brand-teal/20 flex items-center justify-center mb-4 text-brand-teal group-hover:scale-110 transition-transform">
                                     <Dna size={32} />
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-2">The DNA</h3>
+                                <h3 className="text-xl font-bold text-white mb-2">{t('landing.theDna')}</h3>
                                 <p className="text-sm text-gray-400 text-center mb-4">
-                                    Quick Overview (5 min)<br />
-                                    Understand the core mechanism.
+                                    {t('landing.dnaTime')}<br />
+                                    {t('landing.dnaDesc')}
                                 </p>
                                 <span className="text-xs font-mono text-brand-teal uppercase tracking-widest border border-brand-teal/30 px-3 py-1 rounded-full">
-                                    Recommended Start
+                                    {t('landing.recommendedStart')}
                                 </span>
                             </Link>
 
@@ -58,13 +60,13 @@ export function ViewSelector({ isOpen, onClose, locale }: ViewSelectorProps) {
                                 <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mb-4 text-blue-400 group-hover:scale-110 transition-transform">
                                     <Network size={32} />
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-2">The Tree</h3>
+                                <h3 className="text-xl font-bold text-white mb-2">{t('landing.theTree')}</h3>
                                 <p className="text-sm text-gray-400 text-center mb-4">
-                                    Full Exploration (15+ min)<br />
-                                    Deep dive into all concepts.
+                                    {t('landing.treeTime')}<br />
+                                    {t('landing.treeDesc')}
                                 </p>
                                 <span className="text-xs font-mono text-blue-400 uppercase tracking-widest border border-blue-400/30 px-3 py-1 rounded-full">
-                                    Deep Dive
+                                    {t('landing.deepDive')}
                                 </span>
                             </button>
                         </div>

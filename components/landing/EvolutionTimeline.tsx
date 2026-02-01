@@ -5,12 +5,14 @@ import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { STAGES } from '@/lib/stages';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface EvolutionTimelineProps {
     locale: string;
 }
 
 export function EvolutionTimeline({ locale }: EvolutionTimelineProps) {
+    const t = useTranslations();
     return (
         <div className="w-full py-12">
             {/* Mobile: Vertical List / Desktop: Horizontal Timeline */}
@@ -49,10 +51,10 @@ export function EvolutionTimeline({ locale }: EvolutionTimelineProps) {
                             {/* Labels */}
                             <div className="text-center">
                                 <h3 className="text-lg font-bold text-white group-hover:text-brand-teal transition-colors">
-                                    {stage.label}
+                                    {t(`stages.${stage.id}`) || stage.label}
                                 </h3>
                                 <div className="flex items-center gap-1 justify-center text-xs uppercase tracking-widest text-white/40 group-hover:text-white/70 transition-colors">
-                                    <span>{stage.sub}</span>
+                                    <span>{t(`stages.sub.${stage.id}`) || stage.sub}</span>
                                     <ArrowRight size={10} className="opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                                 </div>
                             </div>

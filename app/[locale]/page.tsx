@@ -454,7 +454,7 @@ export default function AITreePage() {
             {/* Brand Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-teal/30 bg-brand-teal/5 text-brand-teal text-xs font-mono tracking-widest uppercase mb-8">
               <span className="w-2 h-2 rounded-full bg-brand-teal animate-pulse" />
-              System Online v2.1
+              {t('landing.systemBadge')}
             </div>
 
             {/* Main Headline */}
@@ -472,12 +472,12 @@ export default function AITreePage() {
               href={`/${locale}/dna`}
               className="group relative inline-flex h-16 items-center justify-center overflow-hidden rounded-full bg-brand-teal px-10 font-medium text-black shadow-[0_0_40px_rgba(45,212,191,0.4)] transition-all duration-300 hover:bg-white hover:scale-105 hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
             >
-              <span className="mr-2 text-lg font-bold">START EVOLUTION</span>
+              <span className="mr-2 text-lg font-bold">{t('landing.startEvolution')}</span>
               <ChevronRight className="transition-transform group-hover:translate-x-1" />
             </Link>
 
             <p className="mt-6 text-sm text-gray-600">
-              Begin the journey from the first token.
+              {t('landing.beginJourney')}
             </p>
           </motion.div>
 
@@ -490,7 +490,7 @@ export default function AITreePage() {
           >
             <div className="flex items-center gap-4 mb-8 justify-center opacity-50">
               <div className="h-px w-12 bg-gradient-to-r from-transparent to-white" />
-              <span className="text-xs font-mono uppercase tracking-widest text-white">Evolutionary Path</span>
+              <span className="text-xs font-mono uppercase tracking-widest text-white">{t('landing.evolutionaryPath')}</span>
               <div className="h-px w-12 bg-gradient-to-l from-transparent to-white" />
             </div>
 

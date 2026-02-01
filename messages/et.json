@@ -1176,7 +1176,7 @@
     },
     "card": {
       "deepDive": "SÜVENE →",
-      "learnMore": "Loe lähemalt: {step} →",
+      "learnMore": "Loe lähemalt →",
       "helpTooltip": "Mis see samm on?"
     },
     "steps": {
@@ -1351,9 +1351,19 @@
     "dna": "DNA",
     "seed": "Seeme",
     "sprout": "Võrse",
+    "sapling": "Istik",
     "tree": "Puu",
     "fruits": "Viljad",
     "orchard": "Aed",
+    "sub": {
+      "dna": "Mehhanism",
+      "seed": "Algupärad",
+      "sprout": "Tärkamine",
+      "sapling": "Harjutamine",
+      "tree": "Teadmised",
+      "fruits": "Rakendused",
+      "orchard": "Karjäärid"
+    },
     "description": {
       "dna": "Mehhanism — Kuidas AI teksti töötleb",
       "seed": "Sinu kavatsus — Mida soovid avastada?",
@@ -1362,6 +1372,22 @@
       "fruits": "Rakendused — Mida AI saab sinu heaks teha?",
       "orchard": "Karjääri saak — Professionaalsed teed AI-s"
     }
+  },
+  "landing": {
+    "systemBadge": "Süsteem Aktiivne v2.1",
+    "startEvolution": "ALUSTA ARENGUT",
+    "beginJourney": "Alusta teekonda esimesest tokenist.",
+    "evolutionaryPath": "Arengutee",
+    "chooseYourPath": "Vali Oma Tee",
+    "exploreQuestion": "Kuidas soovid täna AI-d avastada?",
+    "theDna": "DNA",
+    "dnaTime": "Kiirülevaade (5 min)",
+    "dnaDesc": "Mõista põhimehhanismi.",
+    "recommendedStart": "Soovituslik Algus",
+    "theTree": "Puu",
+    "treeTime": "Täielik Avastamine (15+ min)",
+    "treeDesc": "Süvitsi kõikidesse kontseptsioonidesse.",
+    "deepDive": "Süvauuring"
   },
   "floatingInput": {
     "placeholder": "Küsi AI kohta midagi...",
@@ -1479,13 +1505,13 @@
   },
   "promptSandbox": {
     "yourPrompt": "Sinu Viip",
-    "temperature": "Temperatuur",
+    "temperature": "Loovus (Temperatuur)",
     "placeholder": "Kirjuta siia...",
     "runPrompt": "Saada",
     "iterations": "Ajalugu",
     "aiOutput": "AI Väljund",
     "readyMessage": "Valmis katsetamiseks",
-    "qualityScore": "Kvaliteediskoor:",
+    "qualityScore": "Sidususe skoor:",
     "ratePositive": "Hinda vastust positiivselt"
   },
   "conceptDetail": {

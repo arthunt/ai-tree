@@ -1188,7 +1188,7 @@
     },
     "card": {
       "deepDive": "DEEP DIVE →",
-      "learnMore": "Learn more about {step} →",
+      "learnMore": "Learn more →",
       "helpTooltip": "What is this step?"
     },
     "steps": {
@@ -1363,9 +1363,19 @@
     "dna": "DNA",
     "seed": "Seed",
     "sprout": "Sprout",
+    "sapling": "Sapling",
     "tree": "Tree",
     "fruits": "Fruits",
     "orchard": "Orchard",
+    "sub": {
+      "dna": "Mechanism",
+      "seed": "Origins",
+      "sprout": "Emergence",
+      "sapling": "Practice",
+      "tree": "Knowledge",
+      "fruits": "Applications",
+      "orchard": "Careers"
+    },
     "description": {
       "dna": "The Mechanism — How AI processes text",
       "seed": "Your Intent — What do you want to explore?",
@@ -1374,6 +1384,22 @@
       "fruits": "Applications — What can AI do for you?",
       "orchard": "Career Harvest — Professional paths in AI"
     }
+  },
+  "landing": {
+    "systemBadge": "System Online v2.1",
+    "startEvolution": "START EVOLUTION",
+    "beginJourney": "Begin the journey from the first token.",
+    "evolutionaryPath": "Evolutionary Path",
+    "chooseYourPath": "Choose Your Path",
+    "exploreQuestion": "How do you want to explore AI today?",
+    "theDna": "The DNA",
+    "dnaTime": "Quick Overview (5 min)",
+    "dnaDesc": "Understand the core mechanism.",
+    "recommendedStart": "Recommended Start",
+    "theTree": "The Tree",
+    "treeTime": "Full Exploration (15+ min)",
+    "treeDesc": "Deep dive into all concepts.",
+    "deepDive": "Deep Dive"
   },
   "floatingInput": {
     "placeholder": "Ask anything about AI...",
@@ -1479,13 +1505,13 @@
   },
   "promptSandbox": {
     "yourPrompt": "Your Prompt",
-    "temperature": "Temperature",
+    "temperature": "Creativity (Temperature)",
     "placeholder": "Type your prompt here...",
     "runPrompt": "Run Prompt",
     "iterations": "Iterations",
     "aiOutput": "AI Output",
     "readyMessage": "Ready for experimentation",
-    "qualityScore": "Quality Score:",
+    "qualityScore": "Coherence Score:",
     "ratePositive": "Rate response positively"
   },
   "conceptDetail": {
