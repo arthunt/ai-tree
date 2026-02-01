@@ -2,8 +2,9 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-
-export type EvolutionStage = 'dna' | 'seed' | 'sprout' | 'sapling' | 'tree' | 'fruits' | 'orchard';
+import { STAGES, STAGE_HREF_MAP } from '@/lib/stages';
+import type { EvolutionStage } from '@/lib/stages';
+export type { EvolutionStage } from '@/lib/stages';
 
 interface JourneyContextType {
     currentStage: EvolutionStage;
@@ -23,19 +24,12 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
     // Extract locale from pathname (simple heuristic: first segment)
     const locale = pathname?.split('/')[1] || 'en';
 
-    // Deduce initial stage from URL
+    // Deduce initial stage from URL using centralized STAGES registry
     const getStageFromUrl = (): EvolutionStage => {
-        if (pathname?.includes('/dna')) return 'dna';
-        if (pathname?.includes('/seed')) return 'seed';
-        if (pathname?.includes('/sprout')) return 'sprout';
-        if (pathname?.includes('/sapling')) return 'sapling';
-        if (pathname?.includes('/tree-view')) {
-            // Check query params if we want to be specific, but for now default to 'tree'
-            // and let the component logic decide based on zoom level if it wants to be 'sprout'
-            return 'tree';
+        if (!pathname) return 'dna';
+        for (const stage of STAGES) {
+            if (pathname.includes(stage.href)) return stage.id;
         }
-        if (pathname?.includes('/fruits')) return 'fruits';
-        if (pathname?.includes('/orchard')) return 'orchard';
         return 'dna'; // Default
     };
 
@@ -73,34 +67,10 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
     const setStage = (stage: EvolutionStage) => {
         setTargetStage(stage);
 
-        switch (stage) {
-            case 'dna':
-                if (!pathname?.includes('/dna')) router.push(`/${locale}/dna`);
-                break;
-            case 'seed':
-                if (!pathname?.includes('/seed')) router.push(`/${locale}/seed`);
-                break;
-            case 'sprout':
-                if (!pathname?.includes('/sprout')) router.push(`/${locale}/sprout`);
-                break;
-            case 'sapling':
-                if (!pathname?.includes('/sapling')) router.push(`/${locale}/sapling`);
-                break;
-            case 'tree':
-                if (!pathname?.includes('/tree-view')) {
-                    const intentParam = intent ? `?intent=${intent}` : '';
-                    router.push(`/${locale}/tree-view${intentParam}`);
-                }
-                // If we ARE on tree-view, we don't navigate.
-                // The TreeView component listens to `targetStage` from this context 
-                // and adjusts its Zoom/LOD accordingly.
-                break;
-            case 'fruits':
-                if (!pathname?.includes('/fruits')) router.push(`/${locale}/fruits`);
-                break;
-            case 'orchard':
-                if (!pathname?.includes('/orchard')) router.push(`/${locale}/orchard`);
-                break;
+        const href = STAGE_HREF_MAP[stage];
+        if (href && !pathname?.includes(href)) {
+            const intentParam = stage === 'tree' && intent ? `?intent=${intent}` : '';
+            router.push(`/${locale}${href}${intentParam}`);
         }
 
         setCurrentStageState(stage);

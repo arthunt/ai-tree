@@ -8,16 +8,17 @@ import { DNAProvider, useDNA, DNAStep } from './DNAContext';
 import { DNAInput } from './DNAInput';
 import { DNAStepNav } from './DNAStepNav';
 import { MicroLesson } from './MicroLesson';
-import { ConceptTranslation } from '@/lib/supabase';
+import type { Concept } from '@/lib/concepts/types';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { GlobalNav } from '@/components/GlobalNav';
+import { StageSelector } from '@/components/StageSelector';
 
 interface DNAViewProps {
-    content?: ConceptTranslation[];
+    content?: Concept[];
 }
 
 interface DNAInterfaceProps {
-    content: ConceptTranslation[];
+    content: Concept[];
 }
 
 export function DNAView({ content = [] }: DNAViewProps) {
@@ -109,14 +110,14 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                         <div ref={cardScrollRef} className="relative z-10 flex overflow-x-auto snap-x snap-mandatory scroll-smooth-touch overscroll-contain gap-4 px-4 pt-2 pb-8 scrollbar-hide md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:px-0 md:pt-0 md:pb-0 md:gap-8 lg:grid-cols-4 lg:gap-12">
                             {content.map((item, index) => (
                                 <div
-                                    key={item.concept_id}
+                                    key={item.id}
                                     className="min-w-[85vw] snap-center scroll-mt-28 md:min-w-0 md:scroll-mt-0"
                                 >
                                     <DNAComponentCard
                                         title={item.title}
                                         description={item.explanation}
                                         metaphor={item.metaphor}
-                                        color={colorMap[item.concept_id] || 'white'}
+                                        color={colorMap[item.id] || 'white'}
                                         index={index}
                                         onCardClick={() => jumpToStep(stepMap[index])}
                                     />
@@ -148,8 +149,7 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                     </div>
                 </div>
             </div>
+            <StageSelector />
         </>
     );
 }
-
-

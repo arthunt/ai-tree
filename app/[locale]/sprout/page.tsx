@@ -5,6 +5,15 @@ import { Metadata } from 'next';
 import { getStageContent } from '@/actions/getConcepts';
 import { getRelatedConceptsForStage } from '@/lib/concepts/api';
 
+export const revalidate = 60;
+
+export function generateStaticParams() {
+    return [
+        { locale: 'en' },
+        { locale: 'et' }
+    ];
+}
+
 export const metadata: Metadata = {
     title: 'Sprout | AI Knowledge Tree',
     description: 'Emergent properties — what happens when the model comes alive.',

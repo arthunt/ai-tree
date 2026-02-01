@@ -1,5 +1,14 @@
 import { DNAView } from '@/components/dna/DNAView';
-import { getDNAContent } from '@/actions/getDNAContent';
+import { getStageContent } from '@/actions/getConcepts';
+
+export const revalidate = 60;
+
+export function generateStaticParams() {
+    return [
+        { locale: 'en' },
+        { locale: 'et' }
+    ];
+}
 
 export const metadata = {
     title: 'AI DNA | Dendrix',
@@ -8,6 +17,6 @@ export const metadata = {
 
 export default async function DNAPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
-    const content = await getDNAContent(locale);
+    const content = await getStageContent('dna', locale);
     return <DNAView content={content} />;
 }

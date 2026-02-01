@@ -4,6 +4,15 @@ import { TreeDiagramSkeleton } from '@/components/TreeDiagramSkeleton';
 import { Metadata } from 'next';
 import { getTreeContent } from '@/actions/getTreeContent';
 
+export const revalidate = 60;
+
+export function generateStaticParams() {
+    return [
+        { locale: 'en' },
+        { locale: 'et' }
+    ];
+}
+
 export const metadata: Metadata = {
   title: 'AI Tree | Dendrix',
   description: 'Explore the full AI knowledge tree from roots to leaves.',
