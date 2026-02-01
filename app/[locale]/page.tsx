@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { TreeData, ViewMode, Concept } from '@/lib/types';
 import { useProgress } from '@/lib/useProgress';
 import { LevelSection } from '@/components/LevelSection';
@@ -18,7 +18,7 @@ import { EvolutionTimeline } from '@/components/landing/EvolutionTimeline';
 import { DendrixLogo } from '@/components/DendrixLogo';
 import treeData from '@/data/tree-concepts.json';
 import Link from 'next/link';
-import { Network, Search, Moon, Sun, Lightbulb, Code2, GraduationCap, ChevronRight } from 'lucide-react';
+import { Network, Search, Moon, Sun, Lightbulb, Code2, GraduationCap, ChevronRight, Menu, X } from 'lucide-react';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useTheme } from '@/context/ThemeContext';
@@ -36,6 +36,7 @@ export default function AITreePage() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSkillSelectorOpen, setIsSkillSelectorOpen] = useState(false);
   const [isWelcomeOpen, setIsWelcomeOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const data = treeData as TreeData;
   const t = useTranslations();
   const tLevel = useTranslations('conceptLevels');
@@ -191,55 +192,97 @@ export default function AITreePage() {
         e.preventDefault();
         setIsSearchOpen(true);
       }
-      // ESC to close lightbox
-      if (e.key === 'Escape' && selectedConcept) {
-        setSelectedConcept(null);
+      // ESC to close lightbox or mobile menu
+      if (e.key === 'Escape') {
+        if (isMobileMenuOpen) setIsMobileMenuOpen(false);
+        else if (selectedConcept) setSelectedConcept(null);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedConcept]);
+  }, [selectedConcept, isMobileMenuOpen]);
+
+  // Close mobile menu on scroll and close desktop lang dropdown on outside click
+  useEffect(() => {
+    const handleScrollForMenu = () => {
+      if (isMobileMenuOpen) setIsMobileMenuOpen(false);
+    };
+    const handleClickOutside = (e: MouseEvent) => {
+      const dropdown = document.getElementById('landing-lang-dropdown');
+      if (dropdown && !dropdown.classList.contains('hidden') && !(e.target as Element)?.closest?.('.relative')) {
+        dropdown.classList.add('hidden');
+      }
+    };
+    window.addEventListener('scroll', handleScrollForMenu, { passive: true });
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      window.removeEventListener('scroll', handleScrollForMenu);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50/50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
       {/* Structured Data for SEO */}
       <CourseStructuredData locale={locale} conceptCount={totalConcepts} />
 
-      {/* Header - Compact on mobile, shrinks on scroll */}
+      {/* Header - Mobile: Logo + Start + Hamburger. Desktop: full controls. */}
       <header className="sticky top-0 z-40 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200/60 dark:border-gray-800/60">
         <div className={`container mx-auto max-w-7xl transition-all duration-300 ${isScrolled ? 'px-3 py-1 sm:px-4 sm:py-1.5' : 'px-3 py-2 sm:px-4 sm:py-3'}`}>
           <div className="flex items-center justify-between">
+            {/* Logo / Brand */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 text-left group"
+              className="flex items-center gap-2 sm:gap-3 min-w-0 text-left group"
               aria-label={t('navigation.backToTop')}
               type="button"
             >
               <DendrixLogo size={isScrolled ? 28 : 36} animate={false} className="flex-shrink-0 transition-all duration-300" />
               <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className={`font-bold text-gray-900 dark:text-white truncate transition-all duration-300 ${isScrolled ? 'text-sm sm:text-base' : 'text-base sm:text-lg'}`}>
-                    dendrix.ai
-                  </span>
-                </div>
+                <span className={`font-bold text-gray-900 dark:text-white truncate transition-all duration-300 ${isScrolled ? 'text-sm sm:text-base' : 'text-base sm:text-lg'}`}>
+                  dendrix.ai
+                </span>
                 {!isScrolled && (
                   <p className="hidden sm:block text-xs text-gray-500 dark:text-gray-400 truncate">{t('header.description')}</p>
                 )}
               </div>
             </button>
-            <div className="flex items-center gap-1.5 sm:gap-3">
+
+            {/* Mobile: Start CTA + Hamburger (md:hidden) */}
+            <div className="flex items-center gap-2 md:hidden">
+              {!isScrolled && (
+                <Link
+                  href={`/${locale}/dna`}
+                  className="flex items-center justify-center min-w-[44px] min-h-[44px] px-4 py-2 bg-brand-teal text-black font-bold text-sm rounded-xl hover:bg-brand-cyan transition-colors"
+                >
+                  {t('landing.startEvolution')}
+                </Link>
+              )}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={isMobileMenuOpen}
+                type="button"
+              >
+                {isMobileMenuOpen ? <X className="h-5 w-5 text-gray-700 dark:text-gray-300" /> : <Menu className="h-5 w-5 text-gray-700 dark:text-gray-300" />}
+              </button>
+            </div>
+
+            {/* Desktop controls (hidden on mobile) */}
+            <div className="hidden md:flex items-center gap-2.5">
               {/* Search Button */}
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className={`flex items-center justify-center bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 hover:shadow-md hover:border-gray-400 dark:hover:border-gray-500 transition-all font-medium group ${isScrolled
-                  ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
-                  : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
+                  ? 'min-w-[36px] min-h-[36px] rounded-lg'
+                  : 'min-w-[44px] min-h-[44px] px-4 py-3 rounded-xl'
                   }`}
                 aria-label={t('search.buttonLabel')}
               >
                 <Search className={`text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 ${isScrolled ? 'h-4 w-4' : 'h-5 w-5'}`} aria-hidden="true" />
-                {!isScrolled && <span className="hidden sm:inline ml-2">{t('search.button')}</span>}
+                {!isScrolled && <span className="ml-2">{t('search.button')}</span>}
                 {!isScrolled && (
                   <kbd className="hidden lg:inline-flex items-center gap-1 ml-2 px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded">
                     <span className="text-xs">⌘</span>K
@@ -251,44 +294,44 @@ export default function AITreePage() {
               <Link
                 href={`/${locale}/learn`}
                 className={`flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white hover:shadow-lg transition-all font-medium ${isScrolled
-                  ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
-                  : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
+                  ? 'min-w-[36px] min-h-[36px] rounded-lg'
+                  : 'min-w-[44px] min-h-[44px] px-4 py-3 rounded-xl'
                   }`}
                 aria-label={t('learningPaths.title')}
               >
                 <GraduationCap className={isScrolled ? 'h-4 w-4' : 'h-5 w-5'} aria-hidden="true" />
-                {!isScrolled && <span className="hidden sm:inline ml-2">{t('learningPaths.title')}</span>}
+                {!isScrolled && <span className="ml-2">{t('learningPaths.title')}</span>}
               </Link>
 
               {/* DNA View Button */}
               <Link
                 href={`/${locale}/dna`}
                 className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-brand-teal font-bold transition-all ${isScrolled
-                  ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
-                  : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
+                  ? 'min-w-[36px] min-h-[36px] rounded-lg'
+                  : 'min-w-[44px] min-h-[44px] px-4 py-3 rounded-xl'
                   }`}
                 aria-label="DNA View"
               >
                 <div className="w-5 h-5 flex items-center justify-center">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12h5" /><path d="M17 12h5" /><path d="M7 12a5 5 0 0 1 5-5 5 5 0 0 1 5 5" /></svg>
                 </div>
-                {!isScrolled && <span className="hidden sm:inline ml-2">DNA</span>}
+                {!isScrolled && <span className="ml-2">DNA</span>}
               </Link>
 
               {/* Concept Map Button */}
               <Link
                 href={`/${locale}/tree-view`}
                 className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 transition-all font-medium ${isScrolled
-                  ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
-                  : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-4 sm:py-3 rounded-lg sm:rounded-xl'
+                  ? 'min-w-[36px] min-h-[36px] rounded-lg'
+                  : 'min-w-[44px] min-h-[44px] px-4 py-3 rounded-xl'
                   }`}
                 aria-label={t('header.treeViewAriaLabel')}
               >
                 <Network className={isScrolled ? 'h-4 w-4' : 'h-5 w-5'} aria-hidden="true" />
-                {!isScrolled && <span className="hidden sm:inline ml-2">{t('header.treeView')}</span>}
+                {!isScrolled && <span className="ml-2">{t('header.treeView')}</span>}
               </Link>
 
-              {/* View Mode Toggle (cycles through modes) */}
+              {/* View Mode Toggle */}
               {(() => {
                 const { icon: ViewIcon, next } = viewModeIcons[viewMode];
                 const modeLabelKey = viewMode === 'metaphor' ? 'simple' : 'technical';
@@ -297,40 +340,56 @@ export default function AITreePage() {
                   <button
                     onClick={() => setViewMode(next)}
                     className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all ${isScrolled
-                      ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
-                      : 'w-10 h-10 sm:w-auto sm:h-auto sm:min-w-[44px] sm:min-h-[44px] sm:px-3 sm:py-2.5 rounded-lg sm:rounded-xl'
+                      ? 'min-w-[36px] min-h-[36px] rounded-lg'
+                      : 'min-w-[44px] min-h-[44px] px-3 py-2.5 rounded-xl'
                       }`}
                     aria-label={`${t('settings.viewMode')}: ${modeLabel}`}
                     title={`${t('settings.viewMode')}: ${modeLabel}`}
                     type="button"
                   >
-                    <ViewIcon className={`text-gray-700 dark:text-gray-300 ${isScrolled ? 'h-4 w-4' : 'h-5 w-5 sm:h-4 sm:w-4'}`} />
-                    {!isScrolled && <span className="hidden sm:inline ml-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">{modeLabel}</span>}
+                    <ViewIcon className={`text-gray-700 dark:text-gray-300 ${isScrolled ? 'h-4 w-4' : 'h-5 w-5'}`} />
+                    {!isScrolled && <span className="ml-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">{modeLabel}</span>}
                   </button>
                 );
               })()}
 
-              {/* Language Switcher (inline pill) */}
-              <div className={`flex items-center bg-gray-100 dark:bg-gray-800 overflow-hidden ${isScrolled ? 'rounded-lg' : 'rounded-lg sm:rounded-xl'
-                }`}>
-                {locales.map((loc) => (
-                  <button
-                    key={loc}
-                    onClick={() => switchLanguage(loc)}
-                    className={`font-semibold transition-colors ${isScrolled
-                      ? 'px-2 py-1.5 text-[11px]'
-                      : 'px-2.5 py-2.5 text-xs sm:text-sm min-h-[40px] sm:min-h-[44px]'
-                      } ${loc === displayLocale
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
-                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700'
-                      }`}
-                    aria-label={`Switch to ${loc.toUpperCase()}`}
-                    aria-current={loc === displayLocale ? 'true' : undefined}
-                    type="button"
-                  >
-                    {loc.toUpperCase()}
-                  </button>
-                ))}
+              {/* Language Switcher — dropdown that preserves lightbox in-place switching */}
+              <div className="relative">
+                <button
+                  onClick={() => {
+                    const el = document.getElementById('landing-lang-dropdown');
+                    if (el) el.classList.toggle('hidden');
+                  }}
+                  className={`flex items-center gap-1.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium transition-colors ${isScrolled
+                    ? 'min-w-[36px] min-h-[36px] px-2 rounded-lg text-xs'
+                    : 'min-w-[44px] min-h-[44px] px-3 py-2 rounded-xl text-sm'
+                    }`}
+                  aria-label={`Language: ${displayLocale.toUpperCase()}`}
+                  type="button"
+                >
+                  <span className="uppercase tracking-wide">{displayLocale}</span>
+                </button>
+                <div id="landing-lang-dropdown" className="hidden absolute right-0 top-full mt-2 min-w-[140px] rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg z-50 overflow-hidden">
+                  {locales.map((loc) => {
+                    const nativeName: Record<string, string> = { en: 'English', et: 'Eesti', ru: 'Русский' };
+                    return (
+                      <button
+                        key={loc}
+                        onClick={() => {
+                          switchLanguage(loc);
+                          document.getElementById('landing-lang-dropdown')?.classList.add('hidden');
+                        }}
+                        className={`w-full text-left px-4 py-3 text-sm transition-colors ${loc === displayLocale
+                          ? 'bg-brand-teal/10 text-brand-teal dark:text-brand-cyan font-medium'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                          }`}
+                        type="button"
+                      >
+                        {nativeName[loc] || loc.toUpperCase()}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* Dark Mode Toggle */}
@@ -338,8 +397,8 @@ export default function AITreePage() {
                 <button
                   onClick={toggleTheme}
                   className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all ${isScrolled
-                    ? 'w-8 h-8 sm:w-9 sm:h-9 rounded-lg'
-                    : 'w-10 h-10 sm:min-w-[44px] sm:min-h-[44px] rounded-lg sm:rounded-xl'
+                    ? 'min-w-[36px] min-h-[36px] rounded-lg'
+                    : 'min-w-[44px] min-h-[44px] rounded-xl'
                     }`}
                   aria-label={t('darkMode.ariaLabel')}
                   type="button"
@@ -354,6 +413,123 @@ export default function AITreePage() {
             </div>
           </div>
         </div>
+
+        {/* Mobile Hamburger Menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
+            >
+              <nav className="flex flex-col p-4 gap-1">
+                {/* Search */}
+                <button
+                  onClick={() => { setIsSearchOpen(true); setIsMobileMenuOpen(false); }}
+                  className="flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 text-left"
+                  type="button"
+                >
+                  <Search className="h-5 w-5 text-gray-500" />
+                  <span>{t('search.button')}</span>
+                  <kbd className="ml-auto text-xs text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded">⌘K</kbd>
+                </button>
+
+                {/* Learning Paths */}
+                <Link
+                  href={`/${locale}/learn`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                >
+                  <GraduationCap className="h-5 w-5 text-blue-500" />
+                  <span>{t('learningPaths.title')}</span>
+                </Link>
+
+                {/* DNA View */}
+                <Link
+                  href={`/${locale}/dna`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                >
+                  <div className="w-5 h-5 flex items-center justify-center text-brand-teal">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12h5" /><path d="M17 12h5" /><path d="M7 12a5 5 0 0 1 5-5 5 5 0 0 1 5 5" /></svg>
+                  </div>
+                  <span>DNA</span>
+                </Link>
+
+                {/* Concept Map */}
+                <Link
+                  href={`/${locale}/tree-view`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                >
+                  <Network className="h-5 w-5 text-gray-500" />
+                  <span>{t('header.treeView')}</span>
+                </Link>
+
+                {/* View Mode */}
+                {(() => {
+                  const { icon: ViewIcon, next } = viewModeIcons[viewMode];
+                  const modeLabelKey = viewMode === 'metaphor' ? 'simple' : 'technical';
+                  const modeLabel = t(`viewMode.${modeLabelKey}` as 'viewMode.simple' | 'viewMode.technical');
+                  return (
+                    <button
+                      onClick={() => { setViewMode(next); setIsMobileMenuOpen(false); }}
+                      className="flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 text-left"
+                      type="button"
+                    >
+                      <ViewIcon className="h-5 w-5 text-gray-500" />
+                      <span>{t('settings.viewMode')}: {modeLabel}</span>
+                    </button>
+                  );
+                })()}
+
+                {/* Divider */}
+                <div className="h-px my-2 bg-gray-200 dark:bg-gray-700" />
+
+                {/* Settings row: Language + Dark mode */}
+                <div className="flex items-center justify-between px-4 py-2">
+                  <span className="text-sm text-gray-500 dark:text-gray-400">{t('settings.language')}</span>
+                  <div className="flex items-center gap-2">
+                    {/* Language pills using switchLanguage to preserve lightbox behavior */}
+                    <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+                      {locales.map((loc) => (
+                        <button
+                          key={loc}
+                          onClick={() => switchLanguage(loc)}
+                          className={`px-3 py-2 min-h-[44px] text-xs font-semibold transition-colors ${loc === displayLocale
+                            ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                            }`}
+                          aria-label={`Switch to ${loc.toUpperCase()}`}
+                          type="button"
+                        >
+                          {loc.toUpperCase()}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Dark mode toggle */}
+                    {themeMounted && (
+                      <button
+                        onClick={toggleTheme}
+                        className="flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                        aria-label={t('darkMode.ariaLabel')}
+                        type="button"
+                      >
+                        {theme === 'light' ? (
+                          <Moon className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                        ) : (
+                          <Sun className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                        )}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Active Level Context Bar - all viewports, visible when scrolled */}
         {isScrolled && activeLevelData && (
@@ -404,7 +580,7 @@ export default function AITreePage() {
                       if (element) element.scrollIntoView({ behavior: 'smooth' });
                     }}
                     title={tLevel(`${level.id}.name`)}
-                    className={`flex-1 flex items-center justify-center gap-1 py-1.5 rounded text-xs font-medium transition-all ${isActive
+                    className={`flex-1 flex items-center justify-center gap-1 py-2 min-h-[44px] rounded text-xs font-medium transition-all ${isActive
                       ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-sm'
                       : isPast
                         ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'

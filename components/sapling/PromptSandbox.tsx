@@ -58,11 +58,27 @@ export function PromptSandbox({
     const [history, setHistory] = useState<{ id: string; prompt: string; score: number; attempt: number }[]>([]);
     const scrollRef = useRef<HTMLDivElement>(null);
 
+    const [showSettings, setShowSettings] = useState(false); // Mobile settings toggle
+    const [keyboardOffset, setKeyboardOffset] = useState(0);
+
     // Effect to handle prop updates (from Module selection)
     useEffect(() => {
         if (initialPrompt) setInput(initialPrompt);
         if (initialTemp !== undefined) setTemperature(initialTemp);
     }, [initialPrompt, initialTemp]);
+
+    // Detect virtual keyboard via visualViewport API and adjust layout
+    useEffect(() => {
+        const vv = typeof window !== 'undefined' ? window.visualViewport : null;
+        if (!vv) return;
+        const handleResize = () => {
+            // When keyboard opens, visualViewport.height shrinks
+            const offset = window.innerHeight - vv.height;
+            setKeyboardOffset(offset > 50 ? offset : 0);
+        };
+        vv.addEventListener('resize', handleResize);
+        return () => vv.removeEventListener('resize', handleResize);
+    }, []);
 
     // Report temperature changes
     const handleTempChange = (val: number) => {
@@ -71,7 +87,6 @@ export function PromptSandbox({
     };
 
     // Auto-scroll needs to be here...
-
 
 
     const calculateScore = (text: string, temp: number) => {
@@ -131,41 +146,104 @@ export function PromptSandbox({
     };
 
     return (
-        <div className={cn("grid grid-cols-1 lg:grid-cols-12 gap-6 h-[700px]", className)}>
+        <div className={cn("grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 lg:h-[700px] h-auto", className)}>
 
             {/* LEFT PANEL: Controls & History */}
-            <div className="lg:col-span-4 flex flex-col gap-4 h-full overflow-hidden">
-                <GlassCard className="p-5 bg-emerald-950/40 border-emerald-800/30 flex flex-col h-full">
-                    <h3 className="text-emerald-400 font-bold mb-4 flex items-center gap-2">
-                        <User size={18} />
-                        {t('promptSandbox.yourPrompt')}
-                    </h3>
-
-                    {/* Temperature */}
-                    <div className="mb-4 p-4 rounded-lg bg-emerald-900/20 border border-emerald-800/30">
-                        <div className="flex justify-between text-xs text-emerald-200 mb-2">
-                            <span className="flex items-center gap-1"><Thermometer size={12} /> {t('promptSandbox.temperature')}</span>
-                            <span className="font-mono text-emerald-400">{temperature.toFixed(1)}</span>
-                        </div>
-                        <input
-                            type="range"
-                            min="0" max="1" step="0.1"
-                            value={temperature}
-                            onChange={(e) => handleTempChange(parseFloat(e.target.value))}
-                            className="w-full accent-emerald-500 h-1 bg-emerald-900 rounded-lg appearance-none cursor-pointer"
-                        />
+            <div
+                className="lg:col-span-4 flex flex-col gap-4 h-full overflow-hidden order-2 lg:order-1 sticky bottom-0 z-30 lg:static lg:bottom-auto transition-all"
+                style={keyboardOffset > 0 ? { bottom: `${keyboardOffset}px` } : undefined}
+            >
+                <GlassCard className="p-4 lg:p-5 bg-emerald-950/90 lg:bg-emerald-950/40 backdrop-blur-xl lg:backdrop-blur-none border-t lg:border border-emerald-800/30 flex flex-col h-full lg:h-full lg:rounded-2xl rounded-t-2xl rounded-b-none lg:shadow-none shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+                    <div className="flex justify-between items-center mb-3 lg:mb-4">
+                        <h3 className="text-emerald-400 font-bold flex items-center gap-2">
+                            <User size={18} />
+                            {t('promptSandbox.yourPrompt')}
+                        </h3>
+                        {/* Mobile Settings Toggle */}
+                        <button
+                            onClick={() => setShowSettings(!showSettings)}
+                            className="lg:hidden text-xs font-bold uppercase tracking-wider text-emerald-500 flex items-center gap-1 bg-emerald-900/30 px-2 py-1 rounded"
+                        >
+                            {showSettings ? 'Hide' : 'Settings'}
+                            {history.length > 0 && <span className="bg-emerald-500/20 px-1 rounded text-[10px]">{history.length}</span>}
+                            <Thermometer size={12} />
+                        </button>
                     </div>
 
-                    {/* Input Area */}
-                    <div className="flex-1 flex flex-col min-h-[150px]">
-                        <textarea
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                            placeholder={t('promptSandbox.placeholder')}
-                            className="flex-1 w-full bg-black/20 text-white placeholder-emerald-700/50 p-4 rounded-xl border border-emerald-800/30 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 resize-none font-mono text-sm leading-relaxed"
-                        />
-                        <div className="mt-4 flex justify-end">
+                    {/* Collapsible Area (Temp + History) on Mobile */}
+                    <AnimatePresence>
+                        {(showSettings || typeof window !== 'undefined' && window.innerWidth >= 1024) && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                className="overflow-hidden flex flex-col shrink-0"
+                            >
+                                <div className="mb-4 p-4 rounded-lg bg-emerald-900/20 border border-emerald-800/30">
+                                    <div className="flex justify-between text-xs text-emerald-200 mb-2">
+                                        <span className="flex items-center gap-1"><Thermometer size={12} /> {t('promptSandbox.temperature')}</span>
+                                        <span className="font-mono text-emerald-400">{temperature.toFixed(1)}</span>
+                                    </div>
+                                    <input
+                                        type="range"
+                                        min="0" max="1" step="0.1"
+                                        value={temperature}
+                                        onChange={(e) => handleTempChange(parseFloat(e.target.value))}
+                                        className="w-full accent-emerald-500 h-1 bg-emerald-900 rounded-lg appearance-none cursor-pointer"
+                                    />
+                                </div>
+
+                                {/* Iteration History (Moved here on mobile) */}
+                                {history.length > 0 && (
+                                    <div className="mb-4 lg:mt-2 lg:pt-4 lg:border-t border-emerald-800/30 flex flex-col max-h-[150px] lg:max-h-none overflow-hidden">
+                                        <h4 className="text-xs font-bold text-emerald-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                            <RotateCcw size={12} />
+                                            {t('promptSandbox.iterations')}
+                                        </h4>
+                                        <div className="overflow-y-auto space-y-2 pr-2 custom-scrollbar lg:flex-1 min-h-[60px]">
+                                            {history.map((item) => (
+                                                <div key={item.id} className="p-3 rounded-lg bg-emerald-900/10 border border-emerald-800/20 hover:bg-emerald-900/20 transition-colors text-xs cursor-pointer group">
+                                                    <div className="flex justify-between items-center mb-1">
+                                                        <span className="text-emerald-400 font-mono">#{item.attempt}</span>
+                                                        <span className={cn(
+                                                            "px-1.5 py-0.5 rounded text-[10px] font-bold",
+                                                            item.score > 80 ? "bg-emerald-500/20 text-emerald-300" : "bg-emerald-900/40 text-emerald-500"
+                                                        )}>
+                                                            {item.score}%
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-emerald-100/60 line-clamp-2 font-mono group-hover:text-emerald-100/90">{item.prompt}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* Input Area — compact on mobile with inline Run button */}
+                    <div className="flex-1 flex flex-col min-h-[80px] lg:min-h-[150px]">
+                        <div className="flex-1 relative">
+                            <textarea
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                placeholder={t('promptSandbox.placeholder')}
+                                className="w-full h-full min-h-[60px] lg:min-h-[100px] bg-black/20 text-white placeholder-emerald-700/50 p-3 pr-14 lg:p-4 rounded-xl border border-emerald-800/30 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 resize-none font-mono text-sm leading-relaxed"
+                            />
+                            {/* Inline send button on mobile — always visible inside textarea */}
+                            <button
+                                onClick={handleSend}
+                                disabled={!input.trim() || isTyping}
+                                className="lg:hidden absolute right-2 bottom-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-30 disabled:cursor-not-allowed text-white min-w-[44px] min-h-[44px] rounded-lg flex items-center justify-center transition-all shadow-lg shadow-emerald-900/20"
+                                aria-label={t('promptSandbox.runPrompt')}
+                            >
+                                <Send size={18} />
+                            </button>
+                        </div>
+                        {/* Full-width Run button on desktop only */}
+                        <div className="mt-3 hidden lg:flex justify-end">
                             <button
                                 onClick={handleSend}
                                 disabled={!input.trim() || isTyping}
@@ -176,37 +254,11 @@ export function PromptSandbox({
                             </button>
                         </div>
                     </div>
-
-                    {/* Iteration History */}
-                    {history.length > 0 && (
-                        <div className="mt-6 pt-6 border-t border-emerald-800/30 flex-1 overflow-hidden flex flex-col">
-                            <h4 className="text-xs font-bold text-emerald-500 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                <RotateCcw size={12} />
-                                {t('promptSandbox.iterations')}
-                            </h4>
-                            <div className="overflow-y-auto space-y-2 pr-2 custom-scrollbar flex-1 min-h-[100px]">
-                                {history.map((item) => (
-                                    <div key={item.id} className="p-3 rounded-lg bg-emerald-900/10 border border-emerald-800/20 hover:bg-emerald-900/20 transition-colors text-xs cursor-pointer group">
-                                        <div className="flex justify-between items-center mb-1">
-                                            <span className="text-emerald-400 font-mono">#{item.attempt}</span>
-                                            <span className={cn(
-                                                "px-1.5 py-0.5 rounded text-[10px] font-bold",
-                                                item.score > 80 ? "bg-emerald-500/20 text-emerald-300" : "bg-emerald-900/40 text-emerald-500"
-                                            )}>
-                                                {item.score}%
-                                            </span>
-                                        </div>
-                                        <p className="text-emerald-100/60 line-clamp-2 font-mono group-hover:text-emerald-100/90">{item.prompt}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
                 </GlassCard>
             </div>
 
             {/* RIGHT PANEL: Output / Chat Area */}
-            <div className="lg:col-span-8 h-full">
+            <div className="lg:col-span-8 h-full order-1 lg:order-2">
                 <GlassCard className="h-full bg-black/20 border-emerald-800/20 flex flex-col overflow-hidden relative">
                     {/* Header */}
                     <div className="absolute top-0 left-0 right-0 h-12 bg-emerald-950/60 border-b border-emerald-800/30 flex items-center px-4 justify-between z-10 backdrop-blur-md">
@@ -223,9 +275,10 @@ export function PromptSandbox({
                     {/* Chat Area */}
                     <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 sm:p-6 pt-16 space-y-6 scroll-smooth">
                         {messages.length === 0 && (
-                            <div className="h-full flex flex-col items-center justify-center text-emerald-800/40 select-none">
+                            <div className="h-full flex flex-col items-center justify-center text-emerald-800/40 select-none px-4 text-center">
                                 <Bot size={48} className="mb-4 opacity-30" />
-                                <p className="text-sm font-medium">{t('promptSandbox.readyMessage')}</p>
+                                <p className="text-sm font-medium mb-2">{t('promptSandbox.readyMessage')}</p>
+                                <p className="text-xs text-emerald-800/30 max-w-xs">{t('promptSandbox.emptyHint')}</p>
                             </div>
                         )}
 

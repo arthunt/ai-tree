@@ -1511,6 +1511,7 @@
     "iterations": "Ajalugu",
     "aiOutput": "AI Väljund",
     "readyMessage": "Valmis katsetamiseks",
+    "emptyHint": "Kirjuta allpool viip ja vajuta Saada, et näha AI vastust",
     "qualityScore": "Sidususe skoor:",
     "ratePositive": "Hinda vastust positiivselt"
   },

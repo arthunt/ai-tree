@@ -93,7 +93,7 @@ export function SaplingWorkspace({ locale, i18n }: { locale: string; i18n: Sapli
     };
 
     return (
-        <div className="flex flex-col gap-16">
+        <div className="flex flex-col gap-8 lg:gap-16">
 
             {/* 1. The Sandbox (Interactive Area) */}
             <div id="sapling-sandbox" className="scroll-mt-32">

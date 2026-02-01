@@ -1511,6 +1511,7 @@
     "iterations": "Iterations",
     "aiOutput": "AI Output",
     "readyMessage": "Ready for experimentation",
+    "emptyHint": "Type a prompt below and tap Send to see how AI responds",
     "qualityScore": "Coherence Score:",
     "ratePositive": "Rate response positively"
   },
