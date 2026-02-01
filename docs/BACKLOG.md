@@ -391,11 +391,11 @@
 
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| 9.0.1 | Fix locale enum in schema.sql | 🔄 IN PROGRESS | `CREATE TYPE locale AS ENUM ('et', 'en', 'ru')` |
-| 9.0.2 | Fix types in lib/supabase/types.ts | 🔄 IN PROGRESS | Replace all `'et' \| 'en'` → `'et' \| 'en' \| 'ru'` (12 occurrences) |
-| 9.0.3 | Fix Locale in lib/programs/types.ts | 🔄 IN PROGRESS | `Locale = 'et' \| 'en' \| 'ru'`, `LocalizedString` add `ru` |
-| 9.0.4 | Create Supabase migration | 🔄 IN PROGRESS | `ALTER TYPE locale ADD VALUE IF NOT EXISTS 'ru'` |
-| 9.0.5 | Build verification | ⏳ NEXT | `npm run build` passes with zero TS errors |
+| 9.0.1 | Fix locale enum in schema.sql | ✅ DONE | `CREATE TYPE locale AS ENUM ('et', 'en', 'ru')` |
+| 9.0.2 | Fix types in lib/supabase/types.ts | ✅ DONE | Replace all `'et' \| 'en'` → `'et' \| 'en' \| 'ru'` (12 occurrences) |
+| 9.0.3 | Fix Locale in lib/programs/types.ts | ✅ DONE | `Locale = 'et' \| 'en' \| 'ru'`, `LocalizedString` add `ru` |
+| 9.0.4 | Create Supabase migration | ✅ DONE | `ALTER TYPE locale ADD VALUE IF NOT EXISTS 'ru'` |
+| 9.0.5 | Build verification | ✅ DONE | `npm run build` passes with zero TS errors |
 
 ### Phase 9.1: Paraglide Layer Extension (independent) `@opus` or `@gemini`
 
@@ -417,11 +417,11 @@
 
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| 9.2.1 | Create content_variants migration | ⏳ NEXT | Table + indexes + RLS per I18N_TECHNICAL_MIGRATION.md Section 5 |
-| 9.2.2 | Add content_variants TypeScript types | ⏳ NEXT | Types in lib/supabase/types.ts per Section 12 |
-| 9.2.3 | Create measurement functions | ⏳ NEXT | `record_variant_impression`, `record_variant_engagement`, `record_variant_conversion` |
-| 9.2.4 | Seed first experiment data | ⏳ NEXT | Tokenization title variants (base/practical/provocative) in ET |
-| 9.2.5 | Update V&S doc | ⏳ NEXT | Apply Section 9 changes to VISION_AND_STRATEGY.md |
+| 9.2.1 | Create content_variants migration | ✅ DONE | Table + indexes + RLS per I18N_TECHNICAL_MIGRATION.md Section 5 |
+| 9.2.2 | Add content_variants TypeScript types | ✅ DONE | Types in lib/supabase/types.ts per Section 12 |
+| 9.2.3 | Create measurement functions | ✅ DONE | `record_variant_impression`, `record_variant_engagement`, `record_variant_conversion` |
+| 9.2.4 | Seed first experiment data | ✅ DONE | Tokenization title variants (base/practical/provocative) in ET |
+| 9.2.5 | Update V&S doc | ✅ DONE | Apply Section 9 changes to VISION_AND_STRATEGY.md |
 
 ### Phase 9.3: Variant Serving Logic `@opus`
 
@@ -429,9 +429,9 @@
 
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| 9.3.1 | Create lib/variants/service.ts | ⏳ NEXT | `getVariant()` with weighted random + session cache |
-| 9.3.2 | Create hooks/useContentVariant.ts | ⏳ NEXT | React hook wrapping variant service |
-| 9.3.3 | Wire into ConceptDetailPanel | ⏳ NEXT | Override title/explanation when variant exists |
+| 9.3.1 | Create lib/variants/service.ts | ✅ DONE | `getVariant()` with weighted random + session cache |
+| 9.3.2 | Create hooks/useContentVariant.ts | ✅ DONE | React hook wrapping variant service |
+| 9.3.3 | Wire into ConceptDetailPanel | 🔄 IN PROGRESS | Replace static text with variant-aware components |
 
 ### Phase 9.4: Measurement & Analytics (deferred)
 
