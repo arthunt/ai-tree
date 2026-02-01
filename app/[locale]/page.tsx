@@ -276,7 +276,7 @@ export default function AITreePage() {
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className={`flex items-center justify-center bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 hover:shadow-md hover:border-gray-400 dark:hover:border-gray-500 transition-all font-medium group ${isScrolled
-                  ? 'min-w-[36px] min-h-[36px] rounded-lg'
+                  ? 'min-w-[44px] min-h-[44px] rounded-lg'
                   : 'min-w-[44px] min-h-[44px] px-4 py-3 rounded-xl'
                   }`}
                 aria-label={t('search.buttonLabel')}
@@ -294,7 +294,7 @@ export default function AITreePage() {
               <Link
                 href={`/${locale}/learn`}
                 className={`flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white hover:shadow-lg transition-all font-medium ${isScrolled
-                  ? 'min-w-[36px] min-h-[36px] rounded-lg'
+                  ? 'min-w-[44px] min-h-[44px] rounded-lg'
                   : 'min-w-[44px] min-h-[44px] px-4 py-3 rounded-xl'
                   }`}
                 aria-label={t('learningPaths.title')}
@@ -307,7 +307,7 @@ export default function AITreePage() {
               <Link
                 href={`/${locale}/dna`}
                 className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-brand-teal font-bold transition-all ${isScrolled
-                  ? 'min-w-[36px] min-h-[36px] rounded-lg'
+                  ? 'min-w-[44px] min-h-[44px] rounded-lg'
                   : 'min-w-[44px] min-h-[44px] px-4 py-3 rounded-xl'
                   }`}
                 aria-label="DNA View"
@@ -322,7 +322,7 @@ export default function AITreePage() {
               <Link
                 href={`/${locale}/tree-view`}
                 className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 transition-all font-medium ${isScrolled
-                  ? 'min-w-[36px] min-h-[36px] rounded-lg'
+                  ? 'min-w-[44px] min-h-[44px] rounded-lg'
                   : 'min-w-[44px] min-h-[44px] px-4 py-3 rounded-xl'
                   }`}
                 aria-label={t('header.treeViewAriaLabel')}
@@ -340,7 +340,7 @@ export default function AITreePage() {
                   <button
                     onClick={() => setViewMode(next)}
                     className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all ${isScrolled
-                      ? 'min-w-[36px] min-h-[36px] rounded-lg'
+                      ? 'min-w-[44px] min-h-[44px] rounded-lg'
                       : 'min-w-[44px] min-h-[44px] px-3 py-2.5 rounded-xl'
                       }`}
                     aria-label={`${t('settings.viewMode')}: ${modeLabel}`}
@@ -361,7 +361,7 @@ export default function AITreePage() {
                     if (el) el.classList.toggle('hidden');
                   }}
                   className={`flex items-center gap-1.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium transition-colors ${isScrolled
-                    ? 'min-w-[36px] min-h-[36px] px-2 rounded-lg text-xs'
+                    ? 'min-w-[44px] min-h-[44px] px-2 rounded-lg text-xs'
                     : 'min-w-[44px] min-h-[44px] px-3 py-2 rounded-xl text-sm'
                     }`}
                   aria-label={`Language: ${displayLocale.toUpperCase()}`}
@@ -397,7 +397,7 @@ export default function AITreePage() {
                 <button
                   onClick={toggleTheme}
                   className={`flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all ${isScrolled
-                    ? 'min-w-[36px] min-h-[36px] rounded-lg'
+                    ? 'min-w-[44px] min-h-[44px] rounded-lg'
                     : 'min-w-[44px] min-h-[44px] rounded-xl'
                     }`}
                   aria-label={t('darkMode.ariaLabel')}
@@ -554,11 +554,12 @@ export default function AITreePage() {
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }}
                     title={tLevel(`${level.id}.name`)}
-                    className={`w-2 h-2 rounded-full transition-all ${level.id === activeLevel ? 'w-4 bg-blue-500' : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400'
-                      }`}
+                    className="min-w-[44px] min-h-[44px] flex items-center justify-center"
                     aria-label={tLevel(`${level.id}.name`)}
                     type="button"
-                  />
+                  >
+                    <span className={`block rounded-full transition-all ${level.id === activeLevel ? 'w-4 h-2 bg-blue-500' : 'w-2 h-2 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400'}`} />
+                  </button>
                 ))}
               </div>
             </div>
@@ -851,7 +852,7 @@ export default function AITreePage() {
                 href="https://github.com/arthunt/ai-tree/issues/new?title=[Feedback]&body=Please%20describe%20your%20feedback%20or%20issue%20here.%0A%0A**Concept%20(if%20applicable):**%20%0A**Issue%20type:**%20Bug%20/%20Enhancement%20/%20Question%20/%20Other"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 min-h-[44px] text-sm text-gray-400 hover:text-white transition-colors"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />

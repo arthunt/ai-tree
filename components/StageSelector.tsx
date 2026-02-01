@@ -38,7 +38,7 @@ export function StageSelector() {
                             key={item.id}
                             onClick={() => setStage(item.id)}
                             className={cn(
-                                "relative px-4 py-3 md:py-2 rounded-full flex items-center gap-2 transition-all duration-300 group outline-none shrink-0",
+                                "relative px-4 py-3 md:py-2 min-h-[44px] rounded-full flex items-center gap-2 transition-all duration-300 group outline-none shrink-0",
                                 isActive
                                     ? "bg-white/10 text-white shadow-inner"
                                     : "text-white/40 hover:text-white/80 hover:bg-white/5"

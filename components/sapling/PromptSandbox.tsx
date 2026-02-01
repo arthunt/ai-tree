@@ -27,18 +27,73 @@ interface PromptSandboxProps {
     onRating?: () => void;
 }
 
-// Mock LLM Response generator
+// Context-aware mock LLM response generator
 const generateMockResponse = (prompt: string, temperature: number): string => {
-    const responses = [
-        "That's an interesting perspective. Based on the patterns I've learned, I can tell you that...",
-        "Here's a simpler way to think about it: imagine a garden where every idea is a seed...",
-        "I'm not sure I understand. Could you rephrase that using more specific keywords?",
-        "To answer that, we need to look at the underlying data distribution...",
-        "Sure! Here is a creative variation: The sky wasn't just blue, it was a deep, electric azure..."
+    const lower = prompt.toLowerCase();
+
+    // Topic detection — match prompt keywords to AI concepts
+    const topics: { keywords: string[]; low: string; mid: string; high: string }[] = [
+        {
+            keywords: ['neural', 'network', 'neuron', 'layer'],
+            low: "A neural network processes data through layers of interconnected nodes. Each node applies a weight and activation function to transform the input signal.",
+            mid: "Think of a neural network like a team of specialists — each layer extracts different features. The first layer might detect edges, the next shapes, and deeper layers recognize entire objects.",
+            high: "Imagine a magical forest where each tree whispers part of a story to the next. By the time the message reaches the last tree, it has transformed into a complete understanding of the world!"
+        },
+        {
+            keywords: ['token', 'tokeniz', 'word', 'text', 'split'],
+            low: "Tokenization breaks text into smaller units (tokens) that the model can process. Common approaches include word-level, subword (BPE), and character-level tokenization.",
+            mid: "Tokenization is like cutting a sentence into puzzle pieces. 'Understanding' might become ['Under', 'stand', 'ing'] — the model learns what each piece means and how they connect.",
+            high: "Picture a chef slicing ingredients before cooking — you can't make a meal from a whole potato! Similarly, AI 'slices' your words into bite-sized tokens before it can cook up a response."
+        },
+        {
+            keywords: ['temperature', 'random', 'creative', 'deterministic'],
+            low: "Temperature controls the randomness of the output distribution. At 0, the model always picks the most probable token. Higher values flatten the distribution, increasing diversity.",
+            mid: "Temperature is like a creativity dial. Low temperature = predictable, focused answers. High temperature = surprising, varied responses. Try adjusting the slider to see the difference!",
+            high: "Imagine temperature as the mood of a storyteller: at 0 they read from a script, at 0.7 they improvise a little, and at 1.5 they're wildly freestyling poetry about electric sheep!"
+        },
+        {
+            keywords: ['train', 'learning', 'gradient', 'backprop', 'epoch', 'loss'],
+            low: "Training adjusts model weights to minimize a loss function. Each epoch processes the full dataset, computing gradients via backpropagation to update parameters.",
+            mid: "Training is like studying for an exam — each epoch is one pass through the textbook. The model checks its answers (loss), then adjusts its understanding (weights) to do better next time.",
+            high: "Picture a student who reads the same book over and over, but each time they highlight different parts. After enough re-reads (epochs), they can practically recite it — that's how AI learns!"
+        },
+        {
+            keywords: ['prompt', 'instruction', 'context', 'system'],
+            low: "Prompt engineering structures input to guide model behavior. System prompts set the context, while user prompts provide specific instructions for the desired output.",
+            mid: "A good prompt is like giving clear directions — instead of 'write something about dogs', try 'explain three benefits of adopting rescue dogs in a friendly, conversational tone'.",
+            high: "Prompting an AI is like ordering at a restaurant: 'food please' gets you something random, but 'a medium-rare steak with garlic butter and roasted vegetables' gets exactly what you want!"
+        },
+        {
+            keywords: ['attention', 'transformer', 'self-attention'],
+            low: "Self-attention allows each token to attend to every other token in the sequence, computing relevance scores to weight the contribution of each position.",
+            mid: "Attention is how AI decides which words matter most. In 'The cat sat on the mat because it was tired', attention helps the model know 'it' refers to 'cat', not 'mat'.",
+            high: "Imagine reading a mystery novel — attention is your brain's spotlight, jumping between clues scattered across pages to piece together who did it!"
+        }
     ];
-    // Simple hash
-    const index = (prompt.length + Math.floor(temperature * 10)) % responses.length;
-    return responses[index];
+
+    // Find best matching topic
+    const matched = topics.find(t => t.keywords.some(k => lower.includes(k)));
+
+    // Fallback generic responses
+    const fallbacks = [
+        {
+            low: "Based on the data patterns, the most statistically significant finding is that the input correlates with established computational models.",
+            mid: "That's a great question! AI works by finding patterns in data. The more examples it sees, the better it understands — much like how you learn from experience.",
+            high: "What a fascinating thought! Let me paint you a picture: imagine all the world's knowledge as a vast ocean, and AI is learning to surf its waves — sometimes gracefully, sometimes wiping out spectacularly!"
+        },
+        {
+            low: "The model processes this query by decomposing it into semantic components and mapping them to learned representations in the embedding space.",
+            mid: "To answer your question, the AI looks at how similar ideas are connected in its training data. It's like having read millions of books and now connecting the dots between them.",
+            high: "Ooh, interesting! Think of me as a parrot who's read the entire internet — I don't truly 'understand', but I'm really good at predicting what word comes next. It's pattern matching all the way down!"
+        }
+    ];
+
+    const pick = matched ?? fallbacks[prompt.length % fallbacks.length];
+
+    // Select response based on temperature band
+    if (temperature < 0.3) return pick.low;
+    if (temperature < 0.8) return pick.mid;
+    return pick.high;
 };
 
 export function PromptSandbox({

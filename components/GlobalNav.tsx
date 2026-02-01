@@ -46,7 +46,7 @@ export function GlobalNav({ extraControls, transparent = false }: GlobalNavProps
                 <div className="flex items-center gap-6">
                     <Link
                         href={`/${locale}`}
-                        className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors ${transparent ? 'text-white hover:bg-white/10' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                        className={`flex items-center gap-2 px-3 py-1.5 min-h-[44px] rounded-lg transition-colors ${transparent ? 'text-white hover:bg-white/10' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
                     >
                         <ArrowLeft className="w-5 h-5" />
                         <span className="font-medium hidden sm:inline">{t('back')}</span>
@@ -58,7 +58,7 @@ export function GlobalNav({ extraControls, transparent = false }: GlobalNavProps
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className={`px-4 py-2 transition-all ${isActive(link.href) ? activeClass : textClass}`}
+                                className={`px-4 py-2 min-h-[44px] flex items-center transition-all ${isActive(link.href) ? activeClass : textClass}`}
                             >
                                 {link.label}
                             </Link>
@@ -81,7 +81,7 @@ export function GlobalNav({ extraControls, transparent = false }: GlobalNavProps
                     {/* Mobile Menu Toggle */}
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className={`md:hidden p-2 rounded-lg ${transparent ? 'text-white hover:bg-white/10' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100'}`}
+                        className={`md:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg ${transparent ? 'text-white hover:bg-white/10' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100'}`}
                     >
                         {isMobileMenuOpen ? <X /> : <Menu />}
                     </button>
@@ -103,7 +103,7 @@ export function GlobalNav({ extraControls, transparent = false }: GlobalNavProps
                                     key={link.href}
                                     href={link.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className={`px-4 py-3 rounded-lg text-lg ${isActive(link.href)
+                                    className={`px-4 py-3 min-h-[44px] rounded-lg text-lg ${isActive(link.href)
                                         ? 'bg-brand-teal/10 text-brand-teal font-bold'
                                         : transparent ? 'text-gray-200 hover:bg-white/10' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
                                 >
