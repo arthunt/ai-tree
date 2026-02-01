@@ -3,8 +3,9 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Lightbulb, BookOpen, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useEffect, useRef } from 'react';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
-import { useContentWithVariant } from '@/hooks/useContentVariant';
+import { useContentWithVariant, recordEngagement } from '@/hooks/useContentVariant';
 
 interface ConceptDetailPanelProps {
     isOpen: boolean;
@@ -32,8 +33,21 @@ export function ConceptDetailPanel({
     className,
 }: ConceptDetailPanelProps) {
     const t = useTranslations();
-    const { content: displayTitle } = useContentWithVariant(`concept:${conceptId}:title`, title);
+    const { content: displayTitle, variant: titleVariant } = useContentWithVariant(`concept:${conceptId}:title`, title);
+    const { content: displayMetaphor } = useContentWithVariant(`concept:${conceptId}:metaphor`, metaphor ?? '');
+    const { content: displayDeepDive } = useContentWithVariant(`concept:${conceptId}:deep_dive`, deepDive ?? '');
+    const { content: displayQuestion } = useContentWithVariant(`concept:${conceptId}:question`, question ?? '');
     const hasContent = metaphor || deepDive || question;
+    const engagementFired = useRef(false);
+
+    // Record engagement when panel opens (once per mount cycle)
+    useEffect(() => {
+        if (isOpen && titleVariant && !engagementFired.current) {
+            engagementFired.current = true;
+            recordEngagement(titleVariant);
+        }
+        if (!isOpen) engagementFired.current = false;
+    }, [isOpen, titleVariant]);
 
     if (!hasContent) return null;
 
@@ -72,7 +86,7 @@ export function ConceptDetailPanel({
                                     <span className="text-[10px] font-bold uppercase tracking-wider text-amber-500/70 block mb-1">
                                         {t('conceptDetail.metaphor')}
                                     </span>
-                                    <p className="text-sm text-stone-300 leading-relaxed">{metaphor}</p>
+                                    <p className="text-sm text-stone-300 leading-relaxed">{displayMetaphor}</p>
                                 </div>
                             </div>
                         )}
@@ -85,7 +99,7 @@ export function ConceptDetailPanel({
                                     <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-500/70 block mb-1">
                                         {t('conceptDetail.deepDive')}
                                     </span>
-                                    <p className="text-sm text-stone-300 leading-relaxed">{deepDive}</p>
+                                    <p className="text-sm text-stone-300 leading-relaxed">{displayDeepDive}</p>
                                 </div>
                             </div>
                         )}
@@ -98,7 +112,7 @@ export function ConceptDetailPanel({
                                     <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400/70 block mb-1">
                                         {t('conceptDetail.thinkAboutIt')}
                                     </span>
-                                    <p className="text-sm text-stone-300 leading-relaxed">{question}</p>
+                                    <p className="text-sm text-stone-300 leading-relaxed">{displayQuestion}</p>
                                     {hint && (
                                         <p className="text-xs text-stone-500 mt-2 italic">{hint}</p>
                                     )}

@@ -1417,7 +1417,13 @@
       "dragGuide": "Lohista sõlmed seemne juurde",
       "context": "Kontekst",
       "grammar": "Grammatika",
-      "facts": "Faktid"
+      "facts": "Faktid",
+      "feedbackContext": "Mudel mõistab nüüd ümbritsevaid sõnu!",
+      "feedbackGrammar": "Lausestruktuur loob ühendusi!",
+      "feedbackFacts": "Maailmateadmised juurduvad!",
+      "progress": "{connected}/{total} ühendatud",
+      "complete": "Juured on paigas! Idand on kasvamiseks valmis.",
+      "resetLabel": "Lähtesta"
     }
   },
   "fruits": {

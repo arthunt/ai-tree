@@ -261,7 +261,13 @@
       "dragGuide": "Drag nodes to feed the seed",
       "context": "Context",
       "grammar": "Grammar",
-      "facts": "Facts"
+      "facts": "Facts",
+      "feedbackContext": "The model now understands surrounding words!",
+      "feedbackGrammar": "Sentence structure is forming connections!",
+      "feedbackFacts": "World knowledge is taking root!",
+      "progress": "{connected} of {total} connected",
+      "complete": "Roots established! The sprout is ready to grow.",
+      "resetLabel": "Reset"
     }
   },
   "navigation": {

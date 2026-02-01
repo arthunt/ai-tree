@@ -99,7 +99,7 @@
 |---|---|------|-------------|
 | U1 | ✅ | **4.x.2** Sapling: Connect Real LLM | ~~Replace static mock.~~ Context-aware mock LLM with 6 AI topics + temperature-sensitive responses. |
 | U2 | ✅ | **4.x.5** Sapling: UI Layout | ~~Reduce vertical space.~~ Hero pt-32→pt-24, pb-12→pb-8, workspace mb-20→mb-12. |
-| U3 | **P2** | **3.x.1** Sprout: Interaction Layer | SproutHero already has drag-to-feed interaction. Node labels now i18n. Feedback may need richer content. |
+| U3 | ✅ | **3.x.1** Sprout: Interaction Layer | ~~No interactions.~~ Per-node feedback toasts, progress counter (2/3), completion message + reset button. All i18n EN/ET/RU. |
 | U4 | ✅ | **5.x.1** Tree: Performance | ~~Slow/empty on load.~~ Lazy-load TreeVisualization + loading state fallback. |
 | U5 | ✅ | **8.M3** Sprout: Theme Fix | ~~Dark background.~~ Fixed to Dawn gradient `from-indigo-800 via-violet-800 to-sky-950` + rose sunrise accent. |
 | U6 | ✅ | **8.M5** Accessibility | ~~44px touch targets.~~ Full sweep: landing scrolled buttons, level dots, GlobalNav, StageSelector, footer. |
@@ -355,27 +355,27 @@
 | M3.1 | Lighten gradient to sunrise | ✅ DONE | Change to `from-indigo-800 via-violet-800 to-sky-950` or similar. Must feel like actual dawn, not night sky. |
 | M3.2 | Warm accent hint | ✅ DONE | Add subtle amber/pink sunrise hint at the bottom edge. Must remain dark enough for white text readability. |
 
-### Block M4: Novice Orientation Micro-copy (P1) — available for `@gemini` or `@swarm`
+### Block M4: Novice Orientation Micro-copy `@opus` ✅ DONE
 
 > **Problem:** A novice from Google sees "НАЧАТЬ ЭВОЛЮЦИЮ" but doesn't know what Dendrix.ai is, what they'll learn, how long it takes, or if it's free.
 > **File:** `app/[locale]/page.tsx` (hero section)
 
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| M4.1 | Add orientation block | ⏳ NEXT | Add a short orientation line between badge and title: "Free interactive course. No signup needed." Visible on mobile, concise. |
-| M4.2 | i18n keys for 3 locales | ⏳ NEXT | Add `landing.orientation` keys to `messages/en.json`, `messages/et.json`, `messages/ru.json`. |
+| M4.1 | Add orientation block | ✅ DONE | "Free interactive course. No signup needed." between badge and title. |
+| M4.2 | i18n keys for 3 locales | ✅ DONE | `landing.orientation` in EN/ET/RU. |
 
-### Block M5: Touch Target & Accessibility Sweep (P1) — available for `@swarm`
+### Block M5: Touch Target & Accessibility Sweep `@opus` ✅ DONE
 
 > **Ref:** UAT U6, WCAG 2.5.5. All interactive elements must be ≥44×44px.
 > **Files:** `app/[locale]/page.tsx`, `components/StageSelector.tsx`, `components/GlobalNav.tsx`
 
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| M5.1 | Landing page button audit | ⏳ NEXT | Audit all buttons on landing page for 44px minimum. Fix scrolled-state header controls (currently 32–36px). |
-| M5.2 | StageSelector pills | ⏳ NEXT | Verify StageSelector pill heights meet 44px on mobile viewports. |
-| M5.3 | LanguageSwitcher trigger | ⏳ NEXT | Ensure dropdown trigger meets 44px on all viewports. |
-| M5.4 | Footer navigation | ⏳ NEXT | Footer navigation buttons → 44px (UAT U6). |
+| M5.1 | Landing page button audit | ✅ DONE | All 7 scrolled-state buttons + mobile CTA + hamburger: `min-w-[44px] min-h-[44px]`. |
+| M5.2 | StageSelector pills | ✅ DONE | `min-h-[44px]` on all stage buttons. |
+| M5.3 | LanguageSwitcher trigger | ✅ DONE | `min-h-[44px]` on trigger button. |
+| M5.4 | Footer navigation | ✅ DONE | Footer link: `min-h-[44px]`. |
 
 ---
 
@@ -431,7 +431,7 @@
 |---|------|--------|-------------|
 | 9.3.1 | Create lib/variants/service.ts | ✅ DONE | `getVariant()` with weighted random + session cache |
 | 9.3.2 | Create hooks/useContentVariant.ts | ✅ DONE | React hook wrapping variant service |
-| 9.3.3 | Wire into ConceptDetailPanel | 🔄 IN PROGRESS | Replace static text with variant-aware components |
+| 9.3.3 | Wire into ConceptDetailPanel | ✅ DONE | Title, metaphor, deepDive, question all variant-aware via `useContentWithVariant`. Engagement tracking on panel open. |
 
 ### Phase 9.4: Measurement & Analytics (deferred)
 
