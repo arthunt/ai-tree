@@ -72,6 +72,9 @@ export function OrchardView({ concepts, relatedConcepts = [], locale }: OrchardV
                                 salary={career.hint ?? undefined}
                                 index={index}
                                 icon={career.icon ? ICON_MAP[career.icon] : undefined}
+                                metaphor={career.metaphor}
+                                deepDive={career.deep_dive}
+                                question={career.question}
                             />
                         </motion.div>
                     ))}

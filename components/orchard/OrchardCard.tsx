@@ -1,8 +1,10 @@
 "use client";
 
 import { UnifiedConceptCard } from '@/components/ui/UnifiedConceptCard';
+import { ConceptDetailPanel } from '@/components/concept/ConceptDetailPanel';
 import { motion } from 'framer-motion';
 import { Briefcase, Building2, TrendingUp, Users } from 'lucide-react';
+import { useState } from 'react';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface OrchardCardProps {
@@ -12,10 +14,14 @@ interface OrchardCardProps {
     salary?: string;
     index: number;
     icon?: React.ReactNode;
+    metaphor?: string | null;
+    deepDive?: string | null;
+    question?: string | null;
 }
 
-export function OrchardCard({ title, description, role, salary, index, icon }: OrchardCardProps) {
+export function OrchardCard({ title, description, role, salary, index, icon, metaphor, deepDive, question }: OrchardCardProps) {
     const t = useTranslations();
+    const [isExpanded, setIsExpanded] = useState(false);
     const orchardColor = '#F43F5E'; // Rose-500 for a warm sunset feel
 
     return (
@@ -33,7 +39,7 @@ export function OrchardCard({ title, description, role, salary, index, icon }: O
                     </div>
                 }
                 deepDiveLabel={t('orchard.card.viewPath') || "View Career Path"}
-                onDeepDive={() => console.log('View Path', title)}
+                onDeepDive={() => setIsExpanded(prev => !prev)}
             >
                 <div className="flex flex-col h-full bg-gradient-to-br from-rose-50/50 to-orange-50/50 -m-5 p-5 md:-m-6 md:p-6 rounded-b-2xl">
                     {/* Header Icon */}
@@ -61,6 +67,15 @@ export function OrchardCard({ title, description, role, salary, index, icon }: O
                     </div>
                 </div>
             </UnifiedConceptCard>
+            <ConceptDetailPanel
+                isOpen={isExpanded}
+                onClose={() => setIsExpanded(false)}
+                title={title}
+                metaphor={metaphor}
+                deepDive={deepDive}
+                question={question}
+                color="#F43F5E"
+            />
         </div>
     );
 }

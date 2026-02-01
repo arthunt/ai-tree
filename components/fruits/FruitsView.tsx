@@ -69,6 +69,10 @@ export function FruitsView({ concepts, relatedConcepts = [], locale }: FruitsVie
                                 category={concept.subtitle ?? concept.category}
                                 index={index}
                                 icon={concept.icon ? ICON_MAP[concept.icon] : undefined}
+                                metaphor={concept.metaphor}
+                                deepDive={concept.deep_dive}
+                                question={concept.question}
+                                hint={concept.hint}
                             />
                         </motion.div>
                     ))}

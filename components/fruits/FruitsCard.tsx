@@ -1,8 +1,10 @@
 "use client";
 
 import { UnifiedConceptCard } from '@/components/ui/UnifiedConceptCard';
+import { ConceptDetailPanel } from '@/components/concept/ConceptDetailPanel';
 import { motion } from 'framer-motion';
 import { ExternalLink, Zap } from 'lucide-react';
+import { useState } from 'react';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface FruitsCardProps {
@@ -11,10 +13,15 @@ interface FruitsCardProps {
     category: string;
     index: number;
     icon?: React.ReactNode;
+    metaphor?: string | null;
+    deepDive?: string | null;
+    question?: string | null;
+    hint?: string | null;
 }
 
-export function FruitsCard({ title, description, category, index, icon }: FruitsCardProps) {
+export function FruitsCard({ title, description, category, index, icon, metaphor, deepDive, question, hint }: FruitsCardProps) {
     const t = useTranslations();
+    const [isExpanded, setIsExpanded] = useState(false);
 
     return (
         <div className="h-full min-h-[260px]">
@@ -30,7 +37,7 @@ export function FruitsCard({ title, description, category, index, icon }: Fruits
                     </div>
                 }
                 deepDiveLabel={t('fruits.card.visitApp') || "Launch App"}
-                onDeepDive={() => console.log('Launch', title)} // Placeholder for routing
+                onDeepDive={() => setIsExpanded(prev => !prev)}
             >
                 <div className="flex flex-col h-full">
                     {/* Header Icon */}
@@ -51,6 +58,16 @@ export function FruitsCard({ title, description, category, index, icon }: Fruits
                     </div>
                 </div>
             </UnifiedConceptCard>
+            <ConceptDetailPanel
+                isOpen={isExpanded}
+                onClose={() => setIsExpanded(false)}
+                title={title}
+                metaphor={metaphor}
+                deepDive={deepDive}
+                question={question}
+                hint={hint}
+                color="#f97316"
+            />
         </div>
     );
 }

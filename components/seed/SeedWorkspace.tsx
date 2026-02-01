@@ -4,7 +4,9 @@ import { SeedProvider, useSeed } from './SeedContext';
 import { SeedHeroAnimation } from './SeedHeroAnimation';
 import { SeedStepNav } from './SeedStepNav';
 import { UnifiedConceptCard } from '@/components/ui/UnifiedConceptCard';
+import { ConceptDetailPanel } from '@/components/concept/ConceptDetailPanel';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Concept } from '@/lib/concepts/types';
 
@@ -45,6 +47,36 @@ interface SeedWorkspaceProps {
     i18n: SeedI18n;
 }
 
+function SeedConceptCard({ concept }: { concept: Concept }) {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const hasDetail = concept.metaphor || concept.deep_dive || concept.question;
+
+    return (
+        <div>
+            <div className="h-[280px]">
+                <UnifiedConceptCard
+                    variant="seed"
+                    index={concept.sort_order}
+                    title={concept.title}
+                    description={concept.explanation}
+                    deepDiveLabel={hasDetail ? "Analyze Process" : undefined}
+                    onDeepDive={hasDetail ? () => setIsExpanded(prev => !prev) : undefined}
+                />
+            </div>
+            <ConceptDetailPanel
+                isOpen={isExpanded}
+                onClose={() => setIsExpanded(false)}
+                title={concept.title}
+                metaphor={concept.metaphor}
+                deepDive={concept.deep_dive}
+                question={concept.question}
+                hint={concept.hint}
+                color="#f59e0b"
+            />
+        </div>
+    );
+}
+
 function ConceptGrid({ title, concepts, active }: { title: string; concepts: Concept[]; active: boolean }) {
     if (concepts.length === 0) return null;
 
@@ -64,14 +96,7 @@ function ConceptGrid({ title, concepts, active }: { title: string; concepts: Con
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {concepts.map((concept) => (
-                    <div key={concept.id} className="h-[280px]">
-                        <UnifiedConceptCard
-                            variant="seed"
-                            index={concept.sort_order}
-                            title={concept.title}
-                            description={concept.explanation}
-                        />
-                    </div>
+                    <SeedConceptCard key={concept.id} concept={concept} />
                 ))}
             </div>
         </motion.div>
