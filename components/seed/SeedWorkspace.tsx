@@ -68,6 +68,7 @@ function SeedConceptCard({ concept }: { concept: Concept }) {
                 isOpen={isExpanded}
                 onClose={() => setIsExpanded(false)}
                 title={concept.title}
+                conceptId={concept.id}
                 metaphor={concept.metaphor}
                 deepDive={concept.deep_dive}
                 question={concept.question}

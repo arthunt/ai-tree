@@ -4,11 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Lightbulb, BookOpen, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+import { useContentWithVariant } from '@/hooks/useContentVariant';
 
 interface ConceptDetailPanelProps {
     isOpen: boolean;
     onClose: () => void;
     title: string;
+    conceptId: string;
     metaphor?: string | null;
     deepDive?: string | null;
     question?: string | null;
@@ -21,6 +23,7 @@ export function ConceptDetailPanel({
     isOpen,
     onClose,
     title,
+    conceptId,
     metaphor,
     deepDive,
     question,
@@ -29,6 +32,7 @@ export function ConceptDetailPanel({
     className,
 }: ConceptDetailPanelProps) {
     const t = useTranslations();
+    const { content: displayTitle } = useContentWithVariant(`concept:${conceptId}:title`, title);
     const hasContent = metaphor || deepDive || question;
 
     if (!hasContent) return null;
@@ -50,7 +54,7 @@ export function ConceptDetailPanel({
                                 className="text-sm font-bold uppercase tracking-wider"
                                 style={{ color }}
                             >
-                                {title}
+                                {displayTitle}
                             </h4>
                             <button
                                 onClick={onClose}

@@ -67,6 +67,7 @@ export function OrchardView({ concepts, relatedConcepts = [], locale }: OrchardV
                         >
                             <OrchardCard
                                 title={career.title}
+                                conceptId={career.id}
                                 description={career.explanation}
                                 role={career.subtitle ?? career.category}
                                 salary={career.hint ?? undefined}

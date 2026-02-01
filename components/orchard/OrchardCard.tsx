@@ -9,6 +9,7 @@ import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglid
 
 interface OrchardCardProps {
     title: string;
+    conceptId: string;
     description: string;
     role: string;
     salary?: string;
@@ -19,7 +20,7 @@ interface OrchardCardProps {
     question?: string | null;
 }
 
-export function OrchardCard({ title, description, role, salary, index, icon, metaphor, deepDive, question }: OrchardCardProps) {
+export function OrchardCard({ title, conceptId, description, role, salary, index, icon, metaphor, deepDive, question }: OrchardCardProps) {
     const t = useTranslations();
     const [isExpanded, setIsExpanded] = useState(false);
     const orchardColor = '#F43F5E'; // Rose-500 for a warm sunset feel
@@ -71,6 +72,7 @@ export function OrchardCard({ title, description, role, salary, index, icon, met
                 isOpen={isExpanded}
                 onClose={() => setIsExpanded(false)}
                 title={title}
+                conceptId={conceptId}
                 metaphor={metaphor}
                 deepDive={deepDive}
                 question={question}

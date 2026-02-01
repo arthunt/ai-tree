@@ -65,6 +65,7 @@ export function FruitsView({ concepts, relatedConcepts = [], locale }: FruitsVie
                         >
                             <FruitsCard
                                 title={concept.title}
+                                conceptId={concept.id}
                                 description={concept.explanation}
                                 category={concept.subtitle ?? concept.category}
                                 index={index}

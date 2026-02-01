@@ -9,6 +9,7 @@ import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglid
 
 interface FruitsCardProps {
     title: string;
+    conceptId: string;
     description: string;
     category: string;
     index: number;
@@ -19,7 +20,7 @@ interface FruitsCardProps {
     hint?: string | null;
 }
 
-export function FruitsCard({ title, description, category, index, icon, metaphor, deepDive, question, hint }: FruitsCardProps) {
+export function FruitsCard({ title, conceptId, description, category, index, icon, metaphor, deepDive, question, hint }: FruitsCardProps) {
     const t = useTranslations();
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -62,6 +63,7 @@ export function FruitsCard({ title, description, category, index, icon, metaphor
                 isOpen={isExpanded}
                 onClose={() => setIsExpanded(false)}
                 title={title}
+                conceptId={conceptId}
                 metaphor={metaphor}
                 deepDive={deepDive}
                 question={question}
