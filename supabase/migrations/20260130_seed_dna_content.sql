@@ -84,29 +84,29 @@ INSERT INTO concept_translations (concept_id, locale, title, explanation, metaph
   (
     'tokenization', 'et',
     'Tokeniseerimine',
-    'Sisendtekst jagatakse vaike osadeks, mida nimetatakse tokeniteks. Need on tehisintellekti jaoks tahenduse pohiuhikud — nagu pusletukid, mis koos moodustavad tervikliku pildi.',
-    'Nagu koogi jaoks koogiviljade hakki mine — terved koostisosad muutuvad suutavateks tuk kideks, millega retsept toota saab.',
-    'Kuidas masin hakkab lugema?'
+    'Tekst puruneb väikesteks numbriteks — ainus keel, mida masinad mõistavad.',
+    'Puude lõhkumine — terved palgid muutuvad halgudeks, mis ahju mahuvad.',
+    'Kuidas masin lugema hakkab?'
   ),
   (
     'embeddings', 'et',
     'Vektorid',
-    'Iga token muudetakse arvude loendiks, mis esindab selle tahendust koigemootemelises ruumis. Sarnase tahendusega sonad satuvad lahestikku, moodustades keelekaardi.',
+    'Iga token muudetakse arvude loendiks, mis esindab selle tähendust kõrgemõõtmelises ruumis. Sarnase tähendusega sõnad satuvad lähestikku, moodustades keelekaardi.',
     'Nagu GPS-koordinaadid ideede jaoks — "kuningas" ja "kuninganna" on naabrid, samas kui "kuningas" ja "banaan" on mandrite kaugusel.',
-    'Kuidas tehisintellekt moistab sonade tahendust?'
+    'Kuidas tehisintellekt mõistab sõnade tähendust?'
   ),
   (
     'attention', 'et',
-    'Enesetahelepanu',
-    'Mudel analuusib iga tokeni seost koigi teiste tokenitega sisendis. See voimaldab moiststa konteksti — teadmist, et "pank" tahendab erinevat "joepank" ja "pangakonto" puhul.',
-    'Nagu prohvektor pimedas ruumis — see valgustab sonade vahelisi seoseid, paljastades, millised on uksteise jaoks koige olulisemad.',
-    'Kuidas see moistab konteksti?'
+    'Enesetähelepanu',
+    'Mudel analüüsib iga tokeni seost kõigi teiste tokenitega sisendis. See võimaldab mõista konteksti — teadmist, et "pank" tähendab erinevat "jõepank" ja "pangakonto" puhul.',
+    'Nagu prožektor pimedas ruumis — see valgustab sõnade vahelisi seoseid, paljastades, millised on üksteise jaoks kõige olulisemad.',
+    'Kuidas see mõistab konteksti?'
   ),
   (
     'prediction', 'et',
     'Ennustamine',
-    'Kogu kogutud konteksti pohjal arvutab mudel igale voimalikule jargmisele tokenile toenaosuse. See valib koige toenaolisema (voi valib loovalt) ja kordab — uks token korraga luues vastust.',
-    'Nagu automaattaiendus steroididel — uhe sona asemel kaalub see tuhandeid voimalusi, kasutades koike opitut.',
+    'Kogu kogutud konteksti põhjal arvutab mudel igale võimalikule järgmisele tokenile tõenäosuse. See valib kõige tõenäolisema (või valib loovalt) ja kordab — üks token korraga luues vastust.',
+    'Nagu automaattäiendus steroididel — ühe sõna asemel kaalub see tuhandeid võimalusi, kasutades kõike õpitut.',
     'Kuidas see tegelikult teksti genereerib?'
   )
 ON CONFLICT (concept_id, locale) DO UPDATE SET
