@@ -77,7 +77,10 @@
     "viewProgramLabel": "Vaata Programmi",
     "conceptDeepDive": "Mõiste Süvitsi",
     "readMore": "Loe lisaks...",
-    "exploreStage": "Avasta {stage} etapp →"
+    "exploreStage": "Avasta {stage} etapp →",
+    "closeDetails": "Sulge detailid",
+    "motif": "motiiv",
+    "noDescription": "Kirjeldus pole veel saadaval."
   },
   "viewMode": {
     "both": "Mõlemad",
@@ -1496,11 +1499,6 @@
   "treeExplorer": {
     "map": "Kaart",
     "grid": "Ruudustik"
-  },
-  "treeDetail": {
-    "closeDetails": "Sulge detailid",
-    "motif": "motiiv",
-    "noDescription": "Kirjeldus pole veel saadaval."
   },
   "seedHero": {
     "initializeWeights": "Kaalude initsialiseerimine",

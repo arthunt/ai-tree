@@ -67,7 +67,7 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                     <button
                         onClick={onClose}
                         className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                        aria-label="Close details"
+                        aria-label={t('closeDetails')}
                     >
                         <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                     </button>
@@ -77,7 +77,7 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                 <div className="mb-8">
                     <div className="flex items-center gap-3 mb-4">
                         {node.motif && (
-                            <span className="text-2xl" role="img" aria-label="motif">
+                            <span className="text-2xl" role="img" aria-label={t('motif')}>
                                 {motifToEmoji(node.motif)}
                             </span>
                         )}
@@ -87,7 +87,7 @@ export function TreeDetailPanel({ node, onClose }: TreeDetailPanelProps) {
                     </div>
 
                     <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                        {node.description || "No description available yet."}
+                        {node.description || t('noDescription')}
                     </p>
 
                     {node.significance && (

@@ -77,7 +77,10 @@
     "viewProgramLabel": "View Program",
     "conceptDeepDive": "Concept Deep-Dive",
     "readMore": "Read more...",
-    "exploreStage": "Explore {stage} stage →"
+    "exploreStage": "Explore {stage} stage →",
+    "closeDetails": "Close details",
+    "motif": "motif",
+    "noDescription": "No description available yet."
   },
   "viewMode": {
     "both": "Both",
@@ -1496,11 +1499,6 @@
   "treeExplorer": {
     "map": "Map",
     "grid": "Grid"
-  },
-  "treeDetail": {
-    "closeDetails": "Close details",
-    "motif": "motif",
-    "noDescription": "No description available yet."
   },
   "seedHero": {
     "initializeWeights": "Initialize Weights",

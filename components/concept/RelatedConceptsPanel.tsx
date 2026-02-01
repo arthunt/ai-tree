@@ -25,6 +25,7 @@ const STAGE_THEMES: Record<EvolutionStage, { border: string; bg: string; text: s
 };
 
 export function RelatedConceptsPanel({ concepts, locale, className, onConceptClick }: RelatedConceptsPanelProps) {
+    const t = useTranslations();
     if (!concepts || concepts.length === 0) return null;
 
     return (
@@ -34,7 +35,7 @@ export function RelatedConceptsPanel({ concepts, locale, className, onConceptCli
                     <Network size={18} className="text-white/60" />
                 </div>
                 <h3 className="text-lg font-bold text-white/80 uppercase tracking-widest text-sm">
-                    {locale === 'et' ? 'Seotud Mõisted' : 'Related Concepts'}
+                    {t('relatedConcepts.title')}
                 </h3>
             </div>
 

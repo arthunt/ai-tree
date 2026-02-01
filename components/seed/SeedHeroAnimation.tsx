@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Database, Upload, Play, Check, Server, BrainCircuit } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface SeedHeroI18n {
     selectData: string;
@@ -20,6 +21,7 @@ interface SeedHeroI18n {
 
 export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
     const { phase, selectedSources, toggleSource, startProcessing, startTraining, progress, loss, epoch } = useSeed();
+    const t = useTranslations();
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     // Canvas Animation for Training Phase (Matrix/Particles)
@@ -165,7 +167,7 @@ export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
                         exit={{ opacity: 0 }}
                         className="absolute inset-0 flex flex-col items-center justify-center p-8 bg-black/20"
                     >
-                        <h3 className="text-amber-500 font-mono text-xs uppercase tracking-widest mb-6">Initialize Weights</h3>
+                        <h3 className="text-amber-500 font-mono text-xs uppercase tracking-widest mb-6">{t('seedHero.initializeWeights')}</h3>
 
                         <div className="flex gap-4 mb-8">
                             {[0, 1, 2, 3, 4].map((i) => (
@@ -200,7 +202,7 @@ export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
                         </div>
 
                         <p className="text-stone-400 text-sm max-w-sm text-center mb-6">
-                            "Weights" are like volume knobs. Training adjusts billions of them to reduce noise and amplify meaning.
+                            {t('seedHero.weightsExplanation')}
                         </p>
 
                         <button
@@ -208,7 +210,7 @@ export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
                             className="flex items-center gap-2 px-8 py-3 rounded-full bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold text-sm transition-all shadow-lg hover:shadow-amber-900/20 active:scale-95"
                         >
                             <BrainCircuit size={16} />
-                            Start Training Loop
+                            {t('seedHero.startTrainingLoop')}
                         </button>
                     </motion.div>
                 )}

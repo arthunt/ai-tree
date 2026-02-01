@@ -18,11 +18,8 @@ interface TreeExplorerProps {
 type ViewMode = 'map' | 'grid';
 
 export function TreeExplorer({ data, onNodeClick, intent }: TreeExplorerProps) {
+    const t = useTranslations();
     const [viewMode, setViewMode] = useState<ViewMode>('map');
-
-    // We can add simple translation keys later, hardcoded for now or reuse existing
-    const tMap = "Map"; // t('view.map')
-    const tGrid = "Grid"; // t('view.grid')
 
     return (
         <div className="w-full flex flex-col gap-6">
@@ -39,7 +36,7 @@ export function TreeExplorer({ data, onNodeClick, intent }: TreeExplorerProps) {
                         )}
                     >
                         <Network size={16} />
-                        <span>Map</span>
+                        <span>{t('treeExplorer.map')}</span>
                     </button>
                     <button
                         onClick={() => setViewMode('grid')}
@@ -51,7 +48,7 @@ export function TreeExplorer({ data, onNodeClick, intent }: TreeExplorerProps) {
                         )}
                     >
                         <LayoutGrid size={16} />
-                        <span>Grid</span>
+                        <span>{t('treeExplorer.grid')}</span>
                     </button>
                 </div>
             </div>
