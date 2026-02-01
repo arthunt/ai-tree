@@ -13,7 +13,7 @@
 
 ### `@opus` (Claude Code) — Current Sprint
 
-> Blocks A–D are complete. Next priorities: Phase 6 (i18n polish) and Phase 4 (Sapling refinement).
+> Blocks A–D, Phase 6, Phase 7 complete. **Current: Phase 8 — Mobile Novice UX (M1 + M2).**
 
 #### Block A: Seed Interactive Wiring ✅ DONE
 > SeedView converted from static server to client SeedWorkspace wrapping SeedProvider + SeedStepNav + SeedHeroAnimation. Cards activate/dim based on phase.
@@ -72,28 +72,41 @@
 - ✅ 3.2 Sprout Content Redefinition
 - ✅ 3.3 Sprout Migration to SDK
 
-### `@gemini` — Current Tasks
+### `@gemini` — Available Tasks
 | # | Task | Status | Description |
 |---|------|--------|-------------|
 | 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | Finish remaining: sprout, tree visuals (seed+sapling done) |
-| 2 | **3.1** Seed Stage Polish | ✅ DONE | Hero animation, SeedContext, SeedStepNav all created (wiring done by @opus) |
-| 3 | **4.1** Sapling Page & Theme | ✅ DONE | SaplingView, SaplingHeroAnimation, Morning Green emerald theme created |
-| 4 | **4.2** Prompt Sandbox | ✅ DONE | PromptSandbox component created with input/output panels |
-| 5 | **4.3** Sapling Practice Modules | ✅ DONE | 4 guided modules with validation logic (commit `0ca8cb4`) |
-| 6 | ~~**5.4.4** Related Concepts Panel~~ | ✅ DONE | Wired by @opus into all 5 stage views |
+| 2 | **8.M3** Sprout Theme Correction | ⏳ AVAILABLE | Lighten gradient to "Dawn" sunrise feel. See Phase 8 Block M3. |
+| 3 | **8.M4** Novice Orientation Copy | ⏳ AVAILABLE | Add orientation micro-copy + i18n keys for 3 locales. See Phase 8 Block M4. |
 
-### `@swarm` (Claude Flow) — Available
-| # | Task | Description |
-|---|------|-------------|
-| 1 | E2E smoke tests | Verify all 7 stage routes render with SDK data |
-| 2 | Accessibility audit | WCAG contrast + touch targets across all stages |
+### `@swarm` (Claude Flow) — Available Tasks
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| 1 | E2E smoke tests | ⏳ AVAILABLE | Verify all 7 stage routes render with SDK data |
+| 2 | **8.M5** Touch Target Sweep | ⏳ AVAILABLE | WCAG 44px audit across landing, StageSelector, GlobalNav, footer. See Phase 8 Block M5. |
 
 ### Coordination Rules
 - **Concept SDK is SPOT** — all agents MUST use `lib/concepts/api.ts`, never query Supabase directly from components
 - **Mock data** — when adding new stage concepts, also add mock entries to `lib/concepts/mock-data.ts`
-- **Translations** — every concept MUST have both EN and ET translations
+- **Translations** — every concept MUST have EN, ET, and RU translations
 - **DB inserts** — use `supabase/migrations/` files, not ad-hoc SQL
 - **No hardcoded content** — all new content goes through the Concept Object system
+
+### User Acceptance Testing (UAT) Feedback (Feb 2026) 🆕
+> **Goal:** Address friction points identified during Novice User smoke tests.
+
+| # | Priority | Task | Description |
+|---|---|------|-------------|
+| U1 | **P0** | **4.x.2** Sapling: Connect Real LLM | Replace static "The sky is blue" mock with real API (or better mock logic) to fix immersion. |
+| U2 | **P1** | **4.x.5** Sapling: UI Layout | Reduce vertical space so "Run Prompt" button is visible above fold on laptops. |
+| U3 | **P2** | **3.x.1** Sprout: Interaction Layer | User feedback: "Value questionable", "No interactions". Design a lightweight interactive element (e.g. "Connecting the dots") to match DNA/Seed. |
+| U4 | **P2** | **5.x.1** Tree: Performance | Optimize Map View rendering (currently slow/empty on load). |
+| U5 | **P1** | **8.M3** Sprout: Theme Fix | Fix Background color violation. Currently Dark (DNA-like), must be "Dawn" (Indigo/Violet) per Design System. → **Phase 8 Block M3** |
+| U6 | **P2** | **8.M5** Accessibility | Increase all touch targets to **44px** minimum. → **Phase 8 Block M5** |
+| U7 | **P3** | **4.x.6** Sapling: Empty State | Explicitly label the input area if "Run" cannot be shown, or ensure "Run" button is sticky. |
+| M1 | **P0** | **4.x.7** Sapling: Mobile Input | **CRITICAL:** Virtual keyboard blocks input; footer blocks "Run" button. Needs "Input Mode" or scroll-aware layout. |
+| M2 | ✅ | **6.6.1** i18n: Raw Keys | ~~Fix raw keys visible on Landing/DNA.~~ Fixed in Phase 6 i18n sweep + paraglide recompile. |
+| M3 | **P1** | **8.M1** Mobile Header | Fix "Junkyard" header on <400px devices. → **Phase 8 Block M1** |
 
 ---
 
@@ -303,6 +316,69 @@
 
 ---
 
+## Phase 8: Mobile Novice UX 🆕
+
+> **Goal:** A total novice arriving from Google search on a 360–375px phone should feel welcomed, oriented, and able to start learning within 10 seconds.
+> **Ref:** `VISION_AND_STRATEGY.md` V3.0 — Decision 2 (themes), Decision 5 (animation), Decision 8 (nav). UAT items M1, M3, U5, U6, U7.
+> **Detailed plan:** `.claude/plan-mobile-novice-ux.md`
+
+### Block M1: Landing Page Mobile Header Redesign `@opus` 🔄 IN PROGRESS (P0)
+
+> **Problem:** Landing page uses a custom inline header with 9 controls (Search, Learn, DNA, Map, ViewMode, EN/ET/RU pills, DarkMode). Every other page uses `GlobalNav` with a proper hamburger menu. Touch targets are 40px (below WCAG 44px minimum), gaps are 6px (mis-tap risk).
+> **File:** `app/[locale]/page.tsx` (lines 210–424)
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| M1.1 | Mobile header: 3-item max | ⏳ NEXT | Mobile (<md): show only Logo + "Start" CTA + Hamburger. Move Search, Language, DarkMode, DNA, Map, ViewMode into hamburger slide-down. |
+| M1.2 | Remove inline language pills | ⏳ NEXT | Delete lines 313–334 (inline EN/ET/RU pills). Use dropdown `LanguageSwitcher` from GlobalNav instead. Preserve `switchLanguage()` for lightbox locale swap. |
+| M1.3 | Desktop touch targets | ⏳ NEXT | Fix all header buttons to 44px minimum. Fix `gap-1.5` → `gap-2` on flex container. |
+| M1.4 | Scrolled state | ⏳ NEXT | When scrolled on mobile: ultra-minimal — Logo + Hamburger only. |
+
+### Block M2: Sapling Mobile Input Fix `@opus` 🔄 IN PROGRESS (P0)
+
+> **Problem:** Virtual keyboard pushes content up, footer blocks "Run" button. UAT item M1: "CRITICAL: Virtual keyboard blocks input."
+> **Files:** `components/sapling/SaplingWorkspace.tsx`, `components/sapling/PromptSandbox.tsx`
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| M2.1 | Floating Run button | ⏳ NEXT | Make "Run Prompt" button sticky/floating above keyboard area using `visualViewport` API. |
+| M2.2 | Reduce vertical whitespace | ⏳ NEXT | Compact layout so Run is above fold even without keyboard on laptops (UAT U2). |
+| M2.3 | Empty state label | ⏳ NEXT | Explicitly label the input area when sandbox is empty (UAT U7). |
+
+### Block M3: Sprout Theme Correction (P1) — available for `@gemini` or `@swarm`
+
+> **Problem:** Background is `from-indigo-900 via-purple-900 to-indigo-950` — visually near-black, reads as "DNA dark mode" not "Dawn". Design system says: "Dawn — Indigo/violet → morning sky."
+> **File:** `components/sprout/SproutView.tsx` (line 28)
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| M3.1 | Lighten gradient to sunrise | ⏳ NEXT | Change to `from-indigo-800 via-violet-700 to-sky-800` or similar. Must feel like actual dawn, not night sky. |
+| M3.2 | Warm accent hint | ⏳ NEXT | Add subtle amber/pink sunrise hint at the bottom edge. Must remain dark enough for white text readability. |
+
+### Block M4: Novice Orientation Micro-copy (P1) — available for `@gemini` or `@swarm`
+
+> **Problem:** A novice from Google sees "НАЧАТЬ ЭВОЛЮЦИЮ" but doesn't know what Dendrix.ai is, what they'll learn, how long it takes, or if it's free.
+> **File:** `app/[locale]/page.tsx` (hero section)
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| M4.1 | Add orientation block | ⏳ NEXT | Add a short orientation line between badge and title: "Free interactive course. No signup needed." Visible on mobile, concise. |
+| M4.2 | i18n keys for 3 locales | ⏳ NEXT | Add `landing.orientation` keys to `messages/en.json`, `messages/et.json`, `messages/ru.json`. |
+
+### Block M5: Touch Target & Accessibility Sweep (P1) — available for `@swarm`
+
+> **Ref:** UAT U6, WCAG 2.5.5. All interactive elements must be ≥44×44px.
+> **Files:** `app/[locale]/page.tsx`, `components/StageSelector.tsx`, `components/GlobalNav.tsx`
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| M5.1 | Landing page button audit | ⏳ NEXT | Audit all buttons on landing page for 44px minimum. Fix scrolled-state header controls (currently 32–36px). |
+| M5.2 | StageSelector pills | ⏳ NEXT | Verify StageSelector pill heights meet 44px on mobile viewports. |
+| M5.3 | LanguageSwitcher trigger | ⏳ NEXT | Ensure dropdown trigger meets 44px on all viewports. |
+| M5.4 | Footer navigation | ⏳ NEXT | Footer navigation buttons → 44px (UAT U6). |
+
+---
+
 ## Icebox / Future
 
 - [ ] **2.2.5** Unit tests for Concept SDK functions
@@ -310,7 +386,8 @@
 - [ ] **Forest View:** Technical ecosystem visualization (Multi-model graph) — content moves to Tree deep branches.
 - [ ] **User Auth:** Tracking progress across stages (uses `learning_sessions` + `concept_progress` tables).
 - [ ] **Paraglide Migration:** Complete the ParaglideJS i18n stack transition for UI chrome.
-- [ ] **Additional Languages:** Concept Object system designed for unlimited locales — add RU, FI, etc.
+- [x] **Additional Languages: RU** — Russian locale added (messages/ru.json, paraglide config, all pages). ✅ DONE
+- [ ] **Additional Languages: FI, etc.** — Concept Object system designed for unlimited locales.
 - [ ] **Admin CMS:** Simple admin panel for editing concepts, translations, and relationships in Supabase.
 - [ ] **E2E Tests:** Smoke tests for all 7 stage routes.
 - [ ] **Accessibility Audit:** WCAG contrast + touch targets across all stages.
