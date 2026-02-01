@@ -21,6 +21,12 @@ interface SeedHeroI18n {
     modelReadyDesc: string;
     finalLoss: string;
     parameters: string;
+    output: {
+        chaos: string;
+        broken: string;
+        fluent: string;
+        final: string;
+    };
 }
 
 interface SeedNavI18n {

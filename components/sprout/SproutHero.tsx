@@ -5,16 +5,18 @@ import { useSproutContext } from './SproutContext';
 import { RootSystem } from './RootSystem';
 import { ContextNode } from './ContextNode';
 import { useRef, useState } from 'react';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 export function SproutHero() {
     const { growthLevel, isComplete } = useSproutContext();
     const containerRef = useRef<HTMLDivElement>(null);
+    const t = useTranslations('sprout');
 
-    // Nodes to connect (Static list for now, could be passed as props)
+    // Nodes to connect — labels from i18n
     const contextNodes = [
-        { id: 'ctx-1', label: 'Context', x: -120, y: -80 },
-        { id: 'ctx-2', label: 'Grammar', x: 120, y: -80 },
-        { id: 'ctx-3', label: 'Facts', x: 0, y: 140 },
+        { id: 'ctx-1', label: t('hero.context'), x: -120, y: -80 },
+        { id: 'ctx-2', label: t('hero.grammar'), x: 120, y: -80 },
+        { id: 'ctx-3', label: t('hero.facts'), x: 0, y: 140 },
     ];
 
     return (
@@ -45,8 +47,8 @@ export function SproutHero() {
                     </motion.div>
                 ) : (
                     <div className="text-center text-xs text-indigo-300 font-mono">
-                        <div>DORMANT</div>
-                        <div className="opacity-50">SEED</div>
+                        <div>{t('hero.dormant')}</div>
+                        <div className="opacity-50">{t('hero.seed')}</div>
                     </div>
                 )}
             </motion.div>
@@ -69,7 +71,7 @@ export function SproutHero() {
                     animate={{ opacity: 1, y: 0, transition: { delay: 1 } }}
                     className="absolute bottom-10 text-center text-sm text-indigo-200/60"
                 >
-                    Drag nodes to feed the seed
+                    {t('hero.dragGuide')}
                 </motion.div>
             )}
         </div>

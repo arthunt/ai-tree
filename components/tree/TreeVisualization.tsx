@@ -266,7 +266,11 @@ export function TreeVisualization({ data, onNodeClick, intent }: TreeViewProps) 
     }, [dimensions, zoomBehavior, onNodeClick]);
 
 
-    if (!root) return null;
+    if (!root) return (
+        <div ref={containerRef} className="w-full h-[500px] sm:h-[700px] bg-void/50 border border-white/10 rounded-xl overflow-hidden relative flex items-center justify-center">
+            <div className="text-white/40 text-sm font-mono animate-pulse">Loading tree...</div>
+        </div>
+    );
 
     return (
         <div

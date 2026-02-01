@@ -18,6 +18,12 @@ interface SeedHeroI18n {
     modelReadyDesc: string;
     finalLoss: string;
     parameters: string;
+    output: {
+        chaos: string;
+        broken: string;
+        fluent: string;
+        final: string;
+    };
 }
 
 export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
@@ -277,17 +283,17 @@ export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
                                 >
                                     {epoch <= 3 && (
                                         <span className="text-stone-600 break-all">
-                                            x7zn# m.q9^2 @lp! s_?k... {Math.random().toString(36).substring(7)}
+                                            {i18n.output.chaos} {Math.random().toString(36).substring(7)}
                                         </span>
                                     )}
                                     {epoch > 3 && epoch <= 7 && (
                                         <span className="text-amber-700/70">
-                                            the cat s@t on... {['th', 'chk', 'brr'][epoch % 3]}... predict_nxt
+                                            {i18n.output.broken.replace('{chunk}', ['th', 'chk', 'brr'][epoch % 3])}
                                         </span>
                                     )}
                                     {epoch > 7 && (
                                         <span className="text-amber-400">
-                                            "The neural network is learning to generate coherent text structure."
+                                            {i18n.output.fluent}
                                         </span>
                                     )}
                                 </motion.div>
@@ -333,7 +339,7 @@ export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
                         <div className="mt-6 p-4 bg-stone-900 rounded border border-stone-800 font-mono text-sm max-w-md w-full relative opacity-80">
                             <span className="text-[10px] text-green-500 uppercase tracking-wider absolute top-2 right-2">Final Output</span>
                             <span className="text-amber-100">
-                                "The neural network has successfully learned to generate coherent text structure from the training data."
+                                {i18n.output.final}
                             </span>
                         </div>
                     </motion.div>

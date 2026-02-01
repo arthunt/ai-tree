@@ -4,8 +4,9 @@ import { RelatedConceptsPanel } from '@/components/concept/RelatedConceptsPanel'
 import { StageSelector } from '@/components/StageSelector';
 import enMessages from '@/messages/en.json';
 import etMessages from '@/messages/et.json';
+import ruMessages from '@/messages/ru.json';
 
-const messages: Record<string, typeof enMessages> = { en: enMessages, et: etMessages };
+const messages: Record<string, typeof enMessages> = { en: enMessages, et: etMessages, ru: ruMessages };
 
 function getSeedI18n(locale: string) {
     const m = messages[locale] ?? messages.en;
@@ -15,7 +16,7 @@ function getSeedI18n(locale: string) {
         dataset: m.seed.sections.dataset,
         training: m.seed.sections.training,
         model: m.seed.sections.model,
-        hero: m.seed.hero,
+        hero: { ...m.seed.hero, ...m.seedHero },
         nav: m.seed.nav,
     };
 }

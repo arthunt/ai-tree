@@ -254,7 +254,15 @@
       "tapToLearn": "Tap to learn",
       "visualLink": "Tap to interact"
     },
-    "inputPlaceholder": "Ask about these concepts..."
+    "inputPlaceholder": "Ask about these concepts...",
+    "hero": {
+      "dormant": "DORMANT",
+      "seed": "SEED",
+      "dragGuide": "Drag nodes to feed the seed",
+      "context": "Context",
+      "grammar": "Grammar",
+      "facts": "Facts"
+    }
   },
   "navigation": {
     "viewOptions": "View options",
@@ -1558,6 +1566,12 @@
   "seedHero": {
     "initializeWeights": "Initialize Weights",
     "weightsExplanation": "\"Weights\" are like volume knobs. Training adjusts billions of them to reduce noise and amplify meaning.",
-    "startTrainingLoop": "Start Training Loop"
+    "startTrainingLoop": "Start Training Loop",
+    "output": {
+      "chaos": "x7zn# m.q9^2 @lp! s_?k...",
+      "broken": "the cat s@t on... {chunk}... predict_nxt",
+      "fluent": "\"The neural network is learning to generate coherent text structure.\"",
+      "final": "\"The neural network has successfully learned to generate coherent text structure from the training data.\""
+    }
   }
 }

@@ -97,16 +97,16 @@
 
 | # | Priority | Task | Description |
 |---|---|------|-------------|
-| U1 | **P0** | **4.x.2** Sapling: Connect Real LLM | Replace static "The sky is blue" mock with real API (or better mock logic) to fix immersion. |
-| U2 | **P1** | **4.x.5** Sapling: UI Layout | Reduce vertical space so "Run Prompt" button is visible above fold on laptops. |
-| U3 | **P2** | **3.x.1** Sprout: Interaction Layer | User feedback: "Value questionable", "No interactions". Design a lightweight interactive element (e.g. "Connecting the dots") to match DNA/Seed. |
-| U4 | **P2** | **5.x.1** Tree: Performance | Optimize Map View rendering (currently slow/empty on load). |
-| U5 | **P1** | **8.M3** Sprout: Theme Fix | Fix Background color violation. Currently Dark (DNA-like), must be "Dawn" (Indigo/Violet) per Design System. → **Phase 8 Block M3** |
-| U6 | **P2** | **8.M5** Accessibility | Increase all touch targets to **44px** minimum. → **Phase 8 Block M5** |
-| U7 | **P3** | **4.x.6** Sapling: Empty State | Explicitly label the input area if "Run" cannot be shown, or ensure "Run" button is sticky. |
-| M1 | **P0** | **4.x.7** Sapling: Mobile Input | **CRITICAL:** Virtual keyboard blocks input; footer blocks "Run" button. Needs "Input Mode" or scroll-aware layout. |
+| U1 | ✅ | **4.x.2** Sapling: Connect Real LLM | ~~Replace static mock.~~ Context-aware mock LLM with 6 AI topics + temperature-sensitive responses. |
+| U2 | ✅ | **4.x.5** Sapling: UI Layout | ~~Reduce vertical space.~~ Hero pt-32→pt-24, pb-12→pb-8, workspace mb-20→mb-12. |
+| U3 | **P2** | **3.x.1** Sprout: Interaction Layer | SproutHero already has drag-to-feed interaction. Node labels now i18n. Feedback may need richer content. |
+| U4 | ✅ | **5.x.1** Tree: Performance | ~~Slow/empty on load.~~ Lazy-load TreeVisualization + loading state fallback. |
+| U5 | ✅ | **8.M3** Sprout: Theme Fix | ~~Dark background.~~ Fixed to Dawn gradient `from-indigo-800 via-violet-800 to-sky-950` + rose sunrise accent. |
+| U6 | ✅ | **8.M5** Accessibility | ~~44px touch targets.~~ Full sweep: landing scrolled buttons, level dots, GlobalNav, StageSelector, footer. |
+| U7 | ✅ | **4.x.6** Sapling: Empty State | ~~Empty state label.~~ Already has `readyMessage` + `emptyHint` in PromptSandbox empty state. |
+| M1 | ✅ | **4.x.7** Sapling: Mobile Input | ~~Virtual keyboard blocks input.~~ visualViewport API keyboard detection + inline 44px send button + sticky panel. |
 | M2 | ✅ | **6.6.1** i18n: Raw Keys | ~~Fix raw keys visible on Landing/DNA.~~ Fixed in Phase 6 i18n sweep + paraglide recompile. |
-| M3 | **P1** | **8.M1** Mobile Header | Fix "Junkyard" header on <400px devices. → **Phase 8 Block M1** |
+| M3 | ✅ | **8.M1** Mobile Header | ~~Junkyard header.~~ Mobile: Logo + Start CTA + Hamburger. All controls in slide-down menu. |
 
 ---
 
@@ -322,28 +322,28 @@
 > **Ref:** `VISION_AND_STRATEGY.md` V3.0 — Decision 2 (themes), Decision 5 (animation), Decision 8 (nav). UAT items M1, M3, U5, U6, U7.
 > **Detailed plan:** `.claude/plan-mobile-novice-ux.md`
 
-### Block M1: Landing Page Mobile Header Redesign `@opus` 🔄 IN PROGRESS (P0)
+### Block M1: Landing Page Mobile Header Redesign `@opus` ✅ DONE
 
 > **Problem:** Landing page uses a custom inline header with 9 controls (Search, Learn, DNA, Map, ViewMode, EN/ET/RU pills, DarkMode). Every other page uses `GlobalNav` with a proper hamburger menu. Touch targets are 40px (below WCAG 44px minimum), gaps are 6px (mis-tap risk).
 > **File:** `app/[locale]/page.tsx` (lines 210–424)
 
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| M1.1 | Mobile header: 3-item max | ⏳ NEXT | Mobile (<md): show only Logo + "Start" CTA + Hamburger. Move Search, Language, DarkMode, DNA, Map, ViewMode into hamburger slide-down. |
-| M1.2 | Remove inline language pills | ⏳ NEXT | Delete lines 313–334 (inline EN/ET/RU pills). Use dropdown `LanguageSwitcher` from GlobalNav instead. Preserve `switchLanguage()` for lightbox locale swap. |
-| M1.3 | Desktop touch targets | ⏳ NEXT | Fix all header buttons to 44px minimum. Fix `gap-1.5` → `gap-2` on flex container. |
-| M1.4 | Scrolled state | ⏳ NEXT | When scrolled on mobile: ultra-minimal — Logo + Hamburger only. |
+| M1.1 | Mobile header: 3-item max | ✅ DONE | Mobile: Logo + Start CTA + Hamburger. All other controls in hamburger menu. |
+| M1.2 | Remove inline language pills | ✅ DONE | Replaced with dropdown LanguageSwitcher inside hamburger menu. |
+| M1.3 | Desktop touch targets | ✅ DONE | All 7 scrolled-state buttons: 36px → 44px minimum. |
+| M1.4 | Scrolled state | ✅ DONE | Mobile scrolled: Logo + Hamburger only (CTA hidden when scrolled). |
 
-### Block M2: Sapling Mobile Input Fix `@opus` 🔄 IN PROGRESS (P0)
+### Block M2: Sapling Mobile Input Fix `@opus` ✅ DONE
 
 > **Problem:** Virtual keyboard pushes content up, footer blocks "Run" button. UAT item M1: "CRITICAL: Virtual keyboard blocks input."
 > **Files:** `components/sapling/SaplingWorkspace.tsx`, `components/sapling/PromptSandbox.tsx`
 
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| M2.1 | Floating Run button | ⏳ NEXT | Make "Run Prompt" button sticky/floating above keyboard area using `visualViewport` API. |
-| M2.2 | Reduce vertical whitespace | ⏳ NEXT | Compact layout so Run is above fold even without keyboard on laptops (UAT U2). |
-| M2.3 | Empty state label | ⏳ NEXT | Explicitly label the input area when sandbox is empty (UAT U7). |
+| M2.1 | Floating Run button | ✅ DONE | Inline 44px send button + visualViewport keyboard offset on left panel. |
+| M2.2 | Reduce vertical whitespace | ✅ DONE | Hero pt-32→pt-24, pb-12→pb-8, workspace mb-20→mb-12. |
+| M2.3 | Empty state label | ✅ DONE | `readyMessage` + `emptyHint` keys rendered in empty sandbox state. |
 
 ### Block M3: Sprout Theme Correction (P1) — available for `@gemini` or `@swarm`
 

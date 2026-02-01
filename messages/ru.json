@@ -254,7 +254,15 @@
       "tapToLearn": "Нажмите для обучения",
       "visualLink": "Нажмите для взаимодействия"
     },
-    "inputPlaceholder": "Спросите об этих концепциях..."
+    "inputPlaceholder": "Спросите об этих концепциях...",
+    "hero": {
+      "dormant": "СПЯЩЕЕ",
+      "seed": "СЕМЯ",
+      "dragGuide": "Перетащите узлы к семени",
+      "context": "Контекст",
+      "grammar": "Грамматика",
+      "facts": "Факты"
+    }
   },
   "navigation": {
     "viewOptions": "Параметры просмотра",
@@ -1540,7 +1548,13 @@
   "seedHero": {
     "initializeWeights": "Инициализировать веса",
     "weightsExplanation": "«Веса» — как регуляторы громкости. Обучение настраивает миллиарды из них, чтобы уменьшить шум и усилить смысл.",
-    "startTrainingLoop": "Запустить цикл обучения"
+    "startTrainingLoop": "Запустить цикл обучения",
+    "output": {
+      "chaos": "x7zn# m.q9^2 @lp! s_?k...",
+      "broken": "the cat s@t on... {chunk}... predict_nxt",
+      "fluent": "\"The neural network is learning to generate coherent text structure.\"",
+      "final": "\"The neural network has successfully learned to generate coherent text structure from the training data.\""
+    }
   },
   "stageIntro": {
     "dna": "Загляните внутрь ИИ.",

@@ -7,8 +7,9 @@ import { SaplingHeroAnimation } from './SaplingHeroAnimation';
 import { Info, Leaf } from 'lucide-react';
 import enMessages from '@/messages/en.json';
 import etMessages from '@/messages/et.json';
+import ruMessages from '@/messages/ru.json';
 
-const messages: Record<string, typeof enMessages> = { en: enMessages, et: etMessages };
+const messages: Record<string, typeof enMessages> = { en: enMessages, et: etMessages, ru: ruMessages };
 
 function getSaplingI18n(locale: string) {
     const m = messages[locale] ?? messages.en;
@@ -34,7 +35,7 @@ export default async function SaplingView({ locale }: { locale: string }) {
     return (
         <div className="min-h-screen bg-gradient-to-b from-emerald-950 via-green-950 to-stone-950 pb-20">
             {/* Hero Section */}
-            <div className="relative pt-32 pb-12 px-6 text-center z-10 overflow-hidden">
+            <div className="relative pt-24 pb-8 px-6 text-center z-10 overflow-hidden">
                 <SaplingHeroAnimation />
 
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/40 border border-emerald-500/30 mb-6 text-emerald-300 text-xs font-mono uppercase tracking-widest backdrop-blur-md relative z-20 shadow-lg shadow-emerald-900/20">
@@ -52,7 +53,7 @@ export default async function SaplingView({ locale }: { locale: string }) {
             </div>
 
             {/* Main Interaction Area: The Workspace */}
-            <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 mb-20">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 mb-12">
                 <SaplingWorkspace locale={locale} i18n={t} />
             </div>
 

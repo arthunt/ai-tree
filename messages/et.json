@@ -239,7 +239,7 @@
     "example1": "Tere, maailm!",
     "example2": "GPT-4 maksab 2024",
     "example3": "Kunstlik intelligentsus",
-    "example4": "Machine learning is fascinating",
+    "example4": "Masinõpe on põnev",
     "digitInsight": "<strong>Numbrid jagatakse numbriteks!</strong> AI ei näe \"2024\" ühe numbrina — sellest saab 4 eraldi tokenit (2, 0, 2, 4). Iga number saab oma <em>vektori</em> (numbrilise tähenduse). Seepärast võib AI matemaatikaga hädas olla — ta töötleb numbreid ükshaaval, mitte tervikuna.",
     "subwordInsight": "<strong>Pikad sõnad jagatakse osadeks!</strong> Tokenid märgiga <code>##</code> on alamosad. AI jagab tundmatud või pikad sõnad väiksemateks tuntud osadeks, sarnaselt sellele, kuidas sa võõra sõna silphaaval välja loeksid.",
     "disclaimer": "See on lihtsustatud tokeniseerija. Päris keelemudelid kasutavad keerukamaid meetodeid nagu BPE (Byte Pair Encoding) või WordPiece."
@@ -354,15 +354,15 @@
     "infoText": "AI esindab sõnu vektoritena (numbrinimikirjad) mida kutsutakse <em>embeddinguteks</em>. Sarnastel sõnadel on sarnased vektorid. See demo kasutab lihtsustatud 10-mõõtmelisi vektoreid, kuid päris mudelid nagu GPT kasutavad 1536+ mõõdet! 2D graafik näitab neid kõrgmõõtmelisi seoseid projitseerituna ruumi, mida me näeme.",
     "tryExamples": "Proovi näiteid:",
     "exampleLabel1": "kuningas, kuninganna, prints",
-    "exampleWords1": "king, queen, prince",
+    "exampleWords1": "kuningas, kuninganna, prints",
     "exampleLabel2": "kass, koer, auto",
-    "exampleWords2": "cat, dog, car",
+    "exampleWords2": "kass, koer, auto",
     "exampleLabel3": "rõõmus, kurb, vihane",
-    "exampleWords3": "happy, sad, angry",
+    "exampleWords3": "rõõmus, kurb, vihane",
     "exampleLabel4": "õun, banaan, pitsa",
-    "exampleWords4": "apple, banana, pizza",
+    "exampleWords4": "õun, banaan, pitsa",
     "exampleLabel5": "arvuti, telefon, puu",
-    "exampleWords5": "computer, phone, tree",
+    "exampleWords5": "arvuti, telefon, puu",
     "disclaimer": "See demo kasutab eelarvutatud lihtsustatud embeddinguid. Päris AI mudelid loovad embeddinguid dünaamiliselt konteksti põhjal ja kasutavad tuhandeid mõõtmeid nüansirikkama mõistmise jaoks."
   },
   "codeBlock": {
@@ -1410,6 +1410,14 @@
       "readFull": "Loe täispikka õppetundi",
       "tapToLearn": "Vajuta õppimiseks",
       "visualLink": "Vajuta suhtlemiseks"
+    },
+    "hero": {
+      "dormant": "UINUV",
+      "seed": "SEEME",
+      "dragGuide": "Lohista sõlmed seemne juurde",
+      "context": "Kontekst",
+      "grammar": "Grammatika",
+      "facts": "Faktid"
     }
   },
   "fruits": {
@@ -1540,7 +1548,13 @@
   "seedHero": {
     "initializeWeights": "Kaalude initsialiseerimine",
     "weightsExplanation": "\"Kaalud\" on nagu helitugevuse nupud. Treenimine reguleerib miljardeid, et vähendada müra ja võimendada tähendust.",
-    "startTrainingLoop": "Alusta treeningtsüklit"
+    "startTrainingLoop": "Alusta treeningtsüklit",
+    "output": {
+      "chaos": "x7zn# m.q9^2 @lp! s_?k...",
+      "broken": "kass is7us m@til... {chunk}... ennusta_jargmine",
+      "fluent": "\"Närvivõrk õpib genereerima sidusat tekstistruktuuri.\"",
+      "final": "\"Närvivõrk on edukalt õppinud genereerima sidusat tekstistruktuuri treeningandmetest.\""
+    }
   },
   "stageIntro": {
     "dna": "Vaata, mis on AI sees.",

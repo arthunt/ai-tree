@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { TreeContentSimple } from '@/actions/getTreeContent';
-import { TreeVisualization } from './TreeVisualization';
 import { TreeGrid } from './TreeGrid';
+
+const TreeVisualization = lazy(() => import('./TreeVisualization').then(m => ({ default: m.TreeVisualization })));
 import { LayoutGrid, Network, List } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -65,7 +66,9 @@ export function TreeExplorer({ data, onNodeClick, intent }: TreeExplorerProps) {
                             transition={{ duration: 0.3 }}
                             className="w-full"
                         >
-                            <TreeVisualization data={data} onNodeClick={onNodeClick} intent={intent} />
+                            <Suspense fallback={<div className="w-full h-[500px] sm:h-[700px] bg-void/50 border border-white/10 rounded-xl flex items-center justify-center"><span className="text-white/40 text-sm font-mono animate-pulse">Loading map...</span></div>}>
+                                <TreeVisualization data={data} onNodeClick={onNodeClick} intent={intent} />
+                            </Suspense>
                         </motion.div>
                     ) : (
                         <motion.div
