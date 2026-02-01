@@ -13,48 +13,54 @@
 
 ### `@opus` (Claude Code) — Current Sprint
 
-#### Block A: Seed Interactive Wiring `🔄 IN PROGRESS`
-> SeedContext, SeedStepNav, SeedHeroAnimation all exist as standalone components but SeedView is a static server component that doesn't use them. This block wires everything together.
+> Blocks A–D are complete. Next priorities: Phase 6 (i18n polish) and Phase 4 (Sapling refinement).
+
+#### Block A: Seed Interactive Wiring ✅ DONE
+> SeedView converted from static server to client SeedWorkspace wrapping SeedProvider + SeedStepNav + SeedHeroAnimation. Cards activate/dim based on phase.
 
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| A1 | **3.1.9** Seed View → Interactive | 🔄 IN PROGRESS | Convert SeedView from static server component to client shell wrapping SeedProvider + SeedStepNav + SeedHeroAnimation. Concept cards rendered below hero. |
-| A2 | **3.1.10** Verify DB category values | ⏳ NEXT | Confirm `concepts.category` has values `data`/`training`/`model` for seed concepts; fix filter if not |
-| A3 | **3.1.8** Card ↔ Phase activation | ⏳ NEXT | Highlight/dim SeedCards based on `SeedContext.phase` — dataset cards active in `selection`, training in `training`, model in `complete` |
-| A4 | **3.1.11** SeedCard deep-dive stub → real | ⏳ NEXT | Replace `console.log` onDeepDive with inline expand showing `metaphor`, `deep_dive`, `question` fields |
-| A5 | **3.1.12** Fix typo "Paramaters" → "Parameters" | ⏳ NEXT | `SeedHeroAnimation.tsx:225` |
+| A1 | **3.1.9** Seed View → Interactive | ✅ DONE | SeedView → SeedWorkspace with SeedProvider, SeedStepNav, SeedHeroAnimation. Concept cards below hero. |
+| A2 | **3.1.10** Verify DB category values | ✅ DONE | ConceptGrid receives section-filtered arrays (dataset/training/model) from SeedView server component. |
+| A3 | **3.1.8** Card ↔ Phase activation | ✅ DONE | ConceptGrid dims/highlights based on SeedContext.phase — dataset active in selection, training in training, model in complete. |
+| A4 | **3.1.11** SeedCard deep-dive stub → real | ✅ DONE | SeedConceptCard wrapper with ConceptDetailPanel inline expand for metaphor, deep_dive, question. |
+| A5 | **3.1.12** Fix typo "Paramaters" → "Parameters" | ✅ DONE | Fixed in SeedHeroAnimation. |
 
-#### Block B: Seed i18n Sweep
-> Move all hardcoded strings in Seed components to `messages/en.json` + `messages/et.json`.
-
-| # | Task | Status | Description |
-|---|------|--------|-------------|
-| B1 | **6.1.1** SeedView inline i18n object → messages | ⏳ BLOCKED (A1) | Move `const i18n = {...}` (title, subtitle, section headers) to ParaglideJS keys |
-| B2 | **6.1.2** SeedHeroAnimation strings → messages | ⏳ BLOCKED (A1) | "Select Training Data", "Ingest Data", "Compressing Knowledge", "Base Model Ready", data source labels, stats |
-| B3 | **6.1.3** SeedStepNav strings → messages | ⏳ BLOCKED (A1) | "Ingestion", "Training", "Model", "Reset Run" |
-| B4 | **6.1.4** SeedCard fallback → i18n | ⏳ BLOCKED (A1) | Replace `"Analyze Process"` fallback with proper i18n key |
-| B5 | **6.1.5** FruitsCard fallback → i18n | ⏳ NEXT | Replace `"Launch App"` hardcoded fallback |
-| B6 | **6.1.6** OrchardCard fallback → i18n | ⏳ NEXT | Replace `"View Career Path"` hardcoded fallback |
-
-#### Block C: Concept Deep-Dive (6.2)
-> Enable tap-to-expand on concept cards across all stages. Show metaphor, deep_dive content, and related concepts.
-
-| # | Task | Status | Depends On | Description |
-|---|------|--------|------------|-------------|
-| C1 | **6.2.1** Build `ConceptDetailPanel` | ⏳ BLOCKED (A) | — | Reusable inline-expand component showing metaphor, deep_dive, question, related concept chips |
-| C2 | **6.2.2** Wire into FruitsView | ⏳ BLOCKED (C1) | C1 | Tap FruitsCard → expand with concept detail |
-| C3 | **6.2.3** Wire into OrchardView | ⏳ BLOCKED (C1) | C1 | Tap OrchardCard → expand with concept detail |
-| C4 | **6.2.4** Wire into SeedView | ⏳ BLOCKED (A1, C1) | A1, C1 | Tap SeedCard → expand with concept detail |
-
-#### Block D: Mock Data & Housekeeping
+#### Block B: Seed i18n Sweep ✅ DONE
+> All hardcoded Seed strings moved to `messages/en.json` + `messages/et.json`. Server → client i18n prop threading via typed interfaces.
 
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| D1 | Add sapling mock data | ⏳ NEXT | `lib/concepts/mock-data.ts` has no sapling entries — needed for offline dev |
-| D2 | Add tree mock data | ⏳ NEXT | Same — no tree entries in mock-data.ts |
-| D3 | Build check | ⏳ NEXT | Verify `npm run build` passes with zero TS errors |
+| B1 | **6.1.1** SeedView inline i18n object → messages | ✅ DONE | SeedI18n typed interface, props threaded from server component |
+| B2 | **6.1.2** SeedHeroAnimation strings → messages | ✅ DONE | SeedHeroI18n interface, 9 strings replaced with i18n refs |
+| B3 | **6.1.3** SeedStepNav strings → messages | ✅ DONE | SeedNavI18n interface, STEPS labels + "Reset Run" use i18n |
+| B4 | **6.1.4** SeedCard fallback → i18n | ✅ DONE | Uses `seed.card.learnMore` key with fallback |
+| B5 | **6.1.5** FruitsCard fallback → i18n | ✅ DONE | Uses `fruits.card.visitApp` key with fallback |
+| B6 | **6.1.6** OrchardCard fallback → i18n | ✅ DONE | Uses `orchard.card.viewPath` key with fallback |
+
+#### Block C: Concept Deep-Dive (6.2) ✅ DONE
+> ConceptDetailPanel reusable component wired into Seed, Fruits, and Orchard cards.
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| C1 | **6.2.1** Build `ConceptDetailPanel` | ✅ DONE | `components/concept/ConceptDetailPanel.tsx` — AnimatePresence expand with metaphor, deep_dive, question sections |
+| C2 | **6.2.2** Wire into FruitsView | ✅ DONE | FruitsCard toggle + ConceptDetailPanel |
+| C3 | **6.2.3** Wire into OrchardView | ✅ DONE | OrchardCard toggle + ConceptDetailPanel |
+| C4 | **6.2.4** Wire into SeedView | ✅ DONE | SeedConceptCard wrapper in SeedWorkspace |
+
+#### Block D: Mock Data & Housekeeping ✅ DONE
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| D1 | Add sapling mock data | ✅ DONE | 4 sapling concepts in mock-data.ts (first-prompt, prompt-refinement, temperature-control, output-evaluation) |
+| D2 | Add tree mock data | ✅ DONE | 6 tree concepts in mock-data.ts (history-of-ai, transformer-architecture, rag, fine-tuning, agents, multi-model-systems) |
+| D3 | Build check | ✅ DONE | `npm run build` passes with zero TS errors |
 
 #### Completed (this sprint)
+- ✅ **Block A** — Seed Interactive Wiring (SeedWorkspace, phase activation, deep-dive, typo fix)
+- ✅ **Block B** — Seed i18n Sweep (typed i18n interfaces for Hero, StepNav, all card fallbacks)
+- ✅ **Block C** — ConceptDetailPanel + wired into Fruits, Orchard, Seed cards
+- ✅ **Block D** — Sapling + Tree mock data, build verified
 - ✅ 5.4.4 Related Concepts Wiring — `getRelatedConceptsForStage()` API + `RelatedConceptsPanel` wired into all 5 stage views
 - ✅ 1.6 P2 DNA Polish — metaphor prominence, help button, reset confirm, deep-dive label
 - ✅ 5.3 Tree Integration — bridge nodes to concept objects, deep-dive panel
@@ -70,10 +76,10 @@
 | # | Task | Status | Description |
 |---|------|--------|-------------|
 | 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | Finish remaining: sprout, tree visuals (seed+sapling done) |
-| 2 | **3.1** Seed Stage Polish | ✅ DONE | Hero animation, SeedContext, SeedStepNav all created (wiring by @opus) |
-| 3 | **4.1** Sapling Page & Theme | ⏳ NEXT | Polish skeleton, Morning Green theme |
-| 4 | **4.2** Prompt Sandbox Refinement | ⏳ NEXT | Mobile layout, iteration tracking, feedback scoring |
-| 5 | **4.3** Sapling Practice Modules | 🔄 IN PROGRESS | 4 guided modules: First Prompt, Refinement, Temp, Eval (Adding validation logic) |
+| 2 | **3.1** Seed Stage Polish | ✅ DONE | Hero animation, SeedContext, SeedStepNav all created (wiring done by @opus) |
+| 3 | **4.1** Sapling Page & Theme | ✅ DONE | SaplingView, SaplingHeroAnimation, Morning Green emerald theme created |
+| 4 | **4.2** Prompt Sandbox | ✅ DONE | PromptSandbox component created with input/output panels |
+| 5 | **4.3** Sapling Practice Modules | ✅ DONE | 4 guided modules with validation logic (commit `0ca8cb4`) |
 | 6 | ~~**5.4.4** Related Concepts Panel~~ | ✅ DONE | Wired by @opus into all 5 stage views |
 
 ### `@swarm` (Claude Flow) — Available
@@ -91,7 +97,7 @@
 
 ---
 
-## Phase 1: Narrative & Mobile Core (Immediate)
+## Phase 1: Narrative & Mobile Core ✅ COMPLETE
 
 > **Goal:** Fix the broken narrative bridge (Text->Vectors) and make mobile interaction seamless.
 
@@ -121,222 +127,151 @@
     - [x] Stage labels ET+EN (DNA/Seed/Sprout/Tree/Fruits/Orchard).
     - [x] FloatingInput placeholder & labels.
     - [x] Mobile navigation hints.
-- [x] **1.6 DNA Mobile UX Overhaul** `@opus` `@swarm` P0+P1 DONE
+- [x] **1.6 DNA Mobile UX Overhaul** `@opus` `@swarm` P0+P1+P2 DONE
     > Based on specialist review: [`docs/UX_RECOMMENDATIONS.md`](./UX_RECOMMENDATIONS.md)
-    - [x] **P0 — Critical**
-        - [x] 1.6.1 Step completion badge + contextual message on cards (`DNAComponentCard`)
-        - [x] 1.6.2 Always-visible step nav — show dimmed when no data (`DNAStepNav`)
-        - [x] 1.6.3 Enlarge nav touch targets (36->44px) + show step names (`DNAStepNav`)
-        - [x] 1.6.4 Input length validation — maxLength 500 (`DNAInput`)
-    - [x] **P1 — High Impact**
-        - [x] 1.6.5 Card visual states: active/complete/inactive with distinct borders
-        - [x] 1.6.6 Token tap hint on cards + instructional text (`AttentionSpotlight`)
-        - [x] 1.6.7 Card peek view — show 15% of next card (85vw)
-        - [x] 1.6.8 Reduce mobile header prominence (h1 -> text-2xl, subtitle -> text-sm)
-        - [x] 1.6.9 Desktop layout fix — cards no longer pushed below fold
-    - [x] **P2 — Polish** `@opus` DONE
-        - [x] 1.6.10 Metaphor text prominence increase (italic + quotes + higher opacity)
-        - [x] 1.6.11 Re-accessible help button for MicroLesson (HelpCircle icon on cards)
-        - [x] 1.6.12 Confirm destructive reset action (tap-to-confirm with red flash)
-        - [x] 1.6.13 Display current input text in DNAStepNav (truncated below step name)
-        - [x] 1.6.14 Clarify "Deep Dive" -> "Learn More About [Step]" (dynamic label with step title)
+    - [x] **P0 — Critical** (1.6.1–1.6.4)
+    - [x] **P1 — High Impact** (1.6.5–1.6.9)
+    - [x] **P2 — Polish** (1.6.10–1.6.14)
 - [x] **1.7 DNA Step Color Differentiation** `@opus` DONE
-    - [x] Apply per-step colors to card active borders, step buttons, progress bar
-    - [x] T=teal `#25EDBA`, V=blue `#3B82F6`, A=purple `#A855F7`, P=amber `#F59E0B`
 - [x] **1.8 Accessibility: `prefers-reduced-motion`** `@opus` DONE
-    - [x] Add CSS media query to disable infinite animations
-    - [x] Wrap Framer Motion animations with motion preference check
 - [x] **1.9 i18n: Migrate DNA Hardcoded Strings** `@opus` DONE
-    - [x] Move `STEP_COMPLETE_MESSAGES` to translation keys
-    - [x] Move `STEP_HINT_MESSAGES` to translation keys
-    - [x] Move DNAStepNav labels to translation keys
 - [x] **1.10 DNA Desktop: Responsive Input Width** `@opus` DONE
-    - [x] Widen to `lg:max-w-full` (match cards grid width)
-    - [x] Reduce input vertical padding on desktop
-    - [x] Reduce bottom margin
 - [x] **1.11 DNA Desktop: Reduce Gap Between Input & Cards** `@opus` DONE
-    - [x] Reduce cards container top margin
-    - [x] Shrink GlowingNode area
-    - [x] Remove dead `DNAFlowDiagram` component
 - [x] **1.12 DNA Desktop: GlowingNode Visibility** `@opus` DONE
-    - [x] Reduce container height to match node size
-    - [x] Node sizes tuned (48/32 active/default)
 - [x] **1.13 Remove Non-Functional FloatingInput** `@opus` DONE
-    - [x] Remove from Tree page (console.log stub)
-    - [x] Remove from Sprout page (toast stub)
-    - [x] Remove from Fruits page (toast stub)
-    - [x] Remove from Orchard page (toast stub)
-    - [x] Remove controlHint overlay from DNA page
-    - [x] Keep Seed FloatingInput (functional navigation)
-    - [x] Clean up unused `useToast` imports
 
 ---
 
-## Phase 2: Concept Object Foundation
+## Phase 2: Concept Object Foundation ✅ COMPLETE (except 2.7 card variants)
 
 > **Goal:** Build the unified data architecture that all stages will use. Ref: VISION_AND_STRATEGY.md Decision 7.
 
 - [x] **2.1 Supabase Schema: Concept Object Tables** `@opus` DONE
-    > Evolved existing tables + created `concept_relationships`. Migration: `20260202_concept_objects.sql`
-    - [x] 2.1.1 ALTER `concepts` table: added stage (enum), parent_id, sort_order, visual_type, icon, color, related_program_id, is_published, timestamps
-    - [x] 2.1.2 ALTER `concept_translations` table: added subtitle, deep_dive, completion_message, hint
-    - [x] 2.1.3 CREATE `concept_relationships` table (source_id, target_id, relationship, strength)
-    - [x] 2.1.4 RLS policies for public read on all 3 tables
-    - [x] 2.1.5 Indexes on (stage, sort_order), (parent_id), (locale), (source_id), (target_id)
-
 - [x] **2.2 TypeScript SDK: Concept API** `@opus` DONE
-    > `lib/concepts/` — types, api, mock-data, index barrel export + server actions
-    - [x] 2.2.1 `lib/concepts/types.ts` — Concept, ConceptWithRelated, EvolutionStage, ConceptVisualType
-    - [x] 2.2.2 `lib/concepts/api.ts` — getConceptsByStage(), getConcept(), getConceptWithRelated(), getConceptsByIds()
-    - [x] 2.2.3 `lib/concepts/mock-data.ts` — DNA concepts EN+ET matching DB shape
-    - [x] 2.2.4 `actions/getConcepts.ts` — server actions wrapping SDK
     - [ ] 2.2.5 Unit tests for SDK functions (deferred — tracked in icebox)
-
 - [x] **2.3 DNA Migration to Concept Objects** `@opus` DONE
-    > getDNAContent() now uses getConceptsByStage('dna'). 75-line mock block removed.
-    - [x] 2.3.1 DB already has tokenization, embeddings, attention, prediction (stage='dna' backfilled)
-    - [x] 2.3.2 concept_translations EN + ET already seeded
-    - [x] 2.3.3 getDNAContent() rewritten to use Concept SDK with mock fallback
-    - [x] 2.3.4 Build passes, DNAView renders with new data source
-    - [x] 2.3.5 Old MOCK_DNA_DATA removed (now in lib/concepts/mock-data.ts)
-
 - [x] **2.4 StageSelector: 7-Stage Update** `@gemini` `@opus` DONE
-    > Add Sapling (formerly Istik) to the navigation system.
-    - [x] 2.4.1 Update `EvolutionStage` type: add `'sapling'`
-    - [x] 2.4.2 Update `StageSelector` component with 7 stages
-    - [x] 2.4.3 Create `/[locale]/sapling` route (placeholder page)
-    - [x] 2.4.4 Add translation keys for "Sapling" stage label (EN + ET)
-    - [x] 2.4.5 Update `JourneyContext` stage order
-
 - [x] **2.5 Sprout Level Content** `@gemini` DONE
-    - [x] Create `/sprout` page.
-    - [x] Content: Tokens, Vectors, Attention, Context, Prompting, Hallucination.
 - [x] **2.6 Sprout Alignment & Design Rules** `@gemini` DONE
-    - [x] Create `docs/DESIGN_SYSTEM_RULES.md` (Codified Standards).
-    - [x] Enforce Theme: Transitional Dawn (Indigo/Purple).
-    - [x] Enforce i18n: Migrate hardcoded strings to `en.json`.
 - [ ] **2.7 Unified Card System** `@gemini` 🔄 IN PROGRESS
-    > UnifiedConceptCard created with dna/sprout/tree variants. Needs Istik variant.
+    > UnifiedConceptCard created with dna variant. Seed variant added. Sprout, tree, sapling variants pending.
     - [x] Create `UnifiedConceptCard` (merging DNA/Concept cards).
     - [x] Implement variant: `dna` (Dark/Glass with per-step colors).
+    - [x] Implement variant: `seed` (Deep Earth).
     - [ ] Implement variant: `sprout` (Dawn/Transitional).
     - [ ] Implement variant: `tree` (Light/Clean).
-    - [ ] Implement variant: `seed` (Deep Earth) <!-- Added for completion -->
     - [ ] Implement variant: `sapling` (Morning Green / Sandbox).
 - [x] **2.8 Tree Explorer Component** `@gemini` DONE
-    - [x] Create grid layout with tabs: [Roots] [Trunk] [Branches] [Leaves].
-    - [x] Implement "Map View" toggle (lazy-loaded D3 graph).
-    - [x] Refactor to Server-Side Data Fetching.
 
 ---
 
-## Phase 3: Seed & Sprout Content (7-Stage Alignment)
+## Phase 3: Seed & Sprout Content ✅ COMPLETE
 
 > **Goal:** Build the Seed stage and redefine Sprout for the new 7-stage journey. Ref: VISION_AND_STRATEGY.md Decision 6b/6c.
 
-- [ ] **3.1 Seed Stage: Training Simulation** `@gemini` `@opus` 🔄 IN PROGRESS
+- [x] **3.1 Seed Stage: Training Simulation** `@gemini` `@opus` ✅ DONE
     > Ref: VISION_AND_STRATEGY.md Decision 6b (Interactive Training Run).
     - [x] 3.1.1 Create Seed concepts in DB ✅ 14 concepts in `concepts` table
-    - [x] 3.1.2 Create `SeedView` (Basic shell with Deep Earth theme) ✅
-    - [x] 3.1.3 Create `SeedContext` (State Machine: `selection` -> `processing` -> `training` -> `complete`) ✅ Exists with training loop sim
-    - [x] 3.1.4 Implement `SeedStepNav` (Sticky navigation for the 3 phases) ✅ Exists with progress bar
-    - [x] 3.1.5 Hero: "Ingestion Dashboard" (Data source selection buttons) ✅ Exists in `SeedHeroAnimation`
-    - [x] 3.1.6 Hero: "Training Loop" (Canvas particles + loss curve visualization) ✅ Exists in `SeedHeroAnimation`
-    - [x] 3.1.7 Hero: "Checkpoint" (Model solidification with stats) ✅ Exists in `SeedHeroAnimation`
-    - [ ] 3.1.8 Wiring: Concept cards highlight/activate based on simulation state `@opus`
-    - [ ] 3.1.9 Wire SeedView: wrap in SeedProvider + render SeedStepNav + SeedHeroAnimation `@opus`
-    - [ ] 3.1.10 Verify DB category values (`data`/`training`/`model`) for seed concepts `@opus`
-    - [ ] 3.1.11 Replace SeedCard `console.log` onDeepDive with real expand behavior `@opus`
-    - [ ] 3.1.12 Fix typo "Paramaters" → "Parameters" in SeedHeroAnimation `@opus`
+    - [x] 3.1.2 Create `SeedView` (Basic shell with Deep Earth theme)
+    - [x] 3.1.3 Create `SeedContext` (State Machine: `selection` -> `processing` -> `training` -> `complete`)
+    - [x] 3.1.4 Implement `SeedStepNav` (Sticky navigation for the 3 phases)
+    - [x] 3.1.5 Hero: "Ingestion Dashboard" (Data source selection buttons)
+    - [x] 3.1.6 Hero: "Training Loop" (Canvas particles + loss curve visualization)
+    - [x] 3.1.7 Hero: "Checkpoint" (Model solidification with stats)
+    - [x] 3.1.8 Wiring: Concept cards highlight/activate based on simulation state `@opus`
+    - [x] 3.1.9 Wire SeedView: wrap in SeedProvider + render SeedStepNav + SeedHeroAnimation `@opus`
+    - [x] 3.1.10 Verify DB category values (`data`/`training`/`model`) for seed concepts `@opus`
+    - [x] 3.1.11 Replace SeedCard `console.log` onDeepDive with real expand behavior `@opus`
+    - [x] 3.1.12 Fix typo "Paramaters" → "Parameters" in SeedHeroAnimation `@opus`
 
 - [x] **3.2 Sprout Content Redefinition** `@opus` DONE
     > Migration: `20260204_sprout_concepts.sql`. 6 concepts with "Emergent Properties" framing.
-    - [x] 3.2.1 Create new Sprout concepts in DB: `generalization`, `context-windows`, `hallucination`, `temperature-sampling`, `representations`, `prompting-basics`
+    - [x] 3.2.1 Create new Sprout concepts in DB
     - [x] 3.2.2 Add translations EN + ET with metaphors, explanations, and questions
     - [x] 3.2.3 Update sprout page to use `getStageContent('sprout')` via Concept SDK
-    - [x] 3.2.4 Old `getSproutContent()` + `MOCK_SPROUT_DATA` superseded (sprout_lessons table still exists)
+    - [x] 3.2.4 Old `getSproutContent()` + `MOCK_SPROUT_DATA` superseded
     - [x] 3.2.5 Sprout page metadata updated: "Emergent properties" framing
 
 - [x] **3.3 Sprout Migration to Concept Objects** `@opus` DONE
-    > SproutView now consumes Concept[] from SDK. Legacy sprout_lessons table preserved but unused.
-    - [x] 3.3.1 6 new sprout concepts in concepts table replace sprout_lessons data
-    - [x] 3.3.2 SproutView updated: `concepts: Concept[]` prop, maps explanation→description, metaphor→analogy
+    > SproutView now consumes Concept[] from SDK.
+    - [x] 3.3.1 6 new sprout concepts in concepts table
+    - [x] 3.3.2 SproutView updated: `concepts: Concept[]` prop
     - [x] 3.3.3 Mock fallback in lib/concepts/mock-data.ts covers all 6 sprout concepts EN+ET
 
 ---
 
-## Phase 4: Istik (Guided Practice)
+## Phase 4: Sapling (Guided Practice) 🔄 IN PROGRESS
 
 > **Goal:** Build the nursery stage — the learner's first hands-on experience with AI. Ref: VISION_AND_STRATEGY.md Decision 6d.
+> Note: "Istik" has been renamed to "Sapling" throughout the codebase.
 
-- [ ] **4.1 Istik Page & Theme** `@gemini` `@opus` P0
-    - [ ] 4.1.1 Create `/[locale]/istik/page.tsx` with Morning Green theme
-    - [ ] 4.1.2 Create `IstikView` component with emerald-tinted glass aesthetic
-    - [ ] 4.1.3 Design nursery/greenhouse visual elements
-    - [ ] 4.1.4 Add page translations EN + ET
+- [x] **4.1 Sapling Page & Theme** `@gemini` `@opus` ✅ DONE
+    - [x] 4.1.1 Create `/[locale]/sapling/page.tsx` with Morning Green theme
+    - [x] 4.1.2 Create `SaplingView` component with emerald-tinted glass aesthetic
+    - [x] 4.1.3 SaplingHeroAnimation with nursery/greenhouse visual elements
+    - [x] 4.1.4 Page translations EN + ET (hardcoded locale check — needs i18n migration)
 
-- [ ] **4.2 Prompt Sandbox Component** `@opus` `@gemini` P0
+- [x] **4.2 Prompt Sandbox Component** `@opus` `@gemini` ✅ DONE
     > Core interaction: user types prompt, sees AI output, gets feedback.
-    - [ ] 4.2.1 Design split-screen layout: prompt input (left) + output display (right)
-    - [ ] 4.2.2 Create `PromptSandbox` component with input, output panel, feedback scoring
-    - [ ] 4.2.3 Implement local LLM proxy or mock response system for sandbox
-    - [ ] 4.2.4 Add "iteration" tracking — show improvement across attempts
-    - [ ] 4.2.5 Mobile layout: vertical stack (prompt top, output bottom)
+    - [x] 4.2.1 `PromptSandbox` component with input and output panels
+    - [x] 4.2.2 `SaplingWorkspace` wrapping sandbox + concept cards
+    - [ ] 4.2.3 Implement local LLM proxy or mock response system (deferred — currently mock)
+    - [x] 4.2.4 Mobile layout: vertical stack
+    - [ ] 4.2.5 Iteration tracking — show improvement across attempts (deferred)
 
-- [ ] **4.3 Istik Practice Modules** `@gemini` `@opus` P1
-    > Ref: VISION_AND_STRATEGY.md Decision 6d.
-    - [ ] 4.3.1 Module 1 — First Prompt: basic cause-and-effect
-    - [ ] 4.3.2 Module 2 — Prompt Refinement: same task, 3 attempts, see improvement
-    - [ ] 4.3.3 Module 3 — Temperature & Control: adjust params, see output changes
-    - [ ] 4.3.4 Module 4 — Evaluation: judge output quality (accuracy, relevance, safety)
-    - [ ] 4.3.5 Create concepts in DB with `visual_type: 'sandbox'`
-    - [ ] 4.3.6 Add translations EN + ET
+- [x] **4.3 Sapling Practice Modules** `@gemini` `@opus` ✅ DONE
+    > Ref: VISION_AND_STRATEGY.md Decision 6d. Validation logic added in commit `0ca8cb4`.
+    - [x] 4.3.1 Module 1 — First Prompt: basic cause-and-effect
+    - [x] 4.3.2 Module 2 — Prompt Refinement: same task, 3 attempts, see improvement
+    - [x] 4.3.3 Module 3 — Temperature & Control: adjust params, see output changes
+    - [x] 4.3.4 Module 4 — Evaluation: judge output quality (accuracy, relevance, safety)
+    - [x] 4.3.5 Create concepts in DB with `visual_type: 'sandbox'`
+    - [x] 4.3.6 Mock data EN + ET in mock-data.ts
+
+### 4.x Sapling Polish (Remaining)
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| 4.x.1 | Sapling i18n sweep | ⏳ NEXT | Replace hardcoded `locale === 'et'` checks with proper message keys |
+| 4.x.2 | LLM proxy / mock responses | ⏳ NEXT | Connect PromptSandbox to actual AI response system |
+| 4.x.3 | Iteration tracking UI | ⏳ NEXT | Show attempt history + improvement metrics |
+| 4.x.4 | ConceptDetailPanel for Sapling | ⏳ NEXT | Wire ConceptDetailPanel into SaplingWorkspace cards |
 
 ---
 
-## Phase 5: Content Migration & Cross-Linking
+## Phase 5: Content Migration & Cross-Linking ✅ COMPLETE
 
 > **Goal:** Move all hardcoded content to Concept Objects and enable cross-stage relationships.
 
 - [x] **5.1 Fruits Migration** `@opus` DONE
-    > Migration: `20260203_fruits_orchard_content.sql`. FruitsView now server-fetches from SDK.
-    - [x] 5.1.1 Move `APPLICATIONS` array to concepts table (stage='fruits'): aiki, aivo, codegen, visionary
-    - [x] 5.1.2 Add translations EN + ET (title, subtitle/category, explanation, metaphor)
-    - [x] 5.1.3 Update `FruitsView` to use Concept SDK via `getStageContent('fruits')`
-    - [x] 5.1.4 Remove hardcoded APPLICATIONS array; icon mapping via `ICON_MAP`
-
 - [x] **5.2 Orchard Migration** `@opus` DONE
-    > Same migration file. OrchardView now server-fetches; salary stored in `hint` field.
-    - [x] 5.2.1 Move `CAREERS` array to concepts table (stage='orchard'): ai-engineer, prompt-architect, data-scientist, ai-ethicist, mlops-specialist
-    - [x] 5.2.2 Add translations EN + ET (title, subtitle/role, explanation, metaphor, hint/salary)
-    - [x] 5.2.3 Update `OrchardView` to use Concept SDK via `getStageContent('orchard')`
-    - [x] 5.2.4 Remove hardcoded CAREERS array; icon mapping via `ICON_MAP`
-
 - [x] **5.3 Tree Integration** `@opus` DONE
-    > Migration `20260208_tree_concept_bridge.sql`. 5 nodes linked to concepts. TreeDetailPanel shows concept deep-dive.
-    - [x] 5.3.1 Add `concept_id` FK column to `nodes` table
-    - [x] 5.3.2 Link overlapping tree nodes to concept records (tokenization-process, word2vec, attention-paper, gpt-1, backpropagation)
-    - [x] 5.3.3 Enable deep-dive panel on tree nodes to show full concept content
-
 - [x] **5.4 Concept Relationships** `@opus` DONE
-    > 48 relationships populated across all 5 stages.
-    - [x] 5.4.1 Define prerequisite relationships (tokenization→embeddings→attention→prediction chain, + cross-stage)
-    - [x] 5.4.2 Define cross-stage deepening (DNA→Seed→Sprout→Fruits→Orchard flow)
-    - [x] 5.4.3 Define application links (Sprout→Fruits applies, Fruits→Orchard career links)
-    - [x] 5.4.4 Build "Related Concepts" panel component ✅ `RelatedConceptsPanel` wired into all 5 stage views via `getRelatedConceptsForStage()`
-    - [x] 5.4.5 Update learning paths to reference concept IDs from unified table ✅ (done in 5.5)
-
 - [x] **5.5 Learning Paths Migration** `@opus` DONE
-    - [x] 5.5.1 All 5 paths now use validated concept IDs from unified DB (24 IDs verified)
-    - [x] 5.5.2 Removed stale paths (ai-agents-path, fine-tuning-path) → replaced with training-deep-dive, career-explorer
-    - [x] 5.5.3 Path translations updated in en.json + et.json, briefcase icon added
+
+---
+
+## Phase 6: i18n & Polish
+
+> **Goal:** Complete multilingual support and cross-stage UX consistency.
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| 6.1 | Seed i18n sweep | ✅ DONE | Block B — typed i18n interfaces threaded from server to client |
+| 6.2 | ConceptDetailPanel | ✅ DONE | Block C — reusable expand wired into Seed, Fruits, Orchard |
+| 6.3 | Sapling i18n sweep | ⏳ NEXT | Replace hardcoded locale checks in SaplingView with proper message keys |
+| 6.4 | Sprout i18n audit | ⏳ NEXT | Verify all SproutView strings use translation keys |
+| 6.5 | Tree i18n audit | ⏳ NEXT | Verify TreeView/TreeExplorer use translation keys |
 
 ---
 
 ## Icebox / Future
 
+- [ ] **2.2.5** Unit tests for Concept SDK functions
+- [ ] **2.7** Unified Card variants (sprout, tree, sapling) — `@gemini` in progress
 - [ ] **Forest View:** Technical ecosystem visualization (Multi-model graph) — content moves to Tree deep branches.
 - [ ] **User Auth:** Tracking progress across stages (uses `learning_sessions` + `concept_progress` tables).
 - [ ] **Paraglide Migration:** Complete the ParaglideJS i18n stack transition for UI chrome.
 - [ ] **Additional Languages:** Concept Object system designed for unlimited locales — add RU, FI, etc.
 - [ ] **Admin CMS:** Simple admin panel for editing concepts, translations, and relationships in Supabase.
+- [ ] **E2E Tests:** Smoke tests for all 7 stage routes.
+- [ ] **Accessibility Audit:** WCAG contrast + touch targets across all stages.
