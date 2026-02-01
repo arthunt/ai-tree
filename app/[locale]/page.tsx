@@ -256,7 +256,7 @@ export default function AITreePage() {
                   href={`/${locale}/dna`}
                   className="flex items-center justify-center min-w-[44px] min-h-[44px] px-4 py-2 bg-brand-teal text-black font-bold text-sm rounded-xl hover:bg-brand-cyan transition-colors"
                 >
-                  {t('landing.startEvolution')}
+                  {t('landing.ctaPrimary')}
                 </Link>
               )}
               <button
@@ -635,12 +635,12 @@ export default function AITreePage() {
 
             {/* Main Headline */}
             <h1 id="hero-heading" className="text-5xl md:text-8xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
-              {t('hero.title')}
+              {t('landing.hook')}
             </h1>
 
             {/* Subtitle */}
             <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed">
-              {t('hero.subtitle')}
+              {t('landing.subhook')}
             </p>
 
             {/* Primary CTA */}
@@ -648,7 +648,7 @@ export default function AITreePage() {
               href={`/${locale}/dna`}
               className="group relative inline-flex h-16 items-center justify-center overflow-hidden rounded-full bg-brand-teal px-10 font-medium text-black shadow-[0_0_40px_rgba(45,212,191,0.4)] transition-all duration-300 hover:bg-white hover:scale-105 hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
             >
-              <span className="mr-2 text-lg font-bold">{t('landing.startEvolution')}</span>
+              <span className="mr-2 text-lg font-bold">{t('landing.ctaPrimary')}</span>
               <ChevronRight className="transition-transform group-hover:translate-x-1" />
             </Link>
 

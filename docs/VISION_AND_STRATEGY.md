@@ -14,6 +14,8 @@
 
 > **Implementation Rules:** See [`docs/DESIGN_SYSTEM_RULES.md`](./DESIGN_SYSTEM_RULES.md) for strict UI/UX enforcement guidelines (Theme, Input, i18n).
 
+> **Translation & i18n:** See [`docs/I18N_TRANSLATION_PRINCIPLES.md`](./I18N_TRANSLATION_PRINCIPLES.md) for content writing guidelines and [`docs/I18N_TECHNICAL_MIGRATION.md`](./I18N_TECHNICAL_MIGRATION.md) for the two-layer architecture implementation plan.
+
 ---
 
 ## The Core Metaphor: From Underground to Harvest
@@ -53,6 +55,8 @@ Underground (Dark)                    Surface (Dawn)                         Sun
 | **Tree** | Puu | Knowledge architecture | "How deep does this go?" | Deep reading + branching exploration |
 | **Fruits** | Viljad | Real applications | "What can I build with this?" | Application demos + try-it |
 | **Orchard** | Viljapuuaed | Career & ecosystem | "Where does this take me?" | Career paths + program enrollment |
+
+> **Naming convention:** The stage ID in code remains `sapling` (or `istik` in the evolution_stage enum). The user-facing name is "The Nursery" (EN), "Puukool" (ET), "Питомник" (RU). The metaphor: a nursery (puukool) is where young seedlings (istikud/saplings/саженцы) are cultivated under controlled conditions — perfectly mirroring guided practice before the open field of full knowledge.
 
 ### Andragogy Mapping (Knowles' Adult Learning Principles)
 
@@ -259,9 +263,22 @@ concept_relationships
 
 3. **Relationships enable cross-linking.** A DNA concept can link to its Tree deepening. A Sprout concept can link to its Istik practice module. A Tree node can link to its Program enrollment.
 
-4. **Translations are always in the database.** No more hardcoded strings, no more inline `{en, et}` objects, no more ParaglideJS for content (ParaglideJS stays for UI chrome — buttons, labels, navigation).
+4. **Two-layer translation architecture.** Layer 1 (ParaglideJS) handles UI chrome — buttons, labels, navigation, stage names, structural text. Layer 2 (Supabase `concept_translations` + `content_variants`) handles learning content — titles, explanations, metaphors, hooks, deep-dives. Content variants enable A/B testing of Layer 2 content. See `docs/I18N_TRANSLATION_PRINCIPLES.md` for the authoritative content guidelines.
 
 5. **Fallback chain.** Server actions query Supabase first, fall back to `MOCK_DATA` for offline development. Mock data follows the exact same shape as the DB response.
+
+#### Content Variant Layer
+
+On top of the concept_translations system, a `content_variants` table enables A/B testing of content framing. Variants do not replace concept_translations — they override specific fields for measurement purposes.
+
+**Key rules:**
+1. Every variant key references a specific concept_translations field (e.g., `concept:tokenization:title`)
+2. A `base` variant must always exist that matches the concept_translations value
+3. Variants are session-sticky — same user sees same variant per session
+4. Measurement is built into the table (impressions, engagements, conversions)
+5. Maximum 4 variants per key per locale
+
+See `docs/I18N_TRANSLATION_PRINCIPLES.md` for content authoring guidelines and `docs/I18N_TECHNICAL_MIGRATION.md` for implementation details.
 
 #### TypeScript SDK
 
@@ -432,6 +449,11 @@ All stages MUST use the Concept Object SDK (`lib/concepts/api.ts`) for content:
 2. Build TypeScript SDK with server actions and mock fallbacks.
 3. Migrate DNA concepts as proof of concept.
 4. Update StageSelector for 7 stages (add Istik).
+5. Implement two-layer i18n architecture (see docs/I18N_TECHNICAL_MIGRATION.md):
+   a. Phase 0: Locale unification (add 'ru' to enum and TypeScript types) ✅ DONE
+   b. Phase 1: Extend Paraglide keys for new user journey
+   c. Phase 2: Create content_variants table and measurement functions
+   d. Phase 3: Build variant serving hook and integrate with components
 
 ### Then (Phase 3 — Seed & Sprout Content)
 1. Build Seed stage (Data & Training) with 3-phase visualization.

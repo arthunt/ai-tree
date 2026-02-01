@@ -33,6 +33,15 @@
     "showMore": "Show more",
     "showLess": "Show less"
   },
+  "landing": {
+    "hook": "You use AI every day. Now understand how it works.",
+    "subhook": "Stop guessing. Start mastering the biological mechanics of Artificial Intelligence.",
+    "ctaPrimary": "Start Evolution",
+    "ctaSecondary": "View Concept Map",
+    "systemBadge": "System Architecture",
+    "evolutionaryPath": "Evolutionary Path",
+    "beginJourney": "Start from roots and move up to the leaves"
+  },
   "brand": {
     "heroOrigin": "From dendron (Greek: tree) + dendrites (your neurons that grow when you learn)",
     "footerTitle": "Why Dendrix?",
@@ -1399,7 +1408,28 @@
     "theTree": "The Tree",
     "treeTime": "Full Exploration (15+ min)",
     "treeDesc": "Deep dive into all concepts.",
-    "deepDive": "Deep Dive"
+    "deepDive": "Deep Dive",
+    "subhook": "Dendrix shows AI mechanisms the way biology shows what's inside a cell.",
+    "ctaPrimary": "Start with DNA",
+    "ctaSecondary": "Explore the map"
+  },
+  "stageIntro": {
+    "dna": "See what's inside AI.",
+    "seed": "Where knowledge comes from.",
+    "sprout": "What emerges from training.",
+    "sapling": "Try it yourself — safely.",
+    "tree": "Go deep when you're ready.",
+    "fruits": "Build something real.",
+    "orchard": "Make it your career."
+  },
+  "stageQuestion": {
+    "dna": "How does one prediction work?",
+    "seed": "Where does AI knowledge come from?",
+    "sprout": "What does a trained model become?",
+    "sapling": "Can I actually do this myself?",
+    "tree": "How deep does this go?",
+    "fruits": "What can I build with this?",
+    "orchard": "Where does this take me?"
   },
   "floatingInput": {
     "placeholder": "Ask anything about AI...",
@@ -1421,6 +1451,10 @@
     "subtitle": "How raw data becomes an intelligent model.",
     "phaseLabel": "Phase I: The Seed",
     "inputPlaceholder": "Query the training data...",
+    "motivator": "What do you need?",
+    "pathPractical": "How does this change my work?",
+    "pathCareer": "A new profession in 6 weeks",
+    "pathCurious": "What's actually inside AI?",
     "card": {
       "learnMore": "Analyze Process"
     },
@@ -1455,6 +1489,10 @@
       "finalLoss": "Final Loss",
       "parameters": "Parameters"
     },
+    "motivator": "Why learn this?",
+    "pathPractical": "To write better prompts, you need to know how the model 'reads' data.",
+    "pathCareer": "Training data curation is a high-value skill for AI Engineers.",
+    "pathCurious": "Understand the 'black box' — how numbers become knowledge.",
     "nav": {
       "ingestion": "Ingestion",
       "training": "Training",
@@ -1532,5 +1570,23 @@
     "initializeWeights": "Initialize Weights",
     "weightsExplanation": "\"Weights\" are like volume knobs. Training adjusts billions of them to reduce noise and amplify meaning.",
     "startTrainingLoop": "Start Training Loop"
+  },
+  "stageIntro": {
+    "dna": "The mathematical foundation where text becomes numbers.",
+    "seed": "The training process where raw data becomes compressed knowledge.",
+    "sprout": "The emergence of core behaviors and properties.",
+    "sapling": "Your first hands-on experience guiding the model.",
+    "tree": "The complete architecture of modern AI systems.",
+    "fruits": "Real-world applications powered by the model.",
+    "orchard": "The professional landscape and career paths."
+  },
+  "stageQuestion": {
+    "dna": "How can a computer understand language?",
+    "seed": "How does the model actually learn?",
+    "sprout": "Why does the model behave the way it does?",
+    "sapling": "How do I control the model's output?",
+    "tree": "How are these systems built?",
+    "fruits": "What can I build with this?",
+    "orchard": "Where do I fit in the AI economy?"
   }
 }

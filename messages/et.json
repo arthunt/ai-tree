@@ -33,6 +33,15 @@
     "showMore": "Näita rohkem",
     "showLess": "Näita vähem"
   },
+  "landing": {
+    "hook": "Sa kasutad AI-d iga päev. Nüüd õpi, kuidas see töötab.",
+    "subhook": "Lõpeta oletamine. Saa tehisintellekti bioloogilistest mehhanismidest päriselt aru.",
+    "ctaPrimary": "Alusta evolutsiooni",
+    "ctaSecondary": "Vaata kontseptkaarti",
+    "systemBadge": "Süsteemi Arhitektuur",
+    "evolutionaryPath": "Evolutsiooniline Rada",
+    "beginJourney": "Alusta juurtest ja liigu lehtedeni"
+  },
   "brand": {
     "heroOrigin": "Dendron (kreeka: puu) + dendriidid (neuronid, mis kasvavad kui sa \u00f5pid)",
     "footerTitle": "Miks Dendrix?",
@@ -1387,7 +1396,10 @@
     "theTree": "Puu",
     "treeTime": "Täielik Avastamine (15+ min)",
     "treeDesc": "Süvitsi kõikidesse kontseptsioonidesse.",
-    "deepDive": "Süvauuring"
+    "deepDive": "Süvauuring",
+    "subhook": "Dendrix näitab AI mehhanisme nagu bioloogia näitab, mis on raku sees.",
+    "ctaPrimary": "Alusta DNA-st",
+    "ctaSecondary": "Avasta kaarti"
   },
   "floatingInput": {
     "placeholder": "Küsi AI kohta midagi...",
@@ -1421,6 +1433,10 @@
     "subtitle": "Kuidas toorandmetest saab intelligentne mudel.",
     "phaseLabel": "I Faas: Seeme",
     "inputPlaceholder": "Päri treeningandmeid...",
+    "motivator": "Mida sa vajad?",
+    "pathPractical": "Kuidas see muudab minu tööd?",
+    "pathCareer": "Uus amet 6 nädalaga",
+    "pathCurious": "Mis on tegelikult AI sees?",
     "card": {
       "learnMore": "Analüüsi Protsessi"
     },
@@ -1452,9 +1468,13 @@
       "loss": "Kadu",
       "modelReady": "Baasmudel valmis",
       "modelReadyDesc": "Teadmised tihendatud. Kaalud optimeeritud. Mudel on valmis peenhäälestuseks.",
-      "finalLoss": "Lõppkadu",
+      "finalLoss": "Lõplik kulu",
       "parameters": "Parameetrid"
     },
+    "motivator": "Miks seda õppida?",
+    "pathPractical": "Paremate viipade kirjutamiseks pead mõistma, kuidas mudel andmeid 'loeb'.",
+    "pathCareer": "Treeningandmete kureerimine on AI inseneride jaoks väärtuslik oskus.",
+    "pathCurious": "Mõista 'musta kasti' — kuidas numbritest saavad teadmised.",
     "nav": {
       "ingestion": "Laadimine",
       "training": "Treenimine",
@@ -1532,5 +1552,23 @@
     "initializeWeights": "Kaalude initsialiseerimine",
     "weightsExplanation": "\"Kaalud\" on nagu helitugevuse nupud. Treenimine reguleerib miljardeid, et vähendada müra ja võimendada tähendust.",
     "startTrainingLoop": "Alusta treeningtsüklit"
+  },
+  "stageIntro": {
+    "dna": "Vaata, mis on AI sees.",
+    "seed": "Kust teadmised tulevad.",
+    "sprout": "Mis treenimisest tekib.",
+    "sapling": "Proovi ise — turvaliselt.",
+    "tree": "Mine süvitsi, kui oled valmis.",
+    "fruits": "Ehita midagi päris.",
+    "orchard": "Tee sellest oma amet."
+  },
+  "stageQuestion": {
+    "dna": "Kuidas üks ennustus töötab?",
+    "seed": "Kust AI teadmised tulevad?",
+    "sprout": "Milleks treenitud mudel saab?",
+    "sapling": "Kas ma suudan seda ise?",
+    "tree": "Kui sügavale see ulatub?",
+    "fruits": "Mida ma saan sellega ehitada?",
+    "orchard": "Kuhu see mind viib?"
   }
 }

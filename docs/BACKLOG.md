@@ -404,11 +404,11 @@
 
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| 9.1.1 | Add landing hook keys | ⏳ NEXT | `landing.hook`, `landing.subhook`, `landing.ctaPrimary`, `landing.ctaSecondary` in EN/ET/RU |
-| 9.1.2 | Add seed motivator keys | ⏳ NEXT | `seed.motivator`, `seed.pathPractical`, `seed.pathCareer`, `seed.pathCurious` in EN/ET/RU |
-| 9.1.3 | Add stageIntro keys | ⏳ NEXT | `stageIntro.{stage}` for all 7 stages in EN/ET/RU |
-| 9.1.4 | Add stageQuestion keys | ⏳ NEXT | `stageQuestion.{stage}` for all 7 stages in EN/ET/RU |
-| 9.1.5 | Recompile paraglide | ⏳ NEXT | `node scripts/generate-messages.js` |
+| 9.1.1 | Add landing hook keys | ✅ DONE | `landing.hook`, `landing.subhook`, `landing.ctaPrimary`, `landing.ctaSecondary` in EN/ET/RU |
+| 9.1.2 | Add seed motivator keys | ✅ DONE | `seed.motivator`, `seed.pathPractical`, `seed.pathCareer`, `seed.pathCurious` in EN/ET/RU |
+| 9.1.3 | Add stageIntro keys | ✅ DONE | `stageIntro.{stage}` for all 7 stages in EN/ET/RU |
+| 9.1.4 | Add stageQuestion keys | ✅ DONE | `stageQuestion.{stage}` for all 7 stages in EN/ET/RU |
+| 9.1.5 | Recompile paraglide | ✅ DONE | `node scripts/generate-messages.js` |
 
 ### Phase 9.2: Content Variant Infrastructure `@opus`
 
