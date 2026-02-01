@@ -34,19 +34,30 @@
     "showLess": "Näita vähem"
   },
   "landing": {
-    "hook": "Sa kasutad AI-d iga päev. Nüüd õpi, kuidas see töötab.",
+    "systemBadge": "Süsteem Aktiivne v2.1",
+    "startEvolution": "ALUSTA ARENGUT",
+    "beginJourney": "Alusta teekonda esimesest tokenist.",
+    "evolutionaryPath": "Arengutee",
+    "chooseYourPath": "Vali Oma Tee",
+    "exploreQuestion": "Kuidas soovid täna AI-d avastada?",
+    "theDna": "DNA",
+    "dnaTime": "Kiirülevaade (5 min)",
+    "dnaDesc": "Mõista põhimehhanismi.",
+    "recommendedStart": "Soovituslik Algus",
+    "theTree": "Puu",
+    "treeTime": "Täielik Avastamine (15+ min)",
+    "treeDesc": "Süvitsi kõikidesse kontseptsioonidesse.",
+    "deepDive": "Süvauuring",
     "subhook": "Lõpeta oletamine. Saa tehisintellekti bioloogilistest mehhanismidest päriselt aru.",
     "ctaPrimary": "Alusta evolutsiooni",
     "ctaSecondary": "Vaata kontseptkaarti",
-    "systemBadge": "Süsteemi Arhitektuur",
-    "evolutionaryPath": "Evolutsiooniline Rada",
-    "orientation": "Tasuta interaktiivne kursus. Registreerumine pole vajalik.",
-    "beginJourney": "Alusta juurtest ja liigu lehtedeni"
+    "hook": "Sa kasutad AI-d iga päev. Nüüd saa aru, kuidas see töötab.",
+    "orientation": "Tasuta interaktiivne kursus. Registreerimist pole vaja."
   },
   "brand": {
-    "heroOrigin": "Dendron (kreeka: puu) + dendriidid (neuronid, mis kasvavad kui sa \u00f5pid)",
+    "heroOrigin": "Dendron (kreeka: puu) + dendriidid (neuronid, mis kasvavad kui sa õpid)",
     "footerTitle": "Miks Dendrix?",
-    "footerStory": "Dendriidid on puukujulised ajurakud, mis kasvatavad uusi harusid iga kord, kui sa midagi \u00f5pid. Dendrix (dendron + dendriidid) kaardistab AI teadmisi nii, nagu sinu aju neid tegelikult salvestab \u2014 juurtest lehtedeni."
+    "footerStory": "Dendriidid on puukujulised ajurakud, mis kasvatavad uusi harusid iga kord, kui sa midagi õpid. Dendrix (dendron + dendriidid) kaardistab AI teadmisi nii, nagu sinu aju neid tegelikult salvestab — juurtest lehtedeni."
   },
   "levels": {
     "roots": "Juured",
@@ -152,10 +163,10 @@
     "reportIssue": "Teata Probleemist"
   },
   "complexity": {
-    "level": "Mõiste sügavus",
     "1": "Põhiidee",
     "2": "Seostatud",
     "3": "Süvateema",
+    "level": "Mõiste sügavus",
     "tooltip1": "Üks selge ja fookustatud mõiste — üks põhiidee",
     "tooltip2": "Mitu omavahel seotud ideed — nõuab seoste mõistmist",
     "tooltip3": "Tihe, mitmekihiline teema paljude eelduste ja seostega"
@@ -251,7 +262,7 @@
       "branches": "Oksad",
       "leaves": "Lehed",
       "fruits": "Viljad",
-      "sapling": "Istik",
+      "sapling": "Puukool",
       "orchard": "Aed"
     }
   },
@@ -1383,25 +1394,6 @@
       "orchard": "Karjääri saak — Professionaalsed teed AI-s"
     }
   },
-  "landing": {
-    "systemBadge": "Süsteem Aktiivne v2.1",
-    "startEvolution": "ALUSTA ARENGUT",
-    "beginJourney": "Alusta teekonda esimesest tokenist.",
-    "evolutionaryPath": "Arengutee",
-    "chooseYourPath": "Vali Oma Tee",
-    "exploreQuestion": "Kuidas soovid täna AI-d avastada?",
-    "theDna": "DNA",
-    "dnaTime": "Kiirülevaade (5 min)",
-    "dnaDesc": "Mõista põhimehhanismi.",
-    "recommendedStart": "Soovituslik Algus",
-    "theTree": "Puu",
-    "treeTime": "Täielik Avastamine (15+ min)",
-    "treeDesc": "Süvitsi kõikidesse kontseptsioonidesse.",
-    "deepDive": "Süvauuring",
-    "subhook": "Dendrix näitab AI mehhanisme nagu bioloogia näitab, mis on raku sees.",
-    "ctaPrimary": "Alusta DNA-st",
-    "ctaSecondary": "Avasta kaarti"
-  },
   "floatingInput": {
     "placeholder": "Küsi AI kohta midagi...",
     "expand": "Laienda sisend",
@@ -1434,10 +1426,10 @@
     "subtitle": "Kuidas toorandmetest saab intelligentne mudel.",
     "phaseLabel": "I Faas: Seeme",
     "inputPlaceholder": "Päri treeningandmeid...",
-    "motivator": "Mida sa vajad?",
-    "pathPractical": "Kuidas see muudab minu tööd?",
-    "pathCareer": "Uus amet 6 nädalaga",
-    "pathCurious": "Mis on tegelikult AI sees?",
+    "motivator": "Miks seda õppida?",
+    "pathPractical": "Paremate viipade kirjutamiseks pead mõistma, kuidas mudel andmeid 'loeb'.",
+    "pathCareer": "Treeningandmete kureerimine on AI inseneride jaoks väärtuslik oskus.",
+    "pathCurious": "Mõista 'musta kasti' — kuidas numbritest saavad teadmised.",
     "card": {
       "learnMore": "Analüüsi Protsessi"
     },
@@ -1472,10 +1464,6 @@
       "finalLoss": "Lõplik kulu",
       "parameters": "Parameetrid"
     },
-    "motivator": "Miks seda õppida?",
-    "pathPractical": "Paremate viipade kirjutamiseks pead mõistma, kuidas mudel andmeid 'loeb'.",
-    "pathCareer": "Treeningandmete kureerimine on AI inseneride jaoks väärtuslik oskus.",
-    "pathCurious": "Mõista 'musta kasti' — kuidas numbritest saavad teadmised.",
     "nav": {
       "ingestion": "Laadimine",
       "training": "Treenimine",
