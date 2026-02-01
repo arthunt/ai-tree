@@ -62,7 +62,7 @@ ON CONFLICT (concept_id, locale) DO UPDATE SET
 -- ET translations
 INSERT INTO concept_translations (concept_id, locale, title, subtitle, explanation, metaphor, question)
 VALUES
-  ('generalization', 'et', 'Uldistamine',
+  ('generalization', 'et', 'Üldistamine',
     'Ilmnev omadus',
     'Miljonitel näidetel treenides arendab mudel võime tulla toime olukordadega, mida ta pole kunagi varem näinud. See ilmnev võime — õpitud mustrite rakendamine uutes kontekstides — teeb tehisintellektist tõeliselt kasuliku, mitte lihtsalt otsimistabeli.',
     'Nagu kokkamine pärast 1000 retsepti järgimist — suudad improviseerida roa mis iganes külmkapis on.',
