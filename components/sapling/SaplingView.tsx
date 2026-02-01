@@ -5,12 +5,31 @@ import { RelatedConceptsPanel } from '@/components/concept/RelatedConceptsPanel'
 import { StageSelector } from '@/components/StageSelector';
 import { SaplingHeroAnimation } from './SaplingHeroAnimation';
 import { Info, Leaf } from 'lucide-react';
+import enMessages from '@/messages/en.json';
+import etMessages from '@/messages/et.json';
+
+const messages: Record<string, typeof enMessages> = { en: enMessages, et: etMessages };
+
+function getSaplingI18n(locale: string) {
+    const m = messages[locale] ?? messages.en;
+    return {
+        phaseLabel: m.sapling.phaseLabel,
+        title: m.sapling.title,
+        subtitle: m.sapling.subtitle,
+        keyConcepts: m.sapling.keyConcepts,
+        trainingModules: m.sapling.trainingModules,
+        moduleActive: m.sapling.moduleActive,
+        moduleStart: m.sapling.moduleStart,
+        modules: m.sapling.modules,
+    };
+}
 
 export default async function SaplingView({ locale }: { locale: string }) {
     const [concepts, relatedConcepts] = await Promise.all([
         getConceptsByStage('sapling', locale),
         getRelatedConceptsForStage('sapling', locale, 6),
     ]);
+    const t = getSaplingI18n(locale);
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-emerald-950 via-green-950 to-stone-950 pb-20">
@@ -20,23 +39,21 @@ export default async function SaplingView({ locale }: { locale: string }) {
 
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/40 border border-emerald-500/30 mb-6 text-emerald-300 text-xs font-mono uppercase tracking-widest backdrop-blur-md relative z-20 shadow-lg shadow-emerald-900/20">
                     <Leaf size={12} />
-                    {locale === 'et' ? 'Juhendatud Praktika' : 'Guided Practice'}
+                    {t.phaseLabel}
                 </div>
 
                 <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-emerald-100 via-emerald-200 to-teal-500 mb-4 drop-shadow-sm relative z-20">
-                    {locale === 'et' ? 'Nursery' : 'The Nursery'}
+                    {t.title}
                 </h1>
 
                 <p className="text-lg md:text-xl text-emerald-100/70 max-w-2xl mx-auto leading-relaxed relative z-20">
-                    {locale === 'et'
-                        ? 'Siin saavad abstraktsed mudelid reaalseks. Katseta ja vaata ise.'
-                        : 'Where abstract models become real. Experiment and see for yourself.'}
+                    {t.subtitle}
                 </p>
             </div>
 
             {/* Main Interaction Area: The Workspace */}
             <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 mb-20">
-                <SaplingWorkspace locale={locale} />
+                <SaplingWorkspace locale={locale} i18n={t} />
             </div>
 
             {/* Related Concepts (Fundamentals) */}
@@ -52,7 +69,7 @@ export default async function SaplingView({ locale }: { locale: string }) {
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     <h2 className="text-2xl font-bold text-emerald-500 mb-8 flex items-center gap-2">
                         <Info size={24} />
-                        {locale === 'et' ? 'Mõisted' : 'Key Concepts'}
+                        {t.keyConcepts}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {concepts.map((concept) => (

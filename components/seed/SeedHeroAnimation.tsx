@@ -19,7 +19,7 @@ interface SeedHeroI18n {
 }
 
 export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
-    const { phase, selectedSources, toggleSource, startProcessing, progress, loss, epoch } = useSeed();
+    const { phase, selectedSources, toggleSource, startProcessing, startTraining, progress, loss, epoch } = useSeed();
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     // Canvas Animation for Training Phase (Matrix/Particles)
@@ -156,6 +156,63 @@ export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
                     </motion.div>
                 )}
 
+                {/* PHASE 2.5: TUNING (WEIGHTS / KNOBS) */}
+                {phase === 'tuning' && (
+                    <motion.div
+                        key="tuning"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="absolute inset-0 flex flex-col items-center justify-center p-8 bg-black/20"
+                    >
+                        <h3 className="text-amber-500 font-mono text-xs uppercase tracking-widest mb-6">Initialize Weights</h3>
+
+                        <div className="flex gap-4 mb-8">
+                            {[0, 1, 2, 3, 4].map((i) => (
+                                <div key={i} className="flex flex-col items-center gap-2 group">
+                                    <div className="w-2 h-24 bg-stone-800 rounded-full relative overflow-hidden group-hover:bg-stone-700 transition-colors">
+                                        <motion.div
+                                            className="absolute bottom-0 w-full bg-amber-600"
+                                            initial={{ height: "30%" }}
+                                            animate={{ height: ["30%", "70%", "50%"] }}
+                                            transition={{
+                                                duration: 2,
+                                                delay: i * 0.1,
+                                                repeat: Infinity,
+                                                repeatType: "reverse"
+                                            }}
+                                        />
+                                        {/* Knob Head */}
+                                        <motion.div
+                                            className="absolute w-4 h-4 bg-stone-300 rounded-full -ml-1 shadow-lg"
+                                            animate={{ bottom: ["28%", "68%", "48%"] }}
+                                            transition={{
+                                                duration: 2,
+                                                delay: i * 0.1,
+                                                repeat: Infinity,
+                                                repeatType: "reverse"
+                                            }}
+                                        />
+                                    </div>
+                                    <span className="text-[10px] text-stone-500 font-mono">W{i}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        <p className="text-stone-400 text-sm max-w-sm text-center mb-6">
+                            "Weights" are like volume knobs. Training adjusts billions of them to reduce noise and amplify meaning.
+                        </p>
+
+                        <button
+                            onClick={startTraining}
+                            className="flex items-center gap-2 px-8 py-3 rounded-full bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold text-sm transition-all shadow-lg hover:shadow-amber-900/20 active:scale-95"
+                        >
+                            <BrainCircuit size={16} />
+                            Start Training Loop
+                        </button>
+                    </motion.div>
+                )}
+
                 {/* PHASE 3: TRAINING LOOP */}
                 {phase === 'training' && (
                     <motion.div
@@ -200,6 +257,37 @@ export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
                                 className="absolute top-0 bottom-0 w-[1px] bg-amber-500/50 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
                                 style={{ left: `${progress}%` }}
                             />
+                        </div>
+
+                        {/* Text Evolution Visualization (NEW) */}
+                        <div className="mt-4 p-4 bg-stone-900 rounded border border-stone-800 font-mono text-sm h-24 overflow-hidden relative">
+                            <span className="text-[10px] text-stone-500 uppercase tracking-wider absolute top-2 right-2">Output Preview</span>
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={epoch <= 3 ? 'chaos' : epoch <= 7 ? 'broken' : 'fluent'}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="pt-4"
+                                >
+                                    {epoch <= 3 && (
+                                        <span className="text-stone-600 break-all">
+                                            x7zn# m.q9^2 @lp! s_?k... {Math.random().toString(36).substring(7)}
+                                        </span>
+                                    )}
+                                    {epoch > 3 && epoch <= 7 && (
+                                        <span className="text-amber-700/70">
+                                            the cat s@t on... {['th', 'chk', 'brr'][epoch % 3]}... predict_nxt
+                                        </span>
+                                    )}
+                                    {epoch > 7 && (
+                                        <span className="text-amber-400">
+                                            "The neural network is learning to generate coherent text structure."
+                                        </span>
+                                    )}
+                                </motion.div>
+                            </AnimatePresence>
                         </div>
                     </motion.div>
                 )}

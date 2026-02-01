@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User, Bot, RotateCcw, Thermometer, Info, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { GlassCard } from '@/components/ui/GlassCard';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface Message {
     id: string;
@@ -17,7 +18,7 @@ interface Message {
 }
 
 interface PromptSandboxProps {
-    locale: string;
+    locale?: string;
     className?: string;
     initialPrompt?: string;
     initialTemp?: number;
@@ -49,6 +50,7 @@ export function PromptSandbox({
     onTempChange,
     onRating
 }: PromptSandboxProps) {
+    const t = useTranslations();
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState<Message[]>([]);
     const [isTyping, setIsTyping] = useState(false);
@@ -136,13 +138,13 @@ export function PromptSandbox({
                 <GlassCard className="p-5 bg-emerald-950/40 border-emerald-800/30 flex flex-col h-full">
                     <h3 className="text-emerald-400 font-bold mb-4 flex items-center gap-2">
                         <User size={18} />
-                        {locale === 'et' ? 'Sinu Viip' : 'Your Prompt'}
+                        {t('promptSandbox.yourPrompt')}
                     </h3>
 
                     {/* Temperature */}
                     <div className="mb-4 p-4 rounded-lg bg-emerald-900/20 border border-emerald-800/30">
                         <div className="flex justify-between text-xs text-emerald-200 mb-2">
-                            <span className="flex items-center gap-1"><Thermometer size={12} /> Temperature</span>
+                            <span className="flex items-center gap-1"><Thermometer size={12} /> {t('promptSandbox.temperature')}</span>
                             <span className="font-mono text-emerald-400">{temperature.toFixed(1)}</span>
                         </div>
                         <input
@@ -160,7 +162,7 @@ export function PromptSandbox({
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            placeholder={locale === 'et' ? 'Kirjuta siia...' : 'Type your prompt here...'}
+                            placeholder={t('promptSandbox.placeholder')}
                             className="flex-1 w-full bg-black/20 text-white placeholder-emerald-700/50 p-4 rounded-xl border border-emerald-800/30 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 resize-none font-mono text-sm leading-relaxed"
                         />
                         <div className="mt-4 flex justify-end">
@@ -169,7 +171,7 @@ export function PromptSandbox({
                                 disabled={!input.trim() || isTyping}
                                 className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 py-3 rounded-lg font-bold text-sm tracking-wide transition-all shadow-lg shadow-emerald-900/20 flex items-center justify-center gap-2"
                             >
-                                {locale === 'et' ? 'Saada' : 'Run Prompt'}
+                                {t('promptSandbox.runPrompt')}
                                 <Send size={14} />
                             </button>
                         </div>
@@ -180,7 +182,7 @@ export function PromptSandbox({
                         <div className="mt-6 pt-6 border-t border-emerald-800/30 flex-1 overflow-hidden flex flex-col">
                             <h4 className="text-xs font-bold text-emerald-500 uppercase tracking-widest mb-3 flex items-center gap-2">
                                 <RotateCcw size={12} />
-                                {locale === 'et' ? 'Ajalugu' : 'Iterations'}
+                                {t('promptSandbox.iterations')}
                             </h4>
                             <div className="overflow-y-auto space-y-2 pr-2 custom-scrollbar flex-1 min-h-[100px]">
                                 {history.map((item) => (
@@ -209,7 +211,7 @@ export function PromptSandbox({
                     {/* Header */}
                     <div className="absolute top-0 left-0 right-0 h-12 bg-emerald-950/60 border-b border-emerald-800/30 flex items-center px-4 justify-between z-10 backdrop-blur-md">
                         <span className="text-xs font-bold text-emerald-500 uppercase tracking-widest flex items-center gap-2">
-                            <Bot size={14} /> AI Output
+                            <Bot size={14} /> {t('promptSandbox.aiOutput')}
                         </span>
                         <div className="flex gap-1">
                             <div className="w-2 h-2 rounded-full bg-red-500/40"></div>
@@ -223,7 +225,7 @@ export function PromptSandbox({
                         {messages.length === 0 && (
                             <div className="h-full flex flex-col items-center justify-center text-emerald-800/40 select-none">
                                 <Bot size={48} className="mb-4 opacity-30" />
-                                <p className="text-sm font-medium">Ready for experimentation</p>
+                                <p className="text-sm font-medium">{t('promptSandbox.readyMessage')}</p>
                             </div>
                         )}
 
@@ -265,7 +267,7 @@ export function PromptSandbox({
                                                 className="self-start flex flex-wrap items-center gap-3 px-2"
                                             >
                                                 <div className="flex items-center gap-1.5 text-[10px] text-emerald-500/70 font-mono uppercase tracking-wider bg-emerald-900/20 px-2 py-0.5 rounded-full border border-emerald-500/10">
-                                                    <span>Quality Score:</span>
+                                                    <span>{t('promptSandbox.qualityScore')}</span>
                                                     <span className={cn(
                                                         "font-bold",
                                                         msg.metrics.cost > 75 ? "text-emerald-400" : "text-emerald-600"
@@ -278,7 +280,7 @@ export function PromptSandbox({
                                                         <button
                                                             onClick={onRating}
                                                             className="p-1 hover:bg-emerald-500/20 rounded text-emerald-600 hover:text-emerald-300 transition-colors"
-                                                            aria-label="Rate response positively"
+                                                            aria-label={t('promptSandbox.ratePositive')}
                                                         >
                                                             <CheckCircle2 size={14} />
                                                         </button>

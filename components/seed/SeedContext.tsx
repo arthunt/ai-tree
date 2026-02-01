@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 
-export type SeedPhase = 'selection' | 'processing' | 'training' | 'complete';
+export type SeedPhase = 'selection' | 'processing' | 'tuning' | 'training' | 'complete';
 
 export type DataSourceId = 'common-crawl' | 'github' | 'wikipedia' | 'books' | 'arxiv';
 
@@ -37,7 +37,7 @@ interface SeedContextType {
 
     // Actions
     startProcessing: () => void;
-    startTraining: () => void;
+    startTraining: () => void; // Now triggers training loop from tuning
     reset: () => void;
 }
 
@@ -51,6 +51,7 @@ export function SeedProvider({ children }: { children: ReactNode }) {
     const [progress, setProgress] = useState(0);
     const [epoch, setEpoch] = useState(0);
     const [loss, setLoss] = useState(4.5); // Starting loss
+    // ... (rest of state unchanged)
 
     const toggleSource = useCallback((id: DataSourceId) => {
         if (phase !== 'selection') return;
@@ -72,7 +73,7 @@ export function SeedProvider({ children }: { children: ReactNode }) {
 
         // Simulate data cleaning/compression (2 seconds)
         setTimeout(() => {
-            setPhase('training');
+            setPhase('tuning'); // Go to Tuning (Weights) instead of Training
         }, 2000);
     }, [selectedSources]);
 

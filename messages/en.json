@@ -1442,5 +1442,69 @@
     "card": {
       "viewPath": "View Career Path"
     }
+  },
+  "sapling": {
+    "phaseLabel": "Guided Practice",
+    "title": "The Nursery",
+    "subtitle": "Where abstract models become real. Experiment and see for yourself.",
+    "keyConcepts": "Key Concepts",
+    "trainingModules": "Training Modules",
+    "moduleActive": "Active",
+    "moduleStart": "Start Module",
+    "modules": {
+      "basics": {
+        "title": "First Prompt",
+        "description": "Learn the cause-and-effect of basic prompting.",
+        "promptTemplate": "Write a short poem about a robot learning to garden."
+      },
+      "refinement": {
+        "title": "Refinement",
+        "description": "Iterate on your prompt to get better results.",
+        "promptTemplate": "Write a funny haiku about a robot gardener who loves carrots."
+      },
+      "temperature": {
+        "title": "Temperature",
+        "description": "Experiment with randomness and creativity.",
+        "promptTemplate": "Invent 5 new names for a futuristic fruit."
+      },
+      "evaluation": {
+        "title": "Evaluation",
+        "description": "Judge the quality and safety of AI outputs.",
+        "promptTemplate": "Explain quantum physics to a 5-year-old using emojis."
+      }
+    }
+  },
+  "promptSandbox": {
+    "yourPrompt": "Your Prompt",
+    "temperature": "Temperature",
+    "placeholder": "Type your prompt here...",
+    "runPrompt": "Run Prompt",
+    "iterations": "Iterations",
+    "aiOutput": "AI Output",
+    "readyMessage": "Ready for experimentation",
+    "qualityScore": "Quality Score:",
+    "ratePositive": "Rate response positively"
+  },
+  "conceptDetail": {
+    "metaphor": "Metaphor",
+    "deepDive": "Deep Dive",
+    "thinkAboutIt": "Think About It"
+  },
+  "relatedConcepts": {
+    "title": "Related Concepts"
+  },
+  "treeExplorer": {
+    "map": "Map",
+    "grid": "Grid"
+  },
+  "treeDetail": {
+    "closeDetails": "Close details",
+    "motif": "motif",
+    "noDescription": "No description available yet."
+  },
+  "seedHero": {
+    "initializeWeights": "Initialize Weights",
+    "weightsExplanation": "\"Weights\" are like volume knobs. Training adjusts billions of them to reduce noise and amplify meaning.",
+    "startTrainingLoop": "Start Training Loop"
   }
 }

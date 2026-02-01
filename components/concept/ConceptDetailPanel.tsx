@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Lightbulb, BookOpen, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface ConceptDetailPanelProps {
     isOpen: boolean;
@@ -27,6 +28,7 @@ export function ConceptDetailPanel({
     color = '#f59e0b',
     className,
 }: ConceptDetailPanelProps) {
+    const t = useTranslations();
     const hasContent = metaphor || deepDive || question;
 
     if (!hasContent) return null;
@@ -64,7 +66,7 @@ export function ConceptDetailPanel({
                                 <Lightbulb size={18} className="text-amber-500 mt-0.5 shrink-0" />
                                 <div>
                                     <span className="text-[10px] font-bold uppercase tracking-wider text-amber-500/70 block mb-1">
-                                        Metaphor
+                                        {t('conceptDetail.metaphor')}
                                     </span>
                                     <p className="text-sm text-stone-300 leading-relaxed">{metaphor}</p>
                                 </div>
@@ -77,7 +79,7 @@ export function ConceptDetailPanel({
                                 <BookOpen size={18} className="text-emerald-500 mt-0.5 shrink-0" />
                                 <div>
                                     <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-500/70 block mb-1">
-                                        Deep Dive
+                                        {t('conceptDetail.deepDive')}
                                     </span>
                                     <p className="text-sm text-stone-300 leading-relaxed">{deepDive}</p>
                                 </div>
@@ -90,7 +92,7 @@ export function ConceptDetailPanel({
                                 <HelpCircle size={18} className="text-blue-400 mt-0.5 shrink-0" />
                                 <div>
                                     <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400/70 block mb-1">
-                                        Think About It
+                                        {t('conceptDetail.thinkAboutIt')}
                                     </span>
                                     <p className="text-sm text-stone-300 leading-relaxed">{question}</p>
                                     {hint && (

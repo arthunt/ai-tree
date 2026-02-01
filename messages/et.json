@@ -1442,5 +1442,69 @@
     "card": {
       "viewPath": "Vaata Karjäärirada"
     }
+  },
+  "sapling": {
+    "phaseLabel": "Juhendatud Praktika",
+    "title": "Taimelavad",
+    "subtitle": "Siin saavad abstraktsed mudelid reaalseks. Katseta ja vaata ise.",
+    "keyConcepts": "Mõisted",
+    "trainingModules": "Treeningmoodulid",
+    "moduleActive": "Aktiivne",
+    "moduleStart": "Alusta moodulit",
+    "modules": {
+      "basics": {
+        "title": "Esimene viip",
+        "description": "Õpi viipamise põhjus-tagajärg seost.",
+        "promptTemplate": "Kirjuta lühike luuletus robotist, kes õpib aiatööd tegema."
+      },
+      "refinement": {
+        "title": "Täiustamine",
+        "description": "Korda oma viipa, et saada paremaid tulemusi.",
+        "promptTemplate": "Kirjuta naljakas haiku robotaednikust, kes armastab porgandeid."
+      },
+      "temperature": {
+        "title": "Temperatuur",
+        "description": "Katseta juhuslikkuse ja loovusega.",
+        "promptTemplate": "Leiuta 5 uut nime futuristlikule puuviljale."
+      },
+      "evaluation": {
+        "title": "Hindamine",
+        "description": "Hinda AI väljundite kvaliteeti ja ohutust.",
+        "promptTemplate": "Selgita kvantfüüsikat 5-aastasele emotikonide abil."
+      }
+    }
+  },
+  "promptSandbox": {
+    "yourPrompt": "Sinu Viip",
+    "temperature": "Temperatuur",
+    "placeholder": "Kirjuta siia...",
+    "runPrompt": "Saada",
+    "iterations": "Ajalugu",
+    "aiOutput": "AI Väljund",
+    "readyMessage": "Valmis katsetamiseks",
+    "qualityScore": "Kvaliteediskoor:",
+    "ratePositive": "Hinda vastust positiivselt"
+  },
+  "conceptDetail": {
+    "metaphor": "Metafoor",
+    "deepDive": "Süvitsi",
+    "thinkAboutIt": "Mõtle Sellele"
+  },
+  "relatedConcepts": {
+    "title": "Seotud Mõisted"
+  },
+  "treeExplorer": {
+    "map": "Kaart",
+    "grid": "Ruudustik"
+  },
+  "treeDetail": {
+    "closeDetails": "Sulge detailid",
+    "motif": "motiiv",
+    "noDescription": "Kirjeldus pole veel saadaval."
+  },
+  "seedHero": {
+    "initializeWeights": "Kaalude initsialiseerimine",
+    "weightsExplanation": "\"Kaalud\" on nagu helitugevuse nupud. Treenimine reguleerib miljardeid, et vähendada müra ja võimendada tähendust.",
+    "startTrainingLoop": "Alusta treeningtsüklit"
   }
 }

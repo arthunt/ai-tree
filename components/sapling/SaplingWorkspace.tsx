@@ -9,51 +9,33 @@ import { GlassCard } from '@/components/ui/GlassCard';
 
 export type ModuleId = 'basics' | 'refinement' | 'temperature' | 'evaluation';
 
-interface Module {
-    id: ModuleId;
+interface ModuleI18n {
     title: string;
     description: string;
-    icon: any;
     promptTemplate: string;
-    temperature?: number;
 }
 
-const MODULES: Module[] = [
-    {
-        id: 'basics',
-        title: 'First Prompt',
-        description: 'Learn the cause-and-effect of basic prompting.',
-        icon: Zap,
-        promptTemplate: 'Write a short poem about a robot learning to garden.',
-        temperature: 0.7
-    },
-    {
-        id: 'refinement',
-        title: 'Refinement',
-        description: 'Iterate on your prompt to get better results.',
-        icon: Target,
-        promptTemplate: 'Write a funny haiku about a robot gardener who loves carrots.',
-        temperature: 0.7
-    },
-    {
-        id: 'temperature',
-        title: 'Temperature',
-        description: 'Experiment with randomness and creativity.',
-        icon: Thermometer,
-        promptTemplate: 'Invent 5 new names for a futuristic fruit.',
-        temperature: 0.9
-    },
-    {
-        id: 'evaluation',
-        title: 'Evaluation',
-        description: 'Judge the quality and safety of AI outputs.',
-        icon: CheckCircle2,
-        promptTemplate: 'Explain quantum physics to a 5-year-old using emojis.',
-        temperature: 0.5
-    }
+interface SaplingI18n {
+    trainingModules: string;
+    moduleActive: string;
+    moduleStart: string;
+    modules: Record<ModuleId, ModuleI18n>;
+}
+
+interface Module {
+    id: ModuleId;
+    icon: any;
+    temperature: number;
+}
+
+const MODULE_CONFIGS: Module[] = [
+    { id: 'basics', icon: Zap, temperature: 0.7 },
+    { id: 'refinement', icon: Target, temperature: 0.7 },
+    { id: 'temperature', icon: Thermometer, temperature: 0.9 },
+    { id: 'evaluation', icon: CheckCircle2, temperature: 0.5 },
 ];
 
-export function SaplingWorkspace({ locale }: { locale: string }) {
+export function SaplingWorkspace({ locale, i18n }: { locale: string; i18n: SaplingI18n }) {
     const [activeModule, setActiveModule] = useState<ModuleId | null>(null);
     const [prefill, setPrefill] = useState<{ text: string; temp: number } | null>(null);
     const [completedModules, setCompletedModules] = useState<ModuleId[]>([]);
@@ -62,20 +44,17 @@ export function SaplingWorkspace({ locale }: { locale: string }) {
     const handleLessonEvent = (type: 'run' | 'temp' | 'rating', value?: any) => {
         if (!activeModule) return;
 
-        const currentModule = MODULES.find(m => m.id === activeModule);
-        if (!currentModule || completedModules.includes(activeModule)) return;
+        if (completedModules.includes(activeModule)) return;
 
         let isSuccess = false;
 
         switch (activeModule) {
             case 'basics':
-                // Success: Prompt length > 10
                 if (type === 'run' && typeof value === 'string' && value.length > 10) {
                     isSuccess = true;
                 }
                 break;
             case 'refinement':
-                // Success: Run at least twice (history count tracks this)
                 if (type === 'run') {
                     const newCount = historyCount + 1;
                     setHistoryCount(newCount);
@@ -83,13 +62,11 @@ export function SaplingWorkspace({ locale }: { locale: string }) {
                 }
                 break;
             case 'temperature':
-                // Success: Change temperature from default (0.7)
                 if (type === 'temp' && typeof value === 'number' && Math.abs(value - 0.7) > 0.1) {
                     isSuccess = true;
                 }
                 break;
             case 'evaluation':
-                // Success: Click a rating button
                 if (type === 'rating') {
                     isSuccess = true;
                 }
@@ -98,18 +75,17 @@ export function SaplingWorkspace({ locale }: { locale: string }) {
 
         if (isSuccess) {
             setCompletedModules(prev => [...prev, activeModule]);
-            // Could add a toast here
         }
     };
 
     const handleModuleSelect = (module: Module) => {
         setActiveModule(module.id);
+        const moduleI18n = i18n.modules[module.id];
         setPrefill({
-            text: module.promptTemplate,
-            temp: module.temperature || 0.7
+            text: moduleI18n.promptTemplate,
+            temp: module.temperature,
         });
 
-        // Scroll to sandbox
         const sandbox = document.getElementById('sapling-sandbox');
         if (sandbox) {
             sandbox.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -137,15 +113,16 @@ export function SaplingWorkspace({ locale }: { locale: string }) {
                     <div className="h-px flex-1 bg-gradient-to-r from-transparent via-emerald-800/50 to-transparent"></div>
                     <h2 className="text-2xl font-bold text-emerald-400 uppercase tracking-widest flex items-center gap-2">
                         <Target size={24} />
-                        {locale === 'et' ? 'Treeningmoodulid' : 'Training Modules'}
+                        {i18n.trainingModules}
                     </h2>
                     <div className="h-px flex-1 bg-gradient-to-r from-transparent via-emerald-800/50 to-transparent"></div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {MODULES.map((module) => {
+                    {MODULE_CONFIGS.map((module) => {
                         const Icon = module.icon;
                         const isActive = activeModule === module.id;
+                        const moduleI18n = i18n.modules[module.id];
 
                         return (
                             <GlassCard
@@ -171,18 +148,18 @@ export function SaplingWorkspace({ locale }: { locale: string }) {
                                     "text-lg font-bold mb-2 transition-colors",
                                     isActive ? "text-white" : "text-emerald-100 group-hover:text-white"
                                 )}>
-                                    {module.title}
+                                    {moduleI18n.title}
                                 </h3>
 
                                 <p className="text-sm text-emerald-100/60 leading-relaxed mb-6">
-                                    {module.description}
+                                    {moduleI18n.description}
                                 </p>
 
                                 <div className={cn(
                                     "flex items-center gap-2 text-xs font-bold uppercase tracking-wider transition-colors",
                                     isActive ? "text-emerald-400" : "text-emerald-600 group-hover:text-emerald-400"
                                 )}>
-                                    {isActive ? 'Active' : 'Start Module'}
+                                    {isActive ? i18n.moduleActive : i18n.moduleStart}
                                     <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
                                 </div>
 

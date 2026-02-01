@@ -36,6 +36,11 @@ const MOCK_TREE: TreeContentSimple[] = [
     { id: 'attention-paper', parentId: 'transformer', title: 'Attention Mechanism', type: 'leaf', year: 2017, motif: 'focus', conceptId: 'attention' },
     { id: 'gpt-1', parentId: 'transformer', title: 'GPT-1', type: 'leaf', year: 2018, motif: 'spark', conceptId: 'prediction' },
     { id: 'gpt4', parentId: 'transformer', title: 'GPT-4', type: 'leaf', year: 2023, motif: 'star', conceptId: 'base-model' },
+
+    // Mechanics (Seed Concepts) - Added for Interactive Demo
+    { id: 'weights', parentId: 'neural', title: 'Weights', type: 'leaf', year: 1958, motif: 'knob', conceptId: 'weights' },
+    { id: 'loss', parentId: 'neural', title: 'Loss Function', type: 'leaf', year: 1960, motif: 'target', conceptId: 'loss-function' },
+    { id: 'training', parentId: 'neural', title: 'Training Data', type: 'leaf', year: 2010, motif: 'book', conceptId: 'training-data' },
 ];
 
 type NodeType = Database['public']['Tables']['nodes']['Row']['type'];

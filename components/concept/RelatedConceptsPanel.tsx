@@ -5,6 +5,7 @@ import type { Concept, EvolutionStage } from '@/lib/concepts/types';
 import { ArrowRight, Link as LinkIcon, Network } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface RelatedConceptsPanelProps {
     concepts: Concept[];
