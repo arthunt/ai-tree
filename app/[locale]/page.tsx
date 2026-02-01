@@ -633,6 +633,11 @@ export default function AITreePage() {
               {t('landing.systemBadge')}
             </div>
 
+            {/* Orientation Text (Novice Guidance) */}
+            <p className="text-brand-teal/90 font-medium mb-4 tracking-wide">
+              {t('landing.orientation')}
+            </p>
+
             {/* Main Headline */}
             <h1 id="hero-heading" className="text-5xl md:text-8xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
               {t('landing.hook')}
