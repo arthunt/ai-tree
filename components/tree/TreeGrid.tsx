@@ -4,6 +4,7 @@ import { TreeContentSimple } from '@/actions/getTreeContent';
 import { motion } from 'framer-motion';
 import { LevelIcon } from '@/components/LevelIcon';
 import { cn } from '@/lib/utils';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface TreeGridProps {
     data: TreeContentSimple[];
@@ -12,7 +13,15 @@ interface TreeGridProps {
 
 const LEVELS = ['roots', 'trunk', 'branches', 'leaves'];
 
+const TYPE_TO_LEVEL: Record<string, string> = {
+    root: 'roots',
+    trunk: 'trunk',
+    branch: 'branches',
+    leaf: 'leaves',
+};
+
 export function TreeGrid({ data, onNodeClick }: TreeGridProps) {
+    const t = useTranslations();
     if (!data.length) return null;
 
     // Group contents by Level
@@ -43,7 +52,7 @@ export function TreeGrid({ data, onNodeClick }: TreeGridProps) {
                         <div className="flex items-center gap-3 border-b border-gray-200 dark:border-gray-800 pb-4">
                             <LevelIcon level={level as any} size={28} />
                             <h3 className="text-xl font-bold capitalize text-gray-900 dark:text-white">
-                                {level}
+                                {t('conceptLevels.' + level + '.name')}
                             </h3>
                             <span className="text-sm text-gray-500 font-mono">
                                 ({items.length})
@@ -74,7 +83,7 @@ export function TreeGrid({ data, onNodeClick }: TreeGridProps) {
                                                     item.type === 'leaf' ? "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300" :
                                                         "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300"
                                         )}>
-                                            {item.type}
+                                            {t('conceptLevels.' + (TYPE_TO_LEVEL[item.type] || item.type) + '.name')}
                                         </span>
                                     </div>
 

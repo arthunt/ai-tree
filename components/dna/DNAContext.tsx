@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
+import { useParams } from 'next/navigation';
 import { DNAComponentType } from '@/lib/supabase';
 import { visualTokenize } from './TokenizationSlicer';
 
@@ -61,6 +62,9 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const [isComplete, setIsComplete] = useState(false);
     const [completedSteps, setCompletedSteps] = useState<Set<DNAStep>>(new Set());
 
+    const params = useParams();
+    const locale = (params?.locale as string) || 'en';
+
     const [tokens, setTokens] = useState<string[]>([]);
     const [subTokens, setSubTokens] = useState<string[]>([]);
     const [vectors, setVectors] = useState<number[][]>([]);
@@ -79,22 +83,46 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const vectorize = useCallback((tokens: string[]) => {
         return tokens.map(t => {
             const lower = t.toLowerCase();
+            const isEt = locale === 'et';
+            const isRu = locale === 'ru';
+
             // Cluster 1: Royalty
-            if (['king', 'queen', 'prince', 'princess', 'royal'].some(k => lower.includes(k))) {
+            const royalty = isEt
+                ? ['kuningas', 'kuninganna', 'prints', 'printsess', 'kroon']
+                : isRu
+                    ? ['король', 'королева', 'принц', 'принцесса']
+                    : ['king', 'queen', 'prince', 'princess', 'royal'];
+
+            if (royalty.some(k => lower.includes(k))) {
                 return [0.7 + (Math.random() * 0.1), 0.7 + (Math.random() * 0.1)];
             }
+
             // Cluster 2: Fruit/Nature
-            if (['apple', 'banana', 'fruit', 'tree', 'forest'].some(k => lower.includes(k))) {
+            const nature = isEt
+                ? ['õun', 'banaan', 'puu', 'mets', 'loodus']
+                : isRu
+                    ? ['яблоко', 'банан', 'фрукт', 'дерево', 'лес']
+                    : ['apple', 'banana', 'fruit', 'tree', 'forest'];
+
+            if (nature.some(k => lower.includes(k))) {
                 return [0.2 + (Math.random() * 0.1), 0.2 + (Math.random() * 0.1)];
             }
+
             // Cluster 3: AI
-            if (['ai', 'intelligence', 'robot', 'future'].some(k => lower.includes(k))) {
+            const tech = isEt
+                ? ['ai', 'tehisintellekt', 'robot', 'tulevik', 'masin']
+                : isRu
+                    ? ['ии', 'интеллект', 'робот', 'будущее']
+                    : ['ai', 'intelligence', 'robot', 'future'];
+
+            if (tech.some(k => lower.includes(k))) {
                 return [0.8 + (Math.random() * 0.1), 0.2 + (Math.random() * 0.1)];
             }
+
             // Random scatter
             return [Math.random(), Math.random()];
         });
-    }, []);
+    }, [locale]);
 
     // Smart Mock Attention
     const calculateAttention = useCallback((tokens: string[]) => {
@@ -124,38 +152,70 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const predict = useCallback(() => {
         // Context-aware predictions based on last token (mock)
         const lastToken = tokens.length > 0 ? tokens[tokens.length - 1].toLowerCase() : "";
-        let candidates = [
-            { token: 'and', probability: 0.1 },
-            { token: 'the', probability: 0.1 },
-            { token: 'is', probability: 0.1 },
-            { token: 'future', probability: 0.05 }
-        ];
+        const isEt = locale === 'et';
+
+        // Default Candidates
+        let candidates = isEt
+            ? [
+                { token: 'ja', probability: 0.1 },
+                { token: 'on', probability: 0.1 },
+                { token: 'kui', probability: 0.1 },
+                { token: 'tulevik', probability: 0.05 }
+            ]
+            : [
+                { token: 'and', probability: 0.1 },
+                { token: 'the', probability: 0.1 },
+                { token: 'is', probability: 0.1 },
+                { token: 'future', probability: 0.05 }
+            ];
 
         // Override for specific contexts
-        if (lastToken === 'artificial') {
-            candidates = [
-                { token: 'intelligence', probability: 0.92 },
-                { token: 'flower', probability: 0.02 },
-                { token: 'flavor', probability: 0.01 },
-                { token: 'selection', probability: 0.05 }
-            ];
-        } else if (lastToken === 'machine') {
-            candidates = [
-                { token: 'learning', probability: 0.88 },
-                { token: 'gun', probability: 0.05 },
-                { token: 'turning', probability: 0.02 },
-                { token: 'washable', probability: 0.05 }
-            ];
-        } else if (lastToken === 'jingle') {
-            candidates = [
-                { token: 'bells', probability: 0.99 },
-                { token: 'balls', probability: 0.005 },
-                { token: 'smells', probability: 0.005 }
-            ];
+        if (lastToken === 'artificial' || lastToken === 'tehisintellekt') {
+            // In English artificial -> intelligence. In Estonian tehisintellekt is one word, maybe next is 'on'?
+            if (isEt) {
+                candidates = [
+                    { token: 'on', probability: 0.6 },
+                    { token: 'suudab', probability: 0.2 },
+                    { token: 'muudab', probability: 0.1 }
+                ];
+            } else {
+                candidates = [
+                    { token: 'intelligence', probability: 0.92 },
+                    { token: 'flower', probability: 0.02 },
+                    { token: 'flavor', probability: 0.01 },
+                    { token: 'selection', probability: 0.05 }
+                ];
+            }
+        } else if (lastToken === 'machine' || lastToken === 'masinõpe') {
+            if (isEt) {
+                candidates = [
+                    { token: 'on', probability: 0.5 },
+                    { token: 'töötab', probability: 0.3 }
+                ];
+            } else {
+                candidates = [
+                    { token: 'learning', probability: 0.88 },
+                    { token: 'gun', probability: 0.05 },
+                    { token: 'turning', probability: 0.02 },
+                    { token: 'washable', probability: 0.05 }
+                ];
+            }
+        } else if (lastToken === 'jingle' || lastToken === 'aisakell') {
+            if (isEt) {
+                candidates = [
+                    { token: 'tilla-talla', probability: 0.99 }
+                ];
+            } else {
+                candidates = [
+                    { token: 'bells', probability: 0.99 },
+                    { token: 'balls', probability: 0.005 },
+                    { token: 'smells', probability: 0.005 }
+                ];
+            }
         }
 
         return candidates.sort((a, b) => b.probability - a.probability);
-    }, [tokens]);
+    }, [tokens, locale]);
 
     const runSimulation = useCallback(() => {
         if (!inputText) return;

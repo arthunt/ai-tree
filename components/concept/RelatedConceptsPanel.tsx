@@ -56,7 +56,7 @@ export function RelatedConceptsPanel({ concepts, locale, className, onConceptCli
                         >
                             <div className="flex justify-between items-start mb-2">
                                 <span className={cn("text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-black/20 border border-white/5", theme.text)}>
-                                    {concept.stage}
+                                    {t('stages.' + concept.stage)}
                                 </span>
                                 <ArrowRight size={14} className={cn("opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300", theme.icon)} />
                             </div>

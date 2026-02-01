@@ -101,7 +101,15 @@
     "exploreStage": "Avasta {stage} etapp →",
     "closeDetails": "Sulge detailid",
     "motif": "motiiv",
-    "noDescription": "Kirjeldus pole veel saadaval."
+    "noDescription": "Kirjeldus pole veel saadaval.",
+    "loading": "Puu laadimine...",
+    "intentLabel": "Eesmärk: {intent}",
+    "modeExploration": "Režiim: Avastamine",
+    "lodSprout": "LOD 2: IDU",
+    "lodTree": "LOD 3: PUU"
+  },
+  "card": {
+    "explore": "Avasta"
   },
   "viewMode": {
     "both": "Mõlemad",

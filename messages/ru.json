@@ -101,7 +101,15 @@
     "exploreStage": "Исследовать этап {stage} →",
     "closeDetails": "Закрыть детали",
     "motif": "мотив",
-    "noDescription": "Описание пока недоступно."
+    "noDescription": "Описание пока недоступно.",
+    "loading": "Загрузка дерева...",
+    "intentLabel": "Намерение: {intent}",
+    "modeExploration": "Режим: Исследование",
+    "lodSprout": "LOD 2: РОСТОК",
+    "lodTree": "LOD 3: ДЕРЕВО"
+  },
+  "card": {
+    "explore": "Изучить"
   },
   "viewMode": {
     "both": "Оба",

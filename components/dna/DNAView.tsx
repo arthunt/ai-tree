@@ -45,10 +45,13 @@ function DNAInterface({ content }: DNAInterfaceProps) {
 
     // Map concept IDs to hex colors (hex needed for inline style opacity manipulation)
     const colorMap: Record<string, string> = {
+        tokens: '#25EDBA',
         tokenization: '#25EDBA',
+        vectors: '#3B82F6',
         embeddings: '#3B82F6',
         attention: '#A855F7',
-        prediction: '#F59E0B'
+        prediction: '#F59E0B',
+        'temperature-sampling': '#F59E0B'
     };
 
     const stepMap: Record<number, DNAStep> = {

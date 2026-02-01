@@ -39,7 +39,7 @@ export function OrchardCard({ title, conceptId, description, role, salary, index
                         <Briefcase size={120} className="text-rose-900 -rotate-12" />
                     </div>
                 }
-                deepDiveLabel={t('orchard.card.viewPath') || "View Career Path"}
+                deepDiveLabel={t('orchard.card.viewPath')}
                 onDeepDive={() => setIsExpanded(prev => !prev)}
             >
                 <div className="flex flex-col h-full bg-gradient-to-br from-rose-50/50 to-orange-50/50 -m-5 p-5 md:-m-6 md:p-6 rounded-b-2xl">

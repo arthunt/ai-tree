@@ -57,7 +57,7 @@ export function SeedCard({
                         {stepIcons[step]}
                     </div>
                 }
-                deepDiveLabel={t('seed.card.learnMore') || "Analyze Process"}
+                deepDiveLabel={t('seed.card.learnMore')}
                 onDeepDive={() => console.log('Deep dive into:', title)}
                 className="bg-stone-900/40 backdrop-blur-md" // Darker override
             />

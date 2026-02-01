@@ -6,6 +6,7 @@ import { GlassCard } from '@/components/ui/GlassCard';
 import { Check, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { GlowingNode } from '@/components/ui/GlowingNode';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 export type CardVariant = 'dna' | 'seed' | 'sprout' | 'sapling' | 'tree' | 'fruits' | 'orchard';
 
@@ -125,9 +126,10 @@ export function UnifiedConceptCard({
     visualSlot,
     onCardClick,
     onDeepDive,
-    deepDiveLabel = "Explore",
+    deepDiveLabel,
     className
 }: UnifiedConceptCardProps) {
+    const t = useTranslations();
 
     const styles = VARIANT_STYLES[variant];
     const cardColor = color || (
@@ -227,7 +229,7 @@ export function UnifiedConceptCard({
                             style={{ color: isActive ? 'white' : cardColor }}
                         >
                             <ArrowRight size={14} />
-                            {deepDiveLabel}
+                            {deepDiveLabel || t('card.explore')}
                         </button>
                     )}
                 </div>

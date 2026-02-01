@@ -101,7 +101,15 @@
     "exploreStage": "Explore {stage} stage →",
     "closeDetails": "Close details",
     "motif": "motif",
-    "noDescription": "No description available yet."
+    "noDescription": "No description available yet.",
+    "loading": "Loading tree...",
+    "intentLabel": "Intent: {intent}",
+    "modeExploration": "Mode: Exploration",
+    "lodSprout": "LOD 2: SPROUT",
+    "lodTree": "LOD 3: TREE"
+  },
+  "card": {
+    "explore": "Explore"
   },
   "viewMode": {
     "both": "Both",

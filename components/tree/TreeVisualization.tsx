@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TreeContentSimple } from '@/actions/getTreeContent';
 import { RotateCcw } from 'lucide-react';
 import { useJourney } from '@/lib/contexts/JourneyContext';
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 interface TreeViewProps {
     data: TreeContentSimple[];
@@ -19,6 +20,7 @@ export function TreeVisualization({ data, onNodeClick, intent }: TreeViewProps) 
     const gRef = useRef<SVGGElement>(null);
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const { targetStage, setStage, currentStage } = useJourney();
+    const t = useTranslations();
 
     // Collapsed nodes state
     const [collapsedIds, setCollapsedIds] = useState<Set<string>>(new Set());
@@ -268,7 +270,7 @@ export function TreeVisualization({ data, onNodeClick, intent }: TreeViewProps) 
 
     if (!root) return (
         <div ref={containerRef} className="w-full h-[500px] sm:h-[700px] bg-void/50 border border-white/10 rounded-xl overflow-hidden relative flex items-center justify-center">
-            <div className="text-white/40 text-sm font-mono animate-pulse">Loading tree...</div>
+            <div className="text-white/40 text-sm font-mono animate-pulse">{t('treeView.loading')}</div>
         </div>
     );
 
@@ -403,10 +405,10 @@ export function TreeVisualization({ data, onNodeClick, intent }: TreeViewProps) 
             {/* Visual Title */}
             <div className="absolute top-4 left-4 pointer-events-none">
                 <div className="text-white/30 text-xs font-mono uppercase tracking-widest mb-1">
-                    {intent ? `Intent: ${intent}` : 'Mode: Exploration'}
+                    {intent ? t('treeView.intentLabel').replace('{intent}', intent) : t('treeView.modeExploration')}
                 </div>
                 <div className="text-white/80 font-bold text-sm">
-                    {collapsedIds.size > 10 ? 'LOD 2: SPROUT' : 'LOD 3: TREE'}
+                    {collapsedIds.size > 10 ? t('treeView.lodSprout') : t('treeView.lodTree')}
                 </div>
             </div>
 

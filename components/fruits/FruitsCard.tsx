@@ -37,7 +37,7 @@ export function FruitsCard({ title, conceptId, description, category, index, ico
                         <Zap size={120} className="text-emerald-900 rotate-12" />
                     </div>
                 }
-                deepDiveLabel={t('fruits.card.visitApp') || "Launch App"}
+                deepDiveLabel={t('fruits.card.visitApp')}
                 onDeepDive={() => setIsExpanded(prev => !prev)}
             >
                 <div className="flex flex-col h-full">
