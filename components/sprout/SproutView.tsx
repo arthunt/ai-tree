@@ -36,16 +36,19 @@ export function SproutView({ concepts, relatedConcepts = [], locale }: SproutVie
             {/* Background Gradient (Dawn/Sunrise Transition) */}
             <div
                 className={`absolute inset-0 -z-20 transition-opacity duration-[3000ms] ease-in-out ${isComplete
-                        ? 'opacity-0'
-                        : 'opacity-100'
-                    } bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-950`}
+                    ? 'opacity-0'
+                    : 'opacity-100'
+                    } bg-gradient-to-br from-indigo-800 via-violet-800 to-sky-950`}
             />
+
+            {/* Warm Sunrise Accent (Bottom-up) */}
+            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-rose-900/30 via-fuchsia-900/10 to-transparent -z-10 pointer-events-none" />
 
             {/* Dawn State layer (Appears on completion) */}
             <div
                 className={`absolute inset-0 -z-20 transition-opacity duration-[3000ms] ease-in-out ${isComplete
-                        ? 'opacity-100'
-                        : 'opacity-0'
+                    ? 'opacity-100'
+                    : 'opacity-0'
                     } bg-gradient-to-br from-violet-900 via-fuchsia-900/50 to-indigo-900`}
             />
 
@@ -59,8 +62,8 @@ export function SproutView({ concepts, relatedConcepts = [], locale }: SproutVie
                     transition={{ duration: 0.8 }}
                 >
                     <span className={`inline-block py-1 px-3 rounded-full border text-xs font-bold tracking-widest uppercase mb-4 transition-colors duration-1000 ${isComplete
-                            ? 'bg-fuchsia-500/10 border-fuchsia-400/20 text-fuchsia-300'
-                            : 'bg-indigo-500/10 border-indigo-400/20 text-indigo-300'
+                        ? 'bg-fuchsia-500/10 border-fuchsia-400/20 text-fuchsia-300'
+                        : 'bg-indigo-500/10 border-indigo-400/20 text-indigo-300'
                         }`}>
                         {t('sprout.phaseLabel')}
                     </span>

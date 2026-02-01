@@ -352,8 +352,8 @@
 
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| M3.1 | Lighten gradient to sunrise | ⏳ NEXT | Change to `from-indigo-800 via-violet-700 to-sky-800` or similar. Must feel like actual dawn, not night sky. |
-| M3.2 | Warm accent hint | ⏳ NEXT | Add subtle amber/pink sunrise hint at the bottom edge. Must remain dark enough for white text readability. |
+| M3.1 | Lighten gradient to sunrise | ✅ DONE | Change to `from-indigo-800 via-violet-800 to-sky-950` or similar. Must feel like actual dawn, not night sky. |
+| M3.2 | Warm accent hint | ✅ DONE | Add subtle amber/pink sunrise hint at the bottom edge. Must remain dark enough for white text readability. |
 
 ### Block M4: Novice Orientation Micro-copy (P1) — available for `@gemini` or `@swarm`
 
