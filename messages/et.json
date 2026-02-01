@@ -1445,6 +1445,7 @@
     },
     "hero": {
       "selectData": "Vali treeningandmed",
+      "selectDataHelp": "Mudeli treenimiseks vali vähemalt üks andmestik.",
       "ingestData": "Laadi andmed",
       "compressing": "Teadmiste tihendamine...",
       "epoch": "Epohh",

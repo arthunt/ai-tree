@@ -10,11 +10,12 @@
  */
 
 export type ProgramId = 'aiki' | 'aivo' | 'aime';
-export type Locale = 'et' | 'en';
+export type Locale = 'et' | 'en' | 'ru';
 
 export interface LocalizedString {
   et: string;
   en: string;
+  ru?: string;
 }
 
 export interface InstallmentPlan {

@@ -379,6 +379,84 @@
 
 ---
 
+## Phase 9: i18n Two-Layer Architecture 🆕
+
+> **Goal:** Implement the two-layer i18n architecture (Paraglide for UI chrome + Supabase for learning content) with content variants for A/B testing.
+> **Ref:** `docs/I18N_TECHNICAL_MIGRATION.md` (technical authority), `docs/I18N_TRANSLATION_PRINCIPLES.md` (content authority)
+> **Dependency graph:** Phase 0 → Phase 2 → Phase 3 → Phase 4. Phase 1 is independent. Phase 5 after first experiment.
+
+### Phase 9.0: Locale Unification (CRITICAL — blocks all other phases) `@opus`
+
+> **Problem:** `'ru'` is missing from `locale` ENUM in `schema.sql`, hardcoded `'et' | 'en'` in `lib/supabase/types.ts` and `lib/programs/types.ts`. Blocks Russian users from creating learning sessions.
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| 9.0.1 | Fix locale enum in schema.sql | 🔄 IN PROGRESS | `CREATE TYPE locale AS ENUM ('et', 'en', 'ru')` |
+| 9.0.2 | Fix types in lib/supabase/types.ts | 🔄 IN PROGRESS | Replace all `'et' \| 'en'` → `'et' \| 'en' \| 'ru'` (12 occurrences) |
+| 9.0.3 | Fix Locale in lib/programs/types.ts | 🔄 IN PROGRESS | `Locale = 'et' \| 'en' \| 'ru'`, `LocalizedString` add `ru` |
+| 9.0.4 | Create Supabase migration | 🔄 IN PROGRESS | `ALTER TYPE locale ADD VALUE IF NOT EXISTS 'ru'` |
+| 9.0.5 | Build verification | ⏳ NEXT | `npm run build` passes with zero TS errors |
+
+### Phase 9.1: Paraglide Layer Extension (independent) `@opus` or `@gemini`
+
+> **Problem:** Missing user journey keys (landing hooks, seed motivators, stage introductions, stage questions).
+> **Ref:** I18N_TECHNICAL_MIGRATION.md Section 4, I18N_TRANSLATION_PRINCIPLES.md worked examples.
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| 9.1.1 | Add landing hook keys | ⏳ NEXT | `landing.hook`, `landing.subhook`, `landing.ctaPrimary`, `landing.ctaSecondary` in EN/ET/RU |
+| 9.1.2 | Add seed motivator keys | ⏳ NEXT | `seed.motivator`, `seed.pathPractical`, `seed.pathCareer`, `seed.pathCurious` in EN/ET/RU |
+| 9.1.3 | Add stageIntro keys | ⏳ NEXT | `stageIntro.{stage}` for all 7 stages in EN/ET/RU |
+| 9.1.4 | Add stageQuestion keys | ⏳ NEXT | `stageQuestion.{stage}` for all 7 stages in EN/ET/RU |
+| 9.1.5 | Recompile paraglide | ⏳ NEXT | `node scripts/generate-messages.js` |
+
+### Phase 9.2: Content Variant Infrastructure `@opus`
+
+> **Depends on:** Phase 9.0
+> **Creates:** `content_variants` table, RLS policies, indexes, measurement functions.
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| 9.2.1 | Create content_variants migration | ⏳ NEXT | Table + indexes + RLS per I18N_TECHNICAL_MIGRATION.md Section 5 |
+| 9.2.2 | Add content_variants TypeScript types | ⏳ NEXT | Types in lib/supabase/types.ts per Section 12 |
+| 9.2.3 | Create measurement functions | ⏳ NEXT | `record_variant_impression`, `record_variant_engagement`, `record_variant_conversion` |
+| 9.2.4 | Seed first experiment data | ⏳ NEXT | Tokenization title variants (base/practical/provocative) in ET |
+| 9.2.5 | Update V&S doc | ⏳ NEXT | Apply Section 9 changes to VISION_AND_STRATEGY.md |
+
+### Phase 9.3: Variant Serving Logic `@opus`
+
+> **Depends on:** Phase 9.2
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| 9.3.1 | Create lib/variants/service.ts | ⏳ NEXT | `getVariant()` with weighted random + session cache |
+| 9.3.2 | Create hooks/useContentVariant.ts | ⏳ NEXT | React hook wrapping variant service |
+| 9.3.3 | Wire into ConceptDetailPanel | ⏳ NEXT | Override title/explanation when variant exists |
+
+### Phase 9.4: Measurement & Analytics (deferred)
+
+> **Depends on:** Phase 9.3 live with first experiment
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| 9.4.1 | Impression tracking | ⏳ DEFERRED | Log which variant was shown |
+| 9.4.2 | Engagement tracking | ⏳ DEFERRED | Log card expand / time-on-concept |
+| 9.4.3 | Analytics dashboard | ⏳ DEFERRED | Admin view of variant performance |
+
+### Phase 9.5: Content Migration — One-Breath Explanations (deferred)
+
+> **Depends on:** Phase 9.3 validated
+> **Ref:** I18N_TRANSLATION_PRINCIPLES.md "One-Breath Rule" — rewrite 40+ word explanations to 12-18 words.
+
+| # | Task | Status | Description |
+|---|------|--------|-------------|
+| 9.5.1 | Rewrite DNA explanations (4) | ⏳ DEFERRED | 12-18 word versions, long text → `deep_dive` |
+| 9.5.2 | Rewrite Sprout explanations (6) | ⏳ DEFERRED | Same pattern |
+| 9.5.3 | Rewrite Seed explanations (14) | ⏳ DEFERRED | Same pattern |
+| 9.5.4 | Rewrite remaining stages | ⏳ DEFERRED | Sapling, Tree, Fruits, Orchard |
+
+---
+
 ## Icebox / Future
 
 - [ ] **2.2.5** Unit tests for Concept SDK functions

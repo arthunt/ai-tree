@@ -1445,6 +1445,7 @@
     },
     "hero": {
       "selectData": "Select Training Data",
+      "selectDataHelp": "Tap at least one dataset below to start training your model.",
       "ingestData": "Ingest Data",
       "compressing": "Compressing Knowledge...",
       "epoch": "Epoch",

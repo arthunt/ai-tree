@@ -28,7 +28,7 @@ CREATE TYPE feedback_type AS ENUM ('bug', 'suggestion', 'content_error', 'genera
 CREATE TYPE feedback_status AS ENUM ('new', 'reviewed', 'resolved', 'wont_fix');
 
 -- Supported locales
-CREATE TYPE locale AS ENUM ('et', 'en');
+CREATE TYPE locale AS ENUM ('et', 'en', 'ru');
 
 -- ============================================
 -- TABLES

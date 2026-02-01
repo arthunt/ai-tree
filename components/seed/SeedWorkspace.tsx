@@ -12,6 +12,7 @@ import { Concept } from '@/lib/concepts/types';
 
 interface SeedHeroI18n {
     selectData: string;
+    selectDataHelp: string;
     ingestData: string;
     compressing: string;
     epoch: string;

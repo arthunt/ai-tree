@@ -29,7 +29,7 @@ export interface Database {
           created_at: string
           updated_at: string
           last_active_at: string
-          locale: 'et' | 'en'
+          locale: 'et' | 'en' | 'ru'
           preferences: Json
         }
         Insert: {
@@ -38,7 +38,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
           last_active_at?: string
-          locale?: 'et' | 'en'
+          locale?: 'et' | 'en' | 'ru'
           preferences?: Json
         }
         Update: {
@@ -47,7 +47,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
           last_active_at?: string
-          locale?: 'et' | 'en'
+          locale?: 'et' | 'en' | 'ru'
           preferences?: Json
         }
       }
@@ -242,7 +242,7 @@ export interface Database {
       program_translations: {
         Row: {
           program_id: string
-          locale: 'et' | 'en'
+          locale: 'et' | 'en' | 'ru'
           name: string
           full_name: string
           tagline: string | null
@@ -252,7 +252,7 @@ export interface Database {
         }
         Insert: {
           program_id: string
-          locale: 'et' | 'en'
+          locale: 'et' | 'en' | 'ru'
           name: string
           full_name: string
           tagline?: string | null
@@ -262,7 +262,7 @@ export interface Database {
         }
         Update: {
           program_id?: string
-          locale?: 'et' | 'en'
+          locale?: 'et' | 'en' | 'ru'
           name?: string
           full_name?: string
           tagline?: string | null
@@ -342,7 +342,7 @@ export interface Database {
         Row: {
           id: string
           node_id: string
-          locale: 'et' | 'en'
+          locale: 'et' | 'en' | 'ru'
           display_name: string
           description: string | null
           significance: string | null
@@ -351,7 +351,7 @@ export interface Database {
         Insert: {
           id?: string
           node_id: string
-          locale: 'et' | 'en'
+          locale: 'et' | 'en' | 'ru'
           display_name: string
           description?: string | null
           significance?: string | null
@@ -360,7 +360,7 @@ export interface Database {
         Update: {
           id?: string
           node_id?: string
-          locale?: 'et' | 'en'
+          locale?: 'et' | 'en' | 'ru'
           display_name?: string
           description?: string | null
           significance?: string | null
@@ -453,13 +453,13 @@ export interface Database {
       get_or_create_session: {
         Args: {
           p_session_token: string
-          p_locale?: 'et' | 'en'
+          p_locale?: 'et' | 'en' | 'ru'
         }
         Returns: {
           id: string
           session_token: string
           created_at: string
-          locale: 'et' | 'en'
+          locale: 'et' | 'en' | 'ru'
           preferences: Json
         }
       }
@@ -485,7 +485,7 @@ export interface Database {
       dna_component: 'T' | 'V' | 'A' | 'P'
       feedback_type: 'bug' | 'suggestion' | 'content_error' | 'general'
       feedback_status: 'new' | 'reviewed' | 'resolved' | 'wont_fix'
-      locale: 'et' | 'en'
+      locale: 'et' | 'en' | 'ru'
     }
   }
 }

@@ -9,6 +9,7 @@ import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglid
 
 interface SeedHeroI18n {
     selectData: string;
+    selectDataHelp: string;
     ingestData: string;
     compressing: string;
     epoch: string;
@@ -93,7 +94,8 @@ export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
                         exit={{ opacity: 0, scale: 0.95 }}
                         className="absolute inset-0 flex flex-col items-center justify-center p-6"
                     >
-                        <h3 className="text-amber-500 font-mono text-xs uppercase tracking-widest mb-6">{i18n.selectData}</h3>
+                        <h3 className="text-amber-500 font-mono text-xs uppercase tracking-widest mb-2">{i18n.selectData}</h3>
+                        <p className="text-stone-400 text-xs text-center mb-6 max-w-[250px]">{i18n.selectDataHelp}</p>
 
                         <div className="flex flex-wrap justify-center gap-4 mb-8">
                             {DATA_SOURCES.map((source) => {
