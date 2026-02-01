@@ -1389,7 +1389,7 @@
   },
   "seed": {
     "title": "Treenimine",
-    "subtitle": "Sügaval maa all pressitakse toorandmed suure kuumuse ja rõhu all intelligentsuse seemneks.",
+    "subtitle": "Kuidas toorandmetest saab intelligentne mudel.",
     "phaseLabel": "I Faas: Seeme",
     "inputPlaceholder": "Päri treeningandmeid...",
     "card": {
@@ -1408,6 +1408,28 @@
         "title": "Mudel",
         "desc": "Lõplik kokkusurutud artefakt. Staatiline fail, mis on valmis 'äratamiseks'."
       }
+    },
+    "sections": {
+      "dataset": "1. Andmestik",
+      "training": "2. Treenimine",
+      "model": "3. Mudel"
+    },
+    "hero": {
+      "selectData": "Vali treeningandmed",
+      "ingestData": "Laadi andmed",
+      "compressing": "Teadmiste tihendamine...",
+      "epoch": "Epohh",
+      "loss": "Kadu",
+      "modelReady": "Baasmudel valmis",
+      "modelReadyDesc": "Teadmised tihendatud. Kaalud optimeeritud. Mudel on valmis peenhäälestuseks.",
+      "finalLoss": "Lõppkadu",
+      "parameters": "Parameetrid"
+    },
+    "nav": {
+      "ingestion": "Laadimine",
+      "training": "Treenimine",
+      "model": "Mudel",
+      "resetRun": "Alusta uuesti"
     }
   },
   "orchard": {

@@ -1388,8 +1388,8 @@
     }
   },
   "seed": {
-    "title": "The Training",
-    "subtitle": "Deep underground, raw data is compressed under intense heat into the seed of intelligence.",
+    "title": "Training",
+    "subtitle": "How raw data becomes an intelligent model.",
     "phaseLabel": "Phase I: The Seed",
     "inputPlaceholder": "Query the training data...",
     "card": {
@@ -1408,6 +1408,28 @@
         "title": "The Model",
         "desc": "The final compressed artifact. A static file ready to be 'woken up'."
       }
+    },
+    "sections": {
+      "dataset": "1. The Dataset",
+      "training": "2. Training",
+      "model": "3. The Model"
+    },
+    "hero": {
+      "selectData": "Select Training Data",
+      "ingestData": "Ingest Data",
+      "compressing": "Compressing Knowledge...",
+      "epoch": "Epoch",
+      "loss": "Loss",
+      "modelReady": "Base Model Ready",
+      "modelReadyDesc": "Knowledge compressed. Weights optimized. The model is now ready for fine-tuning.",
+      "finalLoss": "Final Loss",
+      "parameters": "Parameters"
+    },
+    "nav": {
+      "ingestion": "Ingestion",
+      "training": "Training",
+      "model": "Model",
+      "resetRun": "Reset Run"
     }
   },
   "orchard": {

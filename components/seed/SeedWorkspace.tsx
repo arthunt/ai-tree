@@ -8,12 +8,41 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Concept } from '@/lib/concepts/types';
 
+interface SeedHeroI18n {
+    selectData: string;
+    ingestData: string;
+    compressing: string;
+    epoch: string;
+    loss: string;
+    modelReady: string;
+    modelReadyDesc: string;
+    finalLoss: string;
+    parameters: string;
+}
+
+interface SeedNavI18n {
+    ingestion: string;
+    training: string;
+    model: string;
+    resetRun: string;
+}
+
+interface SeedI18n {
+    title: string;
+    subtitle: string;
+    dataset: string;
+    training: string;
+    model: string;
+    hero: SeedHeroI18n;
+    nav: SeedNavI18n;
+}
+
 interface SeedWorkspaceProps {
     locale: string;
     datasetConcepts: Concept[];
     trainingConcepts: Concept[];
     modelConcepts: Concept[];
-    i18n: any;
+    i18n: SeedI18n;
 }
 
 function ConceptGrid({ title, concepts, active }: { title: string; concepts: Concept[]; active: boolean }) {
@@ -59,8 +88,8 @@ function SeedContent({ datasetConcepts, trainingConcepts, modelConcepts, i18n }:
 
     return (
         <div className="max-w-7xl mx-auto px-6 relative z-10 pb-20">
-            <SeedHeroAnimation />
-            <SeedStepNav />
+            <SeedHeroAnimation i18n={i18n.hero} />
+            <SeedStepNav i18n={i18n.nav} />
 
             <div className="mt-12">
                 <ConceptGrid

@@ -2,30 +2,30 @@ import { getConceptsByStage, getRelatedConceptsForStage } from '@/lib/concepts/a
 import { SeedWorkspace } from './SeedWorkspace';
 import { RelatedConceptsPanel } from '@/components/concept/RelatedConceptsPanel';
 import { StageSelector } from '@/components/StageSelector';
+import enMessages from '@/messages/en.json';
+import etMessages from '@/messages/et.json';
 
-const i18n: Record<string, Record<string, string>> = {
-    en: {
-        title: 'Training',
-        subtitle: 'How raw data becomes an intelligent model.',
-        dataset: '1. The Dataset',
-        training: '2. Training',
-        model: '3. The Model',
-    },
-    et: {
-        title: 'Treenimine',
-        subtitle: 'Kuidas toorandmetest saab intelligentne mudel.',
-        dataset: '1. Andmestik',
-        training: '2. Treenimine',
-        model: '3. Mudel',
-    },
-};
+const messages: Record<string, typeof enMessages> = { en: enMessages, et: etMessages };
+
+function getSeedI18n(locale: string) {
+    const m = messages[locale] ?? messages.en;
+    return {
+        title: m.seed.title,
+        subtitle: m.seed.subtitle,
+        dataset: m.seed.sections.dataset,
+        training: m.seed.sections.training,
+        model: m.seed.sections.model,
+        hero: m.seed.hero,
+        nav: m.seed.nav,
+    };
+}
 
 export default async function SeedView({ locale }: { locale: string }) {
     const [concepts, relatedConcepts] = await Promise.all([
         getConceptsByStage('seed', locale),
         getRelatedConceptsForStage('seed', locale, 6),
     ]);
-    const t = i18n[locale] ?? i18n.en;
+    const t = getSeedI18n(locale);
 
     const datasetConcepts = concepts.filter(c => c.category === 'data').sort((a, b) => a.sort_order - b.sort_order);
     const trainingConcepts = concepts.filter(c => c.category === 'training').sort((a, b) => a.sort_order - b.sort_order);

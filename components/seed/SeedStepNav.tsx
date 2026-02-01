@@ -5,14 +5,21 @@ import { ChevronRight, RotateCcw, Check, BrainCircuit, Database, Layers } from '
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-const STEPS = [
-    { id: 'selection', label: 'Ingestion', icon: Database },
-    { id: 'training', label: 'Training', icon: BrainCircuit },
-    { id: 'complete', label: 'Model', icon: Layers },
-] as const;
+interface SeedNavI18n {
+    ingestion: string;
+    training: string;
+    model: string;
+    resetRun: string;
+}
 
-export function SeedStepNav() {
+export function SeedStepNav({ i18n }: { i18n: SeedNavI18n }) {
     const { phase, progress, reset } = useSeed();
+
+    const STEPS = [
+        { id: 'selection', label: i18n.ingestion, icon: Database },
+        { id: 'training', label: i18n.training, icon: BrainCircuit },
+        { id: 'complete', label: i18n.model, icon: Layers },
+    ] as const;
 
     // Helper to determine step status
     const getStepStatus = (stepId: string) => {
@@ -85,7 +92,7 @@ export function SeedStepNav() {
                             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-800 text-stone-400 text-xs font-bold uppercase tracking-wider transition-colors"
                         >
                             <RotateCcw size={14} />
-                            Reset Run
+                            {i18n.resetRun}
                         </button>
                     )}
                 </div>

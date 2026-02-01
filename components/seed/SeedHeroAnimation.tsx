@@ -6,7 +6,19 @@ import { Database, Upload, Play, Check, Server, BrainCircuit } from 'lucide-reac
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 
-export function SeedHeroAnimation() {
+interface SeedHeroI18n {
+    selectData: string;
+    ingestData: string;
+    compressing: string;
+    epoch: string;
+    loss: string;
+    modelReady: string;
+    modelReadyDesc: string;
+    finalLoss: string;
+    parameters: string;
+}
+
+export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
     const { phase, selectedSources, toggleSource, startProcessing, progress, loss, epoch } = useSeed();
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -79,7 +91,7 @@ export function SeedHeroAnimation() {
                         exit={{ opacity: 0, scale: 0.95 }}
                         className="absolute inset-0 flex flex-col items-center justify-center p-6"
                     >
-                        <h3 className="text-amber-500 font-mono text-xs uppercase tracking-widest mb-6">Select Training Data</h3>
+                        <h3 className="text-amber-500 font-mono text-xs uppercase tracking-widest mb-6">{i18n.selectData}</h3>
 
                         <div className="flex flex-wrap justify-center gap-4 mb-8">
                             {DATA_SOURCES.map((source) => {
@@ -112,7 +124,7 @@ export function SeedHeroAnimation() {
                             className="flex items-center gap-2 px-8 py-3 rounded-full bg-amber-600 hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed text-stone-950 font-bold text-sm transition-all shadow-lg hover:shadow-amber-900/20 active:scale-95"
                         >
                             <Upload size={16} />
-                            Ingest Data
+                            {i18n.ingestData}
                         </button>
                     </motion.div>
                 )}
@@ -140,7 +152,7 @@ export function SeedHeroAnimation() {
                                 />
                             ))}
                         </div>
-                        <p className="text-amber-500/80 font-mono text-sm animate-pulse">Compressing Knowledge...</p>
+                        <p className="text-amber-500/80 font-mono text-sm animate-pulse">{i18n.compressing}</p>
                     </motion.div>
                 )}
 
@@ -155,11 +167,11 @@ export function SeedHeroAnimation() {
                     >
                         <div className="flex justify-between items-start mb-4">
                             <div className="flex flex-col">
-                                <span className="text-xs text-stone-500 uppercase tracking-wider">Epoch</span>
+                                <span className="text-xs text-stone-500 uppercase tracking-wider">{i18n.epoch}</span>
                                 <span className="text-3xl font-mono text-amber-500">{epoch}/10</span>
                             </div>
                             <div className="flex flex-col items-end">
-                                <span className="text-xs text-stone-500 uppercase tracking-wider">Loss</span>
+                                <span className="text-xs text-stone-500 uppercase tracking-wider">{i18n.loss}</span>
                                 <span className="text-3xl font-mono text-red-400">{loss.toFixed(4)}</span>
                             </div>
                         </div>
@@ -209,18 +221,18 @@ export function SeedHeroAnimation() {
                             <Server size={64} className="text-amber-400 relative z-10 mb-4 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]" />
                         </div>
 
-                        <h2 className="text-2xl font-bold text-amber-100 mb-2">Base Model Ready</h2>
+                        <h2 className="text-2xl font-bold text-amber-100 mb-2">{i18n.modelReady}</h2>
                         <p className="text-stone-400 text-sm max-w-sm text-center mb-6">
-                            Knowledge compressed. Weights optimized. The model is now ready for fine-tuning.
+                            {i18n.modelReadyDesc}
                         </p>
 
                         <div className="flex gap-4">
                             <div className="flex flex-col items-center p-3 bg-stone-900/50 rounded-lg border border-stone-800">
-                                <span className="text-[10px] text-stone-500 uppercase">Final Loss</span>
+                                <span className="text-[10px] text-stone-500 uppercase">{i18n.finalLoss}</span>
                                 <span className="text-lg font-mono text-green-400">0.4201</span>
                             </div>
                             <div className="flex flex-col items-center p-3 bg-stone-900/50 rounded-lg border border-stone-800">
-                                <span className="text-[10px] text-stone-500 uppercase">Parameters</span>
+                                <span className="text-[10px] text-stone-500 uppercase">{i18n.parameters}</span>
                                 <span className="text-lg font-mono text-amber-400">7B</span>
                             </div>
                         </div>

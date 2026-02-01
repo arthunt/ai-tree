@@ -29,13 +29,13 @@ export interface TreeContentSimple {
 // Fallback mock
 const MOCK_TREE: TreeContentSimple[] = [
     { id: 'algorithm', parentId: null, title: 'The Algorithm', type: 'root', year: 1950, motif: 'seed' },
-    { id: 'neural', parentId: 'algorithm', title: 'Neural Networks', type: 'trunk', year: 1958, motif: 'neuron' },
-    { id: 'tokenization-process', parentId: 'algorithm', title: 'Tokenization', type: 'branch', year: 2016, motif: 'scissors' },
-    { id: 'word2vec', parentId: 'neural', title: 'Word2Vec', type: 'branch', year: 2013, motif: 'compass', relatedProgramId: 'aiki' },
-    { id: 'transformer', parentId: 'neural', title: 'Transformers', type: 'branch', year: 2017, paper: 'Attention Is All You Need', motif: 'crystal', relatedProgramId: 'aiki', marketingHook: 'Master Transformers in Week 2.' },
-    { id: 'attention-paper', parentId: 'transformer', title: 'Attention Mechanism', type: 'leaf', year: 2017, motif: 'focus' },
-    { id: 'gpt-1', parentId: 'transformer', title: 'GPT-1', type: 'leaf', year: 2018, motif: 'spark' },
-    { id: 'gpt4', parentId: 'transformer', title: 'GPT-4', type: 'leaf', year: 2023, motif: 'star' },
+    { id: 'neural', parentId: 'algorithm', title: 'Neural Networks', type: 'trunk', year: 1958, motif: 'neuron', conceptId: 'neural-networks' },
+    { id: 'tokenization-process', parentId: 'algorithm', title: 'Tokenization', type: 'branch', year: 2016, motif: 'scissors', conceptId: 'tokenization' },
+    { id: 'word2vec', parentId: 'neural', title: 'Word2Vec', type: 'branch', year: 2013, motif: 'compass', relatedProgramId: 'aiki', conceptId: 'embeddings' },
+    { id: 'transformer', parentId: 'neural', title: 'Transformers', type: 'branch', year: 2017, paper: 'Attention Is All You Need', motif: 'crystal', relatedProgramId: 'aiki', marketingHook: 'Master Transformers in Week 2.', conceptId: 'attention' },
+    { id: 'attention-paper', parentId: 'transformer', title: 'Attention Mechanism', type: 'leaf', year: 2017, motif: 'focus', conceptId: 'attention' },
+    { id: 'gpt-1', parentId: 'transformer', title: 'GPT-1', type: 'leaf', year: 2018, motif: 'spark', conceptId: 'prediction' },
+    { id: 'gpt4', parentId: 'transformer', title: 'GPT-4', type: 'leaf', year: 2023, motif: 'star', conceptId: 'base-model' },
 ];
 
 type NodeType = Database['public']['Tables']['nodes']['Row']['type'];
