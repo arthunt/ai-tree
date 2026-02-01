@@ -2,6 +2,9 @@
 
 import { motion } from 'framer-motion';
 import { SproutCard } from './SproutCard';
+import { SproutHero } from './SproutHero';
+import { useSproutContext } from './SproutContext';
+import { useEffect } from 'react';
 
 import { StageSelector } from '@/components/StageSelector';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
@@ -17,24 +20,48 @@ interface SproutViewProps {
 
 export function SproutView({ concepts, relatedConcepts = [], locale }: SproutViewProps) {
     const t = useTranslations();
+    const { isComplete } = useSproutContext();
 
-
+    // Haptic feedback and sound effect on completion
+    useEffect(() => {
+        if (isComplete) {
+            if (typeof navigator !== 'undefined' && navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]); // Success pattern
+            }
+        }
+    }, [isComplete]);
 
     return (
-        <div className="min-h-screen relative pb-32 overflow-hidden">
-            {/* Background Gradient (Dawn/Sunrise Theme - Transitional) */}
-            {/* Moving from Data (Dark) to Light. Indigo/Violet to indicate early morning. */}
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-950 via-purple-950 to-slate-900 -z-10" />
+        <div className="min-h-screen relative pb-32 overflow-hidden transition-colors duration-[3000ms] ease-in-out">
+            {/* Background Gradient (Dawn/Sunrise Transition) */}
+            <div
+                className={`absolute inset-0 -z-20 transition-opacity duration-[3000ms] ease-in-out ${isComplete
+                        ? 'opacity-0'
+                        : 'opacity-100'
+                    } bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-950`}
+            />
+
+            {/* Dawn State layer (Appears on completion) */}
+            <div
+                className={`absolute inset-0 -z-20 transition-opacity duration-[3000ms] ease-in-out ${isComplete
+                        ? 'opacity-100'
+                        : 'opacity-0'
+                    } bg-gradient-to-br from-violet-900 via-fuchsia-900/50 to-indigo-900`}
+            />
+
             <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-20 -z-10" />
 
             {/* Header */}
-            <header className="pt-24 pb-12 px-6 text-center max-w-4xl mx-auto">
+            <header className="pt-24 pb-4 px-6 text-center max-w-4xl mx-auto relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <span className="inline-block py-1 px-3 rounded-full bg-brand-teal/10 border border-brand-teal/20 text-brand-teal text-xs font-bold tracking-widest uppercase mb-4">
+                    <span className={`inline-block py-1 px-3 rounded-full border text-xs font-bold tracking-widest uppercase mb-4 transition-colors duration-1000 ${isComplete
+                            ? 'bg-fuchsia-500/10 border-fuchsia-400/20 text-fuchsia-300'
+                            : 'bg-indigo-500/10 border-indigo-400/20 text-indigo-300'
+                        }`}>
                         {t('sprout.phaseLabel')}
                     </span>
                     <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-indigo-400 mb-4 sm:mb-6">
@@ -46,8 +73,13 @@ export function SproutView({ concepts, relatedConcepts = [], locale }: SproutVie
                 </motion.div>
             </header>
 
-            {/* Masonry Grid */}
-            <div className="container mx-auto px-4 md:px-6">
+            {/* Interactive Hero (Rooting System) */}
+            <div className="container mx-auto px-4 mb-16 relative z-10">
+                <SproutHero />
+            </div>
+
+            {/* Masonry Grid (Revealed after interaction potentially? No, always visible but context helps) */}
+            <div className={`container mx-auto px-4 md:px-6 transition-all duration-1000 ${isComplete ? 'opacity-100 translate-y-0' : 'opacity-50 translate-y-4 grayscale-[0.5]'}`}>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
                     {concepts.map((concept, index) => (
                         <SproutCard

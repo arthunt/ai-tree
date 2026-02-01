@@ -326,6 +326,14 @@ export function SeedHeroAnimation({ i18n }: { i18n: SeedHeroI18n }) {
                                 <span className="text-lg font-mono text-amber-400">7B</span>
                             </div>
                         </div>
+
+                        {/* Persisted Final Output (The "Reward") */}
+                        <div className="mt-6 p-4 bg-stone-900 rounded border border-stone-800 font-mono text-sm max-w-md w-full relative opacity-80">
+                            <span className="text-[10px] text-green-500 uppercase tracking-wider absolute top-2 right-2">Final Output</span>
+                            <span className="text-amber-100">
+                                "The neural network has successfully learned to generate coherent text structure from the training data."
+                            </span>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
