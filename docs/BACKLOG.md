@@ -76,14 +76,13 @@
 | # | Task | Status | Description |
 |---|------|--------|-------------|
 | 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | Finish remaining: sprout, tree visuals (seed+sapling done) |
-| 2 | **8.M3** Sprout Theme Correction | ⏳ AVAILABLE | Lighten gradient to "Dawn" sunrise feel. See Phase 8 Block M3. |
-| 3 | **8.M4** Novice Orientation Copy | ⏳ AVAILABLE | Add orientation micro-copy + i18n keys for 3 locales. See Phase 8 Block M4. |
+| 2 | **9.5.x** DNA microLesson rewrite (EN) | ✅ DONE | Rewrote 4 DNA microLesson titles+body to Invitation style (Principle 1). Metaphor Scope Boundary applied. |
+| 3 | **9.5.x** DNA microLesson rewrite (ET, RU) | ⏳ NEXT | Apply same Invitation rewrites to ET and RU locales |
 
 ### `@swarm` (Claude Flow) — Available Tasks
 | # | Task | Status | Description |
 |---|------|--------|-------------|
 | 1 | E2E smoke tests | ⏳ AVAILABLE | Verify all 7 stage routes render with SDK data |
-| 2 | **8.M5** Touch Target Sweep | ⏳ AVAILABLE | WCAG 44px audit across landing, StageSelector, GlobalNav, footer. See Phase 8 Block M5. |
 
 ### Coordination Rules
 - **Concept SDK is SPOT** — all agents MUST use `lib/concepts/api.ts`, never query Supabase directly from components
@@ -91,6 +90,8 @@
 - **Translations** — every concept MUST have EN, ET, and RU translations
 - **DB inserts** — use `supabase/migrations/` files, not ad-hoc SQL
 - **No hardcoded content** — all new content goes through the Concept Object system
+- **Backlog discipline** — MUST mark task IN PROGRESS before starting, DONE when complete
+- **Two-layer metaphor** — platform metaphor (biological) does NOT constrain concept metaphors (best-fit pedagogical). See `VISION_AND_STRATEGY.md` → "Metaphor Scope Boundary"
 
 ### User Acceptance Testing (UAT) Feedback (Feb 2026) 🆕
 > **Goal:** Address friction points identified during Novice User smoke tests.
@@ -244,10 +245,10 @@
 ### 4.x Sapling Polish (Remaining)
 | # | Task | Status | Description |
 |---|------|--------|-------------|
-| 4.x.1 | Sapling i18n sweep | ⏳ NEXT | Replace hardcoded `locale === 'et'` checks with proper message keys |
-| 4.x.2 | LLM proxy / mock responses | ⏳ NEXT | Connect PromptSandbox to actual AI response system |
-| 4.x.3 | Iteration tracking UI | ⏳ NEXT | Show attempt history + improvement metrics |
-| 4.x.4 | ConceptDetailPanel for Sapling | ⏳ NEXT | Wire ConceptDetailPanel into SaplingWorkspace cards |
+| 4.x.1 | Sapling i18n sweep | ✅ DONE | Phase 6.3 — typed i18n interface threaded from server to client |
+| 4.x.2 | LLM proxy / mock responses | ✅ DONE | UAT U1 — context-aware mock LLM with 6 AI topics + temperature-sensitive responses |
+| 4.x.3 | Iteration tracking UI | ⏳ DEFERRED | Show attempt history + improvement metrics |
+| 4.x.4 | ConceptDetailPanel for Sapling | ⏳ DEFERRED | Wire ConceptDetailPanel into SaplingWorkspace cards |
 
 ---
 
@@ -275,6 +276,8 @@
 | 6.4 | Sprout i18n audit | ✅ DONE | All SproutView strings verified — uses `useParaglideTranslations` |
 | 6.5 | Tree i18n audit | ✅ DONE | TreeExplorer, TreeDetailPanel updated — `treeExplorer.*` and `treeView.*` keys |
 | 6.6 | Full app i18n sweep | ✅ DONE | RelatedConceptsPanel, SeedHeroAnimation tuning phase — all translated |
+| 6.7 | Card hardcoding sweep | ✅ DONE | `@opus` — Raw stage names, type labels, English fallbacks replaced with i18n in 7 components (d0f09c6) |
+| 6.8 | DNA microLesson rewrite (EN) | ✅ DONE | `@gemini` — Titles→action-oriented, body→invitation style, metaphors→pedagogical best-fit per Principle 1+3 |
 
 ---
 

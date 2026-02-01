@@ -35,6 +35,20 @@ Underground (Dark)                    Surface (Dawn)                         Sun
 
 ## Decision 1: Level Structure
 
+### Metaphor Scope Boundary
+
+The biological growth metaphor applies to the **platform structure** — stage names, visual themes, progression language, and navigation. It does NOT apply to the **pedagogical metaphors** used to explain AI/ML concepts within each stage.
+
+Concept-level metaphors (e.g., "LEGO blocks" for tokens, "GPS coordinates" for embeddings, "a spotlight" for attention) are chosen purely for pedagogical effectiveness. They may come from any domain of everyday experience: mechanical, spatial, culinary, architectural, social, or any other familiar context. The only criteria are:
+1. The metaphor is drawn from everyday experience
+2. It is culturally familiar to the target audience
+3. It creates a vivid sensory image
+4. It is technically accurate enough not to mislead
+
+Forcing concept metaphors to match the biological platform theme would sacrifice pedagogical quality for thematic consistency — which is explicitly not a goal.
+
+See `docs/I18N_TRANSLATION_PRINCIPLES.md`, Principle 3 for detailed guidance on writing concept metaphors.
+
 **Verdict:** **7-Stage Journey (V3)**
 
 `DNA (Mechanism) -> Seed (Data & Training) -> Sprout (Emergent Properties) -> Istik (Guided Practice) -> Tree (Knowledge) -> Fruits (Applications) -> Orchard (Careers)`

@@ -147,6 +147,8 @@ The primary `explanation` field for any concept must be readable in a single bre
 
 ### Principle 3: Metaphors Must Land in Every Language
 
+> ⚠️ **Scope boundary:** This principle governs **concept-level** metaphors — the analogies used to explain AI mechanisms to learners. These are independent of the platform's biological growth metaphor (DNA → Tree → Orchard), which applies only to stage structure, visual themes, and progression language. A concept metaphor should be whatever everyday image best conveys the AI concept, regardless of thematic alignment with the platform structure. See also: Vision & Strategy V3.0, "Metaphor Scope Boundary."
+
 A metaphor that works in English may not work in Estonian or Russian. Each language gets its **own** metaphor if the English one doesn't translate naturally. The metaphor must:
 
 1. Be drawn from **everyday experience** (cooking, driving, building — not academic analogies)

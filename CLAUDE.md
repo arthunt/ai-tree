@@ -45,6 +45,56 @@ cat /Users/ak/GitHub/ai-tree/.claude-flow/backlog.json | jq '.current_sprint'
 
 ---
 
+## 📝 CONTENT & TRANSLATION PRINCIPLES (MANDATORY)
+
+### Two-Layer Metaphor Rule
+
+Dendrix.ai has **two independent metaphor layers** that must never be conflated:
+
+| Layer | Scope | Metaphor Type | Example |
+|-------|-------|---------------|---------|
+| **A: Platform** | Stage names, themes, navigation, progression | Biological growth | "DNA → Seed → Sprout → Tree → Orchard" |
+| **B: Concepts** | Explaining AI/ML mechanisms to learners | Best-fit pedagogical | "LEGO blocks" for tokens, "GPS coordinates" for embeddings |
+
+**The platform metaphor (Layer A) NEVER constrains concept metaphors (Layer B).**
+
+A concept metaphor is chosen for **pedagogical effectiveness** — whichever everyday image makes the AI concept click for a non-technical adult. It may be mechanical, spatial, culinary, architectural, social, or occasionally biological — but only when biology genuinely fits the concept.
+
+**DO NOT** replace a working concept metaphor with a biological/organic alternative just because the platform uses a biological growth theme.
+
+**Reference:** `docs/VISION_AND_STRATEGY.md` → "Metaphor Scope Boundary", `docs/I18N_TRANSLATION_PRINCIPLES.md` → Principle 3
+
+### Content Quality: Invitation vs Description (Principle 1)
+
+All learner-facing content must **invite** rather than **describe**:
+
+| ❌ Description (passive) | ✅ Invitation (active) |
+|--------------------------|------------------------|
+| "Words broken into pieces" | "Text shatters into tiny numbered pieces — the only language machines understand" |
+| "Meaning represented as numbers" | "Every word gets a GPS coordinate in a universe of meaning" |
+| "The model predicts next tokens" | "Based on everything it learned, the model guesses what comes next" |
+
+### Content Quality: One-Breath Rule (Principle 2)
+
+Explanations must be **12-18 words** — one natural breath. Longer text goes into `deep_dive`.
+
+### Translation Quality Requirements
+
+- Every concept MUST have EN, ET, and RU translations
+- Metaphors may differ per language if the English one doesn't translate naturally
+- UI chrome (buttons, labels) uses Paraglide (`messages/*.json`)
+- Learning content uses Supabase Concept Objects
+- **Reference:** `docs/I18N_TRANSLATION_PRINCIPLES.md`, `docs/I18N_COMPLIANCE_AUDIT.md`
+
+### Backlog Discipline
+
+All agents MUST mark tasks in `docs/BACKLOG.md` before starting work:
+1. Mark task as 🔄 IN PROGRESS when starting
+2. Mark task as ✅ DONE when complete with commit hash
+3. Never start work without a corresponding backlog entry
+
+---
+
 ## 🚨 AUTOMATIC SWARM ORCHESTRATION
 
 **When starting work on complex tasks, Claude Code MUST automatically:**
