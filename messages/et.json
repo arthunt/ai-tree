@@ -1359,7 +1359,7 @@
       "dna": "Mehhanism",
       "seed": "Algupärad",
       "sprout": "Tärkamine",
-      "sapling": "Harjutamine",
+      "sapling": "Puukool",
       "tree": "Teadmised",
       "fruits": "Rakendused",
       "orchard": "Karjäärid"
@@ -1473,8 +1473,8 @@
     }
   },
   "sapling": {
-    "phaseLabel": "Juhendatud Praktika",
-    "title": "Taimelavad",
+    "phaseLabel": "Puukool",
+    "title": "Puukool",
     "subtitle": "Siin saavad abstraktsed mudelid reaalseks. Katseta ja vaata ise.",
     "keyConcepts": "Mõisted",
     "trainingModules": "Treeningmoodulid",

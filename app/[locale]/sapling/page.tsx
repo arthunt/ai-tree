@@ -9,7 +9,7 @@ export function generateStaticParams() {
 }
 
 export const metadata = {
-    title: 'Sapling (Guided Practice) - AI Tree',
+    title: 'Sapling (The Nursery) - AI Tree',
     description: 'Hands-on practice with AI in a guided nursery environment.',
 };
 

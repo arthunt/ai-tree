@@ -812,7 +812,7 @@ export const MOCK_CONCEPTS: MockConcept[] = [
     },
   },
 
-  // ── Sapling Stage (Guided Practice) ──────────────────────
+  // ── Sapling Stage (Nursery / Puukool) ────────────────────
   {
     id: 'first-prompt',
     stage: 'sapling',

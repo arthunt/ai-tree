@@ -1371,7 +1371,7 @@
       "dna": "Mechanism",
       "seed": "Origins",
       "sprout": "Emergence",
-      "sapling": "Practice",
+      "sapling": "Nursery",
       "tree": "Knowledge",
       "fruits": "Applications",
       "orchard": "Careers"
@@ -1473,7 +1473,7 @@
     }
   },
   "sapling": {
-    "phaseLabel": "Guided Practice",
+    "phaseLabel": "The Nursery",
     "title": "The Nursery",
     "subtitle": "Where abstract models become real. Experiment and see for yourself.",
     "keyConcepts": "Key Concepts",
