@@ -1306,7 +1306,8 @@
       "next": "Edasi",
       "deeper": "Mine Sügavamale",
       "resume": "Jätka",
-      "goToSeed": "Avasta Seemnes"
+      "goToSeed": "Avasta Seemnes",
+      "tapToSkip": "Puuduta, et jätkata"
     },
     "summary": {
       "tokenization": "Tekst tükeldatud {count} osaks",

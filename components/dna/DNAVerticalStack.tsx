@@ -10,7 +10,7 @@ import { AttentionSpotlight } from "./AttentionSpotlight";
 import { PredictionBarChart } from "./PredictionBarChart";
 import { CompletionCard } from "./CompletionCard";
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
-import { Lock, Check, ChevronDown, ChevronRight, Lightbulb } from "lucide-react";
+import { Lock, Check, ChevronDown, ChevronRight, Lightbulb, SkipForward } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -182,17 +182,29 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
             aria-expanded={isActive}
             tabIndex={isCollapsed ? 0 : undefined}
             onKeyDown={(e) => {
-                if (isCollapsed && (e.key === 'Enter' || e.key === ' ')) {
+                if ((e.key === 'Enter' || e.key === ' ')) {
                     e.preventDefault();
-                    onExpand();
+                    if (isCollapsed) {
+                        onExpand();
+                    } else if (isActive) {
+                        onNext();
+                    }
                 }
             }}
         >
-            {/* Header Row - Always visible */}
-            <div className={`
-                flex items-center gap-3 p-4
-                ${isActive ? 'border-b border-white/5' : ''}
-            `}>
+            {/* Header Row - Always visible, tappable when active to advance */}
+            <div
+                className={`
+                    flex items-center gap-3 p-4
+                    ${isActive ? 'border-b border-white/5 cursor-pointer hover:bg-white/5 transition-colors' : ''}
+                `}
+                onClick={isActive ? (e) => {
+                    e.stopPropagation();
+                    onNext();
+                } : undefined}
+                role={isActive ? "button" : undefined}
+                aria-label={isActive ? tAccordion('next') : undefined}
+            >
                 {/* Step Badge */}
                 <div
                     className={`
@@ -232,11 +244,16 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
                     )}
                 </div>
 
-                {/* Expand/Collapse Indicator */}
+                {/* Expand/Collapse/Skip Indicator */}
                 {!isLocked && (
-                    <div className="text-white/30 flex-shrink-0">
+                    <div className={`flex-shrink-0 flex items-center gap-1.5 ${isActive ? 'text-white/50' : 'text-white/30'}`}>
                         {isActive ? (
-                            <ChevronDown size={20} />
+                            <>
+                                <span className="text-[10px] font-medium uppercase tracking-wider hidden sm:block">
+                                    {tAccordion('tapToSkip')}
+                                </span>
+                                <SkipForward size={16} />
+                            </>
                         ) : (
                             <ChevronRight size={20} />
                         )}

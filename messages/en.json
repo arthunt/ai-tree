@@ -1332,7 +1332,8 @@
       "next": "Next",
       "deeper": "Go Deeper",
       "resume": "Resume",
-      "goToSeed": "Explore in Seed"
+      "goToSeed": "Explore in Seed",
+      "tapToSkip": "Tap to skip"
     },
     "summary": {
       "tokenization": "Text tokenized into {count} pieces",
