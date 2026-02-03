@@ -1245,24 +1245,24 @@
       "resumeFlow": "Jätka Voogu",
       "exploreMore": "Avasta Rohkem",
       "tokenization": {
-        "title": "Tokeniseerimine",
-        "body": "Sõnad tükeldatakse osadeks. Keelemudelid ei loe sõnu nagu meie — nad jagavad teksti 'tokeniteks', väikesteks tükkideks, mis on tähenduse põhiühikud.",
-        "metaphor": "Nagu lause tükeldamine LEGO klotsideks."
+        "title": "Kuidas AI loeb",
+        "body": "Tekst puruneb väikesteks numbriteks — ainus keel, mida masinad mõistavad.",
+        "metaphor": "Nagu lause lõhkumine LEGO klotsideks."
       },
       "vectorizing": {
-        "title": "Vektoresitlused",
-        "body": "Tähendus arvudena. Iga token teisendatakse arvude loendiks, mis esindab selle tähendust mitmemõõtmelises ruumis.",
-        "metaphor": "Nagu igale sõnale GPS-koordinaadi andmine tähenduse universumis."
+        "title": "Sõnadest saavad arvud",
+        "body": "Iga sõna saab GPS-koordinaadi tähenduste universumis. Sarnased mõisted maanduvad lähestikku.",
+        "metaphor": "Nagu annaks igale sõnale GPS-koordinaadi tähenduste universumis."
       },
       "attention": {
-        "title": "Tähelepanu",
-        "body": "Punktide ühendamine. Mudel vaatab kõiki tokeneid korraga ja otsustab, millised on omavahel seotud, pöörates tähelepanu kontekstile olenemata kaugusest.",
-        "metaphor": "Nagu punktide ühendamine erineva paksusega niitidega."
+        "title": "Punktide ühendamine",
+        "body": "Prožektor valgustab ruumi, leides üles sõnad, mis on üksteise jaoks kõige olulisemad.",
+        "metaphor": "Nagu prožektor pimedas ruumis, mis näitab seoseid."
       },
       "prediction": {
-        "title": "Ennustamine",
-        "body": "Järgmise sõna ära arvamine. Kogu eelneva konteksti põhjal arvutab mudel järgmise tokeni tõenäosuse ja valib ühe.",
-        "metaphor": "Nagu lause lõpu ära arvamine enne selle ütlemist."
+        "title": "Järgmise pakkumine",
+        "body": "Tuginedes kõigele õpitule, ennustab mudel, mis tuleb järgmisena. Üks sõna korraga.",
+        "metaphor": "Nagu lause lõpu arvamine enne selle väljaütlemist."
       }
     },
     "completion": {
