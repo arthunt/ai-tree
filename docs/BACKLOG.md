@@ -2,7 +2,7 @@
 
 **Status:** Active Execution Plan
 **Source:** `docs/VISION_AND_STRATEGY.md` (V3.0)
-**Updated:** 2026-02-01
+**Updated:** 2026-02-03
 
 ---
 
@@ -48,8 +48,8 @@
 | 3 | **10.4** DNAOrientationCard | ✅ DONE | **P0** | Empty state with orientation text + example prompt |
 | 4 | **10.6** Translation keys | ✅ DONE | **P0** | Add dna.orientation.*, dna.card.*, dna.summary.* |
 | 5 | **10.x.1** Speed fixes | ✅ DONE | **P0** | Remove lens effect, set 1x default (4s/step), add speed controls |
-| 6 | **10.x.2** Collapsed card tap | ⏳ TODO | **P1** | Tapping collapsed card re-expands + resumes animation |
-| 7 | **10.x.3** Auto-scroll polish | ⏳ TODO | **P2** | Smoother scroll-to-active when step advances |
+| 6 | **10.x.2** Collapsed card tap | ✅ DONE `079582a` | **P1** | Tapping collapsed card re-expands + resumes animation |
+| 7 | **10.x.3** Auto-scroll polish | ✅ DONE `079582a` | **P2** | Smoother scroll-to-active when step advances |
 
 ### `@swarm` (Claude Flow) — Available Tasks
 | # | Task | Status | Description |
