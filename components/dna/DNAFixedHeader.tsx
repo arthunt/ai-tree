@@ -335,13 +335,15 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
                     {/* Desktop View Toggle */}
                     <button
                         onClick={toggleViewMode}
-                        className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all ml-2"
-                        title={viewMode === 'grid' ? "Switch to Stack View" : "Switch to Grid View"}
+                        className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all ml-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+                        title={viewMode === 'grid' ? tNav('switchToStack') : tNav('switchToGrid')}
+                        aria-label={viewMode === 'grid' ? tNav('switchToStack') : tNav('switchToGrid')}
+                        aria-pressed={viewMode === 'grid'}
                     >
                         {viewMode === 'grid' ? (
-                            <LayoutList size={14} />
+                            <LayoutList size={14} aria-hidden="true" />
                         ) : (
-                            <LayoutGrid size={14} />
+                            <LayoutGrid size={14} aria-hidden="true" />
                         )}
                     </button>
                 </div>

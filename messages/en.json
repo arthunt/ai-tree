@@ -1253,6 +1253,8 @@
       "pause": "Pause simulation",
       "resume": "Resume simulation",
       "nextStep": "Skip to next step",
+      "switchToGrid": "Switch to grid view",
+      "switchToStack": "Switch to stack view",
       "playing": "Playing",
       "paused": "Paused",
       "stepOf": "Step {current} of {total}",

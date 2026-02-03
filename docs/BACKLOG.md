@@ -34,8 +34,7 @@
 | # | Task | Status | Priority | Description |
 |---|------|--------|----------|-------------|
 | 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | P1 | Finish remaining: sprout, tree, sapling visuals (seed done) |
-| 2 | **10.x.7** Desktop UX review | ⏳ **START HERE** | **P1** | Verify auto-advance, grid toggle, tap-to-skip work smoothly on desktop |
-| 3 | **10.6** Deep Dive Content | ⏳ TODO | P2 | Wire metaphor and resume actions in DNADeepDiveSheet |
+| 2 | **10.x.7** Desktop UX review | ✅ DONE | **P1** | Grid toggle a11y + i18n labels, all features verified working |
 
 ### `@opus` — Current Focus (Phase 10.x DNA Speed & UX)
 
@@ -267,7 +266,7 @@
 | 10.3.3 | Collapsed state visuals | ✅ DONE | `@opus` | Minimal height, ✅ icon, summary text |
 | 10.3.4 | State transition animations | ✅ DONE `079582a` | `@opus` | Framer Motion variants, spring stiffness 300, damping 25 |
 
-### Phase 10.2: Deep Dive & Polish (P1) — 🔄 IN PROGRESS
+### Phase 10.2: Deep Dive & Polish (P1) — ✅ COMPLETE
 
 | # | Task | Status | Agent | Description |
 |---|------|--------|-------|-------------|
@@ -275,7 +274,7 @@
 | 10.5.1 | Drag handle + close | ✅ DONE | `@opus` | Swipe down to dismiss, drag to resize |
 | 10.5.2 | Content structure | ✅ DONE | `@opus` | Title, body, metaphor block |
 | 10.5.3 | Wire to MicroLesson content | ✅ DONE | `@opus` | Uses existing microLesson translations |
-| 10.6 | Deep Dive: metaphor + resume | ⏳ TODO | `@gemini` | Wire "Resume" and "Go to Seed" CTA actions |
+| 10.6 | Deep Dive: metaphor + resume | ✅ DONE `4c426a0` | `@opus` | Already wired: onClose→closeDeepDive, onNavigateToSeed→/seed |
 
 ### Phase 10.3: Integration & Polish (P2) — ✅ COMPLETE
 

@@ -1227,6 +1227,8 @@
       "pause": "Peata simulatsioon",
       "resume": "Jätka simulatsiooni",
       "nextStep": "Järgmine samm",
+      "switchToGrid": "Lülitu ruudustikule",
+      "switchToStack": "Lülitu virna vaatele",
       "playing": "Töötab",
       "paused": "Peatatud",
       "stepOf": "Samm {current}/{total}",
