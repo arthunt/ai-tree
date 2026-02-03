@@ -15,7 +15,6 @@ interface DNADeepDiveSheetProps {
 
 export function DNADeepDiveSheet({ step, isOpen, onClose, onNavigateToSeed }: DNADeepDiveSheetProps) {
     const t = useTranslations('dna.microLesson'); // Reuse existing keys
-    const tCommon = useTranslations('common');
     const controls = useAnimation();
     const [isDragging, setIsDragging] = useState(false);
 
@@ -111,7 +110,7 @@ export function DNADeepDiveSheet({ step, isOpen, onClose, onNavigateToSeed }: DN
                                     </div>
                                     <div>
                                         <h3 className="text-sm font-semibold text-indigo-300 uppercase tracking-wider mb-2">
-                                            {tCommon('metaphor')}
+                                            {t('metaphorLabel')}
                                         </h3>
                                         <p className="text-lg italic text-white/90 leading-relaxed">
                                             &ldquo;{t(`${step}.metaphor`)}&rdquo;
@@ -127,13 +126,13 @@ export function DNADeepDiveSheet({ step, isOpen, onClose, onNavigateToSeed }: DN
                                     className="h-14 rounded-xl font-semibold flex items-center justify-center gap-2 bg-white text-black hover:bg-gray-100 transition-colors"
                                 >
                                     <Play size={18} fill="currentColor" />
-                                    {t('resume')}
+                                    {t('resumeFlow')}
                                 </button>
                                 <button
                                     onClick={onNavigateToSeed}
                                     className="h-14 rounded-xl font-semibold flex items-center justify-center gap-2 bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
                                 >
-                                    {t('exploreSeed')}
+                                    {t('exploreMore')}
                                     <ArrowRight size={18} />
                                 </button>
                             </div>

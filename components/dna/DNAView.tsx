@@ -2,10 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { useRef, useCallback } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 import { DNAProvider, useDNA, DNAStep } from './DNAContext';
 import { DNAFixedHeader } from './DNAFixedHeader';
 import { DNAVerticalStack } from './DNAVerticalStack';
 import { MicroLesson } from './MicroLesson';
+import { DNADeepDiveSheet } from './DNADeepDiveSheet';
 import type { Concept } from '@/lib/concepts/types';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { GlobalNav } from '@/components/GlobalNav';
@@ -25,8 +27,11 @@ export function DNAView({ content = [] }: DNAViewProps) {
 
 function DNAInterface() {
     const t = useTranslations('dna');
-    const { setPlaybackSpeed, isComplete } = useDNA();
+    const { setPlaybackSpeed, isComplete, deepDiveStep, closeDeepDive } = useDNA();
     const stackRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
+    const params = useParams();
+    const locale = params.locale as string;
 
     // Scroll to a specific card step
     const handleScrollToCard = useCallback((step: DNAStep) => {
@@ -38,6 +43,16 @@ function DNAInterface() {
         <>
             <GlobalNav transparent />
             <MicroLesson />
+
+            {/* Deep Dive Bottom Sheet */}
+            {deepDiveStep && (
+                <DNADeepDiveSheet
+                    step={deepDiveStep}
+                    isOpen={!!deepDiveStep}
+                    onClose={closeDeepDive}
+                    onNavigateToSeed={() => router.push(`/${locale}/seed`)}
+                />
+            )}
 
             <div
                 className="relative min-h-screen min-h-screen-dynamic w-full bg-void overflow-x-hidden text-white selection:bg-brand-teal selection:text-bg-void"
