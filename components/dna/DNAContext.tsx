@@ -41,7 +41,7 @@ interface DNAContextType {
     deepDiveStep: DNAStep | null;
 
     // Actions
-    runSimulation: () => void;
+    runSimulation: (overrideText?: string) => void;
     resetSimulation: () => void;
     nextStep: () => void;
     prevStep: () => void;
@@ -265,8 +265,14 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         return candidates.sort((a, b) => b.probability - a.probability);
     }, [tokens, locale]);
 
-    const runSimulation = useCallback(() => {
-        if (!inputText) return;
+    const runSimulation = useCallback((overrideText?: string) => {
+        const textToUse = overrideText ?? inputText;
+        if (!textToUse) return;
+
+        // If override text provided, also update the input field
+        if (overrideText) {
+            setInputText(overrideText);
+        }
 
         setIsPlaying(true);
         setCurrentStep('tokenization');
@@ -284,9 +290,9 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         });
 
         // Process Data
-        const t = tokenize(inputText);
+        const t = tokenize(textToUse);
         setTokens(t);
-        setSubTokens(visualTokenize(inputText));
+        setSubTokens(visualTokenize(textToUse));
         setVectors(vectorize(t));
         setAttentionWeights(calculateAttention(t));
         setPredictions(predict());

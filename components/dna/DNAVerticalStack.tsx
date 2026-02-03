@@ -375,7 +375,6 @@ export function DNAVerticalStack() {
         isComplete,
         hasData,
         viewMode,
-        setInputText,
         runSimulation,
         dismissOrientation
     } = useDNA();
@@ -439,9 +438,8 @@ export function DNAVerticalStack() {
     const examplePrompt = "The king wore a crown";
 
     const handleUseExample = () => {
-        setInputText(examplePrompt);
         dismissOrientation();
-        setTimeout(() => runSimulation(), 100);
+        runSimulation(examplePrompt);
     };
 
     return (
