@@ -350,6 +350,20 @@ export function DNAVerticalStack() {
         // The useEffect above will handle scrolling to the new active card
     }, [nextStep]);
 
+    const {
+        setInputText,
+        runSimulation,
+        dismissOrientation: dismissOrientationAction
+    } = useDNA();
+
+    const examplePrompt = "The king wore a crown";
+
+    const handleUseExample = () => {
+        setInputText(examplePrompt);
+        dismissOrientationAction();
+        setTimeout(() => runSimulation(), 100);
+    };
+
     return (
         <div ref={stackRef} className="w-full max-w-lg mx-auto space-y-3 pb-8">
             {/* Orientation Card (shown before any input) */}
@@ -361,7 +375,11 @@ export function DNAVerticalStack() {
                         exit={{ opacity: 0, y: -20, height: 0 }}
                         transition={{ type: "spring", stiffness: 200, damping: 20 }}
                     >
-                        <DNAOrientationCard />
+                        <DNAOrientationCard
+                            onDismiss={dismissOrientationAction}
+                            examplePrompt={examplePrompt}
+                            onUseExample={handleUseExample}
+                        />
                     </motion.div>
                 )}
             </AnimatePresence>
