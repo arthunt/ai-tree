@@ -1,12 +1,10 @@
 "use client";
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRef, useCallback } from 'react';
-import { DNAComponentCard } from '@/components/dna/DNAComponentCard';
-import { CompletionCard } from '@/components/dna/CompletionCard';
 import { DNAProvider, useDNA, DNAStep } from './DNAContext';
-import { DNAInput } from './DNAInput';
-import { DNAStepNav } from './DNAStepNav';
+import { DNAFixedHeader } from './DNAFixedHeader';
+import { DNAVerticalStack } from './DNAVerticalStack';
 import { MicroLesson } from './MicroLesson';
 import type { Concept } from '@/lib/concepts/types';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
@@ -17,49 +15,24 @@ interface DNAViewProps {
     content?: Concept[];
 }
 
-interface DNAInterfaceProps {
-    content: Concept[];
-}
-
 export function DNAView({ content = [] }: DNAViewProps) {
     return (
         <DNAProvider>
-            <DNAInterface content={content} />
+            <DNAInterface />
         </DNAProvider>
     );
 }
 
-function DNAInterface({ content }: DNAInterfaceProps) {
+function DNAInterface() {
     const t = useTranslations('dna');
-    const { setPlaybackSpeed, jumpToStep, togglePause, isPaused, isComplete, hasData } = useDNA();
-    const cardScrollRef = useRef<HTMLDivElement>(null);
+    const { setPlaybackSpeed, isComplete } = useDNA();
+    const stackRef = useRef<HTMLDivElement>(null);
 
-    // Scroll the card carousel to a specific card index
-    const scrollToCard = useCallback((index: number) => {
-        const container = cardScrollRef.current;
-        if (!container) return;
-        const card = container.children[index] as HTMLElement;
-        if (!card) return;
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    // Scroll to a specific card step
+    const handleScrollToCard = useCallback((step: DNAStep) => {
+        // The DNAVerticalStack handles internal scrolling
+        // This is kept for potential header click integration
     }, []);
-
-    // Map concept IDs to hex colors (hex needed for inline style opacity manipulation)
-    const colorMap: Record<string, string> = {
-        tokens: '#25EDBA',
-        tokenization: '#25EDBA',
-        vectors: '#3B82F6',
-        embeddings: '#3B82F6',
-        attention: '#A855F7',
-        prediction: '#F59E0B',
-        'temperature-sampling': '#F59E0B'
-    };
-
-    const stepMap: Record<number, DNAStep> = {
-        0: 'tokenization',
-        1: 'vectorizing',
-        2: 'attention',
-        3: 'prediction'
-    };
 
     return (
         <>
@@ -67,7 +40,7 @@ function DNAInterface({ content }: DNAInterfaceProps) {
             <MicroLesson />
 
             <div
-                className="relative min-h-screen min-h-screen-dynamic w-full bg-void overflow-hidden text-white selection:bg-brand-teal selection:text-bg-void"
+                className="relative min-h-screen min-h-screen-dynamic w-full bg-void overflow-x-hidden text-white selection:bg-brand-teal selection:text-bg-void"
                 // THE LENS EFFECT: Slow down time when user is exploring
                 onMouseEnter={() => setPlaybackSpeed(0.1)}
                 onMouseLeave={() => setPlaybackSpeed(0.5)}
@@ -78,78 +51,28 @@ function DNAInterface({ content }: DNAInterfaceProps) {
                     <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-brand-cyan/5 blur-[120px] rounded-full animate-pulse-slow" style={{ animationDelay: '2s' }} />
                 </div>
 
+                {/* Fixed Header with Input + Step Nav */}
+                <DNAFixedHeader onScrollToCard={handleScrollToCard} />
 
-                <div className="relative z-10 flex flex-col items-center p-4 pt-14 sm:pt-16 sm:px-8 pb-20">
+                {/* Main Content Area */}
+                <div ref={stackRef} className="relative z-10 pt-4 px-4">
+                    {/* Vertical Accordion Stack - Self-contained with all cards */}
+                    <DNAVerticalStack />
 
-                    {/* Header Section */}
-                    <motion.header
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="text-center mb-3 md:mb-4 relative z-20"
-                    >
-                        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-1 md:mb-2 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-white to-brand-cyan drop-shadow-[0_0_15px_rgba(56,189,248,0.3)]">
-                            {t('header.title')}
-                        </h1>
-                        <p className="text-sm sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
-                            {t('header.subtitle')}
-                        </p>
-                    </motion.header>
-
-                    {/* INTERACTIVE INPUT */}
-                    <div className="relative z-30 w-full max-w-7xl" onMouseEnter={() => {
-                        // Explicitly pause when typing
-                        if (!isPaused) togglePause();
-                    }}>
-                        <DNAInput />
-                    </div>
-
-                    {/* Main Flow Visualization */}
-                    <div className="relative w-full max-w-7xl mt-1 md:mt-2">
-                        {/* Sticky Mobile Step Navigation (breadcrumbs + next button) */}
-                        <DNAStepNav onScrollToCard={scrollToCard} />
-
-                        {/* Cards Grid - Mobile: horizontal snap scroll (One Card Per View), Tablet+: grid */}
-                        <div ref={cardScrollRef} className="relative z-10 flex overflow-x-auto snap-x snap-mandatory scroll-smooth-touch overscroll-contain gap-4 px-4 pt-2 pb-8 scrollbar-hide md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:px-0 md:pt-0 md:pb-0 md:gap-8 lg:grid-cols-4 lg:gap-12">
-                            {content.map((item, index) => (
-                                <div
-                                    key={item.id}
-                                    className="min-w-[85vw] snap-center scroll-mt-28 md:min-w-0 md:scroll-mt-0"
-                                >
-                                    <DNAComponentCard
-                                        title={item.title}
-                                        description={item.explanation}
-                                        metaphor={item.metaphor}
-                                        color={colorMap[item.id] || 'white'}
-                                        index={index}
-                                        onCardClick={() => jumpToStep(stepMap[index])}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Completion Card */}
-                        <AnimatePresence>
-                            {isComplete && hasData && (
-                                <CompletionCard />
-                            )}
-                        </AnimatePresence>
-
-                        {/* Progression Hint: Sprouts into Seed */}
-                        {!isComplete && (
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 0.7 }}
-                                className="mt-24 flex flex-col items-center justify-center gap-4 text-brand-teal/50"
-                            >
-                                <div className="w-px h-16 bg-gradient-to-b from-transparent to-brand-teal/50" />
-                                <div className="flex flex-col items-center gap-2 animate-pulse">
-                                    <span className="text-4xl">🌱</span>
-                                    <span className="text-xs font-mono uppercase tracking-widest">{t('seed.growing')}</span>
-                                </div>
-                            </motion.div>
-                        )}
-                    </div>
+                    {/* Progression Hint: Grows into Seed */}
+                    {!isComplete && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 0.7 }}
+                            className="mt-16 mb-8 flex flex-col items-center justify-center gap-4 text-brand-teal/50"
+                        >
+                            <div className="w-px h-16 bg-gradient-to-b from-transparent to-brand-teal/50" />
+                            <div className="flex flex-col items-center gap-2 animate-pulse">
+                                <span className="text-4xl">🌱</span>
+                                <span className="text-xs font-mono uppercase tracking-widest">{t('seed.growing')}</span>
+                            </div>
+                        </motion.div>
+                    )}
                 </div>
             </div>
             <StageSelector />

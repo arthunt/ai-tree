@@ -306,6 +306,37 @@
 
 ---
 
+---
+
+## Phase 10: DNA Vertical Card Stack (Mobile UX) 🔄 IN PROGRESS
+
+> **Goal:** Replace horizontal scroll with vertical accordion for better mobile usability.
+> **Ref:** `docs/handoffs/GEMINI_HANDOFF_PHASE10_DNA_VERTICAL.md`
+
+- [ ] **10.1 DNA Fixed Header** `@gemini`
+    - [ ] Create `components/dna/DNAFixedHeader.tsx`
+    - [ ] Move Input and Progress into header
+- [ ] **10.2 DNA Vertical Stack** `@gemini`
+    - [ ] Create `components/dna/DNAVerticalStack.tsx`
+    - [ ] Implement auto-scroll behavior
+- [ ] **10.3 DNA Accordion Card** `@gemini`
+    - [ ] Create `components/dna/DNAAccordionCard.tsx`
+    - [ ] Implement Locked/Active/Collapsed states
+    - [ ] Add Framer Motion animations
+- [ ] **10.4 Orientation Card** `@gemini`
+    - [ ] Create `components/dna/DNAOrientationCard.tsx`
+- [ ] **10.5 Deep Dive Sheet** `@gemini`
+    - [ ] Create `components/dna/DNADeepDiveSheet.tsx` (Bottom Sheet)
+    - [ ] Wire up "Go Deeper" button
+- [ ] **10.6 Deep Dive Content** `@gemini`
+    - [ ] Wire metaphor and resume actions
+- [ ] **10.7 Desktop Grid Toggle** `@gemini`
+    - [ ] Implement Grid/Stack toggle logic
+- [ ] **10.8 Animation Polish** `@gemini`
+    - [ ] Spring physics, stagger effects
+
+---
+
 ## Icebox / Future
 
 ### Features
