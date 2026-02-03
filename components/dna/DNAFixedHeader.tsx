@@ -2,13 +2,20 @@
 
 import { useDNA, DNAStep } from "./DNAContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Play, RefreshCw, SkipForward, Pause, Check, ChevronRight } from "lucide-react";
+import { Sparkles, Play, RefreshCw, SkipForward, Pause, Check, ChevronRight, Gauge } from "lucide-react";
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { trackDNASimulation } from '@/lib/analytics';
 import { useEffect, useRef, useState } from "react";
 
 const ACTIVE_STEPS: DNAStep[] = ['tokenization', 'vectorizing', 'attention', 'prediction'];
 const BASE_STEP_DURATION = 4000;
+
+// Speed presets: 1x = 4s, 2x = 2s, 3x = 1.33s per step
+const SPEED_PRESETS = [
+    { label: '1×', value: 1.0 },
+    { label: '2×', value: 2.0 },
+    { label: '3×', value: 3.0 },
+];
 
 const STEP_LABELS: Record<string, string> = {
     tokenization: 'T',
@@ -51,6 +58,7 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
         currentStep,
         resetSimulation,
         playbackSpeed,
+        setPlaybackSpeed,
         hasData,
         isComplete,
         completedSteps,
@@ -262,8 +270,30 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
                     })}
                 </div>
 
-                {/* Step Counter */}
-                <div className="flex items-center gap-2">
+                {/* Speed Control + Step Counter */}
+                <div className="flex items-center gap-3">
+                    {/* Speed Control */}
+                    {(isPlaying || hasData) && (
+                        <div className="flex items-center gap-1">
+                            <Gauge size={12} className="text-white/30" />
+                            {SPEED_PRESETS.map(({ label, value }) => (
+                                <button
+                                    key={value}
+                                    onClick={() => setPlaybackSpeed(value)}
+                                    className={`px-1.5 py-0.5 text-[10px] font-mono rounded transition-all ${
+                                        playbackSpeed === value
+                                            ? 'bg-brand-teal/30 text-brand-teal'
+                                            : 'text-white/40 hover:text-white/70 hover:bg-white/5'
+                                    }`}
+                                    aria-label={`Set speed to ${label}`}
+                                >
+                                    {label}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Step Counter */}
                     <span className="text-xs text-white/50 font-mono">
                         {hasData || isPlaying
                             ? tNav('stepOf', { current: String(Math.max(1, stepCount)), total: '4' })

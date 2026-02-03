@@ -13,7 +13,7 @@
 
 ### `@opus` (Claude Code) — Current Sprint
 
-> Blocks A–D, Phase 5–8 complete. Phases 1–8 done. **Now working on Phase 10: DNA Vertical Stack (P0).**
+> Blocks A–D, Phase 5–8 complete. Phases 1–8 done. **Phase 10 core complete. Now working on Phase 10.x: DNA Speed & UX Polish.**
 
 #### Completed Blocks (summary)
 - ✅ **Block A** — Seed Interactive Wiring (5 tasks: SeedWorkspace, phase activation, deep-dive, typo fix)
@@ -28,24 +28,28 @@
 
 ### `@gemini` (Antigravity) — Available Tasks 🆕
 
-> **Priority:** Visual components, animations, theme work. See Phase 10 for DNA vertical stack UI tasks.
+> **Priority:** Visual polish, animation timing, card interaction refinements.
+> **Status:** Phase 10 core DONE. Focus on visual polish and desktop optimization.
 
 | # | Task | Status | Priority | Description |
 |---|------|--------|----------|-------------|
-| 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | P1 | Finish remaining: sprout, tree, sapling visuals (seed done) |
-| 2 | **10.3** DNAAccordionCard visuals | ⏳ AVAILABLE | **P0** | Locked/active/collapsed visual states, animations |
-| 3 | **10.5** DNADeepDiveSheet | ⏳ AVAILABLE | P1 | Bottom sheet with snap points, drag handle, metaphor styling |
-| 4 | **10.7** Desktop grid toggle | ⏳ AVAILABLE | P2 | Optional 2x2 grid layout for desktop DNA |
-| 5 | **10.8** Animation polish | ⏳ AVAILABLE | P2 | Card expand/collapse spring physics, scroll animations |
+| 1 | **10.x.4** Card animation timing | ⏳ **START HERE** | **P0** | Tune expand/collapse spring stiffness for snappier feel |
+| 2 | **10.x.5** Progress indicator polish | ⏳ AVAILABLE | **P0** | Make progress bar more visible, pulse on step change |
+| 3 | **10.7** Desktop grid toggle | ⏳ AVAILABLE | P2 | Optional 2x2 grid layout for desktop DNA |
+| 4 | **10.8** Animation polish | ⏳ AVAILABLE | P2 | Scroll-to-card smoothness, parallax effects |
+| 5 | **2.7** Unified Card variants | 🔄 IN PROGRESS | P1 | Finish remaining: sprout, tree, sapling visuals (seed done) |
 
-### `@opus` — Current Focus
+### `@opus` — Current Focus (Phase 10.x DNA Speed & UX)
 
 | # | Task | Status | Priority | Description |
 |---|------|--------|----------|-------------|
-| 1 | **10.1** DNAContext card states | 🔄 IN PROGRESS | **P0** | Add cardStates, expandCard, collapseCard to context |
-| 2 | **10.2** DNAFixedHeader | ⏳ NEXT | **P0** | Fixed input + progress, replaces DNAStepNav |
-| 3 | **10.4** DNAOrientationCard | ⏳ NEXT | **P0** | Empty state with orientation text + example prompt |
-| 4 | **10.6** Translation keys | ⏳ TODO | **P0** | Add dna.orientation.*, dna.card.*, dna.summary.* |
+| 1 | **10.1** DNAContext card states | ✅ DONE | **P0** | Add cardStates, expandCard, collapseCard to context |
+| 2 | **10.2** DNAFixedHeader | ✅ DONE | **P0** | Fixed input + progress, replaces DNAStepNav |
+| 3 | **10.4** DNAOrientationCard | ✅ DONE | **P0** | Empty state with orientation text + example prompt |
+| 4 | **10.6** Translation keys | ✅ DONE | **P0** | Add dna.orientation.*, dna.card.*, dna.summary.* |
+| 5 | **10.x.1** Speed fixes | ✅ DONE | **P0** | Remove lens effect, set 1x default (4s/step), add speed controls |
+| 6 | **10.x.2** Collapsed card tap | ⏳ TODO | **P1** | Tapping collapsed card re-expands + resumes animation |
+| 7 | **10.x.3** Auto-scroll polish | ⏳ TODO | **P2** | Smoother scroll-to-active when step advances |
 
 ### `@swarm` (Claude Flow) — Available Tasks
 | # | Task | Status | Description |

@@ -27,7 +27,7 @@ export function DNAView({ content = [] }: DNAViewProps) {
 
 function DNAInterface() {
     const t = useTranslations('dna');
-    const { setPlaybackSpeed, isComplete, deepDiveStep, closeDeepDive } = useDNA();
+    const { isComplete, deepDiveStep, closeDeepDive } = useDNA();
     const stackRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
     const params = useParams();
@@ -56,9 +56,6 @@ function DNAInterface() {
 
             <div
                 className="relative min-h-screen min-h-screen-dynamic w-full bg-void overflow-x-hidden text-white selection:bg-brand-teal selection:text-bg-void"
-                // THE LENS EFFECT: Slow down time when user is exploring
-                onMouseEnter={() => setPlaybackSpeed(0.1)}
-                onMouseLeave={() => setPlaybackSpeed(0.5)}
             >
                 {/* Background Ambient Glow */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">

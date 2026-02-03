@@ -62,7 +62,7 @@ interface DNAContextType {
 const DNAContext = createContext<DNAContextType | undefined>(undefined);
 
 const STEP_ORDER: DNAStep[] = ['tokenization', 'vectorizing', 'attention', 'prediction', 'idle'];
-const BASE_STEP_DURATION = 6000; // 6 seconds per step to allow full animations (Text -> Cut -> Grid -> Matrix)
+const BASE_STEP_DURATION = 4000; // 4 seconds per step at 1x speed (user can adjust)
 
 // Active simulation steps (without terminal 'idle')
 const ACTIVE_STEPS: DNAStep[] = ['tokenization', 'vectorizing', 'attention', 'prediction'];
@@ -81,7 +81,7 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const [currentStep, setCurrentStep] = useState<DNAStep>('idle');
     const [isPlaying, setIsPlaying] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
-    const [playbackSpeed, setPlaybackSpeed] = useState(0.5); // Default to slower 0.5x as per US-152
+    const [playbackSpeed, setPlaybackSpeed] = useState(1.0); // Default 1x speed (4 seconds per step)
     const [activeLesson, setActiveLesson] = useState<DNAStep | null>(null);
     const [isComplete, setIsComplete] = useState(false);
     const [completedSteps, setCompletedSteps] = useState<Set<DNAStep>>(new Set());
