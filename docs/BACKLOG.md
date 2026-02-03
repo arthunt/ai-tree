@@ -38,6 +38,7 @@
 | 3 | **10.7** Desktop grid toggle | ✅ DONE | P2 | Optional 2x2 grid layout for desktop DNA |
 | 4 | **10.8** Animation polish | ✅ DONE | P2 | Scroll-to-card smoothness, parallax effects |
 | 5 | **2.7** Unified Card variants | 🔄 IN PROGRESS | P1 | Finish remaining: sprout, tree, sapling visuals (seed done) |
+| 6 | **10.x.7** Desktop UX review | ⏳ **START HERE** | **P1** | Verify auto-advance, grid toggle, tap-to-skip work smoothly on desktop |
 
 ### `@opus` — Current Focus (Phase 10.x DNA Speed & UX)
 
@@ -50,6 +51,7 @@
 | 5 | **10.x.1** Speed fixes | ✅ DONE | **P0** | Remove lens effect, set 1x default (4s/step), add speed controls |
 | 6 | **10.x.2** Collapsed card tap | ✅ DONE `079582a` | **P1** | Tapping collapsed card re-expands + resumes animation |
 | 7 | **10.x.3** Auto-scroll polish | ✅ DONE `079582a` | **P2** | Smoother scroll-to-active when step advances |
+| 8 | **10.x.6** Tap-to-advance | ✅ DONE `182de8c` | **P1** | Tapping active card header skips to next step |
 
 ### `@swarm` (Claude Flow) — Available Tasks
 | # | Task | Status | Description |
