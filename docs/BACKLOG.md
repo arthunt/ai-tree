@@ -29,16 +29,13 @@
 ### `@gemini` (Antigravity) — Available Tasks 🆕
 
 > **Priority:** Visual polish, animation timing, card interaction refinements.
-> **Status:** Phase 10 core DONE. Focus on visual polish and desktop optimization.
+> **Status:** Phase 10 visual polish done by @opus. Gemini available for remaining tasks.
 
 | # | Task | Status | Priority | Description |
 |---|------|--------|----------|-------------|
-| 1 | **10.x.4** Card animation timing | ✅ DONE | **P0** | Tune expand/collapse spring stiffness for snappier feel |
-| 2 | **10.x.5** Progress indicator polish | ✅ DONE | **P0** | Make progress bar more visible, pulse on step change |
-| 3 | **10.7** Desktop grid toggle | ✅ DONE | P2 | Optional 2x2 grid layout for desktop DNA |
-| 4 | **10.8** Animation polish | ✅ DONE | P2 | Scroll-to-card smoothness, parallax effects |
-| 5 | **2.7** Unified Card variants | 🔄 IN PROGRESS | P1 | Finish remaining: sprout, tree, sapling visuals (seed done) |
-| 6 | **10.x.7** Desktop UX review | ⏳ **START HERE** | **P1** | Verify auto-advance, grid toggle, tap-to-skip work smoothly on desktop |
+| 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | P1 | Finish remaining: sprout, tree, sapling visuals (seed done) |
+| 2 | **10.x.7** Desktop UX review | ⏳ **START HERE** | **P1** | Verify auto-advance, grid toggle, tap-to-skip work smoothly on desktop |
+| 3 | **10.6** Deep Dive Content | ⏳ TODO | P2 | Wire metaphor and resume actions in DNADeepDiveSheet |
 
 ### `@opus` — Current Focus (Phase 10.x DNA Speed & UX)
 
@@ -53,7 +50,11 @@
 | 7 | **10.x.3** Auto-scroll polish | ✅ DONE `079582a` | **P2** | Smoother scroll-to-active when step advances |
 | 8 | **10.x.6** Tap-to-advance | ✅ DONE `182de8c` | **P1** | Tapping active card header skips to next step |
 | 9 | **10.x.8** Hold-to-pause | ✅ DONE | **P1** | Hold/tap visualization to pause, release to resume |
-| 10 | **10.x.9** ET translation polish | ✅ DONE | **P2** | Review DNA Estonian translations per I18N principles |
+| 10 | **10.x.9** ET translation polish | ✅ DONE `da9f8c8` | **P2** | Review DNA Estonian translations per I18N principles |
+| 11 | **10.x.4** Card animation timing | ✅ DONE `079582a` | P0 | Tune expand/collapse spring stiffness 200→300 |
+| 12 | **10.x.5** Progress indicator | ✅ DONE `ea27f57` | P0 | Progress bar h-1.5 with glow effect |
+| 13 | **10.7** Desktop grid toggle | ✅ DONE `ea27f57` | P2 | Optional 2x2 grid layout for ≥1024px |
+| 14 | **10.8** Animation polish | ✅ DONE `079582a` | P2 | staggerChildren, spring physics, confetti |
 
 ### `@swarm` (Claude Flow) — Available Tasks
 | # | Task | Status | Description |
@@ -247,40 +248,41 @@
 | "Learn More" navigates away | Bottom sheet keeps context |
 | No visual feedback on completion | Collapsed state with summary |
 
-### Phase 10.0: Core Structure (P0) — `@opus`
+### Phase 10.0: Core Structure (P0) — ✅ COMPLETE
 
 | # | Task | Status | Agent | Description |
 |---|------|--------|-------|-------------|
-| 10.1 | DNAContext card states | 🔄 IN PROGRESS | `@opus` | Add `cardStates: Record<DNAStep, CardState>`, `expandCard()`, `collapseCard()`, `deepDiveStep` |
-| 10.2 | DNAFixedHeader | ⏳ NEXT | `@opus` | Create fixed header with input + step buttons + "Step X of 4" |
-| 10.4 | DNAOrientationCard | ⏳ TODO | `@opus` | Empty state card: "How This Works" + example prompt |
-| 10.6 | Translation keys | ⏳ TODO | `@opus` | Add `dna.orientation.*`, `dna.card.*`, `dna.summary.*` to EN/ET/RU |
+| 10.1 | DNAContext card states | ✅ DONE `ea27f57` | `@opus` | `cardStates`, `expandCard()`, `collapseCard()`, `deepDiveStep` |
+| 10.2 | DNAFixedHeader | ✅ DONE `ea27f57` | `@opus` | Fixed header with input + step buttons + progress bar |
+| 10.4 | DNAOrientationCard | ✅ DONE `ea27f57` | `@opus` | Empty state card: "How This Works" + example prompt |
+| 10.6 | Translation keys | ✅ DONE `ea27f57` | `@opus` | `dna.orientation.*`, `dna.accordion.*`, `dna.summary.*` in EN/ET/RU |
 
-### Phase 10.1: Visual Components (P0) — `@gemini`
-
-| # | Task | Status | Agent | Description |
-|---|------|--------|-------|-------------|
-| 10.3 | DNAAccordionCard | ⏳ AVAILABLE | `@gemini` | Card component with locked/active/collapsed states, animations |
-| 10.3.1 | Locked state visuals | ⏳ TODO | `@gemini` | Grayed out, 🔒 icon, "(locked)" label |
-| 10.3.2 | Active state visuals | ⏳ TODO | `@gemini` | Full height, colored border, visualization visible, CTAs |
-| 10.3.3 | Collapsed state visuals | ⏳ TODO | `@gemini` | Minimal height (64px), ✅ icon, summary text |
-| 10.3.4 | State transition animations | ⏳ TODO | `@gemini` | Framer Motion variants, spring physics |
-
-### Phase 10.2: Deep Dive & Polish (P1) — `@gemini`
+### Phase 10.1: Visual Components (P0) — ✅ COMPLETE
 
 | # | Task | Status | Agent | Description |
 |---|------|--------|-------|-------------|
-| 10.5 | DNADeepDiveSheet | ⏳ AVAILABLE | `@gemini` | Bottom sheet component with snap points (50%, 85%, 95%) |
-| 10.5.1 | Drag handle + close | ⏳ TODO | `@gemini` | Swipe down to dismiss, drag to resize |
-| 10.5.2 | Content structure | ⏳ TODO | `@gemini` | Title, body, metaphor block, "Resume" / "Go to Seed" CTAs |
-| 10.5.3 | Wire to MicroLesson content | ⏳ TODO | `@opus` | Use existing microLesson translations in sheet |
+| 10.3 | DNAAccordionCard | ✅ DONE `ea27f57` | `@opus` | Card component with locked/active/collapsed states |
+| 10.3.1 | Locked state visuals | ✅ DONE | `@opus` | Grayed out, 🔒 icon, "(locked)" label |
+| 10.3.2 | Active state visuals | ✅ DONE | `@opus` | Full height, colored border, visualization visible, CTAs |
+| 10.3.3 | Collapsed state visuals | ✅ DONE | `@opus` | Minimal height, ✅ icon, summary text |
+| 10.3.4 | State transition animations | ✅ DONE `079582a` | `@opus` | Framer Motion variants, spring stiffness 300, damping 25 |
 
-### Phase 10.3: Integration & Polish (P2)
+### Phase 10.2: Deep Dive & Polish (P1) — 🔄 IN PROGRESS
 
 | # | Task | Status | Agent | Description |
 |---|------|--------|-------|-------------|
-| 10.7 | Desktop grid toggle | ⏳ TODO | `@gemini` | Optional 2x2 grid layout for ≥1024px |
-| 10.8 | Animation polish | ⏳ TODO | `@gemini` | Scroll-to-card, expand/collapse timing |
+| 10.5 | DNADeepDiveSheet | ✅ DONE `4c426a0` | `@opus` | Bottom sheet component with snap points |
+| 10.5.1 | Drag handle + close | ✅ DONE | `@opus` | Swipe down to dismiss, drag to resize |
+| 10.5.2 | Content structure | ✅ DONE | `@opus` | Title, body, metaphor block |
+| 10.5.3 | Wire to MicroLesson content | ✅ DONE | `@opus` | Uses existing microLesson translations |
+| 10.6 | Deep Dive: metaphor + resume | ⏳ TODO | `@gemini` | Wire "Resume" and "Go to Seed" CTA actions |
+
+### Phase 10.3: Integration & Polish (P2) — ✅ COMPLETE
+
+| # | Task | Status | Agent | Description |
+|---|------|--------|-------|-------------|
+| 10.7 | Desktop grid toggle | ✅ DONE `ea27f57` | `@opus` | 2x2 grid layout for ≥1024px with toggle button |
+| 10.8 | Animation polish | ✅ DONE `079582a` | `@opus` | staggerChildren, confetti, scroll-to-card |
 | 10.9 | Accessibility audit | ⏳ TODO | `@opus` | aria-expanded, focus management, reduced motion |
 | 10.10 | Deprecate old components | ⏳ TODO | `@opus` | Mark DNAStepNav, MicroLesson, DNAComponentCard as deprecated |
 
@@ -311,37 +313,6 @@
 | `components/dna/DNAStepNav.tsx` | `DNAFixedHeader.tsx` | Keep for reference |
 | `components/dna/MicroLesson.tsx` | `DNADeepDiveSheet.tsx` | Keep for reference |
 | `components/dna/DNAComponentCard.tsx` | `DNAAccordionCard.tsx` | Keep for desktop fallback |
-
----
-
----
-
-## Phase 10: DNA Vertical Card Stack (Mobile UX) 🔄 IN PROGRESS
-
-> **Goal:** Replace horizontal scroll with vertical accordion for better mobile usability.
-> **Ref:** `docs/handoffs/GEMINI_HANDOFF_PHASE10_DNA_VERTICAL.md`
-
-- [x] **10.1 DNA Fixed Header** `@gemini`
-    - [x] Create `components/dna/DNAFixedHeader.tsx`
-    - [x] Move Input and Progress into header
-- [x] **10.2 DNA Vertical Stack** `@gemini`
-    - [x] Create `components/dna/DNAVerticalStack.tsx`
-    - [x] Implement auto-scroll behavior
-- [x] **10.3 DNA Accordion Card** `@gemini`
-    - [x] Create `components/dna/DNAAccordionCard.tsx`
-    - [x] Implement Locked/Active/Collapsed states
-    - [x] Add Framer Motion animations
-- [x] **10.4 Orientation Card** `@gemini`
-    - [x] Create `components/dna/DNAOrientationCard.tsx`
-- [x] **10.5 Deep Dive Sheet** `@gemini`
-    - [x] Create `components/dna/DNADeepDiveSheet.tsx` (Bottom Sheet)
-    - [x] Wire up "Go Deeper" button
-- [ ] **10.6 Deep Dive Content** `@gemini`
-    - [ ] Wire metaphor and resume actions
-- [x] **10.7 Desktop Grid Toggle** `@gemini`
-    - [x] Implement Grid/Stack toggle logic
-- [x] **10.8 Animation Polish** `@gemini`
-    - [x] Spring physics, stagger effects
 
 ---
 
