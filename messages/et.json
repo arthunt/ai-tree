@@ -1293,6 +1293,26 @@
       "swipeHint": "Pühkige sammude avastamiseks",
       "cardOf": "Samm {current}/{total}",
       "tapToExplore": "Puudutage kaarti avastamiseks"
+    },
+    "orientation": {
+      "title": "Kuidas See Töötab",
+      "instruction": "Sisesta tekst ülal ja vajuta ▶, et näha, kuidas AI seda loeb.",
+      "description": "Jälgi, kuidas sinu sõnad muunduvad läbi 4 sammu: T → V → A → P",
+      "example": "Proovi: \"Kuningas kandis krooni\"",
+      "tapToTry": "Puuduta selle näite proovimiseks"
+    },
+    "accordion": {
+      "locked": "lukus",
+      "next": "Edasi",
+      "deeper": "Mine Sügavamale",
+      "resume": "Jätka",
+      "goToSeed": "Avasta Seemnes"
+    },
+    "summary": {
+      "tokenization": "Tekst tükeldatud {count} osaks",
+      "vectorizing": "Kaardistatud {count} koordinaadile",
+      "attention": "{count} seost leitud",
+      "prediction": "Võitja: \"{token}\" ({percent}%)"
     }
   },
   "programs": {

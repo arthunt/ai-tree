@@ -8,6 +8,9 @@ import { visualTokenize } from './TokenizationSlicer';
 // The steps of the simulation
 export type DNAStep = 'idle' | 'tokenization' | 'vectorizing' | 'attention' | 'prediction';
 
+// Card states for vertical accordion pattern (Phase 10)
+export type CardState = 'locked' | 'active' | 'collapsed';
+
 interface DNAContextType {
     // Input State
     inputText: string;
@@ -32,6 +35,11 @@ interface DNAContextType {
     hasData: boolean;          // True when tokens/vectors/etc. are populated
     completedSteps: Set<DNAStep>; // Steps that have been visited/completed
 
+    // Phase 10: Vertical Accordion Card States
+    cardStates: Record<DNAStep, CardState>;
+    showOrientation: boolean;
+    deepDiveStep: DNAStep | null;
+
     // Actions
     runSimulation: () => void;
     resetSimulation: () => void;
@@ -42,6 +50,13 @@ interface DNAContextType {
     togglePause: () => void;
     openLesson: (step: DNAStep) => void;
     closeLesson: () => void;
+
+    // Phase 10: Card State Actions
+    expandCard: (step: DNAStep) => void;
+    collapseCard: (step: DNAStep) => void;
+    openDeepDive: (step: DNAStep) => void;
+    closeDeepDive: () => void;
+    dismissOrientation: () => void;
 }
 
 const DNAContext = createContext<DNAContextType | undefined>(undefined);
@@ -52,6 +67,15 @@ const BASE_STEP_DURATION = 6000; // 6 seconds per step to allow full animations 
 // Active simulation steps (without terminal 'idle')
 const ACTIVE_STEPS: DNAStep[] = ['tokenization', 'vectorizing', 'attention', 'prediction'];
 
+// Initial card states: all locked except idle
+const INITIAL_CARD_STATES: Record<DNAStep, CardState> = {
+    idle: 'locked',
+    tokenization: 'locked',
+    vectorizing: 'locked',
+    attention: 'locked',
+    prediction: 'locked'
+};
+
 export function DNAProvider({ children }: { children: React.ReactNode }) {
     const [inputText, setInputText] = useState("");
     const [currentStep, setCurrentStep] = useState<DNAStep>('idle');
@@ -61,6 +85,11 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const [activeLesson, setActiveLesson] = useState<DNAStep | null>(null);
     const [isComplete, setIsComplete] = useState(false);
     const [completedSteps, setCompletedSteps] = useState<Set<DNAStep>>(new Set());
+
+    // Phase 10: Vertical Accordion States
+    const [cardStates, setCardStates] = useState<Record<DNAStep, CardState>>(INITIAL_CARD_STATES);
+    const [showOrientation, setShowOrientation] = useState(true);
+    const [deepDiveStep, setDeepDiveStep] = useState<DNAStep | null>(null);
 
     const params = useParams();
     const locale = (params?.locale as string) || 'en';
@@ -224,6 +253,16 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         setCurrentStep('tokenization');
         setIsPaused(false);
         setIsComplete(false);
+        setShowOrientation(false);
+
+        // Phase 10: Update card states - first card active, rest locked
+        setCardStates({
+            idle: 'locked',
+            tokenization: 'active',
+            vectorizing: 'locked',
+            attention: 'locked',
+            prediction: 'locked'
+        });
 
         // Process Data
         const t = tokenize(inputText);
@@ -243,6 +282,14 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         if (nextIndex < STEP_ORDER.length) {
             const next = STEP_ORDER[nextIndex];
             setCompletedSteps(prev => new Set(prev).add(currentStep));
+
+            // Phase 10: Update card states - collapse current, activate next
+            setCardStates(prev => ({
+                ...prev,
+                [currentStep]: 'collapsed',
+                [next]: next === 'idle' ? 'collapsed' : 'active'
+            }));
+
             setCurrentStep(next);
             if (stepTimerRef.current) clearTimeout(stepTimerRef.current);
             if (next === 'idle') {
@@ -308,6 +355,14 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         stepTimerRef.current = setTimeout(() => {
             // Mark current step as completed before advancing
             setCompletedSteps(prev => new Set(prev).add(currentStep));
+
+            // Phase 10: Update card states - collapse current, activate next
+            setCardStates(prev => ({
+                ...prev,
+                [currentStep]: 'collapsed',
+                [nextStepName]: nextStepName === 'idle' ? 'collapsed' : 'active'
+            }));
+
             setCurrentStep(nextStepName);
             if (nextStepName === 'idle') {
                 setIsPlaying(false);
@@ -332,6 +387,10 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         setVectors([]);
         setAttentionWeights([]);
         setPredictions([]);
+        // Phase 10: Reset card states and show orientation
+        setCardStates(INITIAL_CARD_STATES);
+        setShowOrientation(true);
+        setDeepDiveStep(null);
     };
 
     const togglePause = () => setIsPaused(prev => !prev);
@@ -342,6 +401,48 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const closeLesson = () => {
         setActiveLesson(null);
     };
+
+    // Phase 10: Card State Actions
+    const expandCard = useCallback((step: DNAStep) => {
+        if (step === 'idle') return;
+        // Can only expand completed or active cards, not locked
+        if (cardStates[step] === 'locked') return;
+
+        setCardStates(prev => {
+            const newStates = { ...prev };
+            // Collapse all other active cards
+            ACTIVE_STEPS.forEach(s => {
+                if (newStates[s] === 'active' && s !== step) {
+                    newStates[s] = 'collapsed';
+                }
+            });
+            // Expand the target card
+            newStates[step] = 'active';
+            return newStates;
+        });
+    }, [cardStates]);
+
+    const collapseCard = useCallback((step: DNAStep) => {
+        if (step === 'idle') return;
+        setCardStates(prev => ({
+            ...prev,
+            [step]: 'collapsed'
+        }));
+    }, []);
+
+    const openDeepDive = useCallback((step: DNAStep) => {
+        if (step === 'idle') return;
+        setDeepDiveStep(step);
+        setIsPaused(true); // Auto-pause when opening deep dive
+    }, []);
+
+    const closeDeepDive = useCallback(() => {
+        setDeepDiveStep(null);
+    }, []);
+
+    const dismissOrientation = useCallback(() => {
+        setShowOrientation(false);
+    }, []);
 
     return (
         <DNAContext.Provider value={{
@@ -360,6 +461,11 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             isComplete,
             hasData,
             completedSteps,
+            // Phase 10: Vertical Accordion States
+            cardStates,
+            showOrientation,
+            deepDiveStep,
+            // Actions
             runSimulation,
             resetSimulation,
             nextStep,
@@ -368,7 +474,13 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             setPlaybackSpeed,
             togglePause,
             openLesson,
-            closeLesson
+            closeLesson,
+            // Phase 10: Card State Actions
+            expandCard,
+            collapseCard,
+            openDeepDive,
+            closeDeepDive,
+            dismissOrientation
         }}>
             {children}
         </DNAContext.Provider>

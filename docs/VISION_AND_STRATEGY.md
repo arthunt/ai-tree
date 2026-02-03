@@ -131,15 +131,20 @@ See `docs/I18N_TRANSLATION_PRINCIPLES.md`, Principle 3 for detailed guidance on 
 
 ## Decision 4: Input Position
 
-**Verdict:** **B (Context-Dependent, Updated)**
+**Verdict:** **B (Context-Dependent, Updated V3)**
 
 | Stage | Input Position | Role | Status |
 |:---|:---|:---|:---|
-| **DNA** | Top (inline, relative) | Simulation Controller | Implemented |
+| **DNA** | **Fixed top** (sticky header) | Simulation Controller | 🆕 Updated 2026-02-03 |
 | **Seed** | Bottom (fixed) | Goal/question entry | Functional (navigates to Tree) |
 | **Istik** | Inline (central) | Prompt Sandbox | Core interaction — not floating |
 | **Tree** | Bottom (fixed floating) | Search / Ask tool | Planned |
 | **Sprout/Fruits/Orchard** | None | No input needed yet | Removed (Design Rule #2) |
+
+**Changes from V3.0 (2026-02-03):**
+* **DNA input moved to fixed sticky header** — always visible as user scrolls through vertical card stack.
+* Ref: `docs/DENDRIX_MASTER_ARCHITECTURE.md` §6.6 "Vertical Accordion Stack"
+* Ref: `docs/technical/DNA_VERTICAL_CARD_SPECIFICATION.md` for implementation details
 
 **Changes from V2.1:**
 * Removed non-functional FloatingInput from Sprout, Fruits, Orchard, Tree (were stub handlers).

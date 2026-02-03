@@ -1319,6 +1319,26 @@
       "swipeHint": "Swipe to explore steps",
       "cardOf": "Step {current} of {total}",
       "tapToExplore": "Tap card to explore"
+    },
+    "orientation": {
+      "title": "How This Works",
+      "instruction": "Type any text above and press ▶ to see how AI reads it.",
+      "description": "Watch your words transform through 4 steps: T → V → A → P",
+      "example": "Try: \"The king wore a crown\"",
+      "tapToTry": "Tap to try this example"
+    },
+    "accordion": {
+      "locked": "locked",
+      "next": "Next",
+      "deeper": "Go Deeper",
+      "resume": "Resume",
+      "goToSeed": "Explore in Seed"
+    },
+    "summary": {
+      "tokenization": "Text tokenized into {count} pieces",
+      "vectorizing": "Mapped to {count} coordinates",
+      "attention": "{count} connections found",
+      "prediction": "Winner: \"{token}\" ({percent}%)"
     }
   },
   "programs": {

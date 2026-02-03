@@ -13,7 +13,7 @@
 
 ### `@opus` (Claude Code) — Current Sprint
 
-> Blocks A–D, Phase 5–8 complete. Phases 1–8 done. **Available for Phase 9.4+, 9.6, or icebox items.**
+> Blocks A–D, Phase 5–8 complete. Phases 1–8 done. **Now working on Phase 10: DNA Vertical Stack (P0).**
 
 #### Completed Blocks (summary)
 - ✅ **Block A** — Seed Interactive Wiring (5 tasks: SeedWorkspace, phase activation, deep-dive, typo fix)
@@ -24,17 +24,34 @@
 - ✅ Phase 6 — i18n & Polish (8 tasks: all stages i18n sweep, card hardcoding, microLesson rewrite)
 - ✅ Phase 7 — Data & UX Consistency (stage registry, GlobalNav, StageSelector, card variants, data fetching)
 - ✅ Phase 8 — Mobile Novice UX (M1–M5: landing header, sapling input, sprout theme, orientation, accessibility)
+- ✅ **9.5.2** DNA microLesson rewrite (ET, RU) — Invitation style applied to all locales
 
-### `@gemini` — Available Tasks
-| # | Task | Status | Description |
-|---|------|--------|-------------|
-| 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | Finish remaining: sprout, tree, sapling visuals (seed done) |
-| 2 | **9.5.2** DNA microLesson rewrite (ET, RU) | ⏳ NEXT | Apply same Invitation rewrites to ET and RU locales (EN done in 9.5.1) |
+### `@gemini` (Antigravity) — Available Tasks 🆕
+
+> **Priority:** Visual components, animations, theme work. See Phase 10 for DNA vertical stack UI tasks.
+
+| # | Task | Status | Priority | Description |
+|---|------|--------|----------|-------------|
+| 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | P1 | Finish remaining: sprout, tree, sapling visuals (seed done) |
+| 2 | **10.3** DNAAccordionCard visuals | ⏳ AVAILABLE | **P0** | Locked/active/collapsed visual states, animations |
+| 3 | **10.5** DNADeepDiveSheet | ⏳ AVAILABLE | P1 | Bottom sheet with snap points, drag handle, metaphor styling |
+| 4 | **10.7** Desktop grid toggle | ⏳ AVAILABLE | P2 | Optional 2x2 grid layout for desktop DNA |
+| 5 | **10.8** Animation polish | ⏳ AVAILABLE | P2 | Card expand/collapse spring physics, scroll animations |
+
+### `@opus` — Current Focus
+
+| # | Task | Status | Priority | Description |
+|---|------|--------|----------|-------------|
+| 1 | **10.1** DNAContext card states | 🔄 IN PROGRESS | **P0** | Add cardStates, expandCard, collapseCard to context |
+| 2 | **10.2** DNAFixedHeader | ⏳ NEXT | **P0** | Fixed input + progress, replaces DNAStepNav |
+| 3 | **10.4** DNAOrientationCard | ⏳ NEXT | **P0** | Empty state with orientation text + example prompt |
+| 4 | **10.6** Translation keys | ⏳ TODO | **P0** | Add dna.orientation.*, dna.card.*, dna.summary.* |
 
 ### `@swarm` (Claude Flow) — Available Tasks
 | # | Task | Status | Description |
 |---|------|--------|-------------|
 | 1 | E2E smoke tests | ⏳ AVAILABLE | Verify all 7 stage routes render with SDK data |
+| 2 | DNA vertical stack E2E | ⏳ BLOCKED (on 10.1-10.4) | Test new DNA flow: orientation → locked → active → collapsed |
 
 ### Coordination Rules
 - **Concept SDK is SPOT** — all agents MUST use `lib/concepts/api.ts`, never query Supabase directly from components
@@ -190,7 +207,7 @@
 | 9.5.4 | Rewrite Sprout explanations (6) | ⏳ DEFERRED | Same pattern |
 | 9.5.5 | Rewrite remaining stages | ⏳ DEFERRED | Sapling, Tree, Fruits, Orchard |
 
-### Phase 9.6: Russian Content Parity 🆕
+### Phase 9.6: Russian Content Parity
 
 > **Goal:** Ensure no English fallbacks visible when browsing in Russian.
 > **DoD:** Full audit of `messages/ru.json` + `concept_translations` (RU) — zero missing keys, zero English fallbacks.
@@ -201,6 +218,91 @@
 | 9.6.2 | Audit concept_translations (RU) | ⏳ TODO | Query DB for concepts missing RU translations |
 | 9.6.3 | Fill translation gaps | ⏳ TODO | Write missing RU translations (body, metaphor, deep_dive, question) |
 | 9.6.4 | Visual smoke test | ⏳ TODO | Browse all 7 stages in RU — no English fallbacks visible |
+
+---
+
+## Phase 10: DNA Vertical Card Stack 🆕
+
+> **Goal:** Implement vertical accordion card pattern for DNA stage (mobile-first).
+> **Source:** UAT Feb 2026 + Expert Panel validation
+> **Ref:** `docs/DENDRIX_MASTER_ARCHITECTURE.md` §6.6, `docs/technical/DNA_VERTICAL_CARD_SPECIFICATION.md`
+> **DoD:** DNA page uses vertical stack on mobile, fixed header, orientation card, locked/active/collapsed states.
+
+### Why This Change?
+
+| Problem (Current) | Solution (V2) |
+|------------------|---------------|
+| Input scrolls away, user loses context | Fixed header with input + progress |
+| No orientation before typing | Orientation card with instructions |
+| Cards show content before simulation | Locked state until step reached |
+| Horizontal scroll unnatural on mobile | Vertical accordion stack |
+| "Learn More" navigates away | Bottom sheet keeps context |
+| No visual feedback on completion | Collapsed state with summary |
+
+### Phase 10.0: Core Structure (P0) — `@opus`
+
+| # | Task | Status | Agent | Description |
+|---|------|--------|-------|-------------|
+| 10.1 | DNAContext card states | 🔄 IN PROGRESS | `@opus` | Add `cardStates: Record<DNAStep, CardState>`, `expandCard()`, `collapseCard()`, `deepDiveStep` |
+| 10.2 | DNAFixedHeader | ⏳ NEXT | `@opus` | Create fixed header with input + step buttons + "Step X of 4" |
+| 10.4 | DNAOrientationCard | ⏳ TODO | `@opus` | Empty state card: "How This Works" + example prompt |
+| 10.6 | Translation keys | ⏳ TODO | `@opus` | Add `dna.orientation.*`, `dna.card.*`, `dna.summary.*` to EN/ET/RU |
+
+### Phase 10.1: Visual Components (P0) — `@gemini`
+
+| # | Task | Status | Agent | Description |
+|---|------|--------|-------|-------------|
+| 10.3 | DNAAccordionCard | ⏳ AVAILABLE | `@gemini` | Card component with locked/active/collapsed states, animations |
+| 10.3.1 | Locked state visuals | ⏳ TODO | `@gemini` | Grayed out, 🔒 icon, "(locked)" label |
+| 10.3.2 | Active state visuals | ⏳ TODO | `@gemini` | Full height, colored border, visualization visible, CTAs |
+| 10.3.3 | Collapsed state visuals | ⏳ TODO | `@gemini` | Minimal height (64px), ✅ icon, summary text |
+| 10.3.4 | State transition animations | ⏳ TODO | `@gemini` | Framer Motion variants, spring physics |
+
+### Phase 10.2: Deep Dive & Polish (P1) — `@gemini`
+
+| # | Task | Status | Agent | Description |
+|---|------|--------|-------|-------------|
+| 10.5 | DNADeepDiveSheet | ⏳ AVAILABLE | `@gemini` | Bottom sheet component with snap points (50%, 85%, 95%) |
+| 10.5.1 | Drag handle + close | ⏳ TODO | `@gemini` | Swipe down to dismiss, drag to resize |
+| 10.5.2 | Content structure | ⏳ TODO | `@gemini` | Title, body, metaphor block, "Resume" / "Go to Seed" CTAs |
+| 10.5.3 | Wire to MicroLesson content | ⏳ TODO | `@opus` | Use existing microLesson translations in sheet |
+
+### Phase 10.3: Integration & Polish (P2)
+
+| # | Task | Status | Agent | Description |
+|---|------|--------|-------|-------------|
+| 10.7 | Desktop grid toggle | ⏳ TODO | `@gemini` | Optional 2x2 grid layout for ≥1024px |
+| 10.8 | Animation polish | ⏳ TODO | `@gemini` | Scroll-to-card, expand/collapse timing |
+| 10.9 | Accessibility audit | ⏳ TODO | `@opus` | aria-expanded, focus management, reduced motion |
+| 10.10 | Deprecate old components | ⏳ TODO | `@opus` | Mark DNAStepNav, MicroLesson, DNAComponentCard as deprecated |
+
+### Files to Create
+
+| File | Owner | Description |
+|------|-------|-------------|
+| `components/dna/DNAFixedHeader.tsx` | `@opus` | Fixed header with input + progress |
+| `components/dna/DNAVerticalStack.tsx` | `@opus` | Container for accordion cards |
+| `components/dna/DNAAccordionCard.tsx` | `@gemini` | Individual accordion card |
+| `components/dna/DNADeepDiveSheet.tsx` | `@gemini` | Bottom sheet for deep dive |
+| `components/dna/DNAOrientationCard.tsx` | `@opus` | Empty state orientation |
+
+### Files to Update
+
+| File | Owner | Description |
+|------|-------|-------------|
+| `components/dna/DNAContext.tsx` | `@opus` | Add card states, deep dive state |
+| `components/dna/DNAView.tsx` | `@opus` | Replace grid with vertical stack |
+| `messages/en.json` | `@opus` | Add new translation keys |
+| `messages/et.json` | `@opus` | Add new translation keys |
+| `messages/ru.json` | `@opus` | Add new translation keys |
+
+### Files to Deprecate
+
+| File | Replaced By | Notes |
+|------|-------------|-------|
+| `components/dna/DNAStepNav.tsx` | `DNAFixedHeader.tsx` | Keep for reference |
+| `components/dna/MicroLesson.tsx` | `DNADeepDiveSheet.tsx` | Keep for reference |
+| `components/dna/DNAComponentCard.tsx` | `DNAAccordionCard.tsx` | Keep for desktop fallback |
 
 ---
 
