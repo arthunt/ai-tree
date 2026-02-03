@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useCallback, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useRef, useCallback, useEffect, useMemo } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useDNA, DNAStep, CardState } from "./DNAContext";
 import { DNAOrientationCard } from "./DNAOrientationCard";
 import { TokenizationSlicer } from "./TokenizationSlicer";
@@ -85,6 +85,9 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
     const tSummary = useTranslations('dna.summary');
     const tMicro = useTranslations('dna.microLesson');
 
+    // Accessibility: respect reduced motion preference
+    const prefersReducedMotion = useReducedMotion();
+
     const isLocked = state === 'locked';
     const isActive = state === 'active';
     const isCollapsed = state === 'collapsed';
@@ -161,14 +164,24 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
     const color = STEP_COLORS[step];
     const label = STEP_LABELS[step];
 
+    // Animation variants that respect reduced motion
+    const cardTransition = prefersReducedMotion
+        ? { duration: 0.01 }
+        : { type: "spring", stiffness: 300, damping: 25 };
+
+    const expandTransition = prefersReducedMotion
+        ? { duration: 0.01 }
+        : { type: "spring", stiffness: 300, damping: 25 };
+
     return (
         <motion.div
-            layout
-            initial={{ opacity: 0, y: 20 }}
+            layout={!prefersReducedMotion}
+            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            transition={cardTransition}
             className={`
                 relative rounded-2xl border transition-all overflow-hidden
+                focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-black
                 ${isLocked
                     ? 'bg-white/[0.02] border-white/5 opacity-50'
                     : isActive
@@ -181,9 +194,10 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
                 boxShadow: isActive ? `0 0 30px ${color}30` : undefined
             }}
             onClick={isCollapsed ? onExpand : undefined}
-            role={isCollapsed ? "button" : undefined}
+            role={isCollapsed ? "button" : "region"}
             aria-expanded={isActive}
-            tabIndex={isCollapsed ? 0 : undefined}
+            aria-label={getStepTitle()}
+            tabIndex={isCollapsed ? 0 : -1}
             onKeyDown={(e) => {
                 if ((e.key === 'Enter' || e.key === ' ')) {
                     e.preventDefault();
@@ -229,10 +243,13 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
 
                 {/* Title + Status */}
                 <div className="flex-1 min-w-0">
-                    <h3 className={`
-                        text-sm font-semibold truncate
-                        ${isLocked ? 'text-white/30' : 'text-white'}
-                    `}>
+                    <h3
+                        id={`step-title-${step}`}
+                        className={`
+                            text-sm font-semibold truncate
+                            ${isLocked ? 'text-white/30' : 'text-white'}
+                        `}
+                    >
                         {getStepTitle()}
                     </h3>
                     {isCollapsed && (
@@ -268,11 +285,13 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
             <AnimatePresence>
                 {isActive && (
                     <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                        initial={prefersReducedMotion ? { opacity: 1 } : { height: 0, opacity: 0 }}
+                        animate={prefersReducedMotion ? { opacity: 1 } : { height: "auto", opacity: 1 }}
+                        exit={prefersReducedMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                        transition={expandTransition}
                         className="overflow-hidden"
+                        role="region"
+                        aria-labelledby={`step-title-${step}`}
                     >
                         <div className="p-4 pt-2 space-y-4">
                             {/* Description */}
@@ -311,9 +330,10 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
                                         e.stopPropagation();
                                         onDeepDive();
                                     }}
-                                    className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white text-sm font-medium transition-all min-h-[48px]"
+                                    className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white text-sm font-medium transition-all min-h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                                    aria-label={tAccordion('deeper')}
                                 >
-                                    <Lightbulb size={16} />
+                                    <Lightbulb size={16} aria-hidden="true" />
                                     {tAccordion('deeper')}
                                 </button>
 
@@ -323,7 +343,8 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
                                         e.stopPropagation();
                                         onNext();
                                     }}
-                                    className="flex-1 py-3 px-4 rounded-xl text-black text-sm font-semibold transition-all min-h-[48px]"
+                                    aria-label={isLastStep && isComplete ? tNav('finish') : tAccordion('next')}
+                                    className="flex-1 py-3 px-4 rounded-xl text-black text-sm font-semibold transition-all min-h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
                                     style={{
                                         backgroundColor: color,
                                         boxShadow: `0 0 20px ${color}40`

@@ -1,7 +1,7 @@
 "use client";
 
 import { useDNA, DNAStep } from "./DNAContext";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Sparkles, Play, RefreshCw, SkipForward, Pause, Check, ChevronRight, Gauge, LayoutGrid, LayoutList } from "lucide-react";
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { trackDNASimulation } from '@/lib/analytics';
@@ -70,6 +70,9 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
     const t = useTranslations('dna.input');
     const tNav = useTranslations('dna.nav');
 
+    // Accessibility: respect reduced motion preference
+    const prefersReducedMotion = useReducedMotion();
+
     const [progress, setProgress] = useState(0);
     const [confirmReset, setConfirmReset] = useState(false);
     const confirmResetTimer = useRef<NodeJS.Timeout | null>(null);
@@ -136,15 +139,18 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
 
     return (
         <motion.header
-            initial={{ opacity: 0, y: -20 }}
+            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={prefersReducedMotion ? { duration: 0.01 } : undefined}
             className="sticky top-0 z-50 bg-black/90 backdrop-blur-xl border-b border-white/10"
+            role="banner"
+            aria-label={t('placeholder')}
         >
             {/* Input Row */}
             <div className="flex items-center gap-2 p-2 md:p-3">
                 {/* Sparkle Icon */}
-                <div className="pl-2 text-brand-teal flex-shrink-0">
-                    <Sparkles size={18} className={isPlaying ? "animate-spin-slow" : ""} />
+                <div className="pl-2 text-brand-teal flex-shrink-0" aria-hidden="true">
+                    <Sparkles size={18} className={isPlaying && !prefersReducedMotion ? "animate-spin-slow" : ""} />
                 </div>
 
                 {/* Input Field */}
@@ -165,41 +171,44 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
                         {!isPlaying ? (
                             <motion.button
                                 key="play"
-                                initial={{ scale: 0.9, opacity: 0 }}
+                                initial={prefersReducedMotion ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
-                                exit={{ scale: 0.9, opacity: 0 }}
+                                exit={prefersReducedMotion ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+                                transition={prefersReducedMotion ? { duration: 0.01 } : undefined}
                                 onClick={handleRun}
                                 disabled={!inputText.trim()}
-                                className="bg-brand-teal/20 hover:bg-brand-teal/30 text-brand-teal p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed border border-brand-teal/30"
-                                aria-label="Play simulation"
+                                className="bg-brand-teal/20 hover:bg-brand-teal/30 text-brand-teal p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed border border-brand-teal/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+                                aria-label={tNav('play')}
                             >
-                                <Play size={18} fill="currentColor" />
+                                <Play size={18} fill="currentColor" aria-hidden="true" />
                             </motion.button>
                         ) : (
                             <>
                                 {/* Pause/Resume */}
                                 <motion.button
                                     key="pause"
-                                    initial={{ scale: 0.9, opacity: 0 }}
+                                    initial={prefersReducedMotion ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
-                                    exit={{ scale: 0.9, opacity: 0 }}
+                                    exit={prefersReducedMotion ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+                                    transition={prefersReducedMotion ? { duration: 0.01 } : undefined}
                                     onClick={togglePause}
-                                    className="bg-white/10 hover:bg-white/20 text-white p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all"
-                                    aria-label={isPaused ? "Resume" : "Pause"}
+                                    className="bg-white/10 hover:bg-white/20 text-white p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                                    aria-label={isPaused ? tNav('resume') : tNav('pause')}
                                 >
-                                    {isPaused ? <Play size={18} /> : <Pause size={18} />}
+                                    {isPaused ? <Play size={18} aria-hidden="true" /> : <Pause size={18} aria-hidden="true" />}
                                 </motion.button>
 
                                 {/* Next Step */}
                                 {!isComplete && (
                                     <motion.button
                                         key="next"
-                                        initial={{ scale: 0.9, opacity: 0 }}
+                                        initial={prefersReducedMotion ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
                                         animate={{ scale: 1, opacity: 1 }}
-                                        exit={{ scale: 0.9, opacity: 0 }}
+                                        exit={prefersReducedMotion ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+                                        transition={prefersReducedMotion ? { duration: 0.01 } : undefined}
                                         onClick={handleNext}
-                                        className="bg-brand-teal/20 hover:bg-brand-teal/30 text-brand-teal p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all border border-brand-teal/30"
-                                        aria-label="Next step"
+                                        className="bg-brand-teal/20 hover:bg-brand-teal/30 text-brand-teal p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all border border-brand-teal/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+                                        aria-label={tNav('nextStep')}
                                     >
                                         <SkipForward size={18} />
                                     </motion.button>
@@ -208,17 +217,18 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
                                 {/* Reset */}
                                 <motion.button
                                     key="reset"
-                                    initial={{ scale: 0.9, opacity: 0 }}
+                                    initial={prefersReducedMotion ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
-                                    exit={{ scale: 0.9, opacity: 0 }}
+                                    exit={prefersReducedMotion ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+                                    transition={prefersReducedMotion ? { duration: 0.01 } : undefined}
                                     onClick={handleReset}
-                                    className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all ${confirmReset
+                                    className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${confirmReset
                                         ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30 ring-1 ring-red-500/40'
                                         : 'bg-white/10 hover:bg-white/20 text-white/50 hover:text-white/70'
                                         }`}
                                     aria-label={confirmReset ? t('confirmReset') : t('reset')}
                                 >
-                                    <RefreshCw size={18} className={confirmReset ? 'animate-spin' : ''} />
+                                    <RefreshCw size={18} className={confirmReset && !prefersReducedMotion ? 'animate-spin' : ''} aria-hidden="true" />
                                 </motion.button>
                             </>
                         )}
