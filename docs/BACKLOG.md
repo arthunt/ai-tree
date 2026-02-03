@@ -33,10 +33,10 @@
 
 | # | Task | Status | Priority | Description |
 |---|------|--------|----------|-------------|
-| 1 | **10.x.4** Card animation timing | ⏳ **START HERE** | **P0** | Tune expand/collapse spring stiffness for snappier feel |
-| 2 | **10.x.5** Progress indicator polish | ⏳ AVAILABLE | **P0** | Make progress bar more visible, pulse on step change |
-| 3 | **10.7** Desktop grid toggle | ⏳ AVAILABLE | P2 | Optional 2x2 grid layout for desktop DNA |
-| 4 | **10.8** Animation polish | ⏳ AVAILABLE | P2 | Scroll-to-card smoothness, parallax effects |
+| 1 | **10.x.4** Card animation timing | ✅ DONE | **P0** | Tune expand/collapse spring stiffness for snappier feel |
+| 2 | **10.x.5** Progress indicator polish | ✅ DONE | **P0** | Make progress bar more visible, pulse on step change |
+| 3 | **10.7** Desktop grid toggle | ✅ DONE | P2 | Optional 2x2 grid layout for desktop DNA |
+| 4 | **10.8** Animation polish | ✅ DONE | P2 | Scroll-to-card smoothness, parallax effects |
 | 5 | **2.7** Unified Card variants | 🔄 IN PROGRESS | P1 | Finish remaining: sprout, tree, sapling visuals (seed done) |
 
 ### `@opus` — Current Focus (Phase 10.x DNA Speed & UX)
@@ -317,27 +317,27 @@
 > **Goal:** Replace horizontal scroll with vertical accordion for better mobile usability.
 > **Ref:** `docs/handoffs/GEMINI_HANDOFF_PHASE10_DNA_VERTICAL.md`
 
-- [ ] **10.1 DNA Fixed Header** `@gemini`
-    - [ ] Create `components/dna/DNAFixedHeader.tsx`
-    - [ ] Move Input and Progress into header
-- [ ] **10.2 DNA Vertical Stack** `@gemini`
-    - [ ] Create `components/dna/DNAVerticalStack.tsx`
-    - [ ] Implement auto-scroll behavior
-- [ ] **10.3 DNA Accordion Card** `@gemini`
-    - [ ] Create `components/dna/DNAAccordionCard.tsx`
-    - [ ] Implement Locked/Active/Collapsed states
-    - [ ] Add Framer Motion animations
-- [ ] **10.4 Orientation Card** `@gemini`
-    - [ ] Create `components/dna/DNAOrientationCard.tsx`
-- [ ] **10.5 Deep Dive Sheet** `@gemini`
-    - [ ] Create `components/dna/DNADeepDiveSheet.tsx` (Bottom Sheet)
-    - [ ] Wire up "Go Deeper" button
+- [x] **10.1 DNA Fixed Header** `@gemini`
+    - [x] Create `components/dna/DNAFixedHeader.tsx`
+    - [x] Move Input and Progress into header
+- [x] **10.2 DNA Vertical Stack** `@gemini`
+    - [x] Create `components/dna/DNAVerticalStack.tsx`
+    - [x] Implement auto-scroll behavior
+- [x] **10.3 DNA Accordion Card** `@gemini`
+    - [x] Create `components/dna/DNAAccordionCard.tsx`
+    - [x] Implement Locked/Active/Collapsed states
+    - [x] Add Framer Motion animations
+- [x] **10.4 Orientation Card** `@gemini`
+    - [x] Create `components/dna/DNAOrientationCard.tsx`
+- [x] **10.5 Deep Dive Sheet** `@gemini`
+    - [x] Create `components/dna/DNADeepDiveSheet.tsx` (Bottom Sheet)
+    - [x] Wire up "Go Deeper" button
 - [ ] **10.6 Deep Dive Content** `@gemini`
     - [ ] Wire metaphor and resume actions
-- [ ] **10.7 Desktop Grid Toggle** `@gemini`
-    - [ ] Implement Grid/Stack toggle logic
-- [ ] **10.8 Animation Polish** `@gemini`
-    - [ ] Spring physics, stagger effects
+- [x] **10.7 Desktop Grid Toggle** `@gemini`
+    - [x] Implement Grid/Stack toggle logic
+- [x] **10.8 Animation Polish** `@gemini`
+    - [x] Spring physics, stagger effects
 
 ---
 
