@@ -33,7 +33,7 @@
 
 | # | Task | Status | Priority | Description |
 |---|------|--------|----------|-------------|
-| 1 | **2.7** Unified Card variants | 🔄 IN PROGRESS | P1 | Finish remaining: sprout, tree, sapling visuals (seed done) |
+| 1 | **2.7** Unified Card variants | ✅ DONE | P1 | All 7 stages using UnifiedConceptCard: dna, seed, sprout, sapling, tree, fruits, orchard |
 | 2 | **10.x.7** Desktop UX review | ✅ DONE | **P1** | Grid toggle a11y + i18n labels, all features verified working |
 
 ### `@opus` — Current Focus (Phase 10.x DNA Speed & UX)
@@ -94,10 +94,10 @@
 
 ---
 
-## Phase 2: Concept Object Foundation ✅ COMPLETE (except 2.7)
+## Phase 2: Concept Object Foundation ✅ COMPLETE
 
-> Schema, SDK, DNA migration, StageSelector, Sprout content+alignment, Tree Explorer. 7/8 tasks done by `@opus`, `@gemini`.
-> **2.7 Unified Card System** — `@gemini` 🔄 IN PROGRESS: dna+seed variants done, sprout/tree/sapling pending.
+> Schema, SDK, DNA migration, StageSelector, Sprout content+alignment, Tree Explorer. 8/8 tasks done by `@opus`, `@gemini`.
+> **2.7 Unified Card System** — ✅ DONE: All 7 variants implemented (dna, seed, sprout, sapling, tree, fruits, orchard).
 
 ---
 
