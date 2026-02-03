@@ -52,6 +52,8 @@
 | 6 | **10.x.2** Collapsed card tap | ✅ DONE `079582a` | **P1** | Tapping collapsed card re-expands + resumes animation |
 | 7 | **10.x.3** Auto-scroll polish | ✅ DONE `079582a` | **P2** | Smoother scroll-to-active when step advances |
 | 8 | **10.x.6** Tap-to-advance | ✅ DONE `182de8c` | **P1** | Tapping active card header skips to next step |
+| 9 | **10.x.8** Hold-to-pause | ✅ DONE | **P1** | Hold/tap visualization to pause, release to resume |
+| 10 | **10.x.9** ET translation polish | ✅ DONE | **P2** | Review DNA Estonian translations per I18N principles |
 
 ### `@swarm` (Claude Flow) — Available Tasks
 | # | Task | Status | Description |

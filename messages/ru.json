@@ -1333,7 +1333,10 @@
       "deeper": "Глубже",
       "resume": "Продолжить",
       "goToSeed": "Исследовать в Семени",
-      "tapToSkip": "Нажмите, чтобы пропустить"
+      "tapToSkip": "Далее",
+      "holdToPause": "Удерживайте для паузы",
+      "holdingPaused": "Отпустите для продолжения",
+      "paused": "Пауза"
     },
     "summary": {
       "tokenization": "Текст разбит на {count} частей",

@@ -1223,7 +1223,7 @@
       "next": "Järgmine",
       "finish": "Lõpeta",
       "done": "Valmis",
-      "playing": "Mängib",
+      "playing": "Töötab",
       "paused": "Peatatud",
       "stepOf": "Samm {current}/{total}",
       "stepName": {
@@ -1266,11 +1266,11 @@
       }
     },
     "completion": {
-      "title": "Simulatsioon Lõppenud",
+      "title": "Simulatsioon lõppenud",
       "subtitle": "Sa uurisid 4-sammulist teekonda tekstist ennustuseni.",
-      "predicted": "Võitja Ennustus",
-      "replay": "Mängi Uuesti",
-      "explore": "Istuta Seeme"
+      "predicted": "Võitja ennustus",
+      "replay": "Korda uuesti",
+      "explore": "Istuta seeme"
     },
     "controlHint": "Liiguta kursorit aeglustamiseks · Kliki kaartidele avastamiseks",
     "seedPath": {
@@ -1295,7 +1295,7 @@
       "tapToExplore": "Puudutage kaarti avastamiseks"
     },
     "orientation": {
-      "title": "Kuidas See Töötab",
+      "title": "Kuidas see töötab",
       "instruction": "Sisesta tekst ülal ja vajuta ▶, et näha, kuidas AI seda loeb.",
       "description": "Jälgi, kuidas sinu sõnad muunduvad läbi 4 sammu: T → V → A → P",
       "example": "Proovi: \"Kuningas kandis krooni\"",
@@ -1307,7 +1307,10 @@
       "deeper": "Mine Sügavamale",
       "resume": "Jätka",
       "goToSeed": "Avasta Seemnes",
-      "tapToSkip": "Puuduta, et jätkata"
+      "tapToSkip": "Edasi",
+      "holdToPause": "Hoia pausiks",
+      "holdingPaused": "Vabasta jätkamiseks",
+      "paused": "Paus"
     },
     "summary": {
       "tokenization": "Tekst tükeldatud {count} osaks",

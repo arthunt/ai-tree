@@ -1333,7 +1333,10 @@
       "deeper": "Go Deeper",
       "resume": "Resume",
       "goToSeed": "Explore in Seed",
-      "tapToSkip": "Tap to skip"
+      "tapToSkip": "Tap to skip",
+      "holdToPause": "Hold to pause",
+      "holdingPaused": "Release to continue",
+      "paused": "Paused"
     },
     "summary": {
       "tokenization": "Text tokenized into {count} pieces",

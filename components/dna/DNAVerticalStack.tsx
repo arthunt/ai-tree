@@ -10,7 +10,7 @@ import { AttentionSpotlight } from "./AttentionSpotlight";
 import { PredictionBarChart } from "./PredictionBarChart";
 import { CompletionCard } from "./CompletionCard";
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
-import { Lock, Check, ChevronDown, ChevronRight, Lightbulb, SkipForward } from "lucide-react";
+import { Lock, Check, ChevronDown, ChevronRight, Lightbulb, SkipForward, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -73,7 +73,10 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
         attentionWeights,
         predictions,
         currentStep,
-        isComplete
+        isComplete,
+        isPaused,
+        isPlaying,
+        togglePause
     } = useDNA();
 
     const t = useTranslations('dna');
@@ -277,9 +280,27 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
                                 {getStepBody()}
                             </p>
 
-                            {/* Visualization */}
-                            <div className="py-4 flex justify-center">
+                            {/* Visualization - tap/hold to pause, release to resume */}
+                            <div
+                                className={`py-4 flex justify-center relative cursor-pointer select-none ${isPaused && isPlaying ? 'ring-2 ring-white/20 rounded-xl' : ''}`}
+                                onMouseDown={() => { if (isPlaying && !isPaused) togglePause(); }}
+                                onMouseUp={() => { if (isPlaying && isPaused) togglePause(); }}
+                                onMouseLeave={() => { if (isPlaying && isPaused) togglePause(); }}
+                                onTouchStart={() => { if (isPlaying && !isPaused) togglePause(); }}
+                                onTouchEnd={() => { if (isPlaying && isPaused) togglePause(); }}
+                                role="button"
+                                aria-label={isPaused ? tAccordion('holdingPaused') : tAccordion('holdToPause')}
+                            >
                                 {renderVisualization()}
+                                {/* Paused indicator overlay */}
+                                {isPaused && isPlaying && (
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-xl pointer-events-none">
+                                        <div className="flex items-center gap-2 text-white/70 text-sm font-medium">
+                                            <Pause size={16} />
+                                            {tAccordion('paused')}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Action Buttons */}

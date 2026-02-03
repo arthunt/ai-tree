@@ -8,6 +8,7 @@
 
 import {
   Dna, CircleDot, Sprout, Leaf, TreeDeciduous, Cherry, LayoutGrid,
+  type LucideIcon
 } from 'lucide-react';
 import type { EvolutionStage } from '@/lib/concepts/types';
 
@@ -20,7 +21,7 @@ export interface StageDefinition {
   /** Short subtitle describing the stage */
   sub: string;
   /** Lucide icon component */
-  icon: React.ElementType;
+  icon: LucideIcon;
   /** Tailwind text color class */
   color: string;
   /** Tailwind background class (low opacity) */
