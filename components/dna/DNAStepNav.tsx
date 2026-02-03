@@ -1,5 +1,12 @@
 "use client";
 
+/**
+ * @deprecated DNAStepNav has been replaced by DNAFixedHeader (Phase 10).
+ * This component is kept for backwards compatibility but will be removed in a future version.
+ * Use `DNAFixedHeader` for new implementations.
+ * @see components/dna/DNAFixedHeader.tsx
+ */
+
 import { useDNA, DNAStep } from './DNAContext';
 import { ChevronRight, SkipForward, Check } from 'lucide-react';
 import { motion } from 'framer-motion';

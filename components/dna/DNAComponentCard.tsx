@@ -1,5 +1,12 @@
 "use client";
 
+/**
+ * @deprecated DNAComponentCard has been replaced by the AccordionCard in DNAVerticalStack (Phase 10).
+ * This component is kept for backwards compatibility and desktop fallback.
+ * Use the accordion pattern in `DNAVerticalStack` for new implementations.
+ * @see components/dna/DNAVerticalStack.tsx
+ */
+
 import { UnifiedConceptCard } from '@/components/ui/UnifiedConceptCard';
 import { useDNA, DNAStep } from './DNAContext';
 import { TokenizationSlicer } from './TokenizationSlicer';

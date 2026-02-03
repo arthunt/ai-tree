@@ -1,5 +1,12 @@
 "use client";
 
+/**
+ * @deprecated MicroLesson has been replaced by DNADeepDiveSheet (Phase 10).
+ * This component is kept for backwards compatibility but will be removed in a future version.
+ * Use `DNADeepDiveSheet` for new implementations.
+ * @see components/dna/DNADeepDiveSheet.tsx
+ */
+
 import { motion } from 'framer-motion';
 import { X, Play } from 'lucide-react';
 import { useDNA } from './DNAContext';

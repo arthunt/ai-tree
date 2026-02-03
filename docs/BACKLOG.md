@@ -283,8 +283,8 @@
 |---|------|--------|-------|-------------|
 | 10.7 | Desktop grid toggle | ✅ DONE `ea27f57` | `@opus` | 2x2 grid layout for ≥1024px with toggle button |
 | 10.8 | Animation polish | ✅ DONE `079582a` | `@opus` | staggerChildren, confetti, scroll-to-card |
-| 10.9 | Accessibility audit | ⏳ TODO | `@opus` | aria-expanded, focus management, reduced motion |
-| 10.10 | Deprecate old components | ⏳ TODO | `@opus` | Mark DNAStepNav, MicroLesson, DNAComponentCard as deprecated |
+| 10.9 | Accessibility audit | ✅ DONE `05005c0` | `@opus` | aria-expanded, focus-visible, reduced motion, i18n labels |
+| 10.10 | Deprecate old components | ✅ DONE | `@opus` | @deprecated JSDoc on DNAStepNav, MicroLesson, DNAComponentCard |
 
 ### Files to Create
 
