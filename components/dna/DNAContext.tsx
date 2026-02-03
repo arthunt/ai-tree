@@ -57,6 +57,10 @@ interface DNAContextType {
     openDeepDive: (step: DNAStep) => void;
     closeDeepDive: () => void;
     dismissOrientation: () => void;
+
+    // View Mode
+    viewMode: 'stack' | 'grid';
+    toggleViewMode: () => void;
 }
 
 const DNAContext = createContext<DNAContextType | undefined>(undefined);
@@ -90,6 +94,21 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     const [cardStates, setCardStates] = useState<Record<DNAStep, CardState>>(INITIAL_CARD_STATES);
     const [showOrientation, setShowOrientation] = useState(true);
     const [deepDiveStep, setDeepDiveStep] = useState<DNAStep | null>(null);
+    const [viewMode, setViewMode] = useState<'stack' | 'grid'>('stack');
+
+    const toggleViewMode = () => {
+        setViewMode(prev => {
+            const next = prev === 'stack' ? 'grid' : 'stack';
+            localStorage.setItem('dna-view-mode', next);
+            return next;
+        });
+    };
+
+    // Initialize view mode from local storage
+    useEffect(() => {
+        const saved = localStorage.getItem('dna-view-mode');
+        if (saved === 'grid') setViewMode('grid');
+    }, []);
 
     const params = useParams();
     const locale = (params?.locale as string) || 'en';
@@ -420,6 +439,16 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             newStates[step] = 'active';
             return newStates;
         });
+
+        // Jump to this step and resume playback
+        setCurrentStep(step);
+        setIsPlaying(true);
+        setIsPaused(false);
+
+        // Clear any existing timer so the game loop restarts cleanly
+        if (stepTimerRef.current) {
+            clearTimeout(stepTimerRef.current);
+        }
     }, [cardStates]);
 
     const collapseCard = useCallback((step: DNAStep) => {
@@ -480,7 +509,10 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             collapseCard,
             openDeepDive,
             closeDeepDive,
-            dismissOrientation
+            dismissOrientation,
+            // Desktop View Mode
+            viewMode,
+            toggleViewMode
         }}>
             {children}
         </DNAContext.Provider>

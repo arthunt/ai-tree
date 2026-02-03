@@ -11,6 +11,7 @@ import { PredictionBarChart } from "./PredictionBarChart";
 import { CompletionCard } from "./CompletionCard";
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { Lock, Check, ChevronDown, ChevronRight, Lightbulb } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 /**
  * DNAVerticalStack — Phase 10
@@ -42,6 +43,17 @@ const STEP_LABELS: Record<DNAStep, string> = {
     vectorizing: 'V',
     attention: 'A',
     prediction: 'P'
+};
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.2
+        }
+    }
 };
 
 interface AccordionCardProps {
@@ -151,7 +163,7 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
             layout
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
             className={`
                 relative rounded-2xl border transition-all overflow-hidden
                 ${isLocked
@@ -239,7 +251,7 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
                         className="overflow-hidden"
                     >
                         <div className="p-4 pt-2 space-y-4">
@@ -302,7 +314,11 @@ export function DNAVerticalStack() {
         nextStep,
         openDeepDive,
         isComplete,
-        hasData
+        hasData,
+        viewMode,
+        setInputText,
+        runSimulation,
+        dismissOrientation
     } = useDNA();
 
     const stackRef = useRef<HTMLDivElement>(null);
@@ -320,22 +336,33 @@ export function DNAVerticalStack() {
 
         const cardEl = cardRefs.current[currentStep];
         if (cardEl) {
-            // Small delay to let the accordion animation start
+            // Delay to let the accordion animation start, then scroll
             setTimeout(() => {
-                cardEl.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }, 100);
+                // Get the card's position relative to the viewport
+                const rect = cardEl.getBoundingClientRect();
+                const headerHeight = 140; // Fixed header height (approx)
+                const targetY = window.scrollY + rect.top - headerHeight - 16; // 16px extra padding
+
+                // Only scroll if card is not already in good view
+                if (rect.top < headerHeight || rect.bottom > window.innerHeight) {
+                    window.scrollTo({
+                        top: Math.max(0, targetY),
+                        behavior: 'smooth'
+                    });
+                }
+            }, 150);
         }
     }, [currentStep]);
 
     const handleScrollToCard = useCallback((step: DNAStep) => {
         const cardEl = cardRefs.current[step];
         if (cardEl) {
-            cardEl.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+            const rect = cardEl.getBoundingClientRect();
+            const headerHeight = 140;
+            const targetY = window.scrollY + rect.top - headerHeight - 16;
+            window.scrollTo({
+                top: Math.max(0, targetY),
+                behavior: 'smooth'
             });
         }
     }, []);
@@ -350,68 +377,65 @@ export function DNAVerticalStack() {
         // The useEffect above will handle scrolling to the new active card
     }, [nextStep]);
 
-    const {
-        setInputText,
-        runSimulation,
-        dismissOrientation: dismissOrientationAction
-    } = useDNA();
-
     const examplePrompt = "The king wore a crown";
 
     const handleUseExample = () => {
         setInputText(examplePrompt);
-        dismissOrientationAction();
+        dismissOrientation();
         setTimeout(() => runSimulation(), 100);
     };
 
     return (
-        <div ref={stackRef} className="w-full max-w-lg mx-auto space-y-3 pb-8">
-            {/* Orientation Card (shown before any input) */}
+        <div ref={stackRef} className={cn(
+            "w-full mx-auto space-y-3 pb-8",
+            viewMode === 'grid' ? "max-w-4xl" : "max-w-lg"
+        )}>
+            {/* Orientation Card (first-time users) */}
             <AnimatePresence>
                 {showOrientation && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20, height: 0 }}
-                        transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                    >
-                        <DNAOrientationCard
-                            onDismiss={dismissOrientationAction}
-                            examplePrompt={examplePrompt}
-                            onUseExample={handleUseExample}
-                        />
-                    </motion.div>
+                    <DNAOrientationCard
+                        onDismiss={dismissOrientation}
+                        examplePrompt={examplePrompt}
+                        onUseExample={handleUseExample}
+                    />
                 )}
             </AnimatePresence>
 
-            {/* Step Cards */}
-            {ACTIVE_STEPS.map((step) => (
-                <div
-                    key={step}
-                    ref={(el) => { cardRefs.current[step] = el; }}
-                    className="scroll-mt-24"
-                >
-                    <AccordionCard
-                        step={step}
-                        state={cardStates[step]}
-                        onExpand={() => handleExpand(step)}
-                        onNext={handleNext}
-                        onDeepDive={() => openDeepDive(step)}
-                    />
-                </div>
-            ))}
+            {/* Grid vs Stack Layout */}
+            <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="show"
+                className={cn(
+                    "transition-all",
+                    viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 gap-4 space-y-0" : "space-y-3"
+                )}
+            >
+                {/* Step Cards */}
+                {ACTIVE_STEPS.map((step) => (
+                    <div
+                        key={step}
+                        ref={(el) => { cardRefs.current[step] = el; }}
+                        className={cn(
+                            "scroll-mt-24 transition-all",
+                            viewMode === 'grid' ? "col-span-1" : "col-span-1"
+                        )}
+                    >
+                        <AccordionCard
+                            step={step}
+                            state={cardStates[step]}
+                            onExpand={() => handleExpand(step)}
+                            onNext={handleNext}
+                            onDeepDive={() => openDeepDive(step)}
+                        />
+                    </div>
+                ))}
+            </motion.div>
 
-            {/* Completion Card */}
+            {/* Completion Card (after prediction step) */}
             <AnimatePresence>
                 {isComplete && hasData && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
-                    >
-                        <CompletionCard />
-                    </motion.div>
+                    <CompletionCard />
                 )}
             </AnimatePresence>
         </div>

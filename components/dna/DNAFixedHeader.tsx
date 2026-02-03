@@ -2,7 +2,7 @@
 
 import { useDNA, DNAStep } from "./DNAContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Play, RefreshCw, SkipForward, Pause, Check, ChevronRight, Gauge } from "lucide-react";
+import { Sparkles, Play, RefreshCw, SkipForward, Pause, Check, ChevronRight, Gauge, LayoutGrid, LayoutList } from "lucide-react";
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 import { trackDNASimulation } from '@/lib/analytics';
 import { useEffect, useRef, useState } from "react";
@@ -62,7 +62,9 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
         hasData,
         isComplete,
         completedSteps,
-        cardStates
+        cardStates,
+        viewMode,
+        toggleViewMode
     } = useDNA();
 
     const t = useTranslations('dna.input');
@@ -210,11 +212,10 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
                                     animate={{ scale: 1, opacity: 1 }}
                                     exit={{ scale: 0.9, opacity: 0 }}
                                     onClick={handleReset}
-                                    className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all ${
-                                        confirmReset
-                                            ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30 ring-1 ring-red-500/40'
-                                            : 'bg-white/10 hover:bg-white/20 text-white/50 hover:text-white/70'
-                                    }`}
+                                    className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all ${confirmReset
+                                        ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30 ring-1 ring-red-500/40'
+                                        : 'bg-white/10 hover:bg-white/20 text-white/50 hover:text-white/70'
+                                        }`}
                                     aria-label={confirmReset ? t('confirmReset') : t('reset')}
                                 >
                                     <RefreshCw size={18} className={confirmReset ? 'animate-spin' : ''} />
@@ -280,11 +281,10 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
                                 <button
                                     key={value}
                                     onClick={() => setPlaybackSpeed(value)}
-                                    className={`px-1.5 py-0.5 text-[10px] font-mono rounded transition-all ${
-                                        playbackSpeed === value
-                                            ? 'bg-brand-teal/30 text-brand-teal'
-                                            : 'text-white/40 hover:text-white/70 hover:bg-white/5'
-                                    }`}
+                                    className={`px-1.5 py-0.5 text-[10px] font-mono rounded transition-all ${playbackSpeed === value
+                                        ? 'bg-brand-teal/30 text-brand-teal'
+                                        : 'text-white/40 hover:text-white/70 hover:bg-white/5'
+                                        }`}
                                     aria-label={`Set speed to ${label}`}
                                 >
                                     {label}
@@ -321,19 +321,37 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
                             <Check size={12} /> {tNav('done')}
                         </span>
                     )}
+
+                    {/* Desktop View Toggle */}
+                    <button
+                        onClick={toggleViewMode}
+                        className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all ml-2"
+                        title={viewMode === 'grid' ? "Switch to Stack View" : "Switch to Grid View"}
+                    >
+                        {viewMode === 'grid' ? (
+                            <LayoutList size={14} />
+                        ) : (
+                            <LayoutGrid size={14} />
+                        )}
+                    </button>
                 </div>
             </div>
 
             {/* Progress Bar */}
             {isPlaying && !isPaused && currentStep !== 'idle' && (
-                <div className="h-1 w-full bg-white/5">
+                <div className="h-1.5 w-full bg-white/5">
                     <motion.div
-                        className="h-full"
-                        style={{ backgroundColor: STEP_COLORS[currentStep] || 'var(--dna-t)' }}
+                        className="h-full relative"
+                        style={{
+                            backgroundColor: STEP_COLORS[currentStep] || 'var(--dna-t)',
+                            boxShadow: `0 0 12px ${STEP_COLORS[currentStep]}`
+                        }}
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
                         transition={{ type: "tween", ease: "linear", duration: 0.05 }}
-                    />
+                    >
+                        <div className="absolute right-0 top-0 bottom-0 w-1 bg-white/50 blur-[2px]" />
+                    </motion.div>
                 </div>
             )}
         </motion.header>
