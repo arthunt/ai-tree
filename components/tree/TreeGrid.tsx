@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { LevelIcon } from '@/components/LevelIcon';
 import { cn } from '@/lib/utils';
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+import { UnifiedConceptCard } from '@/components/ui/UnifiedConceptCard';
 
 interface TreeGridProps {
     data: TreeContentSimple[];
@@ -62,40 +63,26 @@ export function TreeGrid({ data, onNodeClick }: TreeGridProps) {
                         {/* Grid */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                             {items.map((item, index) => (
-                                <motion.button
+                                <motion.div
                                     key={item.id}
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.05 }}
-                                    onClick={() => onNodeClick?.(item)}
-                                    className={cn(
-                                        "flex flex-col items-start p-5 rounded-xl text-left transition-all duration-300",
-                                        "bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800",
-                                        "hover:shadow-lg hover:border-gray-300 dark:hover:border-gray-700 hover:-translate-y-1",
-                                        "group relative overflow-hidden"
-                                    )}
+                                    className="h-full"
                                 >
-                                    <div className="flex items-center justify-between w-full mb-3">
-                                        <span className={cn(
-                                            "px-2 py-1 rounded text-[10px] font-mono uppercase tracking-wider",
-                                            item.type === 'trunk' ? "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300" :
-                                                item.type === 'branch' ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300" :
-                                                    item.type === 'leaf' ? "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300" :
-                                                        "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300"
-                                        )}>
-                                            {t('conceptLevels.' + (TYPE_TO_LEVEL[item.type] || item.type) + '.name')}
-                                        </span>
-                                    </div>
-
-                                    <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-2 leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                        {item.title}
-                                    </h4>
-
-                                    {/* Hover Arrow */}
-                                    <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-2 group-hover:translate-x-0">
-                                        →
-                                    </div>
-                                </motion.button>
+                                    <UnifiedConceptCard
+                                        variant="tree"
+                                        title={item.title}
+                                        index={index}
+                                        description={t('conceptLevels.' + (TYPE_TO_LEVEL[item.type] || item.type) + '.name')} // Using type name as subtitle/description
+                                        onCardClick={() => onNodeClick?.(item)}
+                                        visualSlot={
+                                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
+                                                <LevelIcon level={TYPE_TO_LEVEL[item.type] as any || 'leaves'} size={80} />
+                                            </div>
+                                        }
+                                    />
+                                </motion.div>
                             ))}
                         </div>
                     </section>
