@@ -33,7 +33,7 @@ interface PredictionBarChartProps {
     contextText?: string;
 }
 
-type Stage = "thinking" | "growing" | "eliminating" | "winner";
+type Stage = "thinking" | "context" | "reveal" | "pause" | "eliminating" | "winner";
 
 // Confidence ring component... (unchanged)
 function ConfidenceRing({ probability, isWinner, isEliminated }: { probability: number; isWinner: boolean; isEliminated: boolean }) {
@@ -98,49 +98,60 @@ function ConfidenceRing({ probability, isWinner, isEliminated }: { probability: 
 }
 
 export function PredictionBarChart({ predictions, isActive, contextText }: PredictionBarChartProps) {
-    const [stage, setStage] = useState<Stage>("thinking"); // Start with thinking
+    const [stage, setStage] = useState<Stage>("thinking");
+    const [visibleCount, setVisibleCount] = useState(0);
     const { playbackSpeed } = useDNA();
     const t = useTranslations('dna.prediction');
 
-    // Take top entries (already sorted by probability desc from context)
+    // Take top entries
     const top = predictions.slice(0, 4);
-    const winnerIdx = 0; // First is highest probability
+    const winnerIdx = 0;
 
-    // Scale factor: higher speed = shorter delays.
     const scale = useMemo(() => 1 / Math.max(playbackSpeed, 0.05), [playbackSpeed]);
 
     useEffect(() => {
         if (!isActive) {
             setStage("thinking");
+            setVisibleCount(0);
             return;
         }
 
         setStage("thinking");
+        setVisibleCount(0);
 
-        // Stage 1: Thinking -> Growing (1.5s delay)
-        const t0 = setTimeout(() => setStage("growing"), 1500 * scale);
+        // Timeline (Expert Review Specs)
+        const timeline = [
+            { t: 0, fn: () => setStage("thinking") },
+            { t: 1500, fn: () => setStage("context") }, // Show question
+            // Staggered reveal of bars
+            { t: 3500, fn: () => { setStage("reveal"); setVisibleCount(1); } },
+            { t: 4300, fn: () => setVisibleCount(2) },
+            { t: 5100, fn: () => setVisibleCount(3) },
+            { t: 5900, fn: () => setVisibleCount(4) },
+            // Pause for comparison
+            { t: 6700, fn: () => setStage("pause") },
+            // Eliminate
+            { t: 9700, fn: () => setStage("eliminating") },
+            // Winner
+            { t: 11200, fn: () => setStage("winner") }
+        ];
 
-        // Stage 2: strikethrough losers
-        const t1 = setTimeout(() => setStage("eliminating"), (1500 + 1200) * scale);
+        const timeouts: NodeJS.Timeout[] = [];
+        timeline.forEach(({ t, fn }) => {
+            timeouts.push(setTimeout(fn, t * scale));
+        });
 
-        // Stage 3: highlight winner
-        const t2 = setTimeout(() => setStage("winner"), (1500 + 2200) * scale);
-
-        return () => {
-            clearTimeout(t0);
-            clearTimeout(t1);
-            clearTimeout(t2);
-        };
+        return () => timeouts.forEach(clearTimeout);
     }, [isActive, scale]);
 
     if (!isActive || top.length === 0) return null;
 
     const maxProb = Math.max(...top.map(p => p.probability), 0.01);
 
-    // Render Thinking State
+    // Thinking Spinner
     if (stage === "thinking") {
         return (
-            <div className="w-full h-32 flex flex-col items-center justify-center space-y-3">
+            <div className="w-full h-40 flex flex-col items-center justify-center space-y-3">
                 <div className="relative w-8 h-8">
                     <motion.div
                         className="absolute inset-0 border-2 border-brand-teal rounded-full overflow-hidden"
@@ -148,17 +159,8 @@ export function PredictionBarChart({ predictions, isActive, contextText }: Predi
                         animate={{ rotate: 360 }}
                         transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                     />
-                    <motion.div
-                        className="absolute inset-2 bg-brand-teal/20 rounded-full"
-                        animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                    />
                 </div>
-                <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-xs font-mono text-brand-teal/70 uppercase tracking-widest"
-                >
+                <motion.span animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 1.5, repeat: Infinity }} className="text-xs font-mono text-brand-teal uppercase tracking-widest">
                     Mudel arvutab...
                 </motion.span>
             </div>
@@ -166,139 +168,91 @@ export function PredictionBarChart({ predictions, isActive, contextText }: Predi
     }
 
     return (
-        <div className="w-full space-y-3">
-            {top.map((p, i) => {
-                const isWinner = i === winnerIdx;
-                const isEliminated = !isWinner && stage !== "growing";
-                const isCandidate = stage === "growing" || stage === "eliminating" || stage === "winner";
-                const barWidth = (p.probability / maxProb) * 100;
+        <div className="w-full space-y-4 pt-2">
+            {/* Phase 1: Context Header (Expert Review Request) */}
+            <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-white/5 rounded-xl p-4 border border-white/10 mb-4"
+            >
+                <div className="text-sm text-white/60 mb-1">Mis sõna tuleb järgmisena?</div>
+                <div className="text-lg font-medium text-white">
+                    "Koer on inimese parim <span className="text-brand-teal border-b-2 border-brand-teal/50 inline-block w-12 text-center animate-pulse">___</span>"
+                </div>
+            </motion.div>
 
-                if (!isCandidate) return null;
+            {/* Candidates */}
+            <div className="space-y-3">
+                {top.map((p, i) => {
+                    const isWinner = i === winnerIdx;
+                    // Visibility logic
+                    if (stage === "reveal" && i >= visibleCount) return null;
 
-                return (
-                    <motion.div
-                        key={`${p.token}-${i}`}
-                        className="flex items-center gap-2"
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{
-                            opacity: isEliminated && stage === "winner" ? 0.35 : 1,
-                            x: 0
-                        }}
-                        transition={{
-                            opacity: { duration: 0.4 },
-                            x: { delay: i * 0.08, duration: 0.3 }
-                        }}
-                    >
-                        {/* Confidence Ring (universal visual metaphor) */}
-                        <ConfidenceRing
-                            probability={p.probability}
-                            isWinner={isWinner && stage === "winner"}
-                            isEliminated={isEliminated && stage === "winner"}
-                        />
+                    const isEliminated = !isWinner && (stage === "eliminating" || stage === "winner");
+                    const barWidth = (p.probability / maxProb) * 100;
 
-                        {/* Token label */}
-                        <div className="w-14 shrink-0 relative">
-                            <span
-                                className={`font-mono text-xs transition-colors duration-300 ${isWinner && stage === "winner"
-                                    ? "text-brand-teal font-bold"
-                                    : isEliminated
-                                        ? "text-white/30"
-                                        : "text-brand-cyan"
-                                    }`}
-                            >
-                                {p.token}
-                            </span>
+                    return (
+                        <motion.div
+                            key={`${p.token}-${i}`}
+                            className="flex items-center gap-2"
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{
+                                opacity: isEliminated ? 0.35 : 1,
+                                x: 0
+                            }}
+                        >
+                            <ConfidenceRing
+                                probability={p.probability}
+                                isWinner={isWinner && stage === "winner"}
+                                isEliminated={isEliminated && stage === "winner"}
+                            />
 
-                            {/* Strikethrough line */}
-                            {isEliminated && (
-                                <motion.div
-                                    className="absolute top-1/2 left-0 right-0 h-px bg-red-400/60"
-                                    initial={{ scaleX: 0 }}
-                                    animate={{ scaleX: 1 }}
-                                    transition={{
-                                        duration: 0.3,
-                                        delay: (i - 1) * 0.3,
-                                        ease: "easeOut"
-                                    }}
-                                    style={{ transformOrigin: "left" }}
-                                />
-                            )}
-                        </div>
-
-                        {/* Bar track */}
-                        <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden relative">
-                            {/* Bar fill */}
-                            <motion.div
-                                className={`h-full rounded-full relative ${isWinner && stage === "winner"
-                                    ? "bg-brand-teal"
-                                    : isEliminated
-                                        ? "bg-white/10"
-                                        : "bg-brand-cyan/70"
-                                    }`}
-                                initial={{ width: 0 }}
-                                animate={{ width: `${barWidth}%` }}
-                                transition={{
-                                    duration: 0.8,
-                                    delay: i * 0.3, // Slower sequential growth
-                                    ease: "easeOut"
-                                }}
-                            >
-                                {/* Winner glow pulse */}
-                                {isWinner && stage === "winner" && (
+                            <div className="w-20 shrink-0 relative">
+                                <span className={isWinner && stage === "winner" ? "text-brand-teal font-bold" : "text-white/80"}>
+                                    {p.token}
+                                </span>
+                                {isEliminated && (
                                     <motion.div
-                                        className="absolute inset-0 rounded-full bg-brand-teal/50"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: [0, 0.6, 0] }}
-                                        transition={{
-                                            duration: 1.2,
-                                            repeat: 2,
-                                            ease: "easeInOut"
-                                        }}
+                                        className="absolute top-1/2 left-0 right-4 h-px bg-red-400/60"
+                                        initial={{ scaleX: 0 }}
+                                        animate={{ scaleX: 1 }}
+                                        style={{ transformOrigin: "left" }}
                                     />
                                 )}
-                            </motion.div>
-                        </div>
+                            </div>
 
-                        {/* Percentage */}
-                        <motion.span
-                            className={`w-12 text-right font-mono text-[11px] tabular-nums transition-colors duration-300 ${isWinner && stage === "winner"
-                                ? "text-brand-teal font-bold"
-                                : isEliminated
-                                    ? "text-white/20"
-                                    : "text-gray-400"
-                                }`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.6 + i * 0.1 }}
-                        >
-                            {(p.probability * 100).toFixed(p.probability >= 0.1 ? 0 : 1)}%
-                        </motion.span>
-                    </motion.div>
-                );
-            })}
+                            <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden">
+                                <motion.div
+                                    className={`h-full rounded-full ${isWinner && stage === "winner" ? "bg-brand-teal" : "bg-brand-cyan/70"}`}
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${barWidth}%` }}
+                                    transition={{ duration: 0.5, ease: "easeOut" }}
+                                />
+                            </div>
 
-            {/* "Winner selected" label with context (IMPROVE-7) */}
+                            <div className="w-10 text-right text-xs font-mono text-white/40">
+                                {Math.round(p.probability * 100)}%
+                            </div>
+                        </motion.div>
+                    );
+                })}
+            </div>
+
+            {/* Winner Explanation */}
             <AnimatePresence>
                 {stage === "winner" && (
                     <motion.div
-                        initial={{ opacity: 0, y: 4 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="flex flex-col items-center gap-2 pt-4 border-t border-white/5 mt-4"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        className="pt-4 border-t border-white/10 mt-4"
                     >
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 mb-2">
                             <Trophy size={14} className="text-brand-teal" />
-                            <span className="text-[11px] font-mono text-brand-teal/70 uppercase tracking-wider">
-                                {t('winner')}
-                            </span>
+                            <span className="text-xs font-mono text-brand-teal uppercase tracking-wider">VÕITJA</span>
                         </div>
-
-                        {/* Context Sentence */}
-                        <div className="text-sm text-center">
-                            <span className="text-white/60">"{contextText || '...'}"</span>
-                            <span className="mx-2 text-white/30">→</span>
-                            <span className="font-bold text-brand-teal text-lg">"{top[0]?.token}"</span>
-                        </div>
+                        <p className="text-sm text-white/70 leading-relaxed">
+                            Mudel ennustas sõna <span className="text-brand-teal font-bold">"{top[0].token}"</span>, kuna see esineb treeningandmetes selles kontekstis kõige sagedamini.
+                        </p>
                     </motion.div>
                 )}
             </AnimatePresence>

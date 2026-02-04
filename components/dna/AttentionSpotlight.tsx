@@ -143,7 +143,7 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                                         d={arcPath(x1, x2)}
                                         fill="none"
                                         stroke={color}
-                                        strokeWidth={Math.max(2, w.strength * 6)} // Thicker
+                                        strokeWidth={w.strength >= 0.8 ? 5 : w.strength >= 0.5 ? 3 : 1.5} // Varied thickness (Expert Review)
                                         strokeLinecap="round"
                                         initial={{ pathLength: 0, opacity: 0 }}
                                         animate={{ pathLength: 1, opacity: 0.8 }}

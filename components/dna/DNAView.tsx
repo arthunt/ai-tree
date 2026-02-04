@@ -27,7 +27,7 @@ export function DNAView({ content = [] }: DNAViewProps) {
 
 function DNAInterface() {
     const t = useTranslations('dna');
-    const { isComplete, deepDiveStep, closeDeepDive } = useDNA();
+    const { isComplete, deepDiveStep, closeDeepDive, isPlaying } = useDNA();
     const stackRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
     const params = useParams();
@@ -87,7 +87,7 @@ function DNAInterface() {
                     )}
                 </div>
             </div>
-            <StageSelector />
+            {!isPlaying && <StageSelector />}
         </>
     );
 }

@@ -61,18 +61,29 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
         offsetY: 0
     }));
 
-    // Simple collision detection
+    // Collision detection with manual override for specific pairs
     for (let i = 0; i < mappedPoints.length; i++) {
         for (let j = i + 1; j < mappedPoints.length; j++) {
             const p1 = mappedPoints[i];
             const p2 = mappedPoints[j];
+            const t1 = tokens[i];
+            const t2 = tokens[j];
+
             const dx = p1.x - p2.x;
             const dy = p1.y - p2.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
 
-            if (dist < 40) { // If closer than 40px
-                p1.offsetY = -12; // Move one up
-                p2.offsetY = 12;  // Move one down
+            if (dist < 40) {
+                // Hardcoded override for known problem pair
+                if ((t1 === 'inimese' && t2 === 'parim') || (t1 === 'parim' && t2 === 'inimese')) {
+                    // Move 'parim' down, 'inimese' up
+                    if (t1 === 'parim') { p1.offsetY = 16; p2.offsetY = -16; }
+                    else { p1.offsetY = -16; p2.offsetY = 16; }
+                } else {
+                    // Default collision
+                    p1.offsetY = -12;
+                    p2.offsetY = 12;
+                }
             }
         }
     }
@@ -252,7 +263,7 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                                     y={p.y + (p.offsetY !== 0 ? (p.offsetY > 0 ? 24 : -16) : 20)} // Dynamic Y
                                     textAnchor="middle"
                                     fill="white"
-                                    fontSize={14} // Larger font
+                                    fontSize={16} // Larger (Expert Review)
                                     fontFamily="monospace"
                                     fontWeight="bold"
                                     style={{

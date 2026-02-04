@@ -85,7 +85,10 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
     const [stage, setStage] = useState<SliceStage>('text');
     const { playbackSpeed } = useDNA();
     const t = useTranslations('dna.animation');
-    const subTokens = visualTokenize(text);
+
+    // NEW-5: Use whole-word tokens if provided (expert review request)
+    // Otherwise fallback to visual sub-tokenization
+    const subTokens = tokens.length > 0 ? tokens : visualTokenize(text);
     const slices = buildSliceMap(text, subTokens);
 
     // Scale factor: higher speed = shorter delays.

@@ -317,27 +317,16 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
                                             exit={{ opacity: 0, y: 8 }}
                                             onClick={togglePause}
                                             className={cn(
-                                                "absolute bottom-2 left-1/2 -translate-x-1/2",
-                                                "flex items-center gap-1.5 px-3 py-1.5 rounded-full",
-                                                "text-xs font-medium backdrop-blur-sm transition-all",
-                                                "min-h-[32px] touch-manipulation",
+                                                "absolute bottom-4 left-1/2 -translate-x-1/2",
+                                                "w-10 h-10 rounded-full flex items-center justify-center",
+                                                "backdrop-blur-sm transition-all shadow-lg",
                                                 isPaused
-                                                    ? "bg-brand-teal/30 border border-brand-teal/50 text-brand-teal"
-                                                    : "bg-black/50 border border-white/20 text-white/70 hover:text-white hover:bg-black/70"
+                                                    ? "bg-brand-teal text-black hover:bg-brand-teal/90"
+                                                    : "bg-black/60 text-white/70 hover:bg-black/80 hover:text-white border border-white/10"
                                             )}
                                             aria-label={isPaused ? tAccordion('resume') : tAccordion('pauseToLearn')}
                                         >
-                                            {isPaused ? (
-                                                <>
-                                                    <ChevronRight size={14} />
-                                                    {tAccordion('clickToContinue')}
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <Pause size={14} />
-                                                    {tAccordion('pauseToLearn')}
-                                                </>
-                                            )}
+                                            {isPaused ? <ChevronRight size={20} className="ml-0.5" /> : <Pause size={20} />}
                                         </motion.button>
                                     )}
                                 </AnimatePresence>
@@ -430,7 +419,7 @@ export function DNAVerticalStack() {
                         behavior: 'smooth'
                     });
                 }
-            }, 150);
+            }, 300); // Increased delay for layout stabilization
         }
     }, [currentStep]);
 

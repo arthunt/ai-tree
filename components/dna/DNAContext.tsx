@@ -164,7 +164,12 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
                     : ['human', 'friend', 'best', 'man', 'woman'];
 
             if (human.some(k => lower.includes(k))) {
-                return [0.8 + (Math.random() * 0.1), 0.2 + (Math.random() * 0.1)];
+                return [0.45 + (Math.random() * 0.1), 0.72 + (Math.random() * 0.1)];
+            }
+
+            // Special Case: "on" (Function word) - Move to top-left
+            if (lower === 'on' || lower === 'is' || lower === 'the') {
+                return [0.15, 0.20]; // Far top-left
             }
 
             // Random scatter
@@ -256,9 +261,9 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             if (isEt) {
                 candidates = [
                     { token: 'sõber', probability: 0.78 },
-                    { token: 'seltsiline', probability: 0.09 },
-                    { token: 'kaaslane', probability: 0.07 },
-                    { token: 'abiline', probability: 0.06 }
+                    { token: 'kaaslane', probability: 0.09 },
+                    { token: 'semu', probability: 0.07 },
+                    { token: 'lemmik', probability: 0.06 }
                 ];
             }
         } else if (lastToken === 'machine') {
