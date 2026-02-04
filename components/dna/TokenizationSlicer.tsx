@@ -120,11 +120,11 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
         // Reset
         setStage('text');
 
-        // Timeline
-        schedule('cutting', 600);    // Cuts appear
-        schedule('separating', 1500); // Chunks fly apart
-        schedule('numbering', 3000);  // "Matrix Moment": Flip to numbers
-        schedule('done', 5500);       // Ready for next step (Vectors)
+        // Timeline (Slower for educational clarity)
+        schedule('cutting', 800);    // Cuts appear slower
+        schedule('separating', 2000); // Chunks fly apart
+        schedule('numbering', 4500);  // "Matrix Moment": Flip to numbers (delayed to let user see tokens)
+        schedule('done', 8000);       // Ready for next step (Vectors)
 
         return () => {
             mounted = false;
@@ -185,10 +185,10 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
                                         y: stage === 'done' ? [0, -4, 0] : 0 // Gentle float at end
                                     }}
                                     transition={{
-                                        duration: 0.6,
-                                        delay: i * 0.1, // Staggered flip
+                                        duration: 0.8,
+                                        delay: i * 0.3, // Slower staggered flip (300ms)
                                         type: "spring",
-                                        stiffness: 200,
+                                        stiffness: 180,
                                         damping: 20
                                     }}
                                     style={{ transformStyle: 'preserve-3d' }}

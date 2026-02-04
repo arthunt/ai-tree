@@ -214,7 +214,7 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                                     type: "spring",
                                     stiffness: 120,
                                     damping: 14,
-                                    delay: i * 0.1
+                                    delay: i * 0.4 // Slower one-by-one appearance
                                 }}
                                 style={{
                                     filter: isHighlighted
@@ -227,39 +227,42 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                                 onClick={() => setSelectedIndex(selectedIndex === i ? null : i)}
                             />
 
-                            {/* Token label on hover/select */}
-                            <AnimatePresence>
-                                {isHighlighted && tokens[i] && (
-                                    <motion.g
-                                        initial={{ opacity: 0, y: 4 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0 }}
-                                    >
-                                        {/* Label background */}
-                                        <rect
-                                            x={tx - 24}
-                                            y={ty - 24}
-                                            width={48}
-                                            height={16}
-                                            rx={4}
-                                            fill="rgba(0,0,0,0.8)"
-                                            stroke={color}
-                                            strokeWidth={0.5}
-                                        />
-                                        <text
-                                            x={tx}
-                                            y={ty - 13}
-                                            textAnchor="middle"
-                                            fill="white"
-                                            fontSize={10}
-                                            fontFamily="monospace"
-                                            fontWeight="bold"
-                                        >
-                                            {tokens[i]}
-                                        </text>
-                                    </motion.g>
+                            {/* Token label - Persistent */}
+                            <motion.g
+                                initial={{ opacity: 0, y: 4 }}
+                                animate={{
+                                    opacity: isHighlighted ? 1 : 0.7,
+                                    y: 0,
+                                    scale: isHighlighted ? 1.1 : 1
+                                }}
+                                transition={{ delay: 0.5 + i * 0.1 }}
+                            >
+                                {/* Label background (only active) */}
+                                {isHighlighted && (
+                                    <rect
+                                        x={tx - 24}
+                                        y={ty - 24}
+                                        width={48}
+                                        height={16}
+                                        rx={4}
+                                        fill="rgba(0,0,0,0.8)"
+                                        stroke={color}
+                                        strokeWidth={0.5}
+                                    />
                                 )}
-                            </AnimatePresence>
+                                <text
+                                    x={tx}
+                                    y={isHighlighted ? ty - 13 : ty + 12}
+                                    textAnchor="middle"
+                                    fill={isHighlighted ? "white" : "rgba(255,255,255,0.6)"}
+                                    fontSize={isHighlighted ? 10 : 9}
+                                    fontFamily="monospace"
+                                    fontWeight={isHighlighted ? "bold" : "normal"}
+                                    style={{ pointerEvents: 'none' }}
+                                >
+                                    {tokens[i]}
+                                </text>
+                            </motion.g>
                         </g>
                     );
                 })}

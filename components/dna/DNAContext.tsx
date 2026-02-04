@@ -190,12 +190,27 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
 
                 // Nature metaphors
                 if ((prev === 'mets' || prev === 'puu') && (current === 'kohiseb' || current === 'kasvab')) strength = 0.85;
+                if (prev === 'mets' && current === 'puu') strength = 0.90;
+                if (prev === 'puu' && current === 'elu') strength = 0.80;
 
                 if (strength > 0.4) {
                     weights.push({ fromIndex: i, toIndex: j, strength });
                 }
             }
         }
+
+        // Fallback: If no strong connections found, add a few random ones to illustrate the concept
+        if (weights.length < 2 && tokens.length > 2) {
+            for (let i = 1; i < tokens.length; i++) {
+                // Force a connection to the previous word
+                weights.push({
+                    fromIndex: i,
+                    toIndex: Math.max(0, i - 1),
+                    strength: 0.45 + (Math.random() * 0.2)
+                });
+            }
+        }
+
         return weights.sort((a, b) => b.strength - a.strength); // Strongest first
     }, []);
 
@@ -360,7 +375,18 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
 
         // Calculate Next Step
         const nextStepName = STEP_ORDER[nextIndex];
-        const duration = BASE_STEP_DURATION / playbackSpeed;
+
+        // Phase 11: Dynamic Step Durations (Slower for educational pacing)
+        const STEP_DURATIONS: Record<DNAStep, number> = {
+            idle: 1000,
+            tokenization: 10000, // 8s animation + 2s pause
+            vectorizing: 8000,   // ~5s animation + 3s pause
+            attention: 8000,     // ~5s animation + 3s pause
+            prediction: 9000     // ~6s animation + 3s pause
+        };
+
+        const baseDuration = STEP_DURATIONS[currentStep] || BASE_STEP_DURATION;
+        const duration = baseDuration / playbackSpeed;
 
         stepTimerRef.current = setTimeout(() => {
             // Mark current step as completed before advancing

@@ -64,7 +64,7 @@
     "trunk": "Tüvi",
     "branches": "Oksad",
     "leaves": "Lehed",
-    "totalTime": "Kogu teekond: ~2 tundi",
+    "totalTime": "Kogu rada: ~2 tundi",
     "levelTime": {
       "roots": "~25 min",
       "trunk": "~30 min",
@@ -83,8 +83,8 @@
     "diagramAriaLabel": "AI kontseptide kaardi diagramm",
     "legendHeading": "Puu tasandite legend",
     "rootsEmoji": "Idu emotiikon",
-    "trunkEmoji": "Kuuse puu emotiikon",
-    "branchesEmoji": "Roheline taim emotiikon",
+    "trunkEmoji": "Kuusepuu emotiikon",
+    "branchesEmoji": "Lehtpuu emotiikon",
     "leavesEmoji": "Lehtede emotiikon",
     "rootsLabel": "1. Juured",
     "trunkLabel": "2. Tüvi",
@@ -1261,12 +1261,12 @@
         "metaphor": "Nagu annaks igale sõnale GPS-koordinaadi tähenduste universumis."
       },
       "attention": {
-        "title": "Punktide ühendamine",
-        "body": "Prožektor valgustab ruumi, leides üles sõnad, mis on üksteise jaoks kõige olulisemad.",
-        "metaphor": "Nagu prožektor pimedas ruumis, mis näitab seoseid."
+        "title": "Seoste Loomine",
+        "body": "Prožektor käib üle ruumi, leides, millised sõnad on üksteisele kõige olulisemad.",
+        "metaphor": "Nagu prožektor pimedas toas valgustaks seoseid."
       },
       "prediction": {
-        "title": "Järgmise pakkumine",
+        "title": "Ennustamine",
         "body": "Tuginedes kõigele õpitule, ennustab mudel, mis tuleb järgmisena. Üks sõna korraga.",
         "metaphor": "Nagu lause lõpu arvamine enne selle väljaütlemist."
       }
@@ -1333,7 +1333,7 @@
     "animation": {
       "slicing": "✂️ Teksti lõikamine...",
       "packaging": "📦 Tükkide pakendamine...",
-      "reveal": "🔢 Maatriksi näitamine: Token ID-d",
+      "reveal": "Maatriks: Token ID-d",
       "ready": "✨ Valmis vektoriseerimiseks"
     },
     "visualization": {

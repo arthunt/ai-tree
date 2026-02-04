@@ -163,13 +163,12 @@ export function PredictionBarChart({ predictions, isActive }: PredictionBarChart
                         {/* Token label */}
                         <div className="w-14 shrink-0 relative">
                             <span
-                                className={`font-mono text-xs transition-colors duration-300 ${
-                                    isWinner && stage === "winner"
-                                        ? "text-brand-teal font-bold"
-                                        : isEliminated
-                                            ? "text-white/30"
-                                            : "text-brand-cyan"
-                                }`}
+                                className={`font-mono text-xs transition-colors duration-300 ${isWinner && stage === "winner"
+                                    ? "text-brand-teal font-bold"
+                                    : isEliminated
+                                        ? "text-white/30"
+                                        : "text-brand-cyan"
+                                    }`}
                             >
                                 {p.token}
                             </span>
@@ -182,7 +181,7 @@ export function PredictionBarChart({ predictions, isActive }: PredictionBarChart
                                     animate={{ scaleX: 1 }}
                                     transition={{
                                         duration: 0.3,
-                                        delay: (i - 1) * 0.1,
+                                        delay: (i - 1) * 0.3,
                                         ease: "easeOut"
                                     }}
                                     style={{ transformOrigin: "left" }}
@@ -194,18 +193,17 @@ export function PredictionBarChart({ predictions, isActive }: PredictionBarChart
                         <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden relative">
                             {/* Bar fill */}
                             <motion.div
-                                className={`h-full rounded-full relative ${
-                                    isWinner && stage === "winner"
-                                        ? "bg-brand-teal"
-                                        : isEliminated
-                                            ? "bg-white/10"
-                                            : "bg-brand-cyan/70"
-                                }`}
+                                className={`h-full rounded-full relative ${isWinner && stage === "winner"
+                                    ? "bg-brand-teal"
+                                    : isEliminated
+                                        ? "bg-white/10"
+                                        : "bg-brand-cyan/70"
+                                    }`}
                                 initial={{ width: 0 }}
                                 animate={{ width: `${barWidth}%` }}
                                 transition={{
-                                    duration: 0.6,
-                                    delay: i * 0.1,
+                                    duration: 0.8,
+                                    delay: i * 0.3, // Slower sequential growth
                                     ease: "easeOut"
                                 }}
                             >
@@ -227,13 +225,12 @@ export function PredictionBarChart({ predictions, isActive }: PredictionBarChart
 
                         {/* Percentage */}
                         <motion.span
-                            className={`w-12 text-right font-mono text-[11px] tabular-nums transition-colors duration-300 ${
-                                isWinner && stage === "winner"
-                                    ? "text-brand-teal font-bold"
-                                    : isEliminated
-                                        ? "text-white/20"
-                                        : "text-gray-400"
-                            }`}
+                            className={`w-12 text-right font-mono text-[11px] tabular-nums transition-colors duration-300 ${isWinner && stage === "winner"
+                                ? "text-brand-teal font-bold"
+                                : isEliminated
+                                    ? "text-white/20"
+                                    : "text-gray-400"
+                                }`}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.6 + i * 0.1 }}
