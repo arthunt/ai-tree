@@ -299,26 +299,40 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
                                 {getStepBody()}
                             </p>
 
-                            {/* Visualization - tap/hold to pause, release to resume */}
-                            <div
-                                className={`py-4 flex justify-center relative cursor-pointer select-none ${isPaused && isPlaying ? 'ring-2 ring-white/20 rounded-xl' : ''}`}
-                                onMouseDown={() => { if (isPlaying && !isPaused) togglePause(); }}
-                                onMouseUp={() => { if (isPlaying && isPaused) togglePause(); }}
-                                onMouseLeave={() => { if (isPlaying && isPaused) togglePause(); }}
-                                onTouchStart={() => { if (isPlaying && !isPaused) togglePause(); }}
-                                onTouchEnd={() => { if (isPlaying && isPaused) togglePause(); }}
-                                role="button"
-                                aria-label={isPaused ? tAccordion('holdingPaused') : tAccordion('holdToPause')}
-                            >
-                                {renderVisualization()}
-                                {/* Paused indicator overlay */}
-                                {isPaused && isPlaying && (
-                                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-xl pointer-events-none">
-                                        <div className="flex items-center gap-2 text-white/70 text-sm font-medium">
-                                            <Pause size={16} />
-                                            {tAccordion('paused')}
-                                        </div>
-                                    </div>
+                            {/* Visualization area */}
+                            <div className="py-4 flex flex-col items-center gap-3">
+                                {/* Main visualization */}
+                                <div className="w-full flex justify-center">
+                                    {renderVisualization()}
+                                </div>
+
+                                {/* Prominent Pause/Continue Button */}
+                                {isPlaying && (
+                                    <motion.button
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        onClick={togglePause}
+                                        className={cn(
+                                            "flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all min-h-[44px]",
+                                            "border text-sm font-medium",
+                                            isPaused
+                                                ? "bg-brand-teal/20 border-brand-teal/40 text-brand-teal hover:bg-brand-teal/30"
+                                                : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:text-white"
+                                        )}
+                                        aria-label={isPaused ? tAccordion('resume') : tAccordion('pauseToLearn')}
+                                    >
+                                        {isPaused ? (
+                                            <>
+                                                <ChevronRight size={16} />
+                                                {tAccordion('clickToContinue')}
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Pause size={16} />
+                                                {tAccordion('pauseToLearn')}
+                                            </>
+                                        )}
+                                    </motion.button>
                                 )}
                             </div>
 

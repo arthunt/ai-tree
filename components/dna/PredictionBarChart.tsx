@@ -3,18 +3,23 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useMemo } from "react";
 import { useDNA } from "./DNAContext";
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
+import { Trophy, Target, X } from "lucide-react";
 
 /**
- * PredictionBarChart — US-160 Task 1.4
+ * PredictionBarChart — US-160 Task 1.4 + Phase 10.x.8 (Cultural Clarity)
  *
- * Shows top next-token predictions as a bar chart.
+ * Shows top next-token predictions with universal visual metaphors.
  * 3-stage animation:
- *   1. Bars grow in from zero (staggered)
- *   2. Low-probability candidates get a strikethrough + fade
- *   3. Winner highlights with a glow pulse
+ *   1. Bars grow in from zero (staggered) + confidence rings appear
+ *   2. Low-probability candidates get a strikethrough + fade + X icon
+ *   3. Winner highlights with trophy icon and glow pulse
  *
- * "Jingle, Jingle..." → [Bells (99%), Balls (0.5%), Smells (0.5%)]
- * Bells wins. Others struck through.
+ * Cultural considerations:
+ * - Trophy/target icons are universally understood (sports, games)
+ * - Confidence rings (like loading/progress) work across cultures
+ * - X mark for elimination is universal
+ * - Percentages shown as visual proportion, not just numbers
  */
 
 interface Prediction {
@@ -29,9 +34,72 @@ interface PredictionBarChartProps {
 
 type Stage = "growing" | "eliminating" | "winner";
 
+// Confidence ring component - universal visual metaphor
+function ConfidenceRing({ probability, isWinner, isEliminated }: { probability: number; isWinner: boolean; isEliminated: boolean }) {
+    const circumference = 2 * Math.PI * 10;
+    const strokeDashoffset = circumference * (1 - probability);
+
+    return (
+        <svg width={28} height={28} className="flex-shrink-0">
+            {/* Background ring */}
+            <circle
+                cx={14}
+                cy={14}
+                r={10}
+                fill="none"
+                stroke={isEliminated ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.1)"}
+                strokeWidth={3}
+            />
+            {/* Progress ring */}
+            <motion.circle
+                cx={14}
+                cy={14}
+                r={10}
+                fill="none"
+                stroke={isWinner ? "rgb(45, 212, 191)" : isEliminated ? "rgba(255,255,255,0.1)" : "rgb(34, 211, 238)"}
+                strokeWidth={3}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                initial={{ strokeDashoffset: circumference }}
+                animate={{ strokeDashoffset }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                style={{ transform: "rotate(-90deg)", transformOrigin: "center" }}
+            />
+            {/* Center icon/text */}
+            {isWinner ? (
+                <Trophy
+                    x={7}
+                    y={7}
+                    width={14}
+                    height={14}
+                    className="text-brand-teal"
+                    style={{ color: "rgb(45, 212, 191)" }}
+                />
+            ) : isEliminated ? (
+                <X
+                    x={7}
+                    y={7}
+                    width={14}
+                    height={14}
+                    style={{ color: "rgba(248, 113, 113, 0.6)" }}
+                />
+            ) : (
+                <Target
+                    x={7}
+                    y={7}
+                    width={14}
+                    height={14}
+                    style={{ color: "rgb(34, 211, 238)" }}
+                />
+            )}
+        </svg>
+    );
+}
+
 export function PredictionBarChart({ predictions, isActive }: PredictionBarChartProps) {
     const [stage, setStage] = useState<Stage>("growing");
     const { playbackSpeed } = useDNA();
+    const t = useTranslations('dna.prediction');
 
     // Take top entries (already sorted by probability desc from context)
     const top = predictions.slice(0, 4);
@@ -65,7 +133,7 @@ export function PredictionBarChart({ predictions, isActive }: PredictionBarChart
     const maxProb = Math.max(...top.map(p => p.probability), 0.01);
 
     return (
-        <div className="w-full space-y-2.5">
+        <div className="w-full space-y-3">
             {top.map((p, i) => {
                 const isWinner = i === winnerIdx;
                 const isEliminated = !isWinner && stage !== "growing";
@@ -85,8 +153,15 @@ export function PredictionBarChart({ predictions, isActive }: PredictionBarChart
                             x: { delay: i * 0.08, duration: 0.3 }
                         }}
                     >
+                        {/* Confidence Ring (universal visual metaphor) */}
+                        <ConfidenceRing
+                            probability={p.probability}
+                            isWinner={isWinner && stage === "winner"}
+                            isEliminated={isEliminated && stage === "winner"}
+                        />
+
                         {/* Token label */}
-                        <div className="w-16 shrink-0 text-right relative">
+                        <div className="w-14 shrink-0 relative">
                             <span
                                 className={`font-mono text-xs transition-colors duration-300 ${
                                     isWinner && stage === "winner"
@@ -116,7 +191,7 @@ export function PredictionBarChart({ predictions, isActive }: PredictionBarChart
                         </div>
 
                         {/* Bar track */}
-                        <div className="flex-1 h-4 bg-white/5 rounded-full overflow-hidden relative">
+                        <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden relative">
                             {/* Bar fill */}
                             <motion.div
                                 className={`h-full rounded-full relative ${
@@ -165,35 +240,23 @@ export function PredictionBarChart({ predictions, isActive }: PredictionBarChart
                         >
                             {(p.probability * 100).toFixed(p.probability >= 0.1 ? 0 : 1)}%
                         </motion.span>
-
-                        {/* Winner badge */}
-                        <AnimatePresence>
-                            {isWinner && stage === "winner" && (
-                                <motion.span
-                                    initial={{ opacity: 0, scale: 0, x: -8 }}
-                                    animate={{ opacity: 1, scale: 1, x: 0 }}
-                                    exit={{ opacity: 0, scale: 0 }}
-                                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                                    className="text-brand-teal text-sm"
-                                >
-                                    ✓
-                                </motion.span>
-                            )}
-                        </AnimatePresence>
                     </motion.div>
                 );
             })}
 
-            {/* "Next token selected" label */}
+            {/* "Winner selected" label with trophy */}
             <AnimatePresence>
                 {stage === "winner" && (
                     <motion.div
                         initial={{ opacity: 0, y: 4 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="text-[10px] font-mono uppercase tracking-widest text-brand-teal/40 pt-1"
+                        className="flex items-center justify-center gap-2 pt-2"
                     >
-                        → next token: <span className="text-brand-teal/70 font-bold">{top[0]?.token}</span>
+                        <Trophy size={14} className="text-brand-teal" />
+                        <span className="text-[11px] font-mono text-brand-teal/70">
+                            {t('winner')}: <span className="text-brand-teal font-bold">{top[0]?.token}</span>
+                        </span>
                     </motion.div>
                 )}
             </AnimatePresence>

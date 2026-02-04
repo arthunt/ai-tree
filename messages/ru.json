@@ -1342,7 +1342,19 @@
       "tapToSkip": "Далее",
       "holdToPause": "Удерживайте для паузы",
       "holdingPaused": "Отпустите для продолжения",
-      "paused": "Пауза"
+      "paused": "Пауза",
+      "pauseToLearn": "Пауза для изучения",
+      "clickToContinue": "Нажмите для продолжения"
+    },
+    "attention": {
+      "strongestLink": "{from} → {to}",
+      "strength": "Сила",
+      "whyConnected": "Почему связаны"
+    },
+    "prediction": {
+      "winner": "Победитель",
+      "eliminated": "Исключено",
+      "confidence": "Уверенность"
     },
     "summary": {
       "tokenization": "Текст разбит на {count} частей",

@@ -1316,7 +1316,19 @@
       "tapToSkip": "Edasi",
       "holdToPause": "Hoia pausiks",
       "holdingPaused": "Vabasta jätkamiseks",
-      "paused": "Paus"
+      "paused": "Paus",
+      "pauseToLearn": "Peata õppimiseks",
+      "clickToContinue": "Klõpsa jätkamiseks"
+    },
+    "attention": {
+      "strongestLink": "{from} → {to}",
+      "strength": "Tugevus",
+      "whyConnected": "Miks seotud"
+    },
+    "prediction": {
+      "winner": "Võitja",
+      "eliminated": "Välistatud",
+      "confidence": "Kindlus"
     },
     "summary": {
       "tokenization": "Tekst tükeldatud {count} osaks",

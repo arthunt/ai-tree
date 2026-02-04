@@ -1,25 +1,29 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 /**
- * AttentionSpotlight — US-160 Task 1.3
+ * AttentionSpotlight — US-160 Task 1.3 + Phase 10.x.8 (Attention Explanation)
  *
  * Draws curved bezier arcs between tokens. Thickness = importance.
  * Shows how "Bank" connects to "River" (or "Account") depending on context.
+ *
+ * NEW: Explains WHY the strongest connection exists with semantic annotations.
  *
  * - Tokens displayed as a row at the bottom
  * - Arcs drawn above with staggered pathLength animation
  * - Hover a token to spotlight its connections (dim others)
  * - Strongest connections glow brighter
+ * - Winner arc gets animated explanation label
  */
 
 interface AttentionWeight {
     fromIndex: number;
     toIndex: number;
     strength: number;
+    reason?: string; // Why this connection is strong
 }
 
 interface AttentionSpotlightProps {
@@ -29,9 +33,10 @@ interface AttentionSpotlightProps {
 }
 
 const WIDTH = 300;
-const HEIGHT = 160;
+const HEIGHT = 180; // Increased for explanation label
 const TOKEN_Y = HEIGHT - 16;
 const MIN_ARC_HEIGHT = 25;
+const LABEL_SHOW_DELAY = 1500; // Show explanation after arcs animate
 
 function tokenX(index: number, total: number): number {
     if (total <= 1) return WIDTH / 2;
@@ -43,7 +48,7 @@ function tokenX(index: number, total: number): number {
 function arcPath(x1: number, x2: number): string {
     const midX = (x1 + x2) / 2;
     const dist = Math.abs(x1 - x2);
-    const arcH = Math.min(MIN_ARC_HEIGHT + dist * 0.5, HEIGHT - 30);
+    const arcH = Math.min(MIN_ARC_HEIGHT + dist * 0.5, HEIGHT - 50);
     const cy = TOKEN_Y - arcH;
     return `M ${x1} ${TOKEN_Y} Q ${midX} ${cy} ${x2} ${TOKEN_Y}`;
 }
@@ -55,13 +60,38 @@ function strengthColor(s: number): string {
     return "rgb(148, 163, 184)";                    // slate-400
 }
 
+// Strength level indicator (universal across cultures)
+function strengthLevel(s: number): 1 | 2 | 3 {
+    if (s >= 0.8) return 3; // Strong
+    if (s >= 0.5) return 2; // Medium
+    return 1; // Weak
+}
+
 export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotlightProps) {
     const t = useTranslations('dna.nav');
+    const tAttn = useTranslations('dna.attention');
     const [hoveredToken, setHoveredToken] = useState<number | null>(null);
     const [selectedToken, setSelectedToken] = useState<number | null>(null);
+    const [showExplanation, setShowExplanation] = useState(false);
 
     // Active token: selected (tap) takes priority over hovered (mouse)
     const activeToken = selectedToken ?? hoveredToken;
+
+    // Find the strongest connection (the "winner")
+    const strongestConnection = useMemo(() => {
+        if (weights.length === 0) return null;
+        return weights.reduce((max, w) => w.strength > max.strength ? w : max, weights[0]);
+    }, [weights]);
+
+    // Show explanation after animation completes
+    useEffect(() => {
+        if (!isActive) {
+            setShowExplanation(false);
+            return;
+        }
+        const timer = setTimeout(() => setShowExplanation(true), LABEL_SHOW_DELAY);
+        return () => clearTimeout(timer);
+    }, [isActive, weights]);
 
     // Pre-compute which arcs connect to the active token
     const connectedArcs = useMemo(() => {
@@ -217,6 +247,59 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                         </g>
                     );
                 })}
+
+                {/* Strongest Connection Explanation Label */}
+                <AnimatePresence>
+                    {showExplanation && strongestConnection && activeToken === null && (
+                        <motion.g
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.4 }}
+                        >
+                            {/* Background pill */}
+                            <rect
+                                x={WIDTH / 2 - 70}
+                                y={8}
+                                width={140}
+                                height={24}
+                                rx={12}
+                                fill="rgba(45, 212, 191, 0.15)"
+                                stroke="rgba(45, 212, 191, 0.3)"
+                                strokeWidth={1}
+                            />
+                            {/* Explanation text */}
+                            <text
+                                x={WIDTH / 2}
+                                y={24}
+                                textAnchor="middle"
+                                fill="rgb(45, 212, 191)"
+                                fontSize={9}
+                                fontFamily="monospace"
+                            >
+                                {tAttn('strongestLink', {
+                                    from: tokens[strongestConnection.fromIndex] || '?',
+                                    to: tokens[strongestConnection.toIndex] || '?'
+                                })}
+                            </text>
+                            {/* Strength indicator dots */}
+                            <g transform={`translate(${WIDTH / 2 + 50}, 20)`}>
+                                {[1, 2, 3].map(level => (
+                                    <circle
+                                        key={level}
+                                        cx={level * 8}
+                                        cy={0}
+                                        r={3}
+                                        fill={level <= strengthLevel(strongestConnection.strength)
+                                            ? "rgb(45, 212, 191)"
+                                            : "rgba(255,255,255,0.2)"
+                                        }
+                                    />
+                                ))}
+                            </g>
+                        </motion.g>
+                    )}
+                </AnimatePresence>
             </svg>
 
             {/* Legend + Tap Hint */}
