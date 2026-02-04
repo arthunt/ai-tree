@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useCallback, useEffect, useMemo } from "react";
+import { useParams } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useDNA, DNAStep, CardState } from "./DNAContext";
 import { DNAOrientationCard } from "./DNAOrientationCard";
@@ -454,9 +455,19 @@ export function DNAVerticalStack() {
         // The useEffect above will handle scrolling to the new active card
     }, [nextStep]);
 
-    const examplePrompt = "The king wore a crown";
+    const { locale } = useParams();
+    const isEt = locale === 'et';
+    const isRu = locale === 'ru';
+
+    // Localized Example Prompt (Nature for Estonia)
+    const examplePrompt = isEt
+        ? "Mets ja puu on elu"
+        : isRu
+            ? "Лес и дерево"
+            : "The king wore a crown";
 
     const handleUseExample = () => {
+        // Force the input update immediately
         dismissOrientation();
         runSimulation(examplePrompt);
     };

@@ -1304,7 +1304,7 @@
       "title": "Kuidas see töötab",
       "instruction": "Sisesta tekst ülal ja vajuta ▶, et näha, kuidas AI seda loeb.",
       "description": "Jälgi, kuidas sinu sõnad muunduvad läbi 4 sammu: T → V → A → P",
-      "example": "Proovi: \"Kuningas kandis krooni\"",
+      "example": "Proovi: \"Mets ja puu on elu\"",
       "tapToTry": "Puuduta selle näite proovimiseks"
     },
     "accordion": {
