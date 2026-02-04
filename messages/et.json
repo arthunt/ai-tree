@@ -1263,7 +1263,9 @@
       "attention": {
         "title": "Seoste Loomine",
         "body": "Prožektor käib üle ruumi, leides, millised sõnad on üksteisele kõige olulisemad.",
-        "metaphor": "Nagu prožektor pimedas toas valgustaks seoseid."
+        "metaphor": "Nagu prožektor pimedas toas valgustaks seoseid.",
+        "strongest": "TUGEVAIM SEOS",
+        "connection": "SEOS"
       },
       "prediction": {
         "title": "Ennustamine",

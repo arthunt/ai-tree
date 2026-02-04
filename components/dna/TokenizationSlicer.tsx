@@ -197,7 +197,7 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
                                             opacity: stage === 'numbering' || stage === 'done' ? 0 : 1,
                                             scale: stage === 'numbering' || stage === 'done' ? 0.8 : 1
                                         }}
-                                        transition={{ duration: 0.4, delay: i * 0.1 }}
+                                        transition={{ duration: 0.2, delay: i * 0.1 }}
                                     >
                                         {token}
                                     </motion.div>
@@ -212,8 +212,8 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
                                             y: stage === 'done' ? [0, -4, 0] : 0
                                         }}
                                         transition={{
-                                            duration: 0.4,
-                                            delay: i * 0.1, // Stagger
+                                            duration: 0.2,
+                                            delay: i * 0.1 + 0.2, // Stagger: Wait for text to fade out
                                         }}
                                         style={{
                                             fontFamily: "'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace",

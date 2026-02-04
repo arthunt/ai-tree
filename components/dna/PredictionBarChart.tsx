@@ -119,21 +119,21 @@ export function PredictionBarChart({ predictions, isActive, contextText }: Predi
         setStage("thinking");
         setVisibleCount(0);
 
-        // Timeline (Expert Review Specs)
+        // Timeline (Sprint 7 Unified Flow)
         const timeline = [
             { t: 0, fn: () => setStage("thinking") },
-            { t: 1500, fn: () => setStage("context") }, // Show question
-            // Staggered reveal of bars
+            { t: 2000, fn: () => setStage("context") }, // Show question
+            // Staggered reveal of bars (Sprint 7: 0.8s stagger)
             { t: 3500, fn: () => { setStage("reveal"); setVisibleCount(1); } },
             { t: 4300, fn: () => setVisibleCount(2) },
             { t: 5100, fn: () => setVisibleCount(3) },
             { t: 5900, fn: () => setVisibleCount(4) },
-            // Pause for comparison
+            // CRITICAL: 3s Static Pause (Sprint 7 P1)
             { t: 6700, fn: () => setStage("pause") },
-            // Eliminate - Extended pause (4s total)
-            { t: 10700, fn: () => setStage("eliminating") },
-            // Winner
-            { t: 12200, fn: () => setStage("winner") }
+            // Eliminate - Start fading losers
+            { t: 9700, fn: () => setStage("eliminating") },
+            // Winner Highlight
+            { t: 11700, fn: () => setStage("winner") }
         ];
 
         const timeouts: NodeJS.Timeout[] = [];

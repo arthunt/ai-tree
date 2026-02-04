@@ -358,7 +358,8 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
                                     className="flex-1 py-3 px-4 rounded-xl text-black text-sm font-semibold transition-all min-h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
                                     style={{
                                         backgroundColor: color,
-                                        boxShadow: `0 0 20px ${color}40`
+                                        boxShadow: `0 0 20px ${color}40`,
+                                        display: isPlaying ? 'none' : 'block' // Sprint 7: Hide during auto-play
                                     }}
                                 >
                                     {isLastStep && isComplete

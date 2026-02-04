@@ -66,45 +66,48 @@ export function CompletionCard() {
                         {t('completion.subtitle')}
                     </p>
 
+                    {/* Educational Explanation (Expert Review - Moved Up) */}
+                    {winner && (
+                        <div className="bg-brand-teal/10 rounded-xl p-4 mb-6 border border-brand-teal/20">
+                            <div className="flex gap-2">
+                                <span className="text-lg">💡</span>
+                                <p className="text-sm text-brand-teal/90 leading-relaxed text-left">
+                                    Mudel ennustas järgmise sõna, kasutades kõike, mida ta miljonitelt tekstidelt õppis.
+                                </p>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Winner prediction summary */}
                     {winner && (
-                        <>
-                            <div className="bg-white/5 rounded-xl p-4 mb-6 text-center">
-                                <span className="text-xs text-brand-teal/60 font-mono uppercase tracking-widest">
-                                    {t('completion.predicted')}
+                        <div className="bg-white/5 rounded-xl p-4 mb-6 text-center">
+                            <span className="text-xs text-brand-teal/60 font-mono uppercase tracking-widest">
+                                {t('completion.predicted')}
+                            </span>
+                            <div className="mt-1 text-2xl font-bold text-brand-teal">
+                                &ldquo;{winner.token}&rdquo;
+                                <span className="text-sm text-brand-teal/60 ml-2">
+                                    {Math.round(winner.probability * 100)}%
                                 </span>
-                                <div className="mt-1 text-2xl font-bold text-brand-teal">
-                                    &ldquo;{winner.token}&rdquo;
-                                    <span className="text-sm text-brand-teal/60 ml-2">
-                                        {Math.round(winner.probability * 100)}%
-                                    </span>
-                                </div>
                             </div>
-
-                            {/* Educational Explanation (Expert Review) */}
-                            <div className="bg-brand-teal/10 rounded-xl p-4 mb-6 border border-brand-teal/20">
-                                <div className="flex gap-2">
-                                    <span className="text-lg">💡</span>
-                                    <p className="text-sm text-brand-teal/90 leading-relaxed text-left">
-                                        Mudel ennustas järgmise sõna, kasutades kõike, mida ta miljonitelt tekstidelt õppis.
-                                    </p>
-                                </div>
-                            </div>
-                        </>
+                        </div>
                     )}
 
                     {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row gap-3">
+                        {/* Korda Uuesti - Now Primary Green (Expert Review) */}
                         <button
                             onClick={() => jumpToStep('tokenization')}
-                            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-all text-sm min-h-[48px]"
+                            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-brand-teal text-black hover:bg-brand-teal/90 transition-all text-sm font-bold min-h-[48px] shadow-[0_0_20px_rgba(45,212,191,0.3)]"
                         >
                             <RotateCcw size={16} />
                             {t('completion.replay')}
                         </button>
+
+                        {/* Explore - Secondary */}
                         <button
                             onClick={() => router.push(`/${locale}/seed`)}
-                            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-brand-teal/20 hover:bg-brand-teal/30 border border-brand-teal/30 text-brand-teal hover:text-white transition-all text-sm font-semibold min-h-[48px]"
+                            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white hover:text-white transition-all text-sm font-medium min-h-[48px]"
                         >
                             <Sprout size={16} />
                             {t('completion.explore')}

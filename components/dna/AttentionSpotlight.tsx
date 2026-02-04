@@ -234,7 +234,7 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                             <div className="bg-slate-900/95 border border-brand-teal/30 backdrop-blur-md rounded-xl p-3 shadow-2xl w-auto whitespace-nowrap">
                                 <div className="flex items-center justify-between gap-4 mb-2">
                                     <div className="text-[10px] uppercase tracking-wider text-brand-teal/80 font-bold">
-                                        TUGEVAIM SEOS
+                                        {strongest.strength >= 0.8 ? tAttn('strongest') : tAttn('connection')}
                                     </div>
                                     <StrengthIndicator strength={strongest.strength} />
                                 </div>

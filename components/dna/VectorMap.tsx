@@ -54,7 +54,8 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
     const activeIndex = selectedIndex ?? hoveredIndex;
 
     // Pre-calculate positions and adjust for collisions (NEW-5)
-    const mappedPoints = vectors.map((v, i) => ({
+    // Safeguard: Slice vectors to match tokens length to avoid ghost dots (Sprint 7 Fix)
+    const mappedPoints = vectors.slice(0, tokens.length).map((v, i) => ({
         x: toSvg(v[0]),
         y: toSvg(1 - v[1]),
         color: pointColor(v[0], v[1]),
