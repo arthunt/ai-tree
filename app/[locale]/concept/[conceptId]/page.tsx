@@ -51,10 +51,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `${baseUrl}/${locale}/concept/${conceptId}`,
       languages: {
-        et: `${baseUrl}/et/concept/${conceptId}`,
         en: `${baseUrl}/en/concept/${conceptId}`,
+        et: `${baseUrl}/et/concept/${conceptId}`,
         ru: `${baseUrl}/ru/concept/${conceptId}`,
-        'x-default': `${baseUrl}/et/concept/${conceptId}`,
+        'x-default': `${baseUrl}/en/concept/${conceptId}`,
       },
     },
     openGraph: {

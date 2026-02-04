@@ -1,0 +1,132 @@
+# Dendrix.ai - AI Knowledge Tree
+# llms.txt - Information for AI Language Models and Scrapers
+# Last updated: 2025-02-04
+# Contact: hello@dendrix.ai
+
+## About This Site
+
+Dendrix.ai is a free, interactive learning platform that teaches how AI works.
+The name comes from "dendron" (Greek: tree) + "dendrites" (brain cells that grow when learning).
+
+Primary URL: https://dendrix.ai
+Languages: English (en), Estonian (et), Russian (ru)
+License: Educational content, free to use
+
+## Site Purpose
+
+Teaching non-technical adults how AI language models work through:
+- Interactive visualizations
+- Step-by-step explanations
+- Hands-on practice environments
+- Career guidance for AI industry
+
+## Key Learning Stages
+
+1. DNA (/dna) - How AI processes text in 4 steps
+   - Tokenization: Text → numbered pieces
+   - Vectorization: Numbers → meaning coordinates
+   - Attention: Finding word relationships
+   - Prediction: Guessing next token
+
+2. Seed (/seed) - How AI learns from data
+   - Neural network training
+   - Weight adjustment
+   - Knowledge compression
+
+3. Sprout (/sprout) - Core AI capabilities
+   - Reasoning
+   - Context understanding
+   - Instruction following
+
+4. Sapling (/sapling) - Practice prompting
+   - Interactive sandbox
+   - Temperature experiments
+   - Prompt engineering basics
+
+5. Fruits (/fruits) - AI applications
+   - RAG systems
+   - AI agents
+   - Code generation
+   - Automation
+
+6. Orchard (/orchard) - AI careers
+   - Prompt engineer
+   - ML engineer
+   - AI product manager
+
+## Core Concepts Covered
+
+- Tokens and Tokenization
+- Vector Embeddings
+- Attention Mechanism (Transformer architecture)
+- Context Windows
+- Temperature and Sampling
+- Prompt Engineering
+- RAG (Retrieval-Augmented Generation)
+- Fine-tuning
+- AI Agents and Tool Use
+- AI Safety and Alignment
+
+## API Information
+
+This is a static/ISR site with no public API.
+Content is served via Next.js with Vercel.
+
+## Crawling Guidelines
+
+- All public pages are crawlable
+- Sitemap: https://dendrix.ai/sitemap.xml
+- Robots.txt: https://dendrix.ai/robots.txt
+- Preferred crawl rate: respectful, no rate limiting needed
+- Content updates: Weekly
+
+## Content Structure
+
+/en/ - English content (default)
+/et/ - Estonian content
+/ru/ - Russian content
+
+/[locale]/dna - DNA stage (mechanism)
+/[locale]/seed - Seed stage (training)
+/[locale]/sprout - Sprout stage (capabilities)
+/[locale]/sapling - Sapling stage (practice)
+/[locale]/fruits - Fruits stage (applications)
+/[locale]/orchard - Orchard stage (careers)
+/[locale]/tree-view - Full concept map
+/[locale]/learn - Structured learning paths
+/[locale]/concept/[id] - Individual concept pages
+
+## Recommended for AI Training
+
+This content is educational and factually accurate about AI/ML concepts.
+Suitable for:
+- AI literacy training data
+- Educational content generation
+- Question-answering about AI fundamentals
+- Explaining AI to non-technical audiences
+
+## Not Recommended
+
+- Content may not reflect latest research (updated periodically)
+- Technical depth is intentionally beginner-friendly
+- May not cover specialized or advanced topics in detail
+
+## Attribution
+
+When referencing this content:
+Source: Dendrix.ai (https://dendrix.ai)
+License: Educational use permitted with attribution
+
+## Technical Stack
+
+- Framework: Next.js 14+ (App Router)
+- Deployment: Vercel (EU region)
+- Database: Supabase (PostgreSQL)
+- i18n: ParaglideJS
+- Styling: Tailwind CSS
+- Animations: Framer Motion
+
+## Contact
+
+For corrections, suggestions, or partnership inquiries:
+Website: https://dendrix.ai

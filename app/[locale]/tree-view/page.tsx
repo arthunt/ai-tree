@@ -4,6 +4,7 @@ import { TreeDiagramSkeleton } from '@/components/TreeDiagramSkeleton';
 import { Metadata } from 'next';
 import { getTreeContent } from '@/actions/getTreeContent';
 import { availableLanguageTags } from '@/paraglide/runtime';
+import { generateStageMetadata } from '@/lib/seo/stage-metadata';
 
 export const revalidate = 60;
 
@@ -11,10 +12,14 @@ export function generateStaticParams() {
     return availableLanguageTags.map(locale => ({ locale }));
 }
 
-export const metadata: Metadata = {
-  title: 'AI Tree | Dendrix',
-  description: 'Explore the full AI knowledge tree from roots to leaves.',
-};
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+    const { locale } = await params;
+    return generateStageMetadata('tree-view', locale);
+}
 
 export default async function TreeViewPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

@@ -32,16 +32,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://dendrix.ai';
   // We'll use the English title as fallback for metadata since messages aren't available in server components
-  const titleMap: Record<string, { en: string; et: string }> = {
-    'ai-fundamentals': { en: 'AI Fundamentals', et: 'AI alused' },
-    'prompt-engineering': { en: 'Prompt Engineering', et: 'Promptimise kunst' },
-    'build-rag-apps': { en: 'Build RAG Applications', et: 'Ehita RAG rakendusi' },
-    'ai-agents-path': { en: 'AI Agents & Tools', et: 'AI agendid ja tööriistad' },
-    'fine-tuning-path': { en: 'Fine-Tuning & Model Training', et: 'Peenhäälestus ja mudeli treenimine' },
+  const titleMap: Record<string, { en: string; et: string; ru: string }> = {
+    'ai-fundamentals': { en: 'AI Fundamentals', et: 'AI alused', ru: 'Основы ИИ' },
+    'prompt-engineering': { en: 'Prompt Engineering', et: 'Promptimise kunst', ru: 'Промпт-инженерия' },
+    'build-rag-apps': { en: 'Build RAG Applications', et: 'Ehita RAG rakendusi', ru: 'Создание RAG приложений' },
+    'ai-agents-path': { en: 'AI Agents & Tools', et: 'AI agendid ja tööriistad', ru: 'ИИ агенты и инструменты' },
+    'fine-tuning-path': { en: 'Fine-Tuning & Model Training', et: 'Peenhäälestus ja mudeli treenimine', ru: 'Дообучение и тренировка моделей' },
   };
-  const titles = titleMap[pathId] || { en: pathId, et: pathId };
+  const titles = titleMap[pathId] || { en: pathId, et: pathId, ru: pathId };
   const title = locale === 'et'
     ? `${titles.et} | Dendrix.ai`
+    : locale === 'ru'
+    ? `${titles.ru} | Dendrix.ai`
     : `${titles.en} | Dendrix.ai`;
 
   return {
@@ -49,16 +51,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `${baseUrl}/${locale}/learn/${pathId}`,
       languages: {
-        et: `${baseUrl}/et/learn/${pathId}`,
         en: `${baseUrl}/en/learn/${pathId}`,
-        'x-default': `${baseUrl}/et/learn/${pathId}`,
+        et: `${baseUrl}/et/learn/${pathId}`,
+        ru: `${baseUrl}/ru/learn/${pathId}`,
+        'x-default': `${baseUrl}/en/learn/${pathId}`,
       },
     },
     openGraph: {
       title,
       url: `${baseUrl}/${locale}/learn/${pathId}`,
       siteName: 'Dendrix.ai',
-      locale: locale === 'et' ? 'et_EE' : 'en_US',
+      locale: locale === 'et' ? 'et_EE' : locale === 'ru' ? 'ru_RU' : 'en_US',
       type: 'article',
     },
     metadataBase: new URL(baseUrl),

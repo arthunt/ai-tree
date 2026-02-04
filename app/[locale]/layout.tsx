@@ -55,10 +55,10 @@ export async function generateMetadata({
     alternates: {
       canonical: `${BASE_URL}/${locale}`,
       languages: {
-        et: `${BASE_URL}/et`,
         en: `${BASE_URL}/en`,
+        et: `${BASE_URL}/et`,
         ru: `${BASE_URL}/ru`,
-        'x-default': `${BASE_URL}/et`,
+        'x-default': `${BASE_URL}/en`,
       },
     },
     openGraph: {
