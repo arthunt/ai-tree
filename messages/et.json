@@ -1321,7 +1321,7 @@
       "clickToContinue": "Klõpsa jätkamiseks"
     },
     "attention": {
-      "strongestLink": "{from} → {to}",
+      "strongestLink": "Tugevaim seos: {from} → {to}",
       "strength": "Tugevus",
       "whyConnected": "Miks seotud"
     },
@@ -1339,7 +1339,9 @@
     "visualization": {
       "dimension1": "mõõde 1",
       "dimension2": "mõõde 2",
-      "meaningDistance": "tähendus = kaugus"
+      "meaningDistance": "tähendus = kaugus",
+      "thicknessLabel": "Joone paksus = Tähelepanu tugevus",
+      "tapToSpotlight": "(Katsu sõna, et näha fookust)"
     },
     "summary": {
       "tokenization": "Tekst tükeldatud {count} osaks",

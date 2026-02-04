@@ -136,33 +136,54 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                         : isHighlighted ? Math.max(0.5, w.strength) : 0.06;
 
                     return (
-                        <motion.path
-                            key={`arc-${i}`}
-                            d={arcPath(x1, x2)}
-                            stroke={color}
-                            strokeWidth={Math.max(1, w.strength * 4)}
-                            fill="none"
-                            strokeLinecap="round"
-                            opacity={opacity}
-                            initial={{ pathLength: 0, opacity: 0 }}
-                            animate={{
-                                pathLength: 1,
-                                opacity
-                            }}
-                            transition={{
-                                pathLength: {
-                                    duration: 0.8,
-                                    delay: i * 0.15,
-                                    ease: "easeOut"
-                                },
-                                opacity: { duration: 0.2 }
-                            }}
-                            style={{
-                                filter: isHighlighted && w.strength > 0.7
-                                    ? `drop-shadow(0 0 4px ${color})`
-                                    : "none"
-                            }}
-                        />
+                        <g key={`arc-group-${i}`}>
+                            <motion.path
+                                id={`arc-${i}`}
+                                d={arcPath(x1, x2)}
+                                stroke={color}
+                                strokeWidth={Math.max(1.5, w.strength * 5)}
+                                fill="none"
+                                strokeLinecap="round"
+                                opacity={opacity}
+                                initial={{ pathLength: 0, opacity: 0 }}
+                                animate={{
+                                    pathLength: 1,
+                                    opacity
+                                }}
+                                transition={{
+                                    pathLength: {
+                                        duration: 1.0,
+                                        delay: i * 0.2,
+                                        ease: "easeOut"
+                                    },
+                                    opacity: { duration: 0.2 }
+                                }}
+                                style={{
+                                    filter: isHighlighted && w.strength > 0.7
+                                        ? `drop-shadow(0 0 6px ${color})`
+                                        : "none"
+                                }}
+                            />
+                            {/* Traveling Pulse for strong connections */}
+                            {isActive && w.strength > 0.6 && (
+                                <motion.circle
+                                    r={3}
+                                    fill={color}
+                                    initial={{ offsetDistance: "0%" }}
+                                    animate={{ offsetDistance: "100%" }}
+                                    transition={{
+                                        duration: 1.5,
+                                        repeat: Infinity,
+                                        ease: "easeInOut",
+                                        delay: i * 0.2 + 0.5
+                                    }}
+                                    style={{
+                                        offsetPath: `path('${arcPath(x1, x2)}')`,
+                                        opacity: isHighlighted ? 1 : 0.1
+                                    }}
+                                />
+                            )}
+                        </g>
                     );
                 })}
 

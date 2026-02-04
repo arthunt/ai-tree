@@ -141,18 +141,33 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                     if (nearestIdx < 0) return null;
                     const nv = vectors[nearestIdx];
                     return (
-                        <motion.line
-                            x1={toSvg(hv[0])}
-                            y1={toSvg(1 - hv[1])}
-                            x2={toSvg(nv[0])}
-                            y2={toSvg(1 - nv[1])}
-                            stroke="rgba(45, 212, 191, 0.4)"
-                            strokeWidth={1}
-                            strokeDasharray="3 3"
-                            initial={{ pathLength: 0 }}
-                            animate={{ pathLength: 1 }}
-                            transition={{ duration: 0.3 }}
-                        />
+                        <g>
+                            {/* Neighbor Highlight Ring */}
+                            <motion.circle
+                                cx={toSvg(nv[0])}
+                                cy={toSvg(1 - nv[1])}
+                                r={10}
+                                fill="none"
+                                stroke="rgba(45, 212, 191, 0.4)"
+                                strokeWidth={2}
+                                initial={{ opacity: 0, scale: 0.5 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.3 }}
+                            />
+                            {/* Connection Line */}
+                            <motion.line
+                                x1={toSvg(hv[0])}
+                                y1={toSvg(1 - hv[1])}
+                                x2={toSvg(nv[0])}
+                                y2={toSvg(1 - nv[1])}
+                                stroke="rgb(45, 212, 191)"
+                                strokeWidth={2.5}
+                                strokeDasharray="4 4"
+                                initial={{ pathLength: 0, opacity: 0.5 }}
+                                animate={{ pathLength: 1, opacity: 1 }}
+                                transition={{ duration: 0.5 }}
+                            />
+                        </g>
                     );
                 })()}
 

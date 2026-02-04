@@ -156,7 +156,7 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
                                         <span className="text-white">{slice.text}</span>
                                         {stage === 'cutting' && i < slices.length - 1 && (
                                             <motion.span
-                                                className="absolute right-0 top-0 bottom-0 w-0.5 h-full rounded-full bg-brand-teal/80 shadow-[0_0_8px_rgba(45,212,191,0.8)]"
+                                                className="absolute right-0 top-0 bottom-0 w-1 md:w-0.5 h-full rounded-full bg-brand-teal shadow-[0_0_12px_rgba(45,212,191,1)] z-10"
                                                 initial={{ scaleY: 0, opacity: 0 }}
                                                 animate={{ scaleY: 1, opacity: 1 }}
                                                 transition={{ duration: 0.2, delay: i * 0.05 }}

@@ -134,36 +134,37 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             const isEt = locale === 'et';
             const isRu = locale === 'ru';
 
-            // Cluster 1: Royalty
-            const royalty = isEt
-                ? ['kuningas', 'kuninganna', 'prints', 'printsess', 'kroon']
-                : isRu
-                    ? ['король', 'королева', 'принц', 'принцесса']
-                    : ['king', 'queen', 'prince', 'princess', 'royal'];
-
-            if (royalty.some(k => lower.includes(k))) {
-                return [0.7 + (Math.random() * 0.1), 0.7 + (Math.random() * 0.1)];
-            }
-
-            // Cluster 2: Fruit/Nature
+            // Cluster 1: Nature/Forest (Cultural Adaptation for Estonia)
+            // Replaces generic "Royalty" (King/Queen) with something more "Dendrix" aligned
             const nature = isEt
-                ? ['õun', 'banaan', 'puu', 'mets', 'loodus']
+                ? ['mets', 'puu', 'juur', 'seen', 'sammal', 'känd']
                 : isRu
-                    ? ['яблоко', 'банан', 'фрукт', 'дерево', 'лес']
-                    : ['apple', 'banana', 'fruit', 'tree', 'forest'];
+                    ? ['лес', 'дерево', 'корень', 'гриб']
+                    : ['forest', 'tree', 'root', 'mushroom', 'moss'];
 
             if (nature.some(k => lower.includes(k))) {
-                return [0.2 + (Math.random() * 0.1), 0.2 + (Math.random() * 0.1)];
+                return [0.75 + (Math.random() * 0.1), 0.75 + (Math.random() * 0.1)];
             }
 
-            // Cluster 3: AI
+            // Cluster 2: Technology/AI
             const tech = isEt
-                ? ['ai', 'tehisintellekt', 'robot', 'tulevik', 'masin']
+                ? ['ai', 'tehisintellekt', 'robot', 'arvuti', 'kood']
                 : isRu
-                    ? ['ии', 'интеллект', 'робот', 'будущее']
-                    : ['ai', 'intelligence', 'robot', 'future'];
+                    ? ['ии', 'интеллект', 'робот', 'компьютер']
+                    : ['ai', 'intelligence', 'robot', 'computer', 'code'];
 
             if (tech.some(k => lower.includes(k))) {
+                return [0.25 + (Math.random() * 0.1), 0.25 + (Math.random() * 0.1)];
+            }
+
+            // Cluster 3: Everyday/Home (Contrast)
+            const home = isEt
+                ? ['kodu', 'laud', 'tool', 'aken', 'uks']
+                : isRu
+                    ? ['дом', 'стол', 'стул', 'окно']
+                    : ['home', 'table', 'chair', 'window', 'door'];
+
+            if (home.some(k => lower.includes(k))) {
                 return [0.8 + (Math.random() * 0.1), 0.2 + (Math.random() * 0.1)];
             }
 
@@ -183,10 +184,12 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
 
                 // Strong Connections
                 if (prev === 'artificial' && current === 'intelligence') strength = 0.95;
+                if (prev === 'tehis' && current === 'intellekt') strength = 0.98; // Estonian compound split
                 if (prev === 'machine' && current === 'learning') strength = 0.95;
-                if (prev === 'large' && current === 'language') strength = 0.95;
-                if (prev === 'neural' && current === 'network') strength = 0.95;
-                if (prev === 'bank' && (current === 'account' || current === 'river')) strength = 0.8;
+                if (prev === 'masin' && current === 'õpe') strength = 0.95;
+
+                // Nature metaphors
+                if ((prev === 'mets' || prev === 'puu') && (current === 'kohiseb' || current === 'kasvab')) strength = 0.85;
 
                 if (strength > 0.4) {
                     weights.push({ fromIndex: i, toIndex: j, strength });
@@ -205,10 +208,10 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         // Default Candidates
         let candidates = isEt
             ? [
-                { token: 'ja', probability: 0.1 },
-                { token: 'on', probability: 0.1 },
-                { token: 'kui', probability: 0.1 },
-                { token: 'tulevik', probability: 0.05 }
+                { token: 'on', probability: 0.15 },
+                { token: 'ja', probability: 0.12 },
+                { token: 'kui', probability: 0.10 },
+                { token: 'mis', probability: 0.08 }
             ]
             : [
                 { token: 'and', probability: 0.1 },
@@ -218,46 +221,28 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             ];
 
         // Override for specific contexts
-        if (lastToken === 'artificial' || lastToken === 'tehisintellekt') {
-            // In English artificial -> intelligence. In Estonian tehisintellekt is one word, maybe next is 'on'?
+        if (lastToken === 'tehisintellekt') {
             if (isEt) {
                 candidates = [
-                    { token: 'on', probability: 0.6 },
-                    { token: 'suudab', probability: 0.2 },
-                    { token: 'muudab', probability: 0.1 }
-                ];
-            } else {
-                candidates = [
-                    { token: 'intelligence', probability: 0.92 },
-                    { token: 'flower', probability: 0.02 },
-                    { token: 'flavor', probability: 0.01 },
-                    { token: 'selection', probability: 0.05 }
+                    { token: 'on', probability: 0.65 },
+                    { token: 'suudab', probability: 0.20 },
+                    { token: 'muudab', probability: 0.10 }
                 ];
             }
-        } else if (lastToken === 'machine' || lastToken === 'masinõpe') {
+        } else if (lastToken === 'mets' || lastToken === 'puu') {
             if (isEt) {
                 candidates = [
-                    { token: 'on', probability: 0.5 },
-                    { token: 'töötab', probability: 0.3 }
+                    { token: 'kohiseb', probability: 0.55 },
+                    { token: 'kasvab', probability: 0.35 },
+                    { token: 'on', probability: 0.08 }
                 ];
-            } else {
+            }
+        } else if (lastToken === 'machine') {
+            if (!isEt) {
                 candidates = [
                     { token: 'learning', probability: 0.88 },
                     { token: 'gun', probability: 0.05 },
-                    { token: 'turning', probability: 0.02 },
-                    { token: 'washable', probability: 0.05 }
-                ];
-            }
-        } else if (lastToken === 'jingle' || lastToken === 'aisakell') {
-            if (isEt) {
-                candidates = [
-                    { token: 'tilla-talla', probability: 0.99 }
-                ];
-            } else {
-                candidates = [
-                    { token: 'bells', probability: 0.99 },
-                    { token: 'balls', probability: 0.005 },
-                    { token: 'smells', probability: 0.005 }
+                    { token: 'turning', probability: 0.02 }
                 ];
             }
         }
