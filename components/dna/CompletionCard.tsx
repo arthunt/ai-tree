@@ -68,17 +68,29 @@ export function CompletionCard() {
 
                     {/* Winner prediction summary */}
                     {winner && (
-                        <div className="bg-white/5 rounded-xl p-4 mb-6 text-center">
-                            <span className="text-xs text-brand-teal/60 font-mono uppercase tracking-widest">
-                                {t('completion.predicted')}
-                            </span>
-                            <div className="mt-1 text-2xl font-bold text-brand-teal">
-                                &ldquo;{winner.token}&rdquo;
-                                <span className="text-sm text-brand-teal/60 ml-2">
-                                    {Math.round(winner.probability * 100)}%
+                        <>
+                            <div className="bg-white/5 rounded-xl p-4 mb-6 text-center">
+                                <span className="text-xs text-brand-teal/60 font-mono uppercase tracking-widest">
+                                    {t('completion.predicted')}
                                 </span>
+                                <div className="mt-1 text-2xl font-bold text-brand-teal">
+                                    &ldquo;{winner.token}&rdquo;
+                                    <span className="text-sm text-brand-teal/60 ml-2">
+                                        {Math.round(winner.probability * 100)}%
+                                    </span>
+                                </div>
                             </div>
-                        </div>
+
+                            {/* Educational Explanation (Expert Review) */}
+                            <div className="bg-brand-teal/10 rounded-xl p-4 mb-6 border border-brand-teal/20">
+                                <div className="flex gap-2">
+                                    <span className="text-lg">💡</span>
+                                    <p className="text-sm text-brand-teal/90 leading-relaxed text-left">
+                                        Mudel ennustas järgmise sõna, kasutades kõike, mida ta miljonitelt tekstidelt õppis.
+                                    </p>
+                                </div>
+                            </div>
+                        </>
                     )}
 
                     {/* CTA Buttons */}

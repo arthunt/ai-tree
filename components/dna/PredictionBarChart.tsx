@@ -130,10 +130,10 @@ export function PredictionBarChart({ predictions, isActive, contextText }: Predi
             { t: 5900, fn: () => setVisibleCount(4) },
             // Pause for comparison
             { t: 6700, fn: () => setStage("pause") },
-            // Eliminate
-            { t: 9700, fn: () => setStage("eliminating") },
+            // Eliminate - Extended pause (4s total)
+            { t: 10700, fn: () => setStage("eliminating") },
             // Winner
-            { t: 11200, fn: () => setStage("winner") }
+            { t: 12200, fn: () => setStage("winner") }
         ];
 
         const timeouts: NodeJS.Timeout[] = [];

@@ -167,18 +167,7 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                     const nv = vectors[nearestIdx];
                     return (
                         <g>
-                            {/* Neighbor Highlight Ring */}
-                            <motion.circle
-                                cx={toSvg(nv[0])}
-                                cy={toSvg(1 - nv[1])}
-                                r={10}
-                                fill="none"
-                                stroke="rgba(45, 212, 191, 0.4)"
-                                strokeWidth={2}
-                                initial={{ opacity: 0, scale: 0.5 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.3 }}
-                            />
+                            {/* Neighbor Highlight Ring - REMOVED to prevent confusion */}
                             {/* Connection Line */}
                             <motion.line
                                 x1={toSvg(hv[0])}

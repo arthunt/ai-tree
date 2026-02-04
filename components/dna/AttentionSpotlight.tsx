@@ -55,9 +55,9 @@ function arcPath(x1: number, x2: number): string {
 }
 
 function strengthColor(s: number): string {
-    if (s >= 0.8) return "#2DD4BF";    // brand-teal-400
-    if (s >= 0.5) return "#22D3EE";    // brand-cyan
-    return "#94A3B8";                  // slate-400
+    if (s >= 0.8) return "#22c55e";    // Bright Green (Strong)
+    if (s >= 0.5) return "#86efac";    // Muted Green (Medium)
+    return "#94a3af";                  // Gray (Weak)
 }
 
 // Strength level indicator (universal across cultures)

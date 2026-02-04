@@ -188,39 +188,39 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
                     >
                         <div className="flex flex-wrap gap-3 justify-center perspective-1000">
                             {subTokens.map((token, i) => (
-                                <div key={i} className="relative h-10 min-w-[60px]" style={{ perspective: '1000px' }}>
+                                <div key={i} className="relative h-10 min-w-[60px]">
+                                    {/* Text Token (Fades out) */}
                                     <motion.div
-                                        className="w-full h-full relative preserve-3d"
-                                        initial={{ rotateX: 0 }}
+                                        className="absolute inset-0 flex items-center justify-center px-3 bg-brand-teal/10 border border-brand-teal/30 rounded-lg text-brand-teal font-mono text-sm shadow-sm backdrop-blur-sm"
+                                        initial={{ opacity: 1, scale: 1 }}
                                         animate={{
-                                            rotateX: stage === 'numbering' || stage === 'done' ? 180 : 0,
-                                            y: stage === 'done' ? [0, -4, 0] : 0 // Gentle float at end
+                                            opacity: stage === 'numbering' || stage === 'done' ? 0 : 1,
+                                            scale: stage === 'numbering' || stage === 'done' ? 0.8 : 1
+                                        }}
+                                        transition={{ duration: 0.4, delay: i * 0.1 }}
+                                    >
+                                        {token}
+                                    </motion.div>
+
+                                    {/* Token ID (Fades in) */}
+                                    <motion.div
+                                        className="absolute inset-0 flex items-center justify-center px-3 bg-brand-purple/20 border border-brand-purple/50 rounded-lg text-brand-purple font-bold text-sm shadow-[0_0_15px_rgba(168,85,247,0.3)] backdrop-blur-md"
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        animate={{
+                                            opacity: stage === 'numbering' || stage === 'done' ? 1 : 0,
+                                            scale: stage === 'numbering' || stage === 'done' ? 1 : 0.8,
+                                            y: stage === 'done' ? [0, -4, 0] : 0
                                         }}
                                         transition={{
-                                            duration: 0.8,
-                                            delay: i * 0.3, // Slower staggered flip (300ms)
-                                            type: "spring",
-                                            stiffness: 180,
-                                            damping: 20
+                                            duration: 0.4,
+                                            delay: i * 0.1, // Stagger
                                         }}
-                                        style={{ transformStyle: 'preserve-3d' }}
+                                        style={{
+                                            fontFamily: "'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace",
+                                            fontVariantNumeric: 'tabular-nums'
+                                        }}
                                     >
-                                        {/* FRONT: Text Token */}
-                                        <div className="absolute inset-0 backface-hidden flex items-center justify-center px-3 bg-brand-teal/10 border border-brand-teal/30 rounded-lg text-brand-teal font-mono text-sm shadow-sm backdrop-blur-sm">
-                                            {token}
-                                        </div>
-
-                                        {/* BACK: Token ID (The Matrix Reveal) */}
-                                        <div
-                                            className="absolute inset-0 backface-hidden flex items-center justify-center px-3 bg-brand-purple/20 border border-brand-purple/50 rounded-lg text-brand-purple font-bold text-sm shadow-[0_0_15px_rgba(168,85,247,0.3)] backdrop-blur-md"
-                                            style={{
-                                                transform: 'rotateX(180deg)',
-                                                fontFamily: "'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace",
-                                                fontVariantNumeric: 'tabular-nums'
-                                            }}
-                                        >
-                                            {getTokenId(token)}
-                                        </div>
+                                        {getTokenId(token)}
                                     </motion.div>
                                 </div>
                             ))}

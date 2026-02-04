@@ -102,7 +102,7 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
             case 'tokenization':
                 return tSummary('tokenization', { count: String(subTokens.length) });
             case 'vectorizing':
-                return tSummary('vectorizing', { count: String(vectors.length * 2) });
+                return tSummary('vectorizing', { count: String(vectors.length) });
             case 'attention':
                 return tSummary('attention', { count: String(attentionWeights.length) });
             case 'prediction':
@@ -342,6 +342,7 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
                                     }}
                                     className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white text-sm font-medium transition-all min-h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
                                     aria-label={tAccordion('deeper')}
+                                    style={{ display: isPlaying ? 'none' : 'flex' }}
                                 >
                                     <Lightbulb size={16} aria-hidden="true" />
                                     {tAccordion('deeper')}
@@ -493,8 +494,8 @@ export function DNAVerticalStack() {
             >
                 {/* Step Cards */}
                 {ACTIVE_STEPS.map((step, index) => {
-                    // NEW-1: Hide future locked cards during simulation to prevent overflow
-                    if (isPlaying && index > currentStepIndex) {
+                    // NEW-1: Hide future locked cards during simulation, AND hide all cards on idle start screen
+                    if ((currentStep === 'idle' && !isComplete) || (isPlaying && index > currentStepIndex)) {
                         return null;
                     }
 
