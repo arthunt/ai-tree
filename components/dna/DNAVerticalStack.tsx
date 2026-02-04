@@ -397,7 +397,8 @@ export function DNAVerticalStack() {
         hasData,
         viewMode,
         runSimulation,
-        dismissOrientation
+        dismissOrientation,
+        isPlaying
     } = useDNA();
 
     const stackRef = useRef<HTMLDivElement>(null);
@@ -460,9 +461,9 @@ export function DNAVerticalStack() {
     const isEt = locale === 'et';
     const isRu = locale === 'ru';
 
-    // Localized Example Prompt (Nature for Estonia)
+    // Localized Example Prompt (Nature/Animals for Estonia)
     const examplePrompt = isEt
-        ? "Mets ja puu on elu"
+        ? "Koer on inimese parim"
         : isRu
             ? "Лес и дерево"
             : "The king wore a crown";
@@ -472,6 +473,8 @@ export function DNAVerticalStack() {
         dismissOrientation();
         runSimulation(examplePrompt);
     };
+
+    const currentStepIndex = ACTIVE_STEPS.indexOf(currentStep);
 
     return (
         <div ref={stackRef} className={cn(
@@ -500,24 +503,31 @@ export function DNAVerticalStack() {
                 )}
             >
                 {/* Step Cards */}
-                {ACTIVE_STEPS.map((step) => (
-                    <div
-                        key={step}
-                        ref={(el) => { cardRefs.current[step] = el; }}
-                        className={cn(
-                            "scroll-mt-24 transition-all",
-                            viewMode === 'grid' ? "col-span-1" : "col-span-1"
-                        )}
-                    >
-                        <AccordionCard
-                            step={step}
-                            state={cardStates[step]}
-                            onExpand={() => handleExpand(step)}
-                            onNext={handleNext}
-                            onDeepDive={() => openDeepDive(step)}
-                        />
-                    </div>
-                ))}
+                {ACTIVE_STEPS.map((step, index) => {
+                    // NEW-1: Hide future locked cards during simulation to prevent overflow
+                    if (isPlaying && index > currentStepIndex) {
+                        return null;
+                    }
+
+                    return (
+                        <div
+                            key={step}
+                            ref={(el) => { cardRefs.current[step] = el; }}
+                            className={cn(
+                                "scroll-mt-24 transition-all",
+                                viewMode === 'grid' ? "col-span-1" : "col-span-1"
+                            )}
+                        >
+                            <AccordionCard
+                                step={step}
+                                state={cardStates[step]}
+                                onExpand={() => handleExpand(step)}
+                                onNext={handleNext}
+                                onDeepDive={() => openDeepDive(step)}
+                            />
+                        </div>
+                    );
+                })}
             </motion.div>
 
             {/* Completion Card (after prediction step) */}

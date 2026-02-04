@@ -1304,7 +1304,7 @@
       "title": "Kuidas see töötab",
       "instruction": "Sisesta tekst ülal ja vajuta ▶, et näha, kuidas AI seda loeb.",
       "description": "Jälgi, kuidas sinu sõnad muunduvad läbi 4 sammu: T → V → A → P",
-      "example": "Proovi: \"Mets ja puu on elu\"",
+      "example": "Proovi: \"Koer on inimese parim\"",
       "tapToTry": "Puuduta selle näite proovimiseks"
     },
     "accordion": {
@@ -1328,7 +1328,8 @@
     "prediction": {
       "winner": "Võitja",
       "eliminated": "Välistatud",
-      "confidence": "Kindlus"
+      "confidence": "Kindlus",
+      "explanation": "💡 Mudel luges lauset ja ennustas, milline sõna tuleb JÄRGMISENA. Ta on \"lugenud\" miljoneid tekste ja õppinud, et \"parim\" järel tuleb enamasti \"sõber\"."
     },
     "animation": {
       "slicing": "✂️ Teksti lõikamine...",

@@ -32,15 +32,15 @@ interface AttentionSpotlightProps {
     isActive: boolean;
 }
 
-const WIDTH = 340; // Wider for better spacing
-const HEIGHT = 220; // Increased to center content and prevent clipping
-const TOKEN_Y = 150; // Move dots up to allow space for labels below
-const MIN_ARC_HEIGHT = 40; // Taller arcs
+const WIDTH = 340;
+const HEIGHT = 240; // Increased height
+const TOKEN_Y = 40; // Dots at TOP now (NEW-3)
+const MIN_ARC_HEIGHT = 40;
 const LABEL_SHOW_DELAY = 1500;
 
 function tokenX(index: number, total: number): number {
     if (total <= 1) return WIDTH / 2;
-    const pad = 40; // More padding from edges
+    const pad = 35;
     const usable = WIDTH - pad * 2;
     return pad + (index / (total - 1)) * usable;
 }
@@ -48,24 +48,32 @@ function tokenX(index: number, total: number): number {
 function arcPath(x1: number, x2: number): string {
     const midX = (x1 + x2) / 2;
     const dist = Math.abs(x1 - x2);
-    // Taller arcs for stronger connections (visual cheat)
-    const arcH = Math.min(MIN_ARC_HEIGHT + dist * 0.6, 100);
-    const cy = TOKEN_Y - arcH;
+    // Taller arcs for stronger connections
+    const arcH = Math.min(MIN_ARC_HEIGHT + dist * 0.6, 120);
+    const cy = TOKEN_Y + arcH; // Curve DOWN (NEW-3)
     return `M ${x1} ${TOKEN_Y} Q ${midX} ${cy} ${x2} ${TOKEN_Y}`;
 }
 
 function strengthColor(s: number): string {
-    // Brighter colors for high contrast
     if (s >= 0.8) return "#2DD4BF";    // brand-teal-400
-    if (s >= 0.5) return "#22D3EE";    // brand-cyan-400
+    if (s >= 0.5) return "#22D3EE";    // brand-cyan
     return "#94A3B8";                  // slate-400
 }
 
 // Strength level indicator (universal across cultures)
-function strengthLevel(s: number): 1 | 2 | 3 {
-    if (s >= 0.8) return 3; // Strong
-    if (s >= 0.5) return 2; // Medium
-    return 1; // Weak
+function StrengthIndicator({ strength }: { strength: number }) {
+    const bars = 4;
+    return (
+        <div className="flex gap-0.5 items-end h-3">
+            {[...Array(bars)].map((_, i) => (
+                <div
+                    key={i}
+                    className={`w-1 rounded-sm ${i / bars < strength ? 'bg-brand-teal' : 'bg-white/10'}`}
+                    style={{ height: `${(i + 1) * 25}%` }}
+                />
+            ))}
+        </div>
+    );
 }
 
 export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotlightProps) {
@@ -73,278 +81,181 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
     const tAttn = useTranslations('dna.attention');
     const [hoveredToken, setHoveredToken] = useState<number | null>(null);
     const [selectedToken, setSelectedToken] = useState<number | null>(null);
-    const [showExplanation, setShowExplanation] = useState(false);
 
-    // Active token: selected (tap) takes priority over hovered (mouse)
-    const activeToken = selectedToken ?? hoveredToken;
+    // Auto-play attention "flashlight" (NEW: improved logic)
+    const [demoIndex, setDemoIndex] = useState(0);
+    const [isDemoActive, setIsDemoActive] = useState(true);
 
-    // Find the strongest connection (the "winner")
-    const strongestConnection = useMemo(() => {
-        if (weights.length === 0) return null;
-        return weights.reduce((max, w) => w.strength > max.strength ? w : max, weights[0]);
-    }, [weights]);
+    const activeToken = selectedToken ?? hoveredToken ?? (isDemoActive ? demoIndex : null);
 
-    // Show explanation after animation completes
+    // Filter weights relevant to current active token
+    const activeWeights = useMemo(() => {
+        if (activeToken === null) return [];
+        return weights.filter(w => w.fromIndex === activeToken || w.toIndex === activeToken);
+    }, [activeToken, weights]);
+
+    // Derived: Strongest connection for the tooltip
+    const strongest = activeWeights.length > 0 ? activeWeights.sort((a, b) => b.strength - a.strength)[0] : null;
+
     useEffect(() => {
         if (!isActive) {
-            setShowExplanation(false);
+            setDemoIndex(0);
             return;
         }
-        const timer = setTimeout(() => setShowExplanation(true), LABEL_SHOW_DELAY);
-        return () => clearTimeout(timer);
-    }, [isActive, weights]);
 
-    // Pre-compute which arcs connect to the active token
-    const connectedArcs = useMemo(() => {
-        if (activeToken === null) return null;
-        return new Set(
-            weights
-                .filter(w => w.fromIndex === activeToken || w.toIndex === activeToken)
-                .map((_, i) => weights.indexOf(_))
-        );
-    }, [activeToken, weights]);
-
-    // Token indices that are connected to the active one
-    const connectedTokens = useMemo(() => {
-        if (activeToken === null) return null;
-        const set = new Set<number>();
-        set.add(activeToken);
-        for (const w of weights) {
-            if (w.fromIndex === activeToken) set.add(w.toIndex);
-            if (w.toIndex === activeToken) set.add(w.fromIndex);
+        // Disable demo on interaction
+        if (hoveredToken !== null || selectedToken !== null) {
+            setIsDemoActive(false);
         }
-        return set;
-    }, [activeToken, weights]);
+    }, [isActive, hoveredToken, selectedToken]);
 
-    if (!isActive || tokens.length === 0) return null;
+    // Demo loop
+    useEffect(() => {
+        if (!isActive || !isDemoActive) return;
+        const interval = setInterval(() => {
+            setDemoIndex(prev => (prev + 1) % tokens.length);
+        }, 2200);
+        return () => clearInterval(interval);
+    }, [isActive, isDemoActive, tokens.length]);
+
+
+    if (!isActive) return null;
 
     return (
         <div className="w-full flex flex-col items-center">
-            <svg
-                width={WIDTH}
-                height={HEIGHT}
-                viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-                className="overflow-visible"
-            >
-                {/* Arcs */}
-                {weights.map((w, i) => {
-                    const x1 = tokenX(w.fromIndex, tokens.length);
-                    const x2 = tokenX(w.toIndex, tokens.length);
-                    const color = strengthColor(w.strength);
-                    const isHighlighted = connectedArcs === null || connectedArcs.has(i);
-                    const opacity = connectedArcs === null
-                        ? Math.max(0.3, w.strength)
-                        : isHighlighted ? Math.max(0.5, w.strength) : 0.06;
+            <div className="relative">
+                <svg
+                    width={WIDTH}
+                    height={HEIGHT}
+                    className="overflow-visible"
+                    style={{ pointerEvents: 'none' }}
+                >
+                    {/* Arcs Layer */}
+                    <AnimatePresence>
+                        {activeWeights.map((w, i) => {
+                            const x1 = tokenX(w.fromIndex, tokens.length);
+                            const x2 = tokenX(w.toIndex, tokens.length);
+                            const color = strengthColor(w.strength);
 
-                    return (
-                        <g key={`arc-group-${i}`}>
-                            <motion.path
-                                id={`arc-${i}`}
-                                d={arcPath(x1, x2)}
-                                stroke={color}
-                                strokeWidth={Math.max(1.5, w.strength * 5)}
-                                fill="none"
-                                strokeLinecap="round"
-                                opacity={opacity}
-                                initial={{ pathLength: 0, opacity: 0 }}
-                                animate={{
-                                    pathLength: 1,
-                                    opacity
-                                }}
-                                transition={{
-                                    pathLength: {
-                                        duration: 1.0,
-                                        delay: i * 0.2,
-                                        ease: "easeOut"
-                                    },
-                                    opacity: { duration: 0.2 }
-                                }}
-                                style={{
-                                    filter: isHighlighted && w.strength > 0.7
-                                        ? `drop-shadow(0 0 6px ${color})`
-                                        : "none"
-                                }}
-                            />
-                            {/* Traveling Pulse for strong connections */}
-                            {isActive && w.strength > 0.6 && (
+                            return (
+                                <g key={`${w.fromIndex}-${w.toIndex}`}>
+                                    <motion.path
+                                        d={arcPath(x1, x2)}
+                                        fill="none"
+                                        stroke={color}
+                                        strokeWidth={Math.max(2, w.strength * 6)} // Thicker
+                                        strokeLinecap="round"
+                                        initial={{ pathLength: 0, opacity: 0 }}
+                                        animate={{ pathLength: 1, opacity: 0.8 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.4 }}
+                                    />
+                                    {/* Pulse */}
+                                    {w.strength > 0.6 && (
+                                        <motion.circle
+                                            r={3}
+                                            fill={color}
+                                            initial={{ offsetDistance: "0%" }}
+                                            animate={{ offsetDistance: "100%" }}
+                                            transition={{
+                                                duration: 1.2,
+                                                repeat: Infinity,
+                                                ease: "linear"
+                                            }}
+                                            style={{ offsetPath: `path("${arcPath(x1, x2)}")` }}
+                                        />
+                                    )}
+                                </g>
+                            );
+                        })}
+                    </AnimatePresence>
+
+                    {/* Tokens Layer */}
+                    {tokens.map((token, i) => {
+                        const x = tokenX(i, tokens.length);
+                        const isDimmed = activeToken !== null && activeToken !== i && !activeWeights.some(w => w.fromIndex === i || w.toIndex === i);
+
+                        return (
+                            <g key={i} style={{ pointerEvents: 'auto' }}>
+                                {/* Hit area */}
+                                <rect
+                                    x={x - 24}
+                                    y={0}
+                                    width={48}
+                                    height={80}
+                                    fill="transparent"
+                                    className="cursor-pointer"
+                                    onMouseEnter={() => setHoveredToken(i)}
+                                    onMouseLeave={() => setHoveredToken(null)}
+                                    onClick={() => setSelectedToken(selectedToken === i ? null : i)}
+                                />
+
+                                {/* Token dot */}
                                 <motion.circle
-                                    r={3}
-                                    fill={color}
-                                    initial={{ offsetDistance: "0%" }}
-                                    animate={{ offsetDistance: "100%" }}
-                                    transition={{
-                                        duration: 1.5,
-                                        repeat: Infinity,
-                                        ease: "easeInOut",
-                                        delay: i * 0.2 + 0.5
-                                    }}
+                                    cx={x}
+                                    cy={TOKEN_Y}
+                                    r={activeToken === i ? 6 : 4}
+                                    fill={isDimmed ? "rgba(255,255,255,0.15)" : "#2DD4BF"}
+                                    initial={{ r: 0 }}
+                                    animate={{ r: activeToken === i ? 6 : 4 }}
+                                    transition={{ type: "spring", stiffness: 300 }}
                                     style={{
-                                        offsetPath: `path('${arcPath(x1, x2)}')`,
-                                        opacity: isHighlighted ? 1 : 0.1
+                                        filter: activeToken === i ? "drop-shadow(0 0 8px #2DD4BF)" : "none"
                                     }}
                                 />
-                            )}
-                        </g>
-                    );
-                })}
 
-                {/* Token labels at bottom */}
-                {tokens.map((token, i) => {
-                    const x = tokenX(i, tokens.length);
-                    const isDimmed = connectedTokens !== null && !connectedTokens.has(i);
-                    const connectionCount = weights.filter(w => w.fromIndex === i || w.toIndex === i).length;
-
-                    return (
-                        <g key={`token-${i}`}>
-                            {/* Hit area (invisible, larger for touch) */}
-                            <rect
-                                x={x - 22}
-                                y={TOKEN_Y - 20}
-                                width={44}
-                                height={60} // Taller hit area to cover text
-                                fill="transparent"
-                                className="cursor-pointer"
-                                onMouseEnter={() => setHoveredToken(i)}
-                                onMouseLeave={() => setHoveredToken(null)}
-                                onClick={() => setSelectedToken(selectedToken === i ? null : i)}
-                            />
-
-                            {/* Token dot */}
-                            <motion.circle
-                                cx={x}
-                                cy={TOKEN_Y}
-                                r={activeToken === i ? 6 : 4} // Slightly larger dots
-                                fill={isDimmed ? "rgba(255,255,255,0.15)" : "#2DD4BF"}
-                                initial={{ r: 0 }}
-                                animate={{ r: activeToken === i ? 6 : 4 }}
-                                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                                style={{
-                                    filter: activeToken === i
-                                        ? "drop-shadow(0 0 8px #2DD4BF)"
-                                        : "none"
-                                }}
-                            />
-
-                            {/* Token text - IMPROVE-1: Visible Labels */}
-                            <motion.text
-                                x={x}
-                                y={TOKEN_Y + 24} // Moved down for spacing
-                                textAnchor="middle"
-                                fill={isDimmed ? "rgba(255,255,255,0.3)" : "#FFFFFF"} // Brighter white
-                                fontSize={12} // Increased size
-                                fontFamily="monospace"
-                                fontWeight={activeToken === i ? "bold" : "500"}
-                                initial={{ opacity: 0, y: TOKEN_Y + 30 }}
-                                animate={{
-                                    opacity: isDimmed ? 0.3 : 1,
-                                    y: TOKEN_Y + 24
-                                }}
-                                transition={{ delay: 0.3 + i * 0.05 }}
-                                className="cursor-pointer select-none"
-                                onMouseEnter={() => setHoveredToken(i)}
-                                onMouseLeave={() => setHoveredToken(null)}
-                                onClick={() => setSelectedToken(selectedToken === i ? null : i)}
-                            >
-                                {token}
-                            </motion.text>
-
-                            {/* Strength badge on hover */}
-                            <AnimatePresence>
-                                {activeToken === i && connectionCount > 0 && (
-                                    <motion.text
-                                        x={x}
-                                        y={TOKEN_Y - 16}
-                                        textAnchor="middle"
-                                        fill="rgb(45, 212, 191)"
-                                        fontSize={8}
-                                        fontFamily="monospace"
-                                        initial={{ opacity: 0, y: TOKEN_Y - 10 }}
-                                        animate={{ opacity: 1, y: TOKEN_Y - 16 }}
-                                        exit={{ opacity: 0 }}
-                                    >
-                                        {t('connections', { count: String(connectionCount) })}
-                                    </motion.text>
-                                )}
-                            </AnimatePresence>
-                        </g>
-                    );
-                })}
-
-                {/* Strongest Connection Explanation Label */}
-                <AnimatePresence>
-                    {showExplanation && strongestConnection && activeToken === null && (
-                        <motion.g
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.4 }}
-                        >
-                            {/* Background pill */}
-                            <rect
-                                x={WIDTH / 2 - 70}
-                                y={8}
-                                width={140}
-                                height={24}
-                                rx={12}
-                                fill="rgba(45, 212, 191, 0.15)"
-                                stroke="rgba(45, 212, 191, 0.3)"
-                                strokeWidth={1}
-                            />
-                            {/* Explanation text */}
-                            <text
-                                x={WIDTH / 2}
-                                y={24}
-                                textAnchor="middle"
-                                fill="rgb(45, 212, 191)"
-                                fontSize={9}
-                                fontFamily="monospace"
-                            >
-                                {tAttn('strongestLink', {
-                                    from: tokens[strongestConnection.fromIndex] || '?',
-                                    to: tokens[strongestConnection.toIndex] || '?'
-                                })}
-                            </text>
-                            {/* Strength indicator dots */}
-                            <g transform={`translate(${WIDTH / 2 + 50}, 20)`}>
-                                {[1, 2, 3].map(level => (
-                                    <circle
-                                        key={level}
-                                        cx={level * 8}
-                                        cy={0}
-                                        r={3}
-                                        fill={level <= strengthLevel(strongestConnection.strength)
-                                            ? "rgb(45, 212, 191)"
-                                            : "rgba(255,255,255,0.2)"
-                                        }
-                                    />
-                                ))}
+                                {/* Token text - ABOVE the dot (NEW-3) */}
+                                <motion.text
+                                    x={x}
+                                    y={TOKEN_Y - 16}
+                                    textAnchor="middle"
+                                    fill={isDimmed ? "rgba(255,255,255,0.3)" : "#FFFFFF"}
+                                    fontSize={13} // Large readable text
+                                    fontFamily="monospace"
+                                    fontWeight={activeToken === i ? "bold" : "500"}
+                                    initial={{ opacity: 0, y: TOKEN_Y - 20 }}
+                                    animate={{ opacity: isDimmed ? 0.3 : 1, y: TOKEN_Y - 16 }}
+                                    className="cursor-pointer select-none"
+                                >
+                                    {token}
+                                </motion.text>
                             </g>
-                        </motion.g>
+                        );
+                    })}
+                </svg>
+
+                {/* Explanation Tooltip: Floating IN THE MIDDLE of arcs */}
+                <AnimatePresence>
+                    {strongest && activeToken !== null && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            className="absolute left-1/2 -translate-x-1/2 top-[120px] flex justify-center pointer-events-none z-10"
+                        >
+                            <div className="bg-slate-900/95 border border-brand-teal/30 backdrop-blur-md rounded-xl p-3 shadow-2xl w-[240px]">
+                                <div className="flex items-center justify-between mb-2">
+                                    <div className="text-[10px] uppercase tracking-wider text-brand-teal/80 font-bold">
+                                        {tAttn('strongestLink', { from: '', to: '' }).split(':')[0]}
+                                    </div>
+                                    <StrengthIndicator strength={strongest.strength} />
+                                </div>
+
+                                <div className="flex items-center justify-center gap-2 text-sm text-white font-medium whitespace-nowrap">
+                                    <span className="text-white/70">{tokens[strongest.fromIndex]}</span>
+                                    <span className="text-brand-teal">→</span>
+                                    <span className="text-white font-bold">{tokens[strongest.toIndex]}</span>
+                                </div>
+                            </div>
+                        </motion.div>
                     )}
                 </AnimatePresence>
-            </svg>
+            </div>
 
-            {/* Legend + Tap Hint */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: weights.length * 0.15 + 0.5 }}
-                className="mt-1 flex flex-col items-center gap-1"
-            >
-                <span className="text-[10px] font-mono uppercase tracking-widest text-brand-teal/40">
-                    {t('thicknessLabel')}
-                </span>
-                {selectedToken === null && (
-                    <motion.span
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: [0.4, 0.8, 0.4] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="text-[10px] font-mono text-brand-teal/60"
-                    >
-                        {t('tapToSpotlight')}
-                    </motion.span>
-                )}
-            </motion.div>
+            {/* Legend */}
+            <div className="mt-1 text-[10px] font-mono text-white/30 uppercase tracking-widest text-center">
+                PAKSUS = OLULISUS
+            </div>
         </div>
     );
 }

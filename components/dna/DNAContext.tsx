@@ -134,13 +134,12 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             const isEt = locale === 'et';
             const isRu = locale === 'ru';
 
-            // Cluster 1: Nature/Forest (Cultural Adaptation for Estonia)
-            // Replaces generic "Royalty" (King/Queen) with something more "Dendrix" aligned
+            // Cluster 1: Nature/Forest (Legacy) + Animals (New)
             const nature = isEt
-                ? ['mets', 'puu', 'juur', 'seen', 'sammal', 'känd']
+                ? ['mets', 'puu', 'juur', 'seen', 'sammal', 'koer', 'kass', 'loom']
                 : isRu
-                    ? ['лес', 'дерево', 'корень', 'гриб']
-                    : ['forest', 'tree', 'root', 'mushroom', 'moss'];
+                    ? ['лес', 'дерево', 'корень', 'гриб', 'собака']
+                    : ['forest', 'tree', 'root', 'mushroom', 'moss', 'dog'];
 
             if (nature.some(k => lower.includes(k))) {
                 return [0.75 + (Math.random() * 0.1), 0.75 + (Math.random() * 0.1)];
@@ -157,14 +156,14 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
                 return [0.25 + (Math.random() * 0.1), 0.25 + (Math.random() * 0.1)];
             }
 
-            // Cluster 3: Everyday/Home (Contrast)
-            const home = isEt
-                ? ['kodu', 'laud', 'tool', 'aken', 'uks']
+            // Cluster 3: Human/Social (New for "inimese parim")
+            const human = isEt
+                ? ['inimene', 'inimese', 'naine', 'mees', 'laps', 'parim', 'sõber']
                 : isRu
-                    ? ['дом', 'стол', 'стул', 'окно']
-                    : ['home', 'table', 'chair', 'window', 'door'];
+                    ? ['человек', 'друг', 'лучший']
+                    : ['human', 'friend', 'best', 'man', 'woman'];
 
-            if (home.some(k => lower.includes(k))) {
+            if (human.some(k => lower.includes(k))) {
                 return [0.8 + (Math.random() * 0.1), 0.2 + (Math.random() * 0.1)];
             }
 
@@ -250,6 +249,15 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
                     { token: 'kohiseb', probability: 0.55 },
                     { token: 'kasvab', probability: 0.35 },
                     { token: 'on', probability: 0.08 }
+                ];
+            }
+        } else if (lastToken === 'parim' || lastToken === 'koer') { // New sentence context
+            if (isEt) {
+                candidates = [
+                    { token: 'sõber', probability: 0.78 },
+                    { token: 'kaaslane', probability: 0.12 },
+                    { token: 'loom', probability: 0.05 },
+                    { token: 'on', probability: 0.02 }
                 ];
             }
         } else if (lastToken === 'machine') {

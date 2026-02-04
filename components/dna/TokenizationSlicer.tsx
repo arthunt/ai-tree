@@ -135,17 +135,17 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
     if (!isActive) return null;
 
     return (
-        <div className="w-full perspective-1000">
+        <div className="w-full relative overflow-hidden" style={{ minHeight: '140px' }}>
             <AnimatePresence mode="wait">
                 {/* Stage 1-2: Text with cut lines */}
                 {(stage === 'text' || stage === 'cutting') && (
                     <motion.div
                         key="slicing"
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="relative font-mono text-lg tracking-wide"
+                        className="absolute inset-0 flex flex-col items-center justify-center font-mono text-lg tracking-wide"
                     >
                         <div className="flex flex-wrap items-center justify-center">
                             {slices.map((slice, i) => {
@@ -166,6 +166,14 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
                                 );
                             })}
                         </div>
+                        {stage === 'cutting' && (
+                            <motion.span
+                                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                                className="absolute bottom-2 text-xs font-mono text-brand-teal/60 uppercase tracking-widest"
+                            >
+                                {t('slicing')}
+                            </motion.span>
+                        )}
                     </motion.div>
                 )}
 
@@ -173,65 +181,64 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
                 {(stage === 'separating' || stage === 'numbering' || stage === 'done') && (
                     <motion.div
                         key="tokens"
-                        className="flex flex-wrap gap-3 justify-center perspective-1000"
+                        className="absolute inset-0 flex flex-col items-center justify-center"
                     >
-                        {subTokens.map((token, i) => (
-                            <div key={i} className="relative h-10 min-w-[60px]" style={{ perspective: '1000px' }}>
-                                <motion.div
-                                    className="w-full h-full relative preserve-3d"
-                                    initial={{ rotateX: 0 }}
-                                    animate={{
-                                        rotateX: stage === 'numbering' || stage === 'done' ? 180 : 0,
-                                        y: stage === 'done' ? [0, -4, 0] : 0 // Gentle float at end
-                                    }}
-                                    transition={{
-                                        duration: 0.8,
-                                        delay: i * 0.3, // Slower staggered flip (300ms)
-                                        type: "spring",
-                                        stiffness: 180,
-                                        damping: 20
-                                    }}
-                                    style={{ transformStyle: 'preserve-3d' }}
-                                >
-                                    {/* FRONT: Text Token */}
-                                    <div className="absolute inset-0 backface-hidden flex items-center justify-center px-3 bg-brand-teal/10 border border-brand-teal/30 rounded-lg text-brand-teal font-mono text-sm shadow-sm backdrop-blur-sm">
-                                        {token}
-                                    </div>
-
-                                    {/* BACK: Token ID (The Matrix Reveal) */}
-                                    <div
-                                        className="absolute inset-0 backface-hidden flex items-center justify-center px-3 bg-brand-purple/20 border border-brand-purple/50 rounded-lg text-brand-purple font-mono font-bold text-sm shadow-[0_0_15px_rgba(168,85,247,0.3)] backdrop-blur-md"
-                                        style={{ transform: 'rotateX(180deg)' }}
+                        <div className="flex flex-wrap gap-3 justify-center perspective-1000">
+                            {subTokens.map((token, i) => (
+                                <div key={i} className="relative h-10 min-w-[60px]" style={{ perspective: '1000px' }}>
+                                    <motion.div
+                                        className="w-full h-full relative preserve-3d"
+                                        initial={{ rotateX: 0 }}
+                                        animate={{
+                                            rotateX: stage === 'numbering' || stage === 'done' ? 180 : 0,
+                                            y: stage === 'done' ? [0, -4, 0] : 0 // Gentle float at end
+                                        }}
+                                        transition={{
+                                            duration: 0.8,
+                                            delay: i * 0.3, // Slower staggered flip (300ms)
+                                            type: "spring",
+                                            stiffness: 180,
+                                            damping: 20
+                                        }}
+                                        style={{ transformStyle: 'preserve-3d' }}
                                     >
-                                        {getTokenId(token)}
-                                    </div>
-                                </motion.div>
-                            </div>
-                        ))}
+                                        {/* FRONT: Text Token */}
+                                        <div className="absolute inset-0 backface-hidden flex items-center justify-center px-3 bg-brand-teal/10 border border-brand-teal/30 rounded-lg text-brand-teal font-mono text-sm shadow-sm backdrop-blur-sm">
+                                            {token}
+                                        </div>
+
+                                        {/* BACK: Token ID (The Matrix Reveal) */}
+                                        <div
+                                            className="absolute inset-0 backface-hidden flex items-center justify-center px-3 bg-brand-purple/20 border border-brand-purple/50 rounded-lg text-brand-purple font-mono font-bold text-sm shadow-[0_0_15px_rgba(168,85,247,0.3)] backdrop-blur-md"
+                                            style={{ transform: 'rotateX(180deg)' }}
+                                        >
+                                            {getTokenId(token)}
+                                        </div>
+                                    </motion.div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Status Label (Inside container to avoid jump) */}
+                        <motion.div
+                            key={stage}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="absolute bottom-2 left-0 right-0 text-center"
+                        >
+                            {stage === 'separating' && (
+                                <span className="text-xs font-mono text-brand-teal/80 uppercase tracking-widest">{t('packaging')}</span>
+                            )}
+                            {stage === 'numbering' && (
+                                <span className="text-xs font-mono text-brand-purple uppercase tracking-widest animate-pulse">{t('reveal')}</span>
+                            )}
+                            {stage === 'done' && (
+                                <span className="text-xs font-mono text-white/40 uppercase tracking-widest">{t('ready')}</span>
+                            )}
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
-
-            {/* Stage Indicator / Narration */}
-            <motion.div
-                key={stage}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-8 text-center"
-            >
-                {stage === 'cutting' && (
-                    <span className="text-xs font-mono text-brand-teal/60 uppercase tracking-widest">{t('slicing')}</span>
-                )}
-                {stage === 'separating' && (
-                    <span className="text-xs font-mono text-brand-teal/80 uppercase tracking-widest">{t('packaging')}</span>
-                )}
-                {stage === 'numbering' && (
-                    <span className="text-xs font-mono text-brand-purple uppercase tracking-widest animate-pulse">{t('reveal')}</span>
-                )}
-                {stage === 'done' && (
-                    <span className="text-xs font-mono text-white/40 uppercase tracking-widest">{t('ready')}</span>
-                )}
-            </motion.div>
         </div>
     );
 }
