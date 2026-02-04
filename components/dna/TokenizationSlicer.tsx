@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useMemo } from "react";
 import { useDNA } from "./DNAContext";
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 /**
  * TokenizationSlicer — US-160 Task 1.1
@@ -83,6 +84,7 @@ type SliceStage = 'text' | 'cutting' | 'separating' | 'numbering' | 'done';
 export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlicerProps) {
     const [stage, setStage] = useState<SliceStage>('text');
     const { playbackSpeed } = useDNA();
+    const t = useTranslations('dna.animation');
     const subTokens = visualTokenize(text);
     const slices = buildSliceMap(text, subTokens);
 
@@ -218,16 +220,16 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
                 className="mt-8 text-center"
             >
                 {stage === 'cutting' && (
-                    <span className="text-xs font-mono text-brand-teal/60 uppercase tracking-widest">✂️ Slicing Text...</span>
+                    <span className="text-xs font-mono text-brand-teal/60 uppercase tracking-widest">{t('slicing')}</span>
                 )}
                 {stage === 'separating' && (
-                    <span className="text-xs font-mono text-brand-teal/80 uppercase tracking-widest">📦 Packaging Tokens...</span>
+                    <span className="text-xs font-mono text-brand-teal/80 uppercase tracking-widest">{t('packaging')}</span>
                 )}
                 {stage === 'numbering' && (
-                    <span className="text-xs font-mono text-brand-purple uppercase tracking-widest animate-pulse">🔢 Matrix Reveal: Token IDs</span>
+                    <span className="text-xs font-mono text-brand-purple uppercase tracking-widest animate-pulse">{t('reveal')}</span>
                 )}
                 {stage === 'done' && (
-                    <span className="text-xs font-mono text-white/40 uppercase tracking-widest">✨ Ready for Vectorization</span>
+                    <span className="text-xs font-mono text-white/40 uppercase tracking-widest">{t('ready')}</span>
                 )}
             </motion.div>
         </div>

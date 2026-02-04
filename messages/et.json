@@ -1330,6 +1330,17 @@
       "eliminated": "Välistatud",
       "confidence": "Kindlus"
     },
+    "animation": {
+      "slicing": "✂️ Teksti lõikamine...",
+      "packaging": "📦 Tükkide pakendamine...",
+      "reveal": "🔢 Maatriksi näitamine: Token ID-d",
+      "ready": "✨ Valmis vektoriseerimiseks"
+    },
+    "visualization": {
+      "dimension1": "mõõde 1",
+      "dimension2": "mõõde 2",
+      "meaningDistance": "tähendus = kaugus"
+    },
     "summary": {
       "tokenization": "Tekst tükeldatud {count} osaks",
       "vectorizing": "Kaardistatud {count} koordinaadile",
@@ -1574,6 +1585,48 @@
         "title": "Hindamine",
         "description": "Hinda AI väljundite kvaliteeti ja ohutust.",
         "promptTemplate": "Selgita kvantfüüsikat 5-aastasele emotikonide abil."
+      }
+    },
+    "mockResponses": {
+      "neural": {
+        "low": "Närvivõrk töötleb andmeid läbi omavahel ühendatud sõlmede kihtide. Iga sõlm rakendab kaalu ja aktiveerimisfunktsiooni sisendsignaali teisendamiseks.",
+        "mid": "Mõtle närvivõrgust kui spetsialistide meeskonnast — iga kiht eraldab erinevaid tunnuseid. Esimene kiht tuvastab servi, järgmine kujundeid ja sügavamad kihid tunnevad ära terveid objekte.",
+        "high": "Kujuta ette maagilist metsa, kus iga puu sosistab osa loost järgmisele. Selleks ajaks kui sõnum jõuab viimase puuni, on see muutunud maailma täielikuks mõistmiseks!"
+      },
+      "tokenization": {
+        "low": "Tokeniseerimine jaotab teksti väiksemateks üksusteks (tokeniteks), mida mudel saab töödelda. Levinumad lähenemised on sõnapõhine, alamsõnapõhine (BPE) ja tähemärgipõhine tokeniseerimine.",
+        "mid": "Tokeniseerimine on nagu lause lõikamine pusletükkideks. 'Mõistmine' võib muutuda ['Mõist', 'mi', 'ne'] — mudel õpib, mida iga tükk tähendab ja kuidas need seostuvad.",
+        "high": "Kujuta ette kokka, kes viilutab koostisosi enne küpsetamist — sa ei saa teha rooga tervest kartulist! Samamoodi 'viilutab' AI sinu sõnad suupärasteks tokeniteks enne vastuse 'küpsetamist'."
+      },
+      "temperature": {
+        "low": "Temperatuur kontrollib väljundi jaotuse juhuslikkust. Nulli juures valib mudel alati kõige tõenäolisema tokeni. Kõrgemad väärtused tasandavad jaotust, suurendades mitmekesisust.",
+        "mid": "Temperatuur on nagu loovuse nupp. Madal temperatuur = ennustatavad, fokuseeritud vastused. Kõrge temperatuur = üllatavad, mitmekesised vastused. Proovi liugurit liigutada, et näha erinevust!",
+        "high": "Kujuta temperatuuri kui jutuvestja meeleolu: nulli juures loeb ta stsenaariumist, 0.7 juures improviseerib veidi, ja 1.5 juures freestaileb metsikult luulet elektrilammastest!"
+      },
+      "training": {
+        "low": "Treenimine kohandab mudeli kaale, et minimeerida kadufunktsiooni. Iga epohhiga töödeldakse kogu andmestik, arvutades gradiente tagasilevitamise kaudu parameetrite uuendamiseks.",
+        "mid": "Treenimine on nagu eksamiks õppimine — iga epohh on üks läbiminek õpikust. Mudel kontrollib oma vastuseid (kadu), seejärel kohandab oma arusaamist (kaale), et järgmisel korral paremini hakkama saada.",
+        "high": "Kujuta ette õpilast, kes loeb sama raamatut ikka ja jälle, kuid iga kord tõstab esile erinevaid osi. Pärast piisavalt korduslugemisi (epohhe) oskab ta seda peaaegu pähe — nii õpib AI!"
+      },
+      "prompting": {
+        "low": "Viipade inseneerimine struktureerib sisendit mudeli käitumise juhtimiseks. Süsteemiviibad seavad konteksti, kasutajaviibad annavad konkreetseid juhiseid soovitud väljundi saamiseks.",
+        "mid": "Hea viip on nagu selgete juhiste andmine — selle asemel et öelda 'kirjuta midagi koertest', proovi 'selgita kolme kasu koerte varjupaigast võtmisel sõbralikus, vestlustoonis'.",
+        "high": "AI-le viipimine on nagu restoranis tellimine: 'toitu palun' toob sulle midagi juhuslikku, aga 'keskmiselt küpsetatud steik küüslauguvõi ja röstitud köögiviljadega' toob täpselt seda, mida tahad!"
+      },
+      "attention": {
+        "low": "Enesetähelepanu võimaldab igal tokenil pöörata tähelepanu igale teisele tokenile järjestuses, arvutades relevantsuse skoore iga positsiooni panuse kaalumiseks.",
+        "mid": "Tähelepanu on see, kuidas AI otsustab, millised sõnad on kõige olulisemad. Lauses 'Kass istus matil, sest ta oli väsinud' aitab tähelepanu mudelil teada, et 'ta' viitab 'kassile', mitte 'matile'.",
+        "high": "Kujuta ette krimiromaa lugemist — tähelepanu on sinu aju prožektor, hüppamas lehekülgedele laiali pillutatud vihjete vahel, et kokku panna, kes selle tegi!"
+      },
+      "fallback1": {
+        "low": "Andmemustrite põhjal on statistiliselt kõige olulisem leid see, et sisend korreleerub kehtestatud arvutusmudelitega.",
+        "mid": "See on suurepärane küsimus! AI töötab, leides mustreid andmetes. Mida rohkem näiteid ta näeb, seda paremini ta mõistab — täpselt nagu sina õpid kogemustest.",
+        "high": "Milline huvitav mõte! Lase mul maalida pilt: kujuta kogu maailma teadmisi tohutu ookeanina ja AI õpib surfama selle lainetel — mõnikord graatsiliselt, mõnikord karklikuselt!"
+      },
+      "fallback2": {
+        "low": "Mudel töötleb seda päringut, jagades selle semantilisteks komponentideks ja kaardistades need õpitud representatsioonidele manustusruumis.",
+        "mid": "Sinu küsimusele vastamiseks vaatab AI, kuidas sarnased ideed on seotud tema treeningandmetes. See on nagu miljoneid raamatuid lugenud ja nüüd nende vahel punkte ühendades.",
+        "high": "Ooh, huvitav! Mõtle minust kui papagoist, kes on lugenud kogu internetti — ma ei 'mõista' tegelikult, aga olen väga hea ennustama, mis sõna tuleb järgmisena. See on puhtalt mustrite sobitamine!"
       }
     }
   },

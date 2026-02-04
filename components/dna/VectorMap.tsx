@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { useParaglideTranslations as useTranslations } from '@/hooks/useParaglideTranslations';
 
 /**
  * VectorMap — US-160 Task 1.2
@@ -47,6 +48,7 @@ function pointColor(x: number, y: number): string {
 export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    const t = useTranslations('dna.visualization');
 
     // Active index: selected (tap) takes priority over hovered (mouse)
     const activeIndex = selectedIndex ?? hoveredIndex;
@@ -109,7 +111,7 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                     fontSize={8}
                     fontFamily="monospace"
                 >
-                    dimension 1
+                    {t('dimension1')}
                 </text>
                 <text
                     x={6}
@@ -120,7 +122,7 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                     fontFamily="monospace"
                     transform={`rotate(-90, 6, ${SIZE / 2})`}
                 >
-                    dimension 2
+                    {t('dimension2')}
                 </text>
 
                 {/* Distance line between active point and nearest neighbor */}
@@ -255,7 +257,7 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                 transition={{ delay: vectors.length * 0.1 + 0.3 }}
                 className="mt-1 text-[10px] font-mono uppercase tracking-widest text-brand-teal/40"
             >
-                meaning = distance
+                {t('meaningDistance')}
             </motion.div>
         </div>
     );

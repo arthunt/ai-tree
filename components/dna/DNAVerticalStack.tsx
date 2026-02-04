@@ -299,41 +299,46 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
                                 {getStepBody()}
                             </p>
 
-                            {/* Visualization area */}
-                            <div className="py-4 flex flex-col items-center gap-3">
+                            {/* Visualization area with floating pause button */}
+                            <div className="py-4 relative">
                                 {/* Main visualization */}
-                                <div className="w-full flex justify-center">
+                                <div className="w-full flex justify-center pb-10">
                                     {renderVisualization()}
                                 </div>
 
-                                {/* Prominent Pause/Continue Button */}
-                                {isPlaying && (
-                                    <motion.button
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        onClick={togglePause}
-                                        className={cn(
-                                            "flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all min-h-[44px]",
-                                            "border text-sm font-medium",
-                                            isPaused
-                                                ? "bg-brand-teal/20 border-brand-teal/40 text-brand-teal hover:bg-brand-teal/30"
-                                                : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:text-white"
-                                        )}
-                                        aria-label={isPaused ? tAccordion('resume') : tAccordion('pauseToLearn')}
-                                    >
-                                        {isPaused ? (
-                                            <>
-                                                <ChevronRight size={16} />
-                                                {tAccordion('clickToContinue')}
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Pause size={16} />
-                                                {tAccordion('pauseToLearn')}
-                                            </>
-                                        )}
-                                    </motion.button>
-                                )}
+                                {/* Floating Pause/Continue Button (overlay at bottom) */}
+                                <AnimatePresence>
+                                    {isPlaying && (
+                                        <motion.button
+                                            initial={{ opacity: 0, y: 8 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: 8 }}
+                                            onClick={togglePause}
+                                            className={cn(
+                                                "absolute bottom-2 left-1/2 -translate-x-1/2",
+                                                "flex items-center gap-1.5 px-3 py-1.5 rounded-full",
+                                                "text-xs font-medium backdrop-blur-sm transition-all",
+                                                "min-h-[32px] touch-manipulation",
+                                                isPaused
+                                                    ? "bg-brand-teal/30 border border-brand-teal/50 text-brand-teal"
+                                                    : "bg-black/50 border border-white/20 text-white/70 hover:text-white hover:bg-black/70"
+                                            )}
+                                            aria-label={isPaused ? tAccordion('resume') : tAccordion('pauseToLearn')}
+                                        >
+                                            {isPaused ? (
+                                                <>
+                                                    <ChevronRight size={14} />
+                                                    {tAccordion('clickToContinue')}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Pause size={14} />
+                                                    {tAccordion('pauseToLearn')}
+                                                </>
+                                            )}
+                                        </motion.button>
+                                    )}
+                                </AnimatePresence>
                             </div>
 
                             {/* Action Buttons */}

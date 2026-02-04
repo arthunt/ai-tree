@@ -66,7 +66,7 @@ interface DNAContextType {
 const DNAContext = createContext<DNAContextType | undefined>(undefined);
 
 const STEP_ORDER: DNAStep[] = ['tokenization', 'vectorizing', 'attention', 'prediction', 'idle'];
-const BASE_STEP_DURATION = 4000; // 4 seconds per step at 1x speed (user can adjust)
+const BASE_STEP_DURATION = 5000; // 5 seconds per step at 1x speed (slower for learning)
 
 // Active simulation steps (without terminal 'idle')
 const ACTIVE_STEPS: DNAStep[] = ['tokenization', 'vectorizing', 'attention', 'prediction'];

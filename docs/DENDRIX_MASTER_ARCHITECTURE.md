@@ -1,4 +1,4 @@
-# Dendrix.ai Master Architecture
+c# Dendrix.ai Master Architecture
 ## Single Point of Truth — Platform Design & Implementation Guide
 
 **Document ID:** DENDRIX_MASTER_ARCHITECTURE_v1.0  
