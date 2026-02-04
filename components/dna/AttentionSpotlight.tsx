@@ -32,15 +32,15 @@ interface AttentionSpotlightProps {
     isActive: boolean;
 }
 
-const WIDTH = 300;
-const HEIGHT = 180; // Increased for explanation label
-const TOKEN_Y = HEIGHT - 16;
-const MIN_ARC_HEIGHT = 25;
-const LABEL_SHOW_DELAY = 1500; // Show explanation after arcs animate
+const WIDTH = 340; // Wider for better spacing
+const HEIGHT = 220; // Increased to center content and prevent clipping
+const TOKEN_Y = 150; // Move dots up to allow space for labels below
+const MIN_ARC_HEIGHT = 40; // Taller arcs
+const LABEL_SHOW_DELAY = 1500;
 
 function tokenX(index: number, total: number): number {
     if (total <= 1) return WIDTH / 2;
-    const pad = 30;
+    const pad = 40; // More padding from edges
     const usable = WIDTH - pad * 2;
     return pad + (index / (total - 1)) * usable;
 }
@@ -48,16 +48,17 @@ function tokenX(index: number, total: number): number {
 function arcPath(x1: number, x2: number): string {
     const midX = (x1 + x2) / 2;
     const dist = Math.abs(x1 - x2);
-    const arcH = Math.min(MIN_ARC_HEIGHT + dist * 0.5, HEIGHT - 50);
+    // Taller arcs for stronger connections (visual cheat)
+    const arcH = Math.min(MIN_ARC_HEIGHT + dist * 0.6, 100);
     const cy = TOKEN_Y - arcH;
     return `M ${x1} ${TOKEN_Y} Q ${midX} ${cy} ${x2} ${TOKEN_Y}`;
 }
 
 function strengthColor(s: number): string {
-    // Low = dim purple, High = bright teal
-    if (s >= 0.8) return "rgb(45, 212, 191)";    // brand-teal
-    if (s >= 0.5) return "rgb(34, 211, 238)";     // brand-cyan
-    return "rgb(148, 163, 184)";                    // slate-400
+    // Brighter colors for high contrast
+    if (s >= 0.8) return "#2DD4BF";    // brand-teal-400
+    if (s >= 0.5) return "#22D3EE";    // brand-cyan-400
+    return "#94A3B8";                  // slate-400
 }
 
 // Strength level indicator (universal across cultures)
@@ -198,9 +199,9 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                             {/* Hit area (invisible, larger for touch) */}
                             <rect
                                 x={x - 22}
-                                y={TOKEN_Y - 10}
+                                y={TOKEN_Y - 20}
                                 width={44}
-                                height={24}
+                                height={60} // Taller hit area to cover text
                                 fill="transparent"
                                 className="cursor-pointer"
                                 onMouseEnter={() => setHoveredToken(i)}
@@ -212,31 +213,31 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                             <motion.circle
                                 cx={x}
                                 cy={TOKEN_Y}
-                                r={activeToken === i ? 5 : 3}
-                                fill={isDimmed ? "rgba(255,255,255,0.15)" : "rgb(45, 212, 191)"}
+                                r={activeToken === i ? 6 : 4} // Slightly larger dots
+                                fill={isDimmed ? "rgba(255,255,255,0.15)" : "#2DD4BF"}
                                 initial={{ r: 0 }}
-                                animate={{ r: activeToken === i ? 5 : 3 }}
+                                animate={{ r: activeToken === i ? 6 : 4 }}
                                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                 style={{
                                     filter: activeToken === i
-                                        ? "drop-shadow(0 0 6px rgb(45, 212, 191))"
+                                        ? "drop-shadow(0 0 8px #2DD4BF)"
                                         : "none"
                                 }}
                             />
 
-                            {/* Token text */}
+                            {/* Token text - IMPROVE-1: Visible Labels */}
                             <motion.text
                                 x={x}
-                                y={TOKEN_Y + 14}
+                                y={TOKEN_Y + 24} // Moved down for spacing
                                 textAnchor="middle"
-                                fill={isDimmed ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.7)"}
-                                fontSize={9}
+                                fill={isDimmed ? "rgba(255,255,255,0.3)" : "#FFFFFF"} // Brighter white
+                                fontSize={12} // Increased size
                                 fontFamily="monospace"
-                                fontWeight={activeToken === i ? "bold" : "normal"}
-                                initial={{ opacity: 0, y: TOKEN_Y + 20 }}
+                                fontWeight={activeToken === i ? "bold" : "500"}
+                                initial={{ opacity: 0, y: TOKEN_Y + 30 }}
                                 animate={{
-                                    opacity: isDimmed ? 0.2 : 1,
-                                    y: TOKEN_Y + 14
+                                    opacity: isDimmed ? 0.3 : 1,
+                                    y: TOKEN_Y + 24
                                 }}
                                 transition={{ delay: 0.3 + i * 0.05 }}
                                 className="cursor-pointer select-none"

@@ -30,11 +30,12 @@ interface Prediction {
 interface PredictionBarChartProps {
     predictions: Prediction[];
     isActive: boolean;
+    contextText?: string;
 }
 
-type Stage = "growing" | "eliminating" | "winner";
+type Stage = "thinking" | "growing" | "eliminating" | "winner";
 
-// Confidence ring component - universal visual metaphor
+// Confidence ring component... (unchanged)
 function ConfidenceRing({ probability, isWinner, isEliminated }: { probability: number; isWinner: boolean; isEliminated: boolean }) {
     const circumference = 2 * Math.PI * 10;
     const strokeDashoffset = circumference * (1 - probability);
@@ -96,8 +97,8 @@ function ConfidenceRing({ probability, isWinner, isEliminated }: { probability: 
     );
 }
 
-export function PredictionBarChart({ predictions, isActive }: PredictionBarChartProps) {
-    const [stage, setStage] = useState<Stage>("growing");
+export function PredictionBarChart({ predictions, isActive, contextText }: PredictionBarChartProps) {
+    const [stage, setStage] = useState<Stage>("thinking"); // Start with thinking
     const { playbackSpeed } = useDNA();
     const t = useTranslations('dna.prediction');
 
@@ -105,24 +106,28 @@ export function PredictionBarChart({ predictions, isActive }: PredictionBarChart
     const top = predictions.slice(0, 4);
     const winnerIdx = 0; // First is highest probability
 
-    // Scale factor: higher speed = shorter delays. Clamp to avoid division by zero.
+    // Scale factor: higher speed = shorter delays.
     const scale = useMemo(() => 1 / Math.max(playbackSpeed, 0.05), [playbackSpeed]);
 
     useEffect(() => {
         if (!isActive) {
-            setStage("growing");
+            setStage("thinking");
             return;
         }
 
-        setStage("growing");
+        setStage("thinking");
 
-        // Stage 2: strikethrough losers after bars finish growing
-        const t1 = setTimeout(() => setStage("eliminating"), 1200 * scale);
+        // Stage 1: Thinking -> Growing (1.5s delay)
+        const t0 = setTimeout(() => setStage("growing"), 1500 * scale);
+
+        // Stage 2: strikethrough losers
+        const t1 = setTimeout(() => setStage("eliminating"), (1500 + 1200) * scale);
 
         // Stage 3: highlight winner
-        const t2 = setTimeout(() => setStage("winner"), 2200 * scale);
+        const t2 = setTimeout(() => setStage("winner"), (1500 + 2200) * scale);
 
         return () => {
+            clearTimeout(t0);
             clearTimeout(t1);
             clearTimeout(t2);
         };
@@ -132,12 +137,43 @@ export function PredictionBarChart({ predictions, isActive }: PredictionBarChart
 
     const maxProb = Math.max(...top.map(p => p.probability), 0.01);
 
+    // Render Thinking State
+    if (stage === "thinking") {
+        return (
+            <div className="w-full h-32 flex flex-col items-center justify-center space-y-3">
+                <div className="relative w-8 h-8">
+                    <motion.div
+                        className="absolute inset-0 border-2 border-brand-teal rounded-full overflow-hidden"
+                        style={{ borderRightColor: 'transparent', borderTopColor: 'transparent' }}
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    />
+                    <motion.div
+                        className="absolute inset-2 bg-brand-teal/20 rounded-full"
+                        animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                    />
+                </div>
+                <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-xs font-mono text-brand-teal/70 uppercase tracking-widest"
+                >
+                    Mudel arvutab...
+                </motion.span>
+            </div>
+        );
+    }
+
     return (
         <div className="w-full space-y-3">
             {top.map((p, i) => {
                 const isWinner = i === winnerIdx;
                 const isEliminated = !isWinner && stage !== "growing";
+                const isCandidate = stage === "growing" || stage === "eliminating" || stage === "winner";
                 const barWidth = (p.probability / maxProb) * 100;
+
+                if (!isCandidate) return null;
 
                 return (
                     <motion.div
@@ -241,19 +277,28 @@ export function PredictionBarChart({ predictions, isActive }: PredictionBarChart
                 );
             })}
 
-            {/* "Winner selected" label with trophy */}
+            {/* "Winner selected" label with context (IMPROVE-7) */}
             <AnimatePresence>
                 {stage === "winner" && (
                     <motion.div
                         initial={{ opacity: 0, y: 4 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="flex items-center justify-center gap-2 pt-2"
+                        className="flex flex-col items-center gap-2 pt-4 border-t border-white/5 mt-4"
                     >
-                        <Trophy size={14} className="text-brand-teal" />
-                        <span className="text-[11px] font-mono text-brand-teal/70">
-                            {t('winner')}: <span className="text-brand-teal font-bold">{top[0]?.token}</span>
-                        </span>
+                        <div className="flex items-center gap-2">
+                            <Trophy size={14} className="text-brand-teal" />
+                            <span className="text-[11px] font-mono text-brand-teal/70 uppercase tracking-wider">
+                                {t('winner')}
+                            </span>
+                        </div>
+
+                        {/* Context Sentence */}
+                        <div className="text-sm text-center">
+                            <span className="text-white/60">"{contextText || '...'}"</span>
+                            <span className="mx-2 text-white/30">→</span>
+                            <span className="font-bold text-brand-teal text-lg">"{top[0]?.token}"</span>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

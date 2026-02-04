@@ -155,6 +155,7 @@ function AccordionCard({ step, state, onExpand, onNext, onDeepDive }: AccordionC
                     <PredictionBarChart
                         predictions={predictions}
                         isActive={isCurrentlyAnimating || isActive}
+                        contextText={inputText}
                     />
                 );
             default:

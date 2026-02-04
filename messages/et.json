@@ -1333,7 +1333,7 @@
     "animation": {
       "slicing": "✂️ Teksti lõikamine...",
       "packaging": "📦 Tükkide pakendamine...",
-      "reveal": "Maatriks: Token ID-d",
+      "reveal": "Tokenite ID-d",
       "ready": "✨ Valmis vektoriseerimiseks"
     },
     "visualization": {

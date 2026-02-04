@@ -102,27 +102,17 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                     </g>
                 ))}
 
-                {/* Axis labels */}
+                {/* Title instead of Axis Labels (IMPROVE-4) */}
                 <text
                     x={SIZE / 2}
-                    y={SIZE - 4}
+                    y={12}
                     textAnchor="middle"
-                    fill="rgba(255,255,255,0.2)"
-                    fontSize={8}
+                    fill="rgba(255,255,255,0.4)"
+                    fontSize={10}
                     fontFamily="monospace"
+                    letterSpacing={1}
                 >
-                    {t('dimension1')}
-                </text>
-                <text
-                    x={6}
-                    y={SIZE / 2}
-                    textAnchor="middle"
-                    fill="rgba(255,255,255,0.2)"
-                    fontSize={8}
-                    fontFamily="monospace"
-                    transform={`rotate(-90, 6, ${SIZE / 2})`}
-                >
-                    {t('dimension2')}
+                    TÄHENDUSRUUM
                 </text>
 
                 {/* Distance line between active point and nearest neighbor */}
