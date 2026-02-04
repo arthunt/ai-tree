@@ -209,8 +209,12 @@ export function TokenizationSlicer({ text, tokens, isActive }: TokenizationSlice
 
                                         {/* BACK: Token ID (The Matrix Reveal) */}
                                         <div
-                                            className="absolute inset-0 backface-hidden flex items-center justify-center px-3 bg-brand-purple/20 border border-brand-purple/50 rounded-lg text-brand-purple font-mono font-bold text-sm shadow-[0_0_15px_rgba(168,85,247,0.3)] backdrop-blur-md"
-                                            style={{ transform: 'rotateX(180deg)' }}
+                                            className="absolute inset-0 backface-hidden flex items-center justify-center px-3 bg-brand-purple/20 border border-brand-purple/50 rounded-lg text-brand-purple font-bold text-sm shadow-[0_0_15px_rgba(168,85,247,0.3)] backdrop-blur-md"
+                                            style={{
+                                                transform: 'rotateX(180deg)',
+                                                fontFamily: "'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace",
+                                                fontVariantNumeric: 'tabular-nums'
+                                            }}
                                         >
                                             {getTokenId(token)}
                                         </div>

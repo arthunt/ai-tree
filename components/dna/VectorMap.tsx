@@ -53,6 +53,30 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
     // Active index: selected (tap) takes priority over hovered (mouse)
     const activeIndex = selectedIndex ?? hoveredIndex;
 
+    // Pre-calculate positions and adjust for collisions (NEW-5)
+    const mappedPoints = vectors.map((v, i) => ({
+        x: toSvg(v[0]),
+        y: toSvg(1 - v[1]),
+        color: pointColor(v[0], v[1]),
+        offsetY: 0
+    }));
+
+    // Simple collision detection
+    for (let i = 0; i < mappedPoints.length; i++) {
+        for (let j = i + 1; j < mappedPoints.length; j++) {
+            const p1 = mappedPoints[i];
+            const p2 = mappedPoints[j];
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 40) { // If closer than 40px
+                p1.offsetY = -12; // Move one up
+                p2.offsetY = 12;  // Move one down
+            }
+        }
+    }
+
     if (!isActive || vectors.length === 0) return null;
 
     return (
@@ -162,11 +186,7 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                 })()}
 
                 {/* Data points */}
-                {vectors.map((v, i) => {
-                    const tx = toSvg(v[0]);
-                    // Flip Y so high values are at top
-                    const ty = toSvg(1 - v[1]);
-                    const color = pointColor(v[0], v[1]);
+                {mappedPoints.map((p, i) => {
                     const isHighlighted = activeIndex === i;
 
                     return (
@@ -174,11 +194,11 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                             {/* Glow ring on hover/select */}
                             {isHighlighted && (
                                 <motion.circle
-                                    cx={tx}
-                                    cy={ty}
+                                    cx={p.x}
+                                    cy={p.y}
                                     r={14}
                                     fill="none"
-                                    stroke={color}
+                                    stroke={p.color}
                                     strokeWidth={1}
                                     opacity={0.3}
                                     initial={{ r: 6, opacity: 0 }}
@@ -188,15 +208,15 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
 
                             {/* The point */}
                             <motion.circle
-                                cx={tx}
-                                cy={ty}
+                                cx={p.x}
+                                cy={p.y}
                                 r={isHighlighted ? 6 : 4.5}
-                                fill={color}
+                                fill={p.color}
                                 opacity={isHighlighted ? 1 : 0.85}
                                 initial={{ cx: CENTER_X, cy: CENTER_Y, r: 0, opacity: 0 }}
                                 animate={{
-                                    cx: tx,
-                                    cy: ty,
+                                    cx: p.x,
+                                    cy: p.y,
                                     r: isHighlighted ? 6 : 4.5,
                                     opacity: isHighlighted ? 1 : 0.85
                                 }}
@@ -204,12 +224,12 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                                     type: "spring",
                                     stiffness: 120,
                                     damping: 14,
-                                    delay: i * 0.4 // Slower one-by-one appearance
+                                    delay: i * 0.4
                                 }}
                                 style={{
                                     filter: isHighlighted
-                                        ? `drop-shadow(0 0 6px ${color})`
-                                        : `drop-shadow(0 0 3px ${color})`,
+                                        ? `drop-shadow(0 0 6px ${p.color})`
+                                        : `drop-shadow(0 0 3px ${p.color})`,
                                     cursor: "pointer"
                                 }}
                                 onMouseEnter={() => setHoveredIndex(i)}
@@ -217,38 +237,28 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
                                 onClick={() => setSelectedIndex(selectedIndex === i ? null : i)}
                             />
 
-                            {/* Token label - Persistent */}
+                            {/* Token label - Persistent & Large (NEW-5) */}
                             <motion.g
                                 initial={{ opacity: 0, y: 4 }}
                                 animate={{
-                                    opacity: isHighlighted ? 1 : 0.7,
-                                    y: 0,
+                                    opacity: 1, // Always visible
+                                    y: p.offsetY, // Collision adjustment
                                     scale: isHighlighted ? 1.1 : 1
                                 }}
                                 transition={{ delay: 0.5 + i * 0.1 }}
                             >
-                                {/* Label background (only active) */}
-                                {isHighlighted && (
-                                    <rect
-                                        x={tx - 24}
-                                        y={ty - 24}
-                                        width={48}
-                                        height={16}
-                                        rx={4}
-                                        fill="rgba(0,0,0,0.8)"
-                                        stroke={color}
-                                        strokeWidth={0.5}
-                                    />
-                                )}
                                 <text
-                                    x={tx}
-                                    y={isHighlighted ? ty - 13 : ty + 12}
+                                    x={p.x}
+                                    y={p.y + (p.offsetY !== 0 ? (p.offsetY > 0 ? 24 : -16) : 20)} // Dynamic Y
                                     textAnchor="middle"
-                                    fill={isHighlighted ? "white" : "rgba(255,255,255,0.6)"}
-                                    fontSize={isHighlighted ? 10 : 9}
+                                    fill="white"
+                                    fontSize={14} // Larger font
                                     fontFamily="monospace"
-                                    fontWeight={isHighlighted ? "bold" : "normal"}
-                                    style={{ pointerEvents: 'none' }}
+                                    fontWeight="bold"
+                                    style={{
+                                        pointerEvents: 'none',
+                                        textShadow: '0 1px 4px rgba(0,0,0,0.9)' // Shadow for readability
+                                    }}
                                 >
                                     {tokens[i]}
                                 </text>

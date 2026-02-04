@@ -32,15 +32,15 @@ interface AttentionSpotlightProps {
     isActive: boolean;
 }
 
-const WIDTH = 340;
-const HEIGHT = 240; // Increased height
-const TOKEN_Y = 40; // Dots at TOP now (NEW-3)
+const WIDTH = 380; // Increased width for better padding
+const HEIGHT = 240;
+const TOKEN_Y = 40;
 const MIN_ARC_HEIGHT = 40;
 const LABEL_SHOW_DELAY = 1500;
 
 function tokenX(index: number, total: number): number {
     if (total <= 1) return WIDTH / 2;
-    const pad = 35;
+    const pad = 50; // More horizontal padding (NEW-5)
     const usable = WIDTH - pad * 2;
     return pad + (index / (total - 1)) * usable;
 }
@@ -205,20 +205,18 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                                 />
 
                                 {/* Token text - ABOVE the dot (NEW-3) */}
-                                <motion.text
+                                <text
                                     x={x}
                                     y={TOKEN_Y - 16}
                                     textAnchor="middle"
                                     fill={isDimmed ? "rgba(255,255,255,0.3)" : "#FFFFFF"}
-                                    fontSize={13} // Large readable text
+                                    fontSize={14} // Larger (NEW-5)
                                     fontFamily="monospace"
                                     fontWeight={activeToken === i ? "bold" : "500"}
-                                    initial={{ opacity: 0, y: TOKEN_Y - 20 }}
-                                    animate={{ opacity: isDimmed ? 0.3 : 1, y: TOKEN_Y - 16 }}
                                     className="cursor-pointer select-none"
                                 >
                                     {token}
-                                </motion.text>
+                                </text>
                             </g>
                         );
                     })}
@@ -233,17 +231,17 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                             exit={{ opacity: 0, scale: 0.9 }}
                             className="absolute left-1/2 -translate-x-1/2 top-[120px] flex justify-center pointer-events-none z-10"
                         >
-                            <div className="bg-slate-900/95 border border-brand-teal/30 backdrop-blur-md rounded-xl p-3 shadow-2xl w-[240px]">
-                                <div className="flex items-center justify-between mb-2">
+                            <div className="bg-slate-900/95 border border-brand-teal/30 backdrop-blur-md rounded-xl p-3 shadow-2xl w-auto whitespace-nowrap">
+                                <div className="flex items-center justify-between gap-4 mb-2">
                                     <div className="text-[10px] uppercase tracking-wider text-brand-teal/80 font-bold">
-                                        {tAttn('strongestLink', { from: '', to: '' }).split(':')[0]}
+                                        TUGEVAIM SEOS
                                     </div>
                                     <StrengthIndicator strength={strongest.strength} />
                                 </div>
 
-                                <div className="flex items-center justify-center gap-2 text-sm text-white font-medium whitespace-nowrap">
+                                <div className="flex items-center justify-center gap-2 text-sm text-white font-medium">
                                     <span className="text-white/70">{tokens[strongest.fromIndex]}</span>
-                                    <span className="text-brand-teal">→</span>
+                                    <span className="text-brand-teal">↔</span>
                                     <span className="text-white font-bold">{tokens[strongest.toIndex]}</span>
                                 </div>
                             </div>

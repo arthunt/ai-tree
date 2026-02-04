@@ -214,9 +214,10 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     // Smart Mock Predictor
-    const predict = useCallback(() => {
+    const predict = useCallback((currentTokens?: string[]) => {
         // Context-aware predictions based on last token (mock)
-        const lastToken = tokens.length > 0 ? tokens[tokens.length - 1].toLowerCase() : "";
+        const tokensToUse = currentTokens || tokens;
+        const lastToken = tokensToUse.length > 0 ? tokensToUse[tokensToUse.length - 1].toLowerCase() : "";
         const isEt = locale === 'et';
 
         // Default Candidates
@@ -255,9 +256,9 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
             if (isEt) {
                 candidates = [
                     { token: 'sõber', probability: 0.78 },
-                    { token: 'kaaslane', probability: 0.12 },
-                    { token: 'loom', probability: 0.05 },
-                    { token: 'on', probability: 0.02 }
+                    { token: 'seltsiline', probability: 0.09 },
+                    { token: 'kaaslane', probability: 0.07 },
+                    { token: 'abiline', probability: 0.06 }
                 ];
             }
         } else if (lastToken === 'machine') {
@@ -300,10 +301,11 @@ export function DNAProvider({ children }: { children: React.ReactNode }) {
         // Process Data
         const t = tokenize(textToUse);
         setTokens(t);
-        setSubTokens(visualTokenize(textToUse));
+        // NEW-4 Simplification: Use whole words (4 tokens) instead of BPE sub-tokens (8)
+        setSubTokens(t);
         setVectors(vectorize(t));
         setAttentionWeights(calculateAttention(t));
-        setPredictions(predict());
+        setPredictions(predict(t));
     }, [inputText, tokenize, vectorize, calculateAttention, predict]);
 
     // Derived state
