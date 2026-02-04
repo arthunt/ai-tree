@@ -67,7 +67,7 @@ function DNAInterface() {
                 <DNAFixedHeader onScrollToCard={handleScrollToCard} />
 
                 {/* Main Content Area */}
-                <div ref={stackRef} className="relative z-10 pt-4 px-4">
+                <div ref={stackRef} className="relative z-10 pt-[140px] px-4">
                     {/* Vertical Accordion Stack - Self-contained with all cards */}
                     <DNAVerticalStack />
 

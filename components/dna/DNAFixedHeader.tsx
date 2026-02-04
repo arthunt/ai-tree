@@ -142,7 +142,7 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
             initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={prefersReducedMotion ? { duration: 0.01 } : undefined}
-            className="sticky top-0 z-50 bg-black/90 backdrop-blur-xl border-b border-white/10"
+            className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-xl border-b border-white/10 shadow-xl"
             role="banner"
             aria-label={t('placeholder')}
         >
