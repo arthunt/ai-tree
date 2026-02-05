@@ -437,7 +437,12 @@
       "medium": "Medium (72%)",
       "explanationTitle": "Attention shows which words are important for understanding each word",
       "explanationLine1": "\"she\" pays strong attention to \"Mari\" to know who is being referred to.",
-      "explanationLine2": "Arrow thickness = attention strength. This helps the model understand relationships."
+      "explanationLine2": "Arrow thickness = attention strength. This helps the model understand relationships.",
+      "strongestLink": "Strongest link: {from} → {to}",
+      "strength": "Strength",
+      "whyConnected": "Why connected",
+      "connection": "CONNECTION",
+      "strongest": "STRONGEST CONNECTION"
     },
     "prefillDecode": {
       "title": "Prefill vs Decode — Reading vs Writing",
