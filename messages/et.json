@@ -411,7 +411,12 @@
       "medium": "Keskmine (72%)",
       "explanationTitle": "Tähelepanu näitab, millised sõnad on olulised iga sõna mõistmiseks",
       "explanationLine1": "\"ta\" pöörab tugevat tähelepanu sõnale \"Mari\", et teada, kellele viidatakse.",
-      "explanationLine2": "Noole paksus = tähelepanu tugevus. See aitab mudelil mõista seoseid."
+      "explanationLine2": "Noole paksus = tähelepanu tugevus. See aitab mudelil mõista seoseid.",
+      "strongestLink": "Tugevaim seos: {from} → {to}",
+      "strength": "Tugevus",
+      "whyConnected": "Miks seotud",
+      "connection": "SEOS",
+      "strongest": "TUGEVAIM SEOS"
     },
     "prefillDecode": {
       "title": "Eeltäitmine vs Dekodeerimine — Lugemine vs Kirjutamine",
