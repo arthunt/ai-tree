@@ -146,226 +146,228 @@ export function DNAFixedHeader({ onScrollToCard }: DNAFixedHeaderProps) {
             role="banner"
             aria-label={t('placeholder')}
         >
-            {/* Input Row */}
-            <div className="flex items-center gap-2 p-2 md:p-3">
-                {/* Sparkle Icon */}
-                <div className="pl-2 text-brand-teal flex-shrink-0" aria-hidden="true">
-                    <Sparkles size={18} className={isPlaying && !prefersReducedMotion ? "animate-spin-slow" : ""} />
-                </div>
+            <div className="max-w-5xl mx-auto w-full">
+                {/* Input Row */}
+                <div className="flex items-center gap-2 p-2 md:p-3">
+                    {/* Sparkle Icon */}
+                    <div className="pl-2 text-brand-teal flex-shrink-0" aria-hidden="true">
+                        <Sparkles size={18} className={isPlaying && !prefersReducedMotion ? "animate-spin-slow" : ""} />
+                    </div>
 
-                {/* Input Field */}
-                <input
-                    type="text"
-                    value={inputText}
-                    onChange={(e) => { if (e.target.value.length <= 500) setInputText(e.target.value); }}
-                    onKeyDown={handleKeyDown}
-                    disabled={isPlaying}
-                    maxLength={500}
-                    placeholder={t('placeholder')}
-                    className="flex-1 min-w-0 bg-transparent border-none focus:ring-0 text-white placeholder-gray-500 text-sm md:text-base py-2 px-2 disabled:opacity-50"
-                />
+                    {/* Input Field */}
+                    <input
+                        type="text"
+                        value={inputText}
+                        onChange={(e) => { if (e.target.value.length <= 500) setInputText(e.target.value); }}
+                        onKeyDown={handleKeyDown}
+                        disabled={isPlaying}
+                        maxLength={500}
+                        placeholder={t('placeholder')}
+                        className="flex-1 min-w-0 bg-transparent border-none focus:ring-0 text-white placeholder-gray-500 text-sm md:text-base py-2 px-2 disabled:opacity-50"
+                    />
 
-                {/* Control Buttons */}
-                <div className="flex gap-1.5 flex-shrink-0">
-                    <AnimatePresence mode="wait">
-                        {!isPlaying ? (
-                            <motion.button
-                                key="play"
-                                initial={prefersReducedMotion ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                exit={prefersReducedMotion ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
-                                transition={prefersReducedMotion ? { duration: 0.01 } : undefined}
-                                onClick={handleRun}
-                                disabled={!inputText.trim()}
-                                className="bg-brand-teal/20 hover:bg-brand-teal/30 text-brand-teal p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed border border-brand-teal/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
-                                aria-label={tNav('play')}
-                            >
-                                <Play size={18} fill="currentColor" aria-hidden="true" />
-                            </motion.button>
-                        ) : (
-                            <>
-                                {/* Pause/Resume */}
+                    {/* Control Buttons */}
+                    <div className="flex gap-1.5 flex-shrink-0">
+                        <AnimatePresence mode="wait">
+                            {!isPlaying ? (
                                 <motion.button
-                                    key="pause"
+                                    key="play"
                                     initial={prefersReducedMotion ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
                                     exit={prefersReducedMotion ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
                                     transition={prefersReducedMotion ? { duration: 0.01 } : undefined}
-                                    onClick={togglePause}
-                                    className="bg-white/10 hover:bg-white/20 text-white p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
-                                    aria-label={isPaused ? tNav('resume') : tNav('pause')}
+                                    onClick={handleRun}
+                                    disabled={!inputText.trim()}
+                                    className="bg-brand-teal/20 hover:bg-brand-teal/30 text-brand-teal p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed border border-brand-teal/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+                                    aria-label={tNav('play')}
                                 >
-                                    {isPaused ? <Play size={18} aria-hidden="true" /> : <Pause size={18} aria-hidden="true" />}
+                                    <Play size={18} fill="currentColor" aria-hidden="true" />
                                 </motion.button>
-
-                                {/* Next Step */}
-                                {!isComplete && (
+                            ) : (
+                                <>
+                                    {/* Pause/Resume */}
                                     <motion.button
-                                        key="next"
+                                        key="pause"
                                         initial={prefersReducedMotion ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
                                         animate={{ scale: 1, opacity: 1 }}
                                         exit={prefersReducedMotion ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
                                         transition={prefersReducedMotion ? { duration: 0.01 } : undefined}
-                                        onClick={handleNext}
-                                        className="bg-brand-teal/20 hover:bg-brand-teal/30 text-brand-teal p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all border border-brand-teal/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
-                                        aria-label={tNav('nextStep')}
+                                        onClick={togglePause}
+                                        className="bg-white/10 hover:bg-white/20 text-white p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                                        aria-label={isPaused ? tNav('resume') : tNav('pause')}
                                     >
-                                        <SkipForward size={18} />
+                                        {isPaused ? <Play size={18} aria-hidden="true" /> : <Pause size={18} aria-hidden="true" />}
                                     </motion.button>
-                                )}
 
-                                {/* Reset */}
-                                <motion.button
-                                    key="reset"
-                                    initial={prefersReducedMotion ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    exit={prefersReducedMotion ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
-                                    transition={prefersReducedMotion ? { duration: 0.01 } : undefined}
-                                    onClick={handleReset}
-                                    className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${confirmReset
-                                        ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30 ring-1 ring-red-500/40'
-                                        : 'bg-white/10 hover:bg-white/20 text-white/50 hover:text-white/70'
-                                        }`}
-                                    aria-label={confirmReset ? t('confirmReset') : t('reset')}
-                                >
-                                    <RefreshCw size={18} className={confirmReset && !prefersReducedMotion ? 'animate-spin' : ''} aria-hidden="true" />
-                                </motion.button>
-                            </>
-                        )}
-                    </AnimatePresence>
+                                    {/* Next Step */}
+                                    {!isComplete && (
+                                        <motion.button
+                                            key="next"
+                                            initial={prefersReducedMotion ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
+                                            animate={{ scale: 1, opacity: 1 }}
+                                            exit={prefersReducedMotion ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+                                            transition={prefersReducedMotion ? { duration: 0.01 } : undefined}
+                                            onClick={handleNext}
+                                            className="bg-brand-teal/20 hover:bg-brand-teal/30 text-brand-teal p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all border border-brand-teal/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+                                            aria-label={tNav('nextStep')}
+                                        >
+                                            <SkipForward size={18} />
+                                        </motion.button>
+                                    )}
+
+                                    {/* Reset */}
+                                    <motion.button
+                                        key="reset"
+                                        initial={prefersReducedMotion ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        exit={prefersReducedMotion ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+                                        transition={prefersReducedMotion ? { duration: 0.01 } : undefined}
+                                        onClick={handleReset}
+                                        className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${confirmReset
+                                            ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30 ring-1 ring-red-500/40'
+                                            : 'bg-white/10 hover:bg-white/20 text-white/50 hover:text-white/70'
+                                            }`}
+                                        aria-label={confirmReset ? t('confirmReset') : t('reset')}
+                                    >
+                                        <RefreshCw size={18} className={confirmReset && !prefersReducedMotion ? 'animate-spin' : ''} aria-hidden="true" />
+                                    </motion.button>
+                                </>
+                            )}
+                        </AnimatePresence>
+                    </div>
                 </div>
-            </div>
 
-            {/* Step Breadcrumbs + Progress */}
-            <div className="flex items-center justify-between px-3 py-2 border-t border-white/5">
-                {/* Step Buttons */}
-                <div className="flex items-center gap-0.5">
-                    {ACTIVE_STEPS.map((step, i) => {
-                        const isCurrent = currentStep === step;
-                        const isPast = completedSteps.has(step);
-                        const isLocked = cardStates[step] === 'locked';
+                {/* Step Breadcrumbs + Progress */}
+                <div className="flex items-center justify-between px-3 py-2 border-t border-white/5">
+                    {/* Step Buttons */}
+                    <div className="flex items-center gap-0.5">
+                        {ACTIVE_STEPS.map((step, i) => {
+                            const isCurrent = currentStep === step;
+                            const isPast = completedSteps.has(step);
+                            const isLocked = cardStates[step] === 'locked';
 
-                        return (
-                            <div key={step} className="flex items-center">
-                                <button
-                                    onClick={() => handleStepClick(step)}
-                                    disabled={isLocked}
-                                    className={`
-                                        w-10 h-10 rounded-lg text-xs font-bold font-mono transition-all flex items-center justify-center
-                                        ${isCurrent
-                                            ? 'text-black'
-                                            : isPast
-                                                ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                                                : isLocked
-                                                    ? 'bg-white/5 text-white/20 cursor-not-allowed'
-                                                    : 'bg-white/5 text-white/40 hover:bg-white/10'
-                                        }
-                                    `}
-                                    style={isCurrent ? {
-                                        backgroundColor: STEP_COLORS[step],
-                                        boxShadow: `0 0 12px ${STEP_COLORS[step]}`
-                                    } : undefined}
-                                    aria-label={`Step ${i + 1}: ${step}`}
-                                    aria-current={isCurrent ? 'step' : undefined}
-                                >
-                                    {isPast && !isCurrent ? <Check size={14} /> : STEP_LABELS[step]}
-                                </button>
-                                {i < ACTIVE_STEPS.length - 1 && (
-                                    <ChevronRight
-                                        size={12}
-                                        className={`mx-0.5 ${isPast || isCurrent ? 'text-brand-teal/50' : 'text-white/15'}`}
-                                    />
-                                )}
+                            return (
+                                <div key={step} className="flex items-center">
+                                    <button
+                                        onClick={() => handleStepClick(step)}
+                                        disabled={isLocked}
+                                        className={`
+                                            w-10 h-10 rounded-lg text-xs font-bold font-mono transition-all flex items-center justify-center
+                                            ${isCurrent
+                                                ? 'text-black'
+                                                : isPast
+                                                    ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                                                    : isLocked
+                                                        ? 'bg-white/5 text-white/20 cursor-not-allowed'
+                                                        : 'bg-white/5 text-white/40 hover:bg-white/10'
+                                            }
+                                        `}
+                                        style={isCurrent ? {
+                                            backgroundColor: STEP_COLORS[step],
+                                            boxShadow: `0 0 12px ${STEP_COLORS[step]}`
+                                        } : undefined}
+                                        aria-label={`Step ${i + 1}: ${step}`}
+                                        aria-current={isCurrent ? 'step' : undefined}
+                                    >
+                                        {isPast && !isCurrent ? <Check size={14} /> : STEP_LABELS[step]}
+                                    </button>
+                                    {i < ACTIVE_STEPS.length - 1 && (
+                                        <ChevronRight
+                                            size={12}
+                                            className={`mx-0.5 ${isPast || isCurrent ? 'text-brand-teal/50' : 'text-white/15'}`}
+                                        />
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {/* Speed Control + Step Counter */}
+                    <div className="flex items-center gap-3">
+                        {/* Speed Control */}
+                        {(isPlaying || hasData) && (
+                            <div className="flex items-center gap-1">
+                                <Gauge size={12} className="text-white/30" />
+                                {SPEED_PRESETS.map(({ label, value }) => (
+                                    <button
+                                        key={value}
+                                        onClick={() => setPlaybackSpeed(value)}
+                                        className={`px-1.5 py-0.5 text-[10px] font-mono rounded transition-all ${playbackSpeed === value
+                                            ? 'bg-brand-teal/30 text-brand-teal'
+                                            : 'text-white/40 hover:text-white/70 hover:bg-white/5'
+                                            }`}
+                                        aria-label={`Set speed to ${label}`}
+                                    >
+                                        {label}
+                                    </button>
+                                ))}
                             </div>
-                        );
-                    })}
-                </div>
-
-                {/* Speed Control + Step Counter */}
-                <div className="flex items-center gap-3">
-                    {/* Speed Control */}
-                    {(isPlaying || hasData) && (
-                        <div className="flex items-center gap-1">
-                            <Gauge size={12} className="text-white/30" />
-                            {SPEED_PRESETS.map(({ label, value }) => (
-                                <button
-                                    key={value}
-                                    onClick={() => setPlaybackSpeed(value)}
-                                    className={`px-1.5 py-0.5 text-[10px] font-mono rounded transition-all ${playbackSpeed === value
-                                        ? 'bg-brand-teal/30 text-brand-teal'
-                                        : 'text-white/40 hover:text-white/70 hover:bg-white/5'
-                                        }`}
-                                    aria-label={`Set speed to ${label}`}
-                                >
-                                    {label}
-                                </button>
-                            ))}
-                        </div>
-                    )}
-
-                    {/* Step Counter */}
-                    <span className="text-xs text-white/50 font-mono">
-                        {hasData || isPlaying
-                            ? tNav('stepOf', { current: String(Math.max(1, stepCount)), total: '4' })
-                            : ''
-                        }
-                    </span>
-
-                    {/* Playing/Paused indicator */}
-                    {isPlaying && !isPaused && currentStep !== 'idle' && (
-                        <span className="flex items-center gap-1.5 text-xs font-mono" style={{ color: STEP_COLORS[currentStep] }}>
-                            <span
-                                className="w-2 h-2 rounded-full animate-pulse"
-                                style={{ backgroundColor: STEP_COLORS[currentStep] }}
-                            />
-                            {tNav('playing')}
-                        </span>
-                    )}
-                    {isPaused && (
-                        <span className="text-xs text-white/40 font-mono">
-                            {tNav('paused')}
-                        </span>
-                    )}
-                    {isComplete && (
-                        <span className="flex items-center gap-1 text-xs text-brand-teal font-mono">
-                            <Check size={12} /> {tNav('done')}
-                        </span>
-                    )}
-
-                    {/* Desktop View Toggle */}
-                    <button
-                        onClick={toggleViewMode}
-                        className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all ml-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
-                        title={viewMode === 'grid' ? tNav('switchToStack') : tNav('switchToGrid')}
-                        aria-label={viewMode === 'grid' ? tNav('switchToStack') : tNav('switchToGrid')}
-                        aria-pressed={viewMode === 'grid'}
-                    >
-                        {viewMode === 'grid' ? (
-                            <LayoutList size={14} aria-hidden="true" />
-                        ) : (
-                            <LayoutGrid size={14} aria-hidden="true" />
                         )}
-                    </button>
-                </div>
-            </div>
 
-            {/* Progress Bar */}
-            {isPlaying && !isPaused && currentStep !== 'idle' && (
-                <div className="h-1.5 w-full bg-white/5">
-                    <motion.div
-                        className="h-full relative"
-                        style={{
-                            backgroundColor: STEP_COLORS[currentStep] || 'var(--dna-t)',
-                            boxShadow: `0 0 12px ${STEP_COLORS[currentStep]}`
-                        }}
-                        initial={{ width: 0 }}
-                        animate={{ width: `${progress}%` }}
-                        transition={{ type: "tween", ease: "linear", duration: 0.05 }}
-                    >
-                        <div className="absolute right-0 top-0 bottom-0 w-1 bg-white/50 blur-[2px]" />
-                    </motion.div>
+                        {/* Step Counter */}
+                        <span className="text-xs text-white/50 font-mono">
+                            {hasData || isPlaying
+                                ? tNav('stepOf', { current: String(Math.max(1, stepCount)), total: '4' })
+                                : ''
+                            }
+                        </span>
+
+                        {/* Playing/Paused indicator */}
+                        {isPlaying && !isPaused && currentStep !== 'idle' && (
+                            <span className="flex items-center gap-1.5 text-xs font-mono" style={{ color: STEP_COLORS[currentStep] }}>
+                                <span
+                                    className="w-2 h-2 rounded-full animate-pulse"
+                                    style={{ backgroundColor: STEP_COLORS[currentStep] }}
+                                />
+                                {tNav('playing')}
+                            </span>
+                        )}
+                        {isPaused && (
+                            <span className="text-xs text-white/40 font-mono">
+                                {tNav('paused')}
+                            </span>
+                        )}
+                        {isComplete && (
+                            <span className="flex items-center gap-1 text-xs text-brand-teal font-mono">
+                                <Check size={12} /> {tNav('done')}
+                            </span>
+                        )}
+
+                        {/* Desktop View Toggle */}
+                        <button
+                            onClick={toggleViewMode}
+                            className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all ml-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+                            title={viewMode === 'grid' ? tNav('switchToStack') : tNav('switchToGrid')}
+                            aria-label={viewMode === 'grid' ? tNav('switchToStack') : tNav('switchToGrid')}
+                            aria-pressed={viewMode === 'grid'}
+                        >
+                            {viewMode === 'grid' ? (
+                                <LayoutList size={14} aria-hidden="true" />
+                            ) : (
+                                <LayoutGrid size={14} aria-hidden="true" />
+                            )}
+                        </button>
+                    </div>
                 </div>
-            )}
+
+                {/* Progress Bar */}
+                {isPlaying && !isPaused && currentStep !== 'idle' && (
+                    <div className="h-1.5 w-full bg-white/5">
+                        <motion.div
+                            className="h-full relative"
+                            style={{
+                                backgroundColor: STEP_COLORS[currentStep] || 'var(--dna-t)',
+                                boxShadow: `0 0 12px ${STEP_COLORS[currentStep]}`
+                            }}
+                            initial={{ width: 0 }}
+                            animate={{ width: `${progress}%` }}
+                            transition={{ type: "tween", ease: "linear", duration: 0.05 }}
+                        >
+                            <div className="absolute right-0 top-0 bottom-0 w-1 bg-white/50 blur-[2px]" />
+                        </motion.div>
+                    </div>
+                )}
+            </div>
         </motion.header>
     );
 }

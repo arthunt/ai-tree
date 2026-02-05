@@ -122,12 +122,12 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
     if (!isActive) return null;
 
     return (
-        <div className="w-full flex flex-col items-center">
-            <div className="relative">
+        <div className="w-full h-[200px] md:h-[240px] flex flex-col items-center justify-center">
+            <div className="relative w-full h-full max-w-[380px] max-h-[240px]">
                 <svg
-                    width={WIDTH}
-                    height={HEIGHT}
-                    className="overflow-visible"
+                    viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+                    preserveAspectRatio="xMidYMid meet"
+                    className="w-full h-full overflow-visible"
                     style={{ pointerEvents: 'none' }}
                 >
                     {/* Arcs Layer */}

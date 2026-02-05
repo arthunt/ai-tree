@@ -412,7 +412,7 @@ export function DNAVerticalStack() {
                 // Get the card's position relative to the viewport
                 const rect = cardEl.getBoundingClientRect();
                 const headerHeight = 140; // Fixed header height (approx)
-                const targetY = window.scrollY + rect.top - headerHeight - 16; // 16px extra padding
+                const targetY = window.scrollY + rect.top - headerHeight - 32; // 32px extra padding (increased)
 
                 // Only scroll if card is not already in good view
                 if (rect.top < headerHeight || rect.bottom > window.innerHeight) {

@@ -92,12 +92,11 @@ export function VectorMap({ tokens, vectors, isActive }: VectorMapProps) {
     if (!isActive || vectors.length === 0) return null;
 
     return (
-        <div className="w-full flex flex-col items-center">
+        <div className="w-full h-[240px] md:h-[280px] flex flex-col items-center justify-center">
             <svg
-                width={SIZE}
-                height={SIZE}
                 viewBox={`0 0 ${SIZE} ${SIZE}`}
-                className="overflow-visible"
+                preserveAspectRatio="xMidYMid meet"
+                className="w-full h-full max-w-[280px] max-h-[280px] overflow-visible"
             >
                 {/* Background */}
                 <rect
