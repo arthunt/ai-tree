@@ -1329,7 +1329,9 @@
     "attention": {
       "strongestLink": "Tugevaim seos: {from} → {to}",
       "strength": "Tugevus",
-      "whyConnected": "Miks seotud"
+      "whyConnected": "Miks seotud",
+      "connection": "SEOS",
+      "strongest": "TUGEVAIM SEOS"
     },
     "prediction": {
       "winner": "Võitja",

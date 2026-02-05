@@ -229,9 +229,9 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                             initial={{ opacity: 0, y: 10, scale: 0.95 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
-                            className="absolute left-1/2 -translate-x-1/2 top-[120px] flex justify-center pointer-events-none z-10"
+                            className="absolute left-1/2 -translate-x-1/2 top-[120px] flex justify-center pointer-events-none z-10 w-full max-w-[90%]"
                         >
-                            <div className="bg-slate-900/95 border border-brand-teal/30 backdrop-blur-md rounded-xl p-3 shadow-2xl w-auto whitespace-nowrap">
+                            <div className="bg-slate-900/95 border border-brand-teal/30 backdrop-blur-md rounded-xl p-3 shadow-2xl w-auto max-w-full">
                                 <div className="flex items-center justify-between gap-4 mb-2">
                                     <div className="text-[10px] uppercase tracking-wider text-brand-teal/80 font-bold">
                                         {strongest.strength >= 0.8 ? tAttn('strongest') : tAttn('connection')}
