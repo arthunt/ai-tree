@@ -168,7 +168,11 @@
   "footer": {
     "description": "AI Knowledge Tree – Interactive learning tool for understanding AI concepts",
     "version": "Version",
-    "reportIssue": "Report Issue"
+    "reportIssue": "Report Issue",
+    "offeredBy": "A learning platform by",
+    "hakaLabel": "HAKA Quality Label 2023–2028",
+    "trainingPartner": "Töötukassa Training Card Partner",
+    "tootukassaNote": "Eligible for Töötukassa training card"
   },
   "complexity": {
     "1": "Core Idea",
@@ -1420,7 +1424,8 @@
       "flexiblePayment": "Flexible payment available",
       "cta": "Enroll Now",
       "paymentNote": "Secure payment. Start learning immediately.",
-      "graduateDiscount": "Graduate Discount"
+      "graduateDiscount": "Graduate Discount",
+      "tootukassaNote": "Eligible for Töötukassa training card funding. Contact us for details."
     },
     "faq": {
       "heading": "Frequently Asked Questions"

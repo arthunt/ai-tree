@@ -7,6 +7,8 @@ import '../globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { ToastProvider } from '@/lib/useToast';
 import { ToastContainer } from '@/components/Toast';
+import { Analytics } from '@vercel/analytics/react';
+import Script from 'next/script';
 
 import { Suspense } from 'react';
 
@@ -25,18 +27,18 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://dendrix.ai';
 const metadataTranslations: Record<string, { title: string; description: string; keywords: string[] }> = {
   et: {
     title: 'AI Teadmiste Puu | Dendrix.ai',
-    description: 'Terviklik interaktiivne raamistik AI kontseptide õpetamiseks ja mõistmiseks.',
-    keywords: ['AI', 'tehisintellekt', 'masinõpe', 'õppimine', 'AI koolitus', 'Dendrix'],
+    description: 'Terviklik interaktiivne raamistik AI kontseptide õpetamiseks ja mõistmiseks. Ettevõtluskeskus OÜ õppeplatvorm.',
+    keywords: ['AI', 'tehisintellekt', 'masinõpe', 'õppimine', 'AI koolitus', 'tehisintellekt koolitus', 'AI kursus ettevõtjatele', 'AI ümberõpe', 'AI õppeplatvorm', 'Dendrix', 'Ettevõtluskeskus'],
   },
   en: {
     title: 'AI Knowledge Tree | Dendrix.ai',
-    description: 'Comprehensive interactive framework for teaching and understanding AI concepts.',
-    keywords: ['AI', 'artificial intelligence', 'machine learning', 'education', 'AI training', 'Dendrix'],
+    description: 'Comprehensive interactive framework for teaching and understanding AI concepts. A learning platform by Ettevõtluskeskus OÜ.',
+    keywords: ['AI', 'artificial intelligence', 'machine learning', 'education', 'AI training', 'AI training Estonia', 'AI courses for managers', 'AI reskilling programs', 'learn AI basics', 'Dendrix', 'Ettevõtluskeskus'],
   },
   ru: {
     title: 'Дерево Знаний ИИ | Dendrix.ai',
-    description: 'Комплексная интерактивная платформа для изучения и понимания концепций искусственного интеллекта.',
-    keywords: ['ИИ', 'искусственный интеллект', 'машинное обучение', 'образование', 'обучение ИИ', 'Dendrix'],
+    description: 'Комплексная интерактивная платформа для изучения и понимания концепций ИИ. Учебная платформа Ettevõtluskeskus OÜ.',
+    keywords: ['ИИ', 'искусственный интеллект', 'машинное обучение', 'образование', 'обучение ИИ', 'AI курсы Эстония', 'ИИ курсы', 'обучение ИИ для руководителей', 'курсы искусственного интеллекта Таллинн', 'Dendrix', 'Ettevõtluskeskus'],
   },
 };
 
@@ -52,6 +54,9 @@ export async function generateMetadata({
     title: meta.title,
     description: meta.description,
     keywords: meta.keywords,
+    ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION && {
+      verification: { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION },
+    }),
     alternates: {
       canonical: `${BASE_URL}/${locale}`,
       languages: {
@@ -109,8 +114,23 @@ export default async function RootLayout({
   // Set the language tag for ParaglideJS (server-side)
   setLanguageTag(locale as AvailableLanguageTag);
 
+  const ga4Id = process.env.NEXT_PUBLIC_GA4_ID;
+
   return (
     <html lang={locale}>
+      <head>
+        {ga4Id && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${ga4Id}');`}
+            </Script>
+          </>
+        )}
+      </head>
       <body className={inter.className}>
         <LanguageProvider initialLocale={locale as AvailableLanguageTag}>
           <ThemeProvider>
@@ -126,6 +146,7 @@ export default async function RootLayout({
             </ToastProvider>
           </ThemeProvider>
         </LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );

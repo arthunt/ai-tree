@@ -168,7 +168,11 @@
   "footer": {
     "description": "AI Teadmiste Puu – Interaktiivne õppevahend AI kontseptide mõistmiseks",
     "version": "Versioon",
-    "reportIssue": "Teata Probleemist"
+    "reportIssue": "Teata Probleemist",
+    "offeredBy": "Õppeplatvorm ettevõttelt",
+    "hakaLabel": "HAKA kvaliteedimärgis 2023–2028",
+    "trainingPartner": "Töötukassa koolituskaardi partner",
+    "tootukassaNote": "Töötukassa koolituskaardiga kaetav"
   },
   "complexity": {
     "1": "Põhiidee",
@@ -1399,7 +1403,8 @@
       "flexiblePayment": "Paindlik maksmine saadaval",
       "cta": "Registreeru",
       "paymentNote": "Turvaline makse. Alusta õppimist kohe.",
-      "graduateDiscount": "Lõpetaja Soodustus"
+      "graduateDiscount": "Lõpetaja Soodustus",
+      "tootukassaNote": "Sobib Töötukassa koolituskaardi rahastuseks. Võta meiega ühendust."
     },
     "faq": {
       "heading": "Korduma Kippuvad Küsimused"

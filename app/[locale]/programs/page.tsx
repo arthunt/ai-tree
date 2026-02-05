@@ -5,8 +5,11 @@ import { ArrowRight } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 import enMessages from '@/messages/en.json';
 import etMessages from '@/messages/et.json';
+import ruMessages from '@/messages/ru.json';
+import { Metadata } from 'next';
+import { generateProgramsIndexMetadata } from '@/lib/seo/program-metadata';
 
-const allMessages: Record<string, typeof enMessages> = { en: enMessages, et: etMessages };
+const allMessages: Record<string, typeof enMessages> = { en: enMessages, et: etMessages, ru: ruMessages };
 
 function getIcon(name?: string): React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }> {
     if (!name) return LucideIcons.Sparkles;
@@ -15,10 +18,14 @@ function getIcon(name?: string): React.ComponentType<{ size?: number; className?
     return Icon || LucideIcons.Sparkles;
 }
 
-export const metadata = {
-    title: 'Programs | AI Tree',
-    description: 'Master AI with our specialized training programs.',
-};
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+    const { locale } = await params;
+    return generateProgramsIndexMetadata(locale);
+}
 
 export default async function ProgramsIndexPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;

@@ -1,4 +1,4 @@
-import { Check, ShieldCheck } from 'lucide-react';
+import { Check, ShieldCheck, BadgeCheck } from 'lucide-react';
 import { Program } from '@/lib/types';
 import { ApplyButton } from './ApplyButton';
 import type { LeadLabels } from './LeadCaptureDialog';
@@ -17,6 +17,7 @@ interface ProgramPricingProps {
         cta: string;
         paymentNote: string;
         graduateDiscount: string;
+        tootukassaNote?: string;
     };
     leadLabels: LeadLabels;
 }
@@ -120,6 +121,15 @@ export function ProgramPricing({ program, labels, leadLabels }: ProgramPricingPr
                         <p className="text-xs text-center text-gray-500">
                             {labels.paymentNote}
                         </p>
+
+                        {labels.tootukassaNote && (
+                            <div className="mt-6 flex items-center gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                                <BadgeCheck size={20} className="text-emerald-400 flex-shrink-0" />
+                                <p className="text-xs text-emerald-300/90">
+                                    {labels.tootukassaNote}
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

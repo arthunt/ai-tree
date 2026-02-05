@@ -5,10 +5,13 @@ import { ProgramFeatures } from '@/components/programs/ProgramFeatures';
 import { ProgramCurriculumList } from '@/components/programs/ProgramCurriculum';
 import { ProgramPricing } from '@/components/programs/ProgramPricing';
 import { ProgramFAQList } from '@/components/programs/ProgramFAQ';
+import { ProgramCourseStructuredData, FAQStructuredData, BreadcrumbStructuredData } from '@/components/StructuredData';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import enMessages from '@/messages/en.json';
 import etMessages from '@/messages/et.json';
+import ruMessages from '@/messages/ru.json';
+import { generateProgramMetadata } from '@/lib/seo/program-metadata';
 
 
 export function generateStaticParams() {
@@ -23,17 +26,14 @@ type Props = {
     }>;
 };
 
-const messages: Record<string, typeof enMessages> = { en: enMessages, et: etMessages };
+const messages: Record<string, typeof enMessages> = { en: enMessages, et: etMessages, ru: ruMessages };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug, locale } = await params;
     const program = await getProgram(slug, locale);
     if (!program) return { title: 'Program Not Found' };
 
-    return {
-        title: `${program.name} | AI Tree`,
-        description: program.tagline,
-    };
+    return generateProgramMetadata(slug, locale, { name: program.name, tagline: program.tagline });
 }
 
 export default async function ProgramPage({ params }: Props) {
@@ -50,6 +50,11 @@ export default async function ProgramPage({ params }: Props) {
 
     return (
         <main className="min-h-screen bg-black text-white selection:bg-brand-purple/30 selection:text-white">
+            <ProgramCourseStructuredData locale={locale} program={program} />
+            {program.faq && program.faq.length > 0 && (
+                <FAQStructuredData locale={locale} faqs={program.faq} />
+            )}
+            <BreadcrumbStructuredData locale={locale} stage="programs" programTitle={program.name} programSlug={program.slug} />
             <GlobalNav transparent />
 
             <ProgramHero
@@ -96,6 +101,7 @@ export default async function ProgramPage({ params }: Props) {
                     cta: p.pricing.cta,
                     paymentNote: p.pricing.paymentNote,
                     graduateDiscount: p.pricing.graduateDiscount,
+                    tootukassaNote: p.pricing.tootukassaNote,
                 }}
                 leadLabels={leadLabels}
             />

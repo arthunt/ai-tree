@@ -11,7 +11,7 @@ interface StructuredDataProps {
 // BREADCRUMB SCHEMA - For navigation structure
 // ============================================================================
 
-type StageKey = 'dna' | 'seed' | 'sprout' | 'sapling' | 'fruits' | 'orchard' | 'tree-view' | 'learn' | 'concept';
+type StageKey = 'dna' | 'seed' | 'sprout' | 'sapling' | 'fruits' | 'orchard' | 'tree-view' | 'learn' | 'concept' | 'programs';
 
 interface BreadcrumbItem {
   name: string;
@@ -28,6 +28,7 @@ const STAGE_NAMES: Record<StageKey, { en: string; et: string; ru: string }> = {
   'tree-view': { en: 'Knowledge Tree', et: 'Teadmiste Puu', ru: 'Дерево Знаний' },
   learn: { en: 'Learning Paths', et: 'Õppeteed', ru: 'Пути обучения' },
   concept: { en: 'Concept', et: 'Kontseptsioon', ru: 'Концепция' },
+  programs: { en: 'Programs', et: 'Programmid', ru: 'Программы' },
 };
 
 const HOME_NAMES = {
@@ -41,6 +42,8 @@ interface BreadcrumbStructuredDataProps {
   stage?: StageKey;
   conceptTitle?: string;
   conceptId?: string;
+  programTitle?: string;
+  programSlug?: string;
 }
 
 export function BreadcrumbStructuredData({
@@ -48,6 +51,8 @@ export function BreadcrumbStructuredData({
   stage,
   conceptTitle,
   conceptId,
+  programTitle,
+  programSlug,
 }: BreadcrumbStructuredDataProps) {
   const lang = (locale as 'en' | 'et' | 'ru') || 'en';
   const items: BreadcrumbItem[] = [];
@@ -63,7 +68,7 @@ export function BreadcrumbStructuredData({
     const stageName = STAGE_NAMES[stage]?.[lang] || stage;
     items.push({
       name: stageName,
-      url: `${BASE_URL}/${locale}/${stage}`,
+      url: `${BASE_URL}/${locale}/${stage === 'programs' ? 'programs' : stage}`,
     });
   }
 
@@ -72,6 +77,14 @@ export function BreadcrumbStructuredData({
     items.push({
       name: conceptTitle,
       url: `${BASE_URL}/${locale}/concept/${conceptId}`,
+    });
+  }
+
+  // Program (if provided)
+  if (programTitle && programSlug) {
+    items.push({
+      name: programTitle,
+      url: `${BASE_URL}/${locale}/programs/${programSlug}`,
     });
   }
 
@@ -227,8 +240,14 @@ export function OrganizationStructuredData({ locale }: OrganizationStructuredDat
     url: BASE_URL,
     logo: `${BASE_URL}/logo.png`,
     description: descriptions[lang],
+    parentOrganization: {
+      '@type': 'EducationalOrganization',
+      '@id': 'https://ettevotluskeskus.ee/#org',
+      name: 'Ettev\u00f5tluskeskus O\u00dc',
+      url: 'https://ettevotluskeskus.ee',
+    },
     sameAs: [
-      // Add social media URLs when available
+      'https://ettevotluskeskus.ee',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
@@ -304,9 +323,10 @@ export function CourseStructuredData({ locale, conceptCount }: StructuredDataPro
     name: names[lang],
     description: descriptions[lang],
     provider: {
-      '@type': 'Organization',
-      name: 'Dendrix.ai',
-      url: BASE_URL,
+      '@type': 'EducationalOrganization',
+      '@id': 'https://ettevotluskeskus.ee/#org',
+      name: 'Ettev\u00f5tluskeskus O\u00dc',
+      url: 'https://ettevotluskeskus.ee',
     },
     url: `${BASE_URL}/${locale}`,
     inLanguage: locale,
@@ -383,6 +403,110 @@ export function ConceptStructuredData({
       '@type': 'AlignmentObject',
       alignmentType: 'complexity',
       targetName: `Level ${complexity}/3`,
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+// ============================================================================
+// PROGRAM COURSE SCHEMA - For individual program pages (AIKI, AIVO, AIME)
+// ============================================================================
+
+interface ProgramCourseStructuredDataProps {
+  locale: string;
+  program: {
+    slug: string;
+    code: string;
+    name: string;
+    tagline: string;
+    duration_weeks: number;
+    academic_hours: number;
+    price_cents: number;
+    faq?: { question: string; answer: string }[];
+  };
+}
+
+export function ProgramCourseStructuredData({ locale, program }: ProgramCourseStructuredDataProps) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: `${program.code} \u2014 ${program.name}`,
+    description: program.tagline,
+    url: `${BASE_URL}/${locale}/programs/${program.slug}`,
+    inLanguage: locale,
+    provider: {
+      '@type': 'EducationalOrganization',
+      '@id': 'https://ettevotluskeskus.ee/#org',
+      name: 'Ettev\u00f5tluskeskus O\u00dc',
+      url: 'https://ettevotluskeskus.ee',
+      sameAs: ['https://dendrix.ai'],
+    },
+    offers: {
+      '@type': 'Offer',
+      price: (program.price_cents / 100).toFixed(2),
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      url: `${BASE_URL}/${locale}/programs/${program.slug}`,
+    },
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'blended',
+      duration: `P${program.duration_weeks}W`,
+      inLanguage: [locale],
+    },
+    educationalLevel: 'Beginner to Intermediate',
+    numberOfCredits: program.academic_hours,
+    isAccessibleForFree: false,
+    financialAidEligible: true,
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+// ============================================================================
+// EDUCATIONAL ORGANIZATION SCHEMA - For Ettev\u00f5tluskeskus O\u00dc
+// ============================================================================
+
+export function EducationalOrganizationStructuredData({ locale }: { locale: string }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    '@id': 'https://ettevotluskeskus.ee/#org',
+    name: 'Ettev\u00f5tluskeskus O\u00dc',
+    url: 'https://ettevotluskeskus.ee',
+    sameAs: ['https://dendrix.ai'],
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Tallinn',
+      addressCountry: 'EE',
+    },
+    hasCredential: {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'QualityAssurance',
+      name: 'HAKA Quality Label',
+      recognizedBy: {
+        '@type': 'Organization',
+        name: 'HAKA \u2014 Estonian Quality Agency for Education',
+        url: 'https://haka.ee',
+      },
+      validFrom: '2023',
+      validThrough: '2028',
+    },
+    brand: {
+      '@type': 'Brand',
+      name: 'Dendrix.ai',
+      url: 'https://dendrix.ai',
     },
   };
 

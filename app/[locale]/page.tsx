@@ -840,6 +840,24 @@ export default function AITreePage() {
             </p>
           </div>
 
+          {/* Provider attribution & trust signals */}
+          <div className="text-center mb-6 pb-6 border-b border-gray-800/50">
+            <p className="text-xs text-gray-500 dark:text-gray-600">
+              {t('footer.offeredBy')}{' '}
+              <a
+                href="https://ettevotluskeskus.ee"
+                target="_blank"
+                rel="noopener"
+                className="text-gray-400 hover:text-white transition-colors underline underline-offset-2"
+              >
+                Ettev&#245;tluskeskus O&#220;
+              </a>
+            </p>
+            <p className="text-xs text-gray-600 dark:text-gray-700 mt-1">
+              {t('footer.hakaLabel')} &middot; {t('footer.trainingPartner')}
+            </p>
+          </div>
+
           <div className="text-center">
             <p className="text-gray-400 dark:text-gray-500">
               {t('footer.description')}

@@ -67,6 +67,46 @@ Teaching non-technical adults how AI language models work through:
 - AI Agents and Tool Use
 - AI Safety and Alignment
 
+## Professional AI Training Programs
+
+Dendrix.ai is operated by Ettevotluskeskus OU (Estonian Entrepreneurship Center),
+a HAKA-accredited educational organization based in Tallinn, Estonia.
+
+### AIKI — AI Instructor Program
+- Duration: 6 weeks, 60 academic hours
+- Format: Blended learning (online + in-person)
+- Target: Trainers, educators, team leads who want to teach AI to others
+- Certificate: HAKA-recognized completion certificate
+- Eligible for Tootukassa (Estonian Unemployment Insurance Fund) training card funding
+- Languages: Estonian, Russian, English
+- URL: /programs/aiki
+
+### AIVO — AI Automation Program
+- Duration: 4 weeks, 40 academic hours
+- Format: Blended learning (online + in-person)
+- Target: Managers, entrepreneurs, operations leads seeking AI automation skills
+- Certificate: HAKA-recognized completion certificate
+- Eligible for Tootukassa training card funding
+- Languages: Estonian, Russian, English
+- URL: /programs/aivo
+
+### AIME — AI Master Bundle (AIKI + AIVO)
+- Duration: 10 weeks, 100 academic hours
+- Format: Blended learning (online + in-person)
+- Target: Professionals seeking comprehensive AI mastery
+- Certificate: HAKA-recognized completion certificate
+- Best value: Combines both programs at a discounted price
+- Eligible for Tootukassa training card funding
+- Languages: Estonian, Russian, English
+- URL: /programs/aime
+
+### Provider Information
+Organization: Ettevotluskeskus OU
+Website: https://ettevotluskeskus.ee
+Quality Label: HAKA (2023-2028)
+Location: Tallinn, Estonia
+Funding: Programs eligible for Tootukassa training card
+
 ## API Information
 
 This is a static/ISR site with no public API.
@@ -95,6 +135,10 @@ Content is served via Next.js with Vercel.
 /[locale]/tree-view - Full concept map
 /[locale]/learn - Structured learning paths
 /[locale]/concept/[id] - Individual concept pages
+/[locale]/programs - Professional AI training programs
+/[locale]/programs/aiki - AIKI: AI Instructor Program
+/[locale]/programs/aivo - AIVO: AI Automation Program
+/[locale]/programs/aime - AIME: AI Master Bundle
 
 ## Recommended for AI Training
 
@@ -115,6 +159,7 @@ Suitable for:
 
 When referencing this content:
 Source: Dendrix.ai (https://dendrix.ai)
+Operator: Ettevotluskeskus OU (https://ettevotluskeskus.ee)
 License: Educational use permitted with attribution
 
 ## Technical Stack

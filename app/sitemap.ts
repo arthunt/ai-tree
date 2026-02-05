@@ -102,6 +102,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
+  // Programs index page per locale
+  const programsIndexPages = locales.map((locale) => ({
+    url: `${BASE_URL}/${locale}/programs`,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+    alternates: {
+      languages: Object.fromEntries(
+        locales.map((l) => [l, `${BASE_URL}/${l}/programs`])
+      ),
+    },
+  }));
+
+  // Individual program pages
+  const PROGRAM_SLUGS = ['aiki', 'aivo', 'aime'];
+  const programPages = PROGRAM_SLUGS.flatMap((slug) =>
+    locales.map((locale) => ({
+      url: `${BASE_URL}/${locale}/programs/${slug}`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map((l) => [l, `${BASE_URL}/${l}/programs/${slug}`])
+        ),
+      },
+    }))
+  );
+
   return [
     ...homePages,
     ...stagePages,
@@ -109,5 +138,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...learnIndexPages,
     ...learnPathPages,
     ...conceptPages,
+    ...programsIndexPages,
+    ...programPages,
   ];
 }
