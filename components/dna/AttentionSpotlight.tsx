@@ -230,6 +230,7 @@ export function AttentionSpotlight({ tokens, weights, isActive }: AttentionSpotl
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
                             className="absolute left-1/2 -translate-x-1/2 top-[120px] flex justify-center pointer-events-none z-10 w-max max-w-[90vw]"
+                            style={{ maxWidth: 'min(90vw, 300px)' }}
                         >
                             <div className="bg-slate-900/95 border border-brand-teal/30 backdrop-blur-md rounded-xl p-3 shadow-2xl w-auto max-w-full">
                                 <div className="flex items-center justify-between gap-4 mb-2">
